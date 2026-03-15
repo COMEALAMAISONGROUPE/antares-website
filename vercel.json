@@ -1,0 +1,10 @@
+{
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/engine", "destination": "/engine.html" },
+    { "source": "/features", "destination": "/features.html" },
+    { "source": "/sources", "destination": "/sources.html" },
+    { "source": "/token", "destination": "/token.html" }
+  ]
+}
