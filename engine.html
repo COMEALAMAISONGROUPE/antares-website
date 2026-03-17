@@ -85,24 +85,84 @@ footer span{color:var(--c)}
   <div class="eyebrow">Scoring Engine</div>
   <h1 class="glitch" data-text="HOW THE SCORE IS BUILT">HOW THE <span>SCORE</span> IS BUILT</h1>
   <p>Eight independent analysis layers each contribute weighted deductions to a 0&ndash;1000 base score. A hardcoded Safe Gate overrides everything — critical flags block the token regardless of numeric score. This page covers the technical scoring logic. For what you see in the browser, visit <a href="/features" style="color:var(--c);text-decoration:none">Features</a>.</p>
-<div style="margin:40px 0 50px;border-left:2px solid var(--c);padding-left:16px">
-  <div style="font-size:10px;color:var(--c);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px">Analysis Layers &amp; Data Sources</div>
-  <ul style="font-size:12px;color:#5a5a62;line-height:2.1;list-style:none">
-    <li><span style="color:#e0e0e0;font-weight:600">L1 — Contract Security</span> &mdash; GoPlus (honeypot sim, proxy, blacklist, sell restrictions)</li>
-    <li><span style="color:#e0e0e0;font-weight:600">L2 — LP &amp; Metadata Audit</span> &mdash; RugCheck (LP burn/lock, mutable metadata, bundler detection)</li>
-    <li><span style="color:#e0e0e0;font-weight:600">L3 — On-Chain Authority</span> &mdash; Helius RPC (mint authority, freeze authority, supply, token accounts)</li>
-    <li><span style="color:#e0e0e0;font-weight:600">L4 — Liquidity &amp; Volume</span> &mdash; DexScreener (price, market cap, liquidity depth, tx counts 5m/1h/6h/24h)</li>
-    <li><span style="color:#e0e0e0;font-weight:600">L5 — Holder Distribution</span> &mdash; Solscan (holder count, top wallet concentration, token age, volume x-val)</li>
-    <li><span style="color:#e0e0e0;font-weight:600">L6 — Chart Intelligence</span> &mdash; GeckoTerminal (OHLCV candles 5m / 1h / 6h / 24h — pump, blow-off top, wash trading)</li>
-    <li><span style="color:#e0e0e0;font-weight:600">L7 — Identity Validation</span> &mdash; Internal Registry (exact clones, unicode spoofing, zero-width chars, ticker collisions)</li>
-    <li><span style="color:#e0e0e0;font-weight:600">L8 — Safe Gate Override</span> &mdash; Hardcoded logic (score &ge; 850 pts + zero critical flags — no exceptions)</li>
-  </ul>
+<div style="margin:50px 0 60px;background:#111113;border:1px solid #1a1a1d;padding:40px 36px;position:relative;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c),transparent)"></div>
+  <div style="font:400 32px/1 'Bebas Neue',sans-serif;letter-spacing:.08em;color:#e0e0e0;margin-bottom:6px">Analysis Layers &amp; Data Sources</div>
+  <div style="font-size:10px;color:var(--c);letter-spacing:.2em;text-transform:uppercase;margin-bottom:28px">7 APIs &mdash; 8 scoring layers &mdash; mapped below</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:2px">
+
+    <div style="background:#0f0f11;border:1px solid #1a1a1d;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:11px;color:var(--c);font-weight:700;white-space:nowrap;padding-top:2px">L1</div>
+      <div>
+        <div style="font-size:14px;color:#e0e0e0;font-weight:600;margin-bottom:4px">Contract Security</div>
+        <div style="font-size:11px;color:#5a5a62;line-height:1.7">GoPlus &mdash; honeypot simulation, proxy contract detection, blacklist functions, sell restrictions, hidden transfer fees.</div>
+      </div>
+    </div>
+
+    <div style="background:#0f0f11;border:1px solid #1a1a1d;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:11px;color:var(--c);font-weight:700;white-space:nowrap;padding-top:2px">L2</div>
+      <div>
+        <div style="font-size:14px;color:#e0e0e0;font-weight:600;margin-bottom:4px">LP &amp; Metadata Audit</div>
+        <div style="font-size:11px;color:#5a5a62;line-height:1.7">RugCheck &mdash; LP burn/lock status, mutable metadata detection, mint &amp; freeze authority, bundler detection (coordinated bots).</div>
+      </div>
+    </div>
+
+    <div style="background:#0f0f11;border:1px solid #1a1a1d;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:11px;color:var(--c);font-weight:700;white-space:nowrap;padding-top:2px">L3</div>
+      <div>
+        <div style="font-size:14px;color:#e0e0e0;font-weight:600;margin-bottom:4px">On-Chain Authority</div>
+        <div style="font-size:11px;color:#5a5a62;line-height:1.7">Helius RPC &mdash; direct Solana reads: mint authority, freeze authority, current supply, active token accounts. Ground truth — cannot be spoofed.</div>
+      </div>
+    </div>
+
+    <div style="background:#0f0f11;border:1px solid #1a1a1d;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:11px;color:var(--c);font-weight:700;white-space:nowrap;padding-top:2px">L4</div>
+      <div>
+        <div style="font-size:14px;color:#e0e0e0;font-weight:600;margin-bottom:4px">Liquidity &amp; Volume</div>
+        <div style="font-size:11px;color:#5a5a62;line-height:1.7">DexScreener &mdash; real-time price, market cap, liquidity depth across all pairs, granular tx counts (5m / 1h / 6h / 24h).</div>
+      </div>
+    </div>
+
+    <div style="background:#0f0f11;border:1px solid #1a1a1d;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:11px;color:var(--c);font-weight:700;white-space:nowrap;padding-top:2px">L5</div>
+      <div>
+        <div style="font-size:14px;color:#e0e0e0;font-weight:600;margin-bottom:4px">Holder Distribution</div>
+        <div style="font-size:11px;color:#5a5a62;line-height:1.7">Solscan &mdash; unique holder count, top-wallet concentration analysis, token creation timestamp (age signal), independent 24h volume cross-validation.</div>
+      </div>
+    </div>
+
+    <div style="background:#0f0f11;border:1px solid #1a1a1d;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:11px;color:var(--c);font-weight:700;white-space:nowrap;padding-top:2px">L6</div>
+      <div>
+        <div style="font-size:14px;color:#e0e0e0;font-weight:600;margin-bottom:4px">Chart Intelligence</div>
+        <div style="font-size:11px;color:#5a5a62;line-height:1.7">GeckoTerminal &mdash; OHLCV candles across 5m / 1h / 6h / 24h windows. Detects parabolic pumps, blow-off tops, wash trading, abnormal B/S ratios.</div>
+      </div>
+    </div>
+
+    <div style="background:#0f0f11;border:1px solid #1a1a1d;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:11px;color:var(--c);font-weight:700;white-space:nowrap;padding-top:2px">L7</div>
+      <div>
+        <div style="font-size:14px;color:#e0e0e0;font-weight:600;margin-bottom:4px">Identity Validation</div>
+        <div style="font-size:11px;color:#5a5a62;line-height:1.7">Internal Registry &mdash; exact name clones, Cyrillic/unicode spoofing, zero-width character tricks, ticker symbol collisions against curated project DB.</div>
+      </div>
+    </div>
+
+    <div style="background:#0f0f11;border:1px solid #1a1a1d;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-size:11px;color:#f5d000;font-weight:700;white-space:nowrap;padding-top:2px">L8</div>
+      <div>
+        <div style="font-size:14px;color:#f5d000;font-weight:600;margin-bottom:4px">Safe Gate Override</div>
+        <div style="font-size:11px;color:#5a5a62;line-height:1.7">Hardcoded logic &mdash; score &ge; 850 pts required + zero critical flags outstanding. Overrides numeric score. No exceptions, no bypass.</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 </div>
 
 <div class="stat-strip">
-  <div class="st"><strong>5</strong><span>Data Sources</span></div>
-  <div class="st"><strong>6</strong><span>Analysis Layers</span></div>
+  <div class="st"><strong>7</strong><span>Data Sources</span></div>
+  <div class="st"><strong>8</strong><span>Analysis Layers</span></div>
   <div class="st"><strong>1000</strong><span>Max Score</span></div>
   <div class="st"><strong>&lt;2s</strong><span>Scan Time</span></div>
 </div>
