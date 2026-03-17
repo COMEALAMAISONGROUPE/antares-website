@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Antares Features — Every Protection, Explained</title>
-<meta name="description" content="All Antares features: Safe Gate, real-time scanning, 5 sources, Chart Intel, Identity Check, Universal detection — and what you see in your browser." />
+<meta name="description" content="All Antares features: Safe Gate, real-time scanning, 7 sources, Chart Intel, Identity Check, Universal detection — and what you see in your browser." />
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -105,8 +105,8 @@ footer span{color:var(--c)}
 <div class="sub">From address detection to verdict &mdash; the full pipeline</div>
 <div class="flow">
   <div class="flow-step"><div class="flow-n">01</div><div class="flow-label">Detect</div><div class="flow-desc">Content script watches every page for Solana contract addresses as you browse.</div></div>
-  <div class="flow-step"><div class="flow-n">02</div><div class="flow-label">Query</div><div class="flow-desc">5 sources queried in parallel via the Antares API on Vercel Edge.</div></div>
-  <div class="flow-step"><div class="flow-n">03</div><div class="flow-label">Analyse</div><div class="flow-desc">6 layers process the data: contract, on-chain, liquidity, holders, identity, chart.</div></div>
+  <div class="flow-step"><div class="flow-n">02</div><div class="flow-label">Query</div><div class="flow-desc">7 sources queried in parallel via the Antares API on Vercel Edge.</div></div>
+  <div class="flow-step"><div class="flow-n">03</div><div class="flow-label">Analyse</div><div class="flow-desc">8 layers process the data: contract, on-chain, liquidity, holders, identity, chart.</div></div>
   <div class="flow-step"><div class="flow-n">04</div><div class="flow-label">Score</div><div class="flow-desc">A weighted 0&ndash;1000 score is computed. Safe Gate checks run in parallel.</div></div>
   <div class="flow-step"><div class="flow-n">05</div><div class="flow-label">Display</div><div class="flow-desc">A floating overlay appears in your browser with the verdict and full detail.</div></div>
 </div>
@@ -116,7 +116,7 @@ footer span{color:var(--c)}
   <div class="gate-full-title">&#128274; Safe Gate</div>
   <div class="gate-full-sub">Score-independent hard block &mdash; cannot be bypassed</div>
   <div class="gate-full-body">
-    <div class="gate-full-desc">The Safe Gate is a hardcoded set of non-negotiable checks that run alongside the scoring system. A token can score 950/1000 and still be fully blocked if a Safe Gate condition is met. This prevents edge cases where a manipulated token looks statistically safe but contains a critical trap. It is the last line of defense &mdash; and the most important one.</div>
+    <div class="gate-full-desc">The Safe Gate is a hardcoded set of non-negotiable checks that run alongside the scoring system. A token can score 950/1000 and still be fully blocked if a Safe Gate condition is met. This prevents edge cases where a manipulated token looks statistically safe but contains a critical trap. It is the last line of defense &mdash; and the most important one. As of v6.0.0, the SAFE verdict additionally requires a score of &ge;&thinsp;850 pts with zero outstanding critical flags — conditional override logic closes all previously known bypass edge cases.</div>
     <div class="gate-flags">
       <div class="gf">Honeypot / sell disabled (GoPlus)</div>
       <div class="gf">Mint authority active (Helius RPC)</div>
@@ -138,7 +138,7 @@ footer span{color:var(--c)}
     <div class="feat-main">
       <h2>Real-Time Scanning</h2>
       <div class="tag-row"><span class="ftag">PASSIVE</span><span class="ftag">AUTOMATIC</span><span class="ftag">&lt;2s</span></div>
-      <p>Antares runs in the background. You never paste a contract address manually. Every time a Solana address appears on a page you visit &mdash; Twitter, Telegram web, Discord, any DEX &mdash; the scan fires automatically and the overlay appears in under 2 seconds.</p>
+      <p>Antares runs in the background. You never paste a contract address manually. Every time a Solana address appears on a page you visit &mdash; Twitter, Telegram web, Discord, any DEX &mdash; the scan fires automatically and the overlay appears in under 2 seconds. The Chrome extension icon simultaneously updates with a <strong style="color:#00e5b0">✓</strong>, <strong style="color:#f5d000">!</strong>, or <strong style="color:#ff2244">✗</strong> badge — the verdict is visible at a glance without opening the popup. If a previously scanned token&rsquo;s risk level escalates, Antares fires a Chrome notification automatically.</p>
     </div>
     <div class="feat-detail">
       <div class="dl">How it works</div>
@@ -146,7 +146,7 @@ footer span{color:var(--c)}
         <li>Content script watches DOM mutations and URL changes</li>
         <li>Solana address regex matches base58 strings of 32&ndash;44 chars</li>
         <li>Debounced to avoid duplicate scans on the same address</li>
-        <li>All 5 API calls run in parallel via Promise.allSettled</li>
+        <li>All 7 API calls run in parallel via Promise.allSettled</li>
         <li>Overlay injects into page DOM with isolated CSS</li>
       </ul>
     </div>
@@ -155,9 +155,9 @@ footer span{color:var(--c)}
   <div class="feat-block">
     <div class="feat-icon">&#128279;</div>
     <div class="feat-main">
-      <h2>5 Data Sources</h2>
-      <div class="tag-row"><span class="ftag">DEXSCREENER</span><span class="ftag">RUGCHECK</span><span class="ftag">GOPLUS</span><span class="ftag">HELIUS</span><span class="ftag">SOLSCAN</span></div>
-      <p>No single source is trusted alone. Antares queries 5 independent APIs simultaneously and cross-validates results. Each source covers a different attack surface. If sources conflict, the most conservative verdict wins. Full details on the <a href="/sources" style="color:var(--c);text-decoration:none">Sources page</a>.</p>
+      <h2>7 Data Sources</h2>
+      <div class="tag-row"><span class="ftag">DEXSCREENER</span><span class="ftag">RUGCHECK</span><span class="ftag">GOPLUS</span><span class="ftag">HELIUS</span><span class="ftag">SOLSCAN</span><span class="ftag">GECKOTERMINAL</span><span class="ftag">IDENTITY REGISTRY</span></div>
+      <p>No single source is trusted alone. Antares queries 7 independent APIs simultaneously and cross-validates results. Each source covers a different attack surface. If sources conflict, the most conservative verdict wins. Full details on the <a href="/sources" style="color:var(--c);text-decoration:none">Sources page</a>. A burst rate limiter (5&thinsp;req&thinsp;/&thinsp;10s) queues scans gracefully during high-frequency browsing without dropping any result.</p>
     </div>
     <div class="feat-detail">
       <div class="dl">Source roles</div>
@@ -167,6 +167,8 @@ footer span{color:var(--c)}
         <li>GoPlus &mdash; honeypot, proxy, blacklist, sell restrictions</li>
         <li>Helius RPC &mdash; on-chain mint/freeze authority, supply</li>
         <li>Solscan &mdash; holder count, concentration, token age</li>
+        <li>GeckoTerminal &mdash; OHLCV candles 5m / 1h / 6h / 24h (Chart Intelligence)</li>
+        <li>Internal Registry &mdash; identity validation, copycat &amp; unicode spoofing detection</li>
       </ul>
     </div>
   </div>
@@ -176,7 +178,7 @@ footer span{color:var(--c)}
     <div class="feat-main">
       <h2>Chart Intelligence</h2>
       <div class="tag-row"><span class="ftag">OHLCV</span><span class="ftag">PUMP DETECTION</span><span class="ftag">WASH TRADING</span></div>
-      <p>Most rug detection tools ignore price action. Antares analyses OHLCV candle data from DexScreener across four time windows (5m, 1h, 6h, 24h) to detect manipulation patterns that precede a rug: parabolic pumps, blow-off tops, and wash trading designed to fake volume.</p>
+      <p>Most rug detection tools ignore price action. Antares analyses OHLCV candle data from GeckoTerminal across four time windows (5m, 1h, 6h, 24h) to detect manipulation patterns that precede a rug: parabolic pumps, blow-off tops, and wash trading designed to fake volume.</p>
     </div>
     <div class="feat-detail">
       <div class="dl">Detected patterns</div>
@@ -236,27 +238,29 @@ footer span{color:var(--c)}
 <div class="verdict-row">
   <div class="vd" style="background:#1a0809;border-color:#ff2244">
     <div class="vd-label" style="color:#ff2244">RUG PULL</div>
-    <div class="vd-range" style="color:#ff2244">0 &ndash; 99</div>
+    <div class="vd-range" style="color:#ff2244">&lt; 350</div>
     <div class="vd-desc">Safe Gate triggered or catastrophic score. Do not interact with this token.</div>
   </div>
   <div class="vd" style="background:#1a0e0e;border-color:#ff5f5f">
     <div class="vd-label" style="color:#ff5f5f">DANGER</div>
-    <div class="vd-range" style="color:#ff5f5f">100 &ndash; 399</div>
+    <div class="vd-range" style="color:#ff5f5f">350 &ndash; 599</div>
     <div class="vd-desc">High risk. Multiple critical flags. Strong indicators of manipulation.</div>
   </div>
   <div class="vd" style="background:#1a180a;border-color:#f5d000">
     <div class="vd-label" style="color:#f5d000">CAUTION</div>
-    <div class="vd-range" style="color:#f5d000">400 &ndash; 699</div>
+    <div class="vd-range" style="color:#f5d000">600 &ndash; 849</div>
     <div class="vd-desc">Moderate risk. Some flags raised. Proceed with reduced position and caution.</div>
   </div>
   <div class="vd" style="background:#0d1a16;border-color:#00e5b0">
     <div class="vd-label" style="color:#00e5b0">SAFE</div>
-    <div class="vd-range" style="color:#00e5b0">700 &ndash; 1000</div>
+    <div class="vd-range" style="color:#00e5b0">850 &ndash; 1000</div>
     <div class="vd-desc">All critical checks pass. LP secured. No manipulation patterns detected.</div>
   </div>
 </div>
 
-<footer>Antares v4.5.3 &mdash; <span>No mercy for scammers.</span></footer>
+
+
+<footer>Antares v6.0.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 <script>
 ;(function(){

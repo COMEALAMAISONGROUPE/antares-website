@@ -84,7 +84,20 @@ footer span{color:var(--c)}
 <div class="eng-hero">
   <div class="eyebrow">Scoring Engine</div>
   <h1 class="glitch" data-text="HOW THE SCORE IS BUILT">HOW THE <span>SCORE</span> IS BUILT</h1>
-  <p>Six independent analysis layers each contribute weighted deductions to a 0&ndash;1000 base score. A hardcoded Safe Gate overrides everything — critical flags block the token regardless of numeric score. This page covers the technical scoring logic. For what you see in the browser, visit <a href="/features" style="color:var(--c);text-decoration:none">Features</a>.</p>
+  <p>Eight independent analysis layers each contribute weighted deductions to a 0&ndash;1000 base score. A hardcoded Safe Gate overrides everything — critical flags block the token regardless of numeric score. This page covers the technical scoring logic. For what you see in the browser, visit <a href="/features" style="color:var(--c);text-decoration:none">Features</a>.</p>
+<div style="margin:40px 0 50px;border-left:2px solid var(--c);padding-left:16px">
+  <div style="font-size:10px;color:var(--c);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px">Analysis Layers &amp; Data Sources</div>
+  <ul style="font-size:12px;color:#5a5a62;line-height:2.1;list-style:none">
+    <li><span style="color:#e0e0e0;font-weight:600">L1 — Contract Security</span> &mdash; GoPlus (honeypot sim, proxy, blacklist, sell restrictions)</li>
+    <li><span style="color:#e0e0e0;font-weight:600">L2 — LP &amp; Metadata Audit</span> &mdash; RugCheck (LP burn/lock, mutable metadata, bundler detection)</li>
+    <li><span style="color:#e0e0e0;font-weight:600">L3 — On-Chain Authority</span> &mdash; Helius RPC (mint authority, freeze authority, supply, token accounts)</li>
+    <li><span style="color:#e0e0e0;font-weight:600">L4 — Liquidity &amp; Volume</span> &mdash; DexScreener (price, market cap, liquidity depth, tx counts 5m/1h/6h/24h)</li>
+    <li><span style="color:#e0e0e0;font-weight:600">L5 — Holder Distribution</span> &mdash; Solscan (holder count, top wallet concentration, token age, volume x-val)</li>
+    <li><span style="color:#e0e0e0;font-weight:600">L6 — Chart Intelligence</span> &mdash; GeckoTerminal (OHLCV candles 5m / 1h / 6h / 24h — pump, blow-off top, wash trading)</li>
+    <li><span style="color:#e0e0e0;font-weight:600">L7 — Identity Validation</span> &mdash; Internal Registry (exact clones, unicode spoofing, zero-width chars, ticker collisions)</li>
+    <li><span style="color:#e0e0e0;font-weight:600">L8 — Safe Gate Override</span> &mdash; Hardcoded logic (score &ge; 850 pts + zero critical flags — no exceptions)</li>
+  </ul>
+</div>
 </div>
 
 <div class="stat-strip">
@@ -97,12 +110,14 @@ footer span{color:var(--c)}
 <div class="sh2 glitch" data-text="Analysis Layers">Analysis Layers</div>
 <div class="sub">6 independent checks — each weighted in the final score</div>
 <div class="layers-full">
-  <div class="lc"><div class="lc-id">L1</div><div class="lc-name">Contract Security</div><div class="lc-src">GoPlus &middot; RugCheck</div><div class="lc-desc">Checks for honeypot logic, sell restrictions, proxy contracts, blacklist functions, and freeze authorities embedded in the token contract. A single critical flag here activates the Safe Gate.</div><div class="lc-pts">Up to &minus;400 pts on critical fail &middot; Safe Gate trigger</div></div>
+  <div class="lc"><div class="lc-id">L1</div><div class="lc-name">Contract Security</div><div class="lc-src">GoPlus</div><div class="lc-desc">Checks for honeypot logic, sell restrictions, proxy contracts, blacklist functions, and freeze authorities embedded in the token contract. A single critical flag here activates the Safe Gate.</div><div class="lc-pts">Up to &minus;400 pts on critical fail &middot; Safe Gate trigger</div></div>
   <div class="lc"><div class="lc-id">L2</div><div class="lc-name">On-Chain Data</div><div class="lc-src">RugCheck &middot; Helius RPC</div><div class="lc-desc">Verifies mint authority (can supply be inflated?), freeze authority (can wallets be locked?), metadata mutability, and token creation context directly from the Solana blockchain.</div><div class="lc-pts">&minus;200 pts mint auth &middot; &minus;150 pts freeze auth &middot; &minus;80 pts mutable metadata</div></div>
   <div class="lc"><div class="lc-id">L3</div><div class="lc-name">Liquidity &amp; Pool</div><div class="lc-src">DexScreener</div><div class="lc-desc">Evaluates total liquidity depth, liquidity-to-market-cap ratio, LP burn/lock status, and number of active trading pairs. Low liquidity makes exit manipulation trivially easy.</div><div class="lc-pts">Graduated &minus;50 to &minus;200 pts based on liquidity depth</div></div>
   <div class="lc"><div class="lc-id">L4</div><div class="lc-name">Holder Distribution</div><div class="lc-src">RugCheck &middot; Solscan</div><div class="lc-desc">Analyzes top-10 wallet concentration, developer wallet size, and holder count. High concentration in few wallets signals coordinated dump risk.</div><div class="lc-pts">&minus;100 pts if top-10 &gt;60% &middot; &minus;60 pts if dev wallet &gt;10%</div></div>
   <div class="lc"><div class="lc-id">L5</div><div class="lc-name">Identity Risk</div><div class="lc-src">DexScreener Metadata</div><div class="lc-desc">Cross-references token name, symbol, and branding against known tokens and copycat patterns. Detects impersonation of established projects like WIF, BONK, PEPE, etc.</div><div class="lc-pts">&minus;120 pts copycat detected &middot; &minus;40 pts no social presence</div></div>
-  <div class="lc"><div class="lc-id">L6</div><div class="lc-name">Chart Intelligence</div><div class="lc-src">DexScreener OHLCV</div><div class="lc-desc">Detects parabolic pump-and-dump patterns, blow-off tops (sudden spike + crash), wash trading (artificial volume), and abnormal buy/sell ratios across 5m, 1h, 6h, and 24h windows.</div><div class="lc-pts">&minus;150 pts blow-off top &middot; &minus;80 pts wash trading detected</div></div>
+  <div class="lc"><div class="lc-id">L6</div><div class="lc-name">Chart Intelligence</div><div class="lc-src">GeckoTerminal OHLCV</div><div class="lc-desc">Detects parabolic pump-and-dump patterns, blow-off tops (sudden spike + crash), wash trading (artificial volume), and abnormal buy/sell ratios across 5m, 1h, 6h, and 24h windows.</div><div class="lc-pts">&minus;150 pts blow-off top &middot; &minus;80 pts wash trading detected</div></div>
+  <div class="lc"><div class="lc-id">L7</div><div class="lc-name">Identity Validation</div><div class="lc-src">Internal registry</div><div class="lc-desc">Cross-references every token name and ticker against a database of known legitimate projects. Detects exact matches, unicode spoofing (Cyrillic look-alikes), zero-width character tricks, and symbol collisions used by copycat tokens to impersonate established projects.</div><div class="lc-pts">Identity flag &rarr; Safe Gate trigger</div></div>
+  <div class="lc"><div class="lc-id">L8</div><div class="lc-name">Cross-Validation</div><div class="lc-src">All 7 sources aggregated</div><div class="lc-desc">Reconciles all source outputs and resolves conflicts. When independent sources disagree, the most conservative (highest-risk) interpretation wins. Detects implausible combinations (e.g. high score + forceRug flag) and applies override logic. Final arbiter before the verdict is issued.</div><div class="lc-pts">Override &amp; conflict resolution layer</div></div>
 </div>
 
 <div class="gate-block">
@@ -123,12 +138,12 @@ footer span{color:var(--c)}
 <div class="sub">How 0&ndash;1000 points are distributed</div>
 <div class="score-grid">
   <div class="sg"><div class="sg-title">Base Score</div><div class="sg-body">Every token starts at <strong>1000 points</strong>. Each risk flag deducts a weighted amount. Positive signals (LP burned, no mint authority, strong liquidity) can partially restore points. The final score reflects net confidence after all deductions.</div></div>
-  <div class="sg"><div class="sg-title">Verdict Thresholds</div><div class="sg-body"><strong style="color:#00e5b0">SAFE</strong> &mdash; 700&ndash;1000 pts<br><br><strong style="color:#f5d000">CAUTION</strong> &mdash; 400&ndash;699 pts<br><br><strong style="color:#ff5f5f">DANGER</strong> &mdash; 100&ndash;399 pts<br><br><strong style="color:#ff2244">RUG PULL</strong> &mdash; 0&ndash;99 pts or Safe Gate triggered</div></div>
-  <div class="sg"><div class="sg-title">Confidence Score</div><div class="sg-body">A separate <strong>0&ndash;100% confidence</strong> metric reflects data completeness. If only 2 of 5 sources return data, confidence is lower. High confidence means the verdict is based on full cross-source validation.</div></div>
-  <div class="sg"><div class="sg-title">Scan Speed</div><div class="sg-body">All 5 sources are queried <strong>in parallel</strong> via Promise.allSettled. Failed sources are gracefully skipped without blocking the scan. Average scan completes in <strong>under 2 seconds</strong> for indexed tokens.</div></div>
+  <div class="sg"><div class="sg-title">Verdict Thresholds</div><div class="sg-body"><strong style="color:#00e5b0">SAFE</strong> &mdash; 850&ndash;1000 pts<br><br><strong style="color:#f5d000">CAUTION</strong> &mdash; 600&ndash;849 pts<br><br><strong style="color:#ff5f5f">DANGER</strong> &mdash; 350&ndash;599 pts<br><br><strong style="color:#ff2244">RUG PULL</strong> &mdash; &lt; 350 pts or Safe Gate triggered</div></div>
+  <div class="sg"><div class="sg-title">Confidence Score</div><div class="sg-body">A separate <strong>0&ndash;100% confidence</strong> metric reflects data completeness. If only 2 of 7 sources return data, confidence is lower. High confidence means the verdict is based on full cross-source validation.</div></div>
+  <div class="sg"><div class="sg-title">Scan Speed</div><div class="sg-body">All 7 sources are queried <strong>in parallel</strong> via Promise.allSettled. Failed sources are gracefully skipped without blocking the scan. Average scan completes in <strong>under 2 seconds</strong> for indexed tokens.</div></div>
 </div>
 
-<footer>Antares v4.5.3 &mdash; <span>No mercy for scammers.</span></footer>
+<footer>Antares v6.0.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 
 <script>

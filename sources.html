@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Antares Data Sources — 5 APIs, One Verdict</title>
-<meta name="description" content="Deep-dive into all 5 Antares data sources: DexScreener, RugCheck, GoPlus, Helius RPC, Solscan. What each provides and why it matters." />
+<title>Antares Data Sources — 7 APIs. One Verdict</title>
+<meta name="description" content="Deep-dive into all 7 Antares data sources: DexScreener, RugCheck, GoPlus, Helius RPC, Solscan, GeckoTerminal, Identity Registry. What each provides and why it matters." />
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -85,12 +85,12 @@ footer span{color:var(--c)}
 
 <div class="eng-hero">
   <div class="eyebrow">Data Sources</div>
-  <h1 class="glitch" data-text="5 APIS. ONE VERDICT.">5 APIS. <span>ONE VERDICT.</span></h1>
-  <p>Antares never trusts a single source. Five independent APIs are queried in parallel on every scan. Each covers a distinct attack surface. Results are cross-validated — when sources conflict, the most conservative verdict wins. A failed source is skipped gracefully without blocking the scan.</p>
+  <h1 class="glitch" data-text="7 APIS. ONE VERDICT.">7 APIS. <span>ONE VERDICT.</span></h1>
+  <p>Antares never trusts a single source. Seven independent APIs are queried in parallel on every scan. Each covers a distinct attack surface. Results are cross-validated — when sources conflict, the most conservative verdict wins. A failed source is skipped gracefully without blocking the scan.</p>
 </div>
 
 <div class="sh2 glitch" data-text="Data Sources">Data Sources</div>
-<div class="sub">5 APIs — each covering a distinct risk surface</div>
+<div class="sub">7 APIs — each covering a distinct risk surface</div>
 <div class="src-list">
 
   <div class="src-big">
@@ -103,7 +103,7 @@ footer span{color:var(--c)}
       </div>
       <div class="src-mid">
         <div class="src-mid-title">Why it matters</div>
-        <p>DexScreener is the primary market data layer. It provides the token's real-time price, market cap, liquidity depth across all active pairs, and granular transaction counts across 5m, 1h, 6h, and 24h windows. The OHLCV candle data powers the Chart Intelligence layer: pump detection, blow-off top analysis, and wash trading identification all depend on this feed. A token with no DexScreener pair is likely not yet indexed or is too illiquid to trade safely.</p>
+        <p>DexScreener is the primary market data layer. It provides the token's real-time price, market cap, liquidity depth across all active pairs, and granular transaction counts across 5m, 1h, 6h, and 24h windows. Real-time price action and transaction counts across 5m, 1h, 6h, and 24h windows feed into liquidity and volume scoring. OHLCV candle data is now sourced from GeckoTerminal for Chart Intelligence. A token with no DexScreener pair is likely not yet indexed or is too illiquid to trade safely.</p>
       </div>
       <div class="src-right">
         <div class="src-right-title">Fields used</div>
@@ -220,6 +220,52 @@ footer span{color:var(--c)}
       </div>
     </div>
   </div>
+  <div class="src-big">
+    <div class="src-big-inner">
+      <div class="src-left">
+        <div class="src-num">06</div>
+        <div class="src-name-big">GeckoTerminal</div>
+        <div class="src-role-big">OHLCV Candles &middot; Chart Intelligence</div>
+        <div class="src-tags"><span class="stag">OHLCV</span><span class="stag">CANDLES</span><span class="stag">CHART</span></div>
+      </div>
+      <div class="src-mid">
+        <div class="src-mid-title">Why it matters</div>
+        <p>GeckoTerminal is the OHLCV candle data provider for the Chart Intelligence layer (L6). Since Phase 1, it replaces DexScreener as the source for raw price candles across 5m, 1h, 6h, and 24h windows. Pump-and-dump detection, blow-off top analysis, and wash trading identification all depend on this feed. Without valid candle data, L6 scoring is skipped gracefully rather than blocking the scan.</p>
+      </div>
+      <div class="src-right">
+        <div class="src-right-title">Fields used</div>
+        <div class="src-fields">
+          <div class="sf"><span class="sf-name">ohlcv[].open / close</span><span class="sf-use">Pump detection L6</span></div>
+          <div class="sf"><span class="sf-name">ohlcv[].high / low</span><span class="sf-use">Blow-off top L6</span></div>
+          <div class="sf"><span class="sf-name">ohlcv[].volume</span><span class="sf-use">Wash trading L6</span></div>
+          <div class="sf"><span class="sf-name">buy/sell ratio</span><span class="sf-use">Manipulation flag</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="src-big">
+    <div class="src-big-inner">
+      <div class="src-left">
+        <div class="src-num">07</div>
+        <div class="src-name-big">Identity Registry</div>
+        <div class="src-role-big">Token Identity &middot; Copycat Detection</div>
+        <div class="src-tags"><span class="stag">IDENTITY</span><span class="stag">SPOOFING</span><span class="stag">COPYCAT</span></div>
+      </div>
+      <div class="src-mid">
+        <div class="src-mid-title">Why it matters</div>
+        <p>The internal identity registry powers the Identity Validation layer (L7). It cross-references every token name and ticker symbol against a curated database of known legitimate projects. It catches exact name clones, unicode spoofing attacks (Cyrillic characters that look identical to Latin ones), zero-width character tricks, and ticker symbol collisions &mdash; all common tactics used by copycat tokens to steal a project&rsquo;s reputation.</p>
+      </div>
+      <div class="src-right">
+        <div class="src-right-title">Fields used</div>
+        <div class="src-fields">
+          <div class="sf"><span class="sf-name">token.name</span><span class="sf-use">Name match L7</span></div>
+          <div class="sf"><span class="sf-name">token.symbol</span><span class="sf-use">Ticker collision L7</span></div>
+          <div class="sf"><span class="sf-name">unicode normalisation</span><span class="sf-use">Spoofing detection</span></div>
+          <div class="sf"><span class="sf-name">identity flag</span><span class="sf-use">Safe Gate trigger</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -233,7 +279,7 @@ footer span{color:var(--c)}
     </div>
     <div class="cg">
       <div class="cg-title">Graceful degradation</div>
-      <div class="cg-body">If a source times out or returns an error, it is skipped via Promise.allSettled. The scan continues with the remaining sources. The confidence score drops proportionally: missing 2 of 5 sources reduces confidence to 60%. The verdict still fires, but the user sees reduced confidence.</div>
+      <div class="cg-body">If a source times out or returns an error, it is skipped via Promise.allSettled. The scan continues with the remaining sources. The confidence score drops proportionally: missing 2 of 7 sources reduces confidence to 71%. The verdict still fires, but the user sees reduced confidence.</div>
     </div>
     <div class="cg">
       <div class="cg-title">Safe Gate cannot be skipped</div>
@@ -242,7 +288,7 @@ footer span{color:var(--c)}
   </div>
 </div>
 
-<footer>Antares v4.5.3 &mdash; <span>No mercy for scammers.</span></footer>
+<footer>Antares v6.0.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 <script>
 ;(function(){
