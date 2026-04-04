@@ -83,27 +83,27 @@ footer span{color:var(--c)}
 <nav>
   <a href="/" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="/features">Features</a><a href="/engine" class="active">Engine</a><a href="/sources">Sources</a></div>
-  <div class="tag">v6.0.0 // SOLANA</div>
+  <div class="tag">v1.1.0 // SOLANA</div>
 </nav>
 
 <section class="page-hero">
   <div class="eyebrow reveal">Scoring Engine</div>
-  <h1 class="reveal delay-1"><span class="glitch" data-text="8 LAYERS.">8 LAYERS.</span><br><span class="accent glitch" data-text="1000 POINTS.">1000 POINTS.</span></h1>
-  <p class="sub reveal delay-2">Eight independent analysis layers each contribute weighted deductions to a 0&ndash;1000 base score. A hardcoded Safe Gate overrides everything &mdash; critical flags block the token regardless of numeric score.</p>
+  <h1 class="reveal delay-1"><span class="glitch" data-text="6 LAYERS.">6 LAYERS.</span><br><span class="accent glitch" data-text="1000 POINTS.">1000 POINTS.</span></h1>
+  <p class="sub reveal delay-2">Six independent analysis layers each contribute weighted deductions to a 0&ndash;1000 base score. A hardcoded Safe Gate overrides everything &mdash; critical flags block the token regardless of numeric score.</p>
 </section>
 
 <div class="section-label reveal"><span>Score Ranges</span></div>
 <div class="score-visual reveal">
-  <div class="sv-item"><div class="sv-val green">800+</div><div class="sv-label">Safe</div></div>
-  <div class="sv-item"><div class="sv-val yellow">500&ndash;799</div><div class="sv-label">Caution</div></div>
-  <div class="sv-item"><div class="sv-val orange">200&ndash;499</div><div class="sv-label">Danger</div></div>
   <div class="sv-item"><div class="sv-val red">&lt;200</div><div class="sv-label">Rug Pull</div></div>
+  <div class="sv-item"><div class="sv-val orange">200&ndash;499</div><div class="sv-label">Danger</div></div>
+  <div class="sv-item"><div class="sv-val yellow">500&ndash;799</div><div class="sv-label">Caution</div></div>
+  <div class="sv-item"><div class="sv-val green">800+</div><div class="sv-label">Safe</div></div>
 </div>
 
 <div class="section-label reveal"><span>Analysis Layers</span></div>
 <div class="layer-list">
   <div class="layer reveal delay-1"><div class="layer-num">L1</div><div class="layer-body"><h3>Liquidity Analysis</h3><span class="tag">DexScreener</span><p>Evaluates total liquidity depth across all active pairs. Near-zero liquidity is a Safe Gate trigger. Thresholds scale with market cap to avoid false positives on micro-caps.</p></div></div>
-  <div class="layer reveal delay-2"><div class="layer-num">L2</div><div class="layer-body"><h3>Contract Security</h3><span class="tag">GoPlus</span><p>Simulated buy/sell transaction to detect honeypots. Also checks for proxy contracts, blacklist functions, transfer restrictions, and hidden fees. Honeypot = instant Safe Gate.</p></div></div>
+  <div class="layer reveal delay-2"><div class="layer-num">L2</div><div class="layer-body"><h3>Contract Security</h3><span class="tag">GoPlus</span><p>Contract security analysis: proxy contracts, blacklist functions, transfer restrictions, hidden fees, and sell restrictions. Any critical finding triggers Safe Gate instantly.</p></div></div>
   <div class="layer reveal delay-3"><div class="layer-num">L3</div><div class="layer-body"><h3>Authority Check</h3><span class="tag">Helius + RugCheck</span><p>Verifies mint authority and freeze authority directly on-chain. Active mint means infinite token printing. Active freeze means your wallet can be locked. Both are Safe Gate triggers.</p></div></div>
   <div class="layer reveal delay-4"><div class="layer-num">L4</div><div class="layer-body"><h3>LP Status</h3><span class="tag">RugCheck</span><p>Checks whether LP tokens are burned (permanent), locked (time-limited), or still held by the deployer (rug risk). Burned LP is the safest outcome. Unlocked LP with concentrated ownership deducts heavily.</p></div></div>
   <div class="layer reveal delay-5"><div class="layer-num">L5</div><div class="layer-body"><h3>Holder Distribution</h3><span class="tag">Solscan</span><p>Analyses top wallet concentration and holder count. Top 10 wallets holding &gt;50% supply triggers major deductions. Combined with token age, this catches pre-rug setups.</p></div></div>
@@ -116,7 +116,7 @@ footer span{color:var(--c)}
   <h3 class="glitch" data-text="SAFE GATE">SAFE GATE</h3>
   <p>The Safe Gate is a hardcoded override that fires before the numeric score is even calculated. If any of these conditions are met, the token is blocked immediately. No score, no appeal, no override.</p>
   <div class="safegate-triggers">
-    <span>&#10007; Honeypot detected</span>
+    <span>&#10007; Bundler detected</span>
     <span>&#10007; Mint authority active</span>
     <span>&#10007; Freeze authority active</span>
     <span>&#10007; Liquidity &lt; $500</span>
@@ -124,7 +124,7 @@ footer span{color:var(--c)}
   </div>
 </div>
 
-<footer>Antares v6.0.0 &mdash; <span>No mercy for scammers.</span></footer>
+<footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 <script>
 ;(function(){
