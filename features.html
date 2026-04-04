@@ -78,7 +78,7 @@ footer span{color:var(--c)}
 <nav>
   <a href="/" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="/features" class="active">Features</a><a href="/engine">Engine</a><a href="/sources">Sources</a></div>
-  <div class="tag">v6.0.0 // SOLANA</div>
+  <div class="tag">v1.1.0 // SOLANA</div>
 </nav>
 
 <section class="page-hero">
@@ -110,9 +110,9 @@ footer span{color:var(--c)}
   </div>
   <div class="feat-card reveal delay-4">
     <div class="icon">&#129518;</div>
-    <h3>Identity Check</h3>
-    <div class="benefit">Never fall for a fake.</div>
-    <p>Cross-references every token name and ticker against known projects. Catches exact matches, unicode spoofing (e.g. Cyrillic vs Latin), and zero-width character tricks used by copycat tokens.</p>
+    <h3>Wash Trading Detection</h3>
+    <div class="benefit">Fake volume exposed instantly.</div>
+    <p>Cross-validates volume from multiple sources to flag artificial activity. Abnormal volume/liquidity ratios, coordinated bot transactions, and pump patterns are detected and penalized.</p>
   </div>
   <div class="feat-card reveal delay-5">
     <div class="icon">&#127760;</div>
@@ -123,8 +123,8 @@ footer span{color:var(--c)}
   <div class="feat-card reveal delay-6">
     <div class="icon">&#9889;</div>
     <h3>Safe Gate</h3>
-    <div class="benefit">Hardcoded kill switch.</div>
-    <p>One critical flag &mdash; honeypot, active mint, active freeze, or near-zero liquidity &mdash; and the token is blocked. No override, no exceptions. Safe Gate fires before you can click buy.</p>
+    <div class="benefit">Hardcoded kill switch for Solana scams.</div>
+    <p>One critical flag &mdash; active mint, active freeze, bundler detected, sniper activity, or near-zero liquidity &mdash; and the token is blocked. No override. Safe Gate fires before you can click buy.</p>
   </div>
 </div>
 
@@ -144,7 +144,7 @@ footer span{color:var(--c)}
   </div>
 </section>
 
-<footer>Antares v6.0.0 &mdash; <span>No mercy for scammers.</span></footer>
+<footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 <script>
 ;(function(){
