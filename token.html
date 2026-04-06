@@ -13,6 +13,24 @@ body{background:#0f0f11;color:#d0d0d0;font-family:'IBM Plex Mono',monospace;over
   background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
 @keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
 
+/* Cached banner — appears when data comes from extension cache (hash payload) */
+#cached-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:998;
+  background:rgba(10,10,12,.92);border-top:1px solid rgba(0,229,176,.12);
+  padding:8px 24px;display:none;
+  font-size:9px;color:#3a7060;letter-spacing:.15em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:space-between;
+}
+#cached-banner.visible{display:flex}
+#cached-banner span{color:rgba(0,229,176,.5)}
+#cached-banner button{
+  background:none;border:1px solid rgba(0,229,176,.18);
+  color:rgba(0,229,176,.45);font-size:8px;letter-spacing:.1em;
+  padding:3px 8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  text-transform:uppercase;transition:.2s;
+}
+#cached-banner button:hover{color:#00e5b0;border-color:#00e5b0}
+
 .shell{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:40px 24px}
 
 nav{display:flex;justify-content:space-between;align-items:center;
@@ -188,6 +206,13 @@ footer span{color:var(--c)}
 <body>
 <div class="stripe"></div>
 <canvas id="particles-canvas"></canvas>
+
+<!-- Cached banner: shown when page was fed pre-fetched data from the extension -->
+<div id="cached-banner">
+  <span>&#x26A1; Instant result from Antares extension cache</span>
+  <button id="force-refresh-btn">Refresh live data</button>
+</div>
+
 <div class="shell">
 
 <nav>
@@ -290,14 +315,71 @@ function fmtPct(n){
 }
 function pctClass(n){return n>0?"up":n<0?"dn":"flat"}
 
+/**
+ * Safely decode a base64url-encoded JSON payload from the URL hash.
+ * The extension passes: #data=<base64url(JSON.stringify(scanData))>
+ * Returns parsed object or null if absent / malformed.
+ */
+function decodeHashPayload(){
+  try{
+    const hash=location.hash
+    if(!hash||!hash.startsWith("#data="))return null
+    const b64=hash.slice(6).replace(/-/g,"+").replace(/_/g,"/")
+    const json=decodeURIComponent(escape(atob(b64)))
+    return JSON.parse(json)
+  }catch(e){
+    console.warn("[antares] hash payload decode failed",e)
+    return null
+  }
+}
+
 const params=new URLSearchParams(location.search)
 const ca=params.get("ca")
-if(!ca){document.querySelector(".shell").innerHTML="<p style='color:#ff5f5f;padding:80px 0;text-align:center'>No token address provided.</p>"}
-else{init(ca)}
+if(!ca){
+  document.querySelector(".shell").innerHTML="<p style='color:#ff5f5f;padding:80px 0;text-align:center'>No token address provided.</p>"
+}else{
+  init(ca)
+}
+
+let _liveRevalidateTimer=null
 
 async function init(ca){
   document.getElementById("token-ca-text").textContent=ca
   document.title="Antares — "+ca.slice(0,8)+"…"
+
+  // [SOLUTION 4] Try to use the pre-fetched payload embedded in the URL hash.
+  // This allows the extension to pass the full scan result directly so the page
+  // renders at 0ms with zero network requests.
+  const hashData=decodeHashPayload()
+  if(hashData && hashData.risk){
+    // Render immediately from cache
+    render(hashData,ca)
+    // Show the cached banner
+    const banner=document.getElementById("cached-banner")
+    if(banner)banner.classList.add("visible")
+    // Wire the "Refresh live data" button
+    const refreshBtn=document.getElementById("force-refresh-btn")
+    if(refreshBtn){
+      refreshBtn.addEventListener("click",()=>{
+        if(_liveRevalidateTimer){clearTimeout(_liveRevalidateTimer);_liveRevalidateTimer=null}
+        if(banner)banner.classList.remove("visible")
+        fetchAndRender(ca)
+      },{once:true})
+    }
+    // Background stale-while-revalidate: silently refresh after 8s
+    _liveRevalidateTimer=setTimeout(()=>{
+      _liveRevalidateTimer=null
+      if(banner)banner.classList.remove("visible")
+      fetchAndRender(ca)
+    },8000)
+    return
+  }
+
+  // Fallback: no hash payload → normal fetch
+  await fetchAndRender(ca)
+}
+
+async function fetchAndRender(ca){
   try{
     const res=await fetch(API+"?ca="+ca)
     if(!res.ok)throw new Error(res.status)
@@ -432,7 +514,6 @@ function render(d,ca){
     "Helius":"Token accounts · Authority",
     "Solscan":"Holders · Age · Volume"
   }
-  // Solscan toujours inclus dans le fallback
   const srcNames=d.sources_used&&d.sources_used.length
     ? (d.sources_used.includes("Solscan")?d.sources_used:[...d.sources_used,"Solscan"])
     : ["DexScreener","RugCheck","GoPlus","Helius RPC","Solscan"]
