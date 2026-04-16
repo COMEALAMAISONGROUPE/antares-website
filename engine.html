@@ -97,16 +97,16 @@ footer span{color:var(--c)}
 </style>
 </head>
 <body>
-<div class="stripe"></div>
+<div class="stripe" role="presentation" aria-hidden="true"></div>
 <div class="cursor-glow" id="cursor-glow"></div>
 <canvas id="particles-canvas"></canvas>
 <div class="shell">
 
-<nav>
+<header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./features.html">Features</a><a href="./engine.html" class="active">Engine</a><a href="./sources.html">Sources</a></div>
   <div class="tag">v1.1.0 // SOLANA</div>
-</nav>
+</nav></header><main>
 
 <section class="page-hero">
   <div class="eyebrow reveal">Scoring Engine</div>
@@ -144,7 +144,7 @@ footer span{color:var(--c)}
   </div>
 </div>
 
-<footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
+</main><footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 <script>
 ;(function(){
