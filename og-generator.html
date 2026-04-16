@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Antares OG Image Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;display:flex;flex-direction:column;align-items:center;padding:40px;font-family:'IBM Plex Mono',monospace}
+#og{width:1200px;height:630px;background:linear-gradient(135deg,#08080a 0%,#0a0a0c 40%,#0c0b0e 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:60px 70px}
+#og::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c0007a,#00e5b0,#c8c000,#c0002a,#00e5b0)}
+.top-row{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.logo{font:400 28px 'Bebas Neue',sans-serif;color:#e0e0e0;letter-spacing:.18em}
+.tag{font-size:9px;color:#333;border:1px solid #1e1e22;padding:4px 10px;letter-spacing:.08em}
+.headline{font:400 72px/.9 'Bebas Neue',sans-serif;color:#e8e8e8;letter-spacing:.04em;margin-bottom:6px}
+.headline span{color:#00e5b0}
+.sub{font-size:12px;color:#4a4a52;margin-bottom:40px;letter-spacing:.04em}
+.cards{display:flex;gap:16px}
+.card{flex:1;padding:18px 16px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.03)}
+.card::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:120px;height:70px;border-radius:50%;filter:blur(40px);opacity:.1}
+.card.s{background:linear-gradient(180deg,#0b100f,#090b0a)}.card.s::before{background:#00e5b0}
+.card.c{background:linear-gradient(180deg,#0e0d0a,#0a0a09)}.card.c::before{background:#f5d000}
+.card.d{background:linear-gradient(180deg,#0e0a0a,#0a0909)}.card.d::before{background:#ff5f5f}
+.card.r{background:linear-gradient(180deg,#100809,#0a0808)}.card.r::before{background:#ff2244}
+.cbar{height:2px;margin-bottom:10px}
+.card.s .cbar{background:linear-gradient(90deg,transparent,#00e5b0,transparent)}
+.card.c .cbar{background:linear-gradient(90deg,transparent,#f5d000,transparent)}
+.card.d .cbar{background:linear-gradient(90deg,transparent,#ff5f5f,transparent)}
+.card.r .cbar{background:linear-gradient(90deg,transparent,#ff2244,transparent)}
+.tk{font-size:8px;color:#2a2a30;letter-spacing:.06em;margin-bottom:4px}.tk b{color:#444;font-weight:600}
+.verdict{font:400 34px/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:6px}
+.card.s .verdict{color:#00e5b0}.card.c .verdict{color:#f5d000}.card.d .verdict{color:#ff5f5f}.card.r .verdict{color:#ff2244}
+.score{font-size:9px;color:#333;font-weight:600;margin-bottom:8px}.score b{color:#666}
+.sbar{height:2px;background:#101012;border-radius:1px;overflow:hidden;margin-bottom:10px}
+.sbar-fill{height:100%;border-radius:1px}
+.card.s .sbar-fill{background:linear-gradient(90deg,#00e5b055,#00e5b0);width:85%}
+.card.c .sbar-fill{background:linear-gradient(90deg,#f5d00044,#f5d000);width:52%}
+.card.d .sbar-fill{background:linear-gradient(90deg,#ff5f5f44,#ff5f5f);width:29%}
+.card.r .sbar-fill{background:linear-gradient(90deg,#ff224444,#ff2244);width:9%}
+.flags{font-size:7.5px;line-height:1.6}
+.f{display:flex;align-items:center;gap:5px;padding:2px 0}
+.ic{width:12px;height:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:6px;flex-shrink:0;font-style:normal}
+.ic.g{background:rgba(0,229,176,.08);color:#00c89a}
+.ic.y{background:rgba(245,208,0,.06);color:#bfa000}
+.ic.re{background:rgba(255,60,80,.08);color:#ff5f5f}
+.ft{color:#444}.ft em{font-style:normal;font-weight:700;color:#666}
+.stats{display:flex;margin-top:10px;background:#09090b;border-radius:2px;overflow:hidden}
+.si{flex:1;text-align:center;padding:5px 2px}
+.si span{display:block;font-size:5px;color:#1e1e22;letter-spacing:.14em;text-transform:uppercase;margin-bottom:2px}
+.si b{font-size:8px;font-weight:700}.si b.y{color:#00e5b0}.si b.n{color:#ff5f5f}.si b.w{color:#f5d000}
+.bottom{position:absolute;bottom:20px;left:70px;right:70px;display:flex;justify-content:space-between;align-items:center}
+.bottom-left{font-size:9px;color:#2a2a2f;letter-spacing:.12em;text-transform:uppercase}
+.bottom-left span{color:#00e5b0}
+.bottom-right{font-size:8px;color:#1e1e22;letter-spacing:.1em}
+#dl{margin-top:20px;padding:12px 30px;background:#00e5b0;color:#0a0a0c;font:700 12px 'IBM Plex Mono',monospace;border:none;cursor:pointer;letter-spacing:.1em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div id="og">
+  <div class="top-row">
+    <div class="logo">ANTARES</div>
+    <div class="tag">SOLANA TOKEN SCANNER</div>
+  </div>
+  <div class="headline">STOP GETTING <span>SCAMMED.</span></div>
+  <div class="sub">7 sources. 6 layers. 1000-point score. Real-time protection.</div>
+  <div class="cards">
+    <div class="card s">
+      <div class="cbar"></div>
+      <div class="tk"><b>WIF</b> dogwifhat</div>
+      <div class="verdict">SAFE</div>
+      <div class="score"><b>847</b> / 1000</div>
+      <div class="sbar"><div class="sbar-fill"></div></div>
+      <div class="flags">
+        <div class="f"><i class="ic g">&#10003;</i><span class="ft">No critical flags</span></div>
+      </div>
+      <div class="stats">
+        <div class="si"><span>Sell</span><b class="y">&#10003;</b></div>
+        <div class="si"><span>Mint</span><b class="y">OFF</b></div>
+        <div class="si"><span>Freeze</span><b class="y">OFF</b></div>
+        <div class="si"><span>LP</span><b class="y">BURN</b></div>
+      </div>
+    </div>
+    <div class="card c">
+      <div class="cbar"></div>
+      <div class="tk"><b>MICHI</b> michi</div>
+      <div class="verdict">CAUTION</div>
+      <div class="score"><b>523</b> / 1000</div>
+      <div class="sbar"><div class="sbar-fill"></div></div>
+      <div class="flags">
+        <div class="f"><i class="ic re">&#10007;</i><span class="ft"><em>Wash</em> trading</span></div>
+        <div class="f"><i class="ic y">!</i><span class="ft">LP not locked</span></div>
+      </div>
+      <div class="stats">
+        <div class="si"><span>Sell</span><b class="y">&#10003;</b></div>
+        <div class="si"><span>Mint</span><b class="y">OFF</b></div>
+        <div class="si"><span>LP</span><b class="n">NO</b></div>
+        <div class="si"><span>Liq</span><b class="w">$47K</b></div>
+      </div>
+    </div>
+    <div class="card d">
+      <div class="cbar"></div>
+      <div class="tk"><b>FAKE</b> elonmusktoken</div>
+      <div class="verdict">DANGER</div>
+      <div class="score"><b>285</b> / 1000</div>
+      <div class="sbar"><div class="sbar-fill"></div></div>
+      <div class="flags">
+        <div class="f"><i class="ic re">&#10007;</i><span class="ft"><em>Freeze</em> active</span></div>
+        <div class="f"><i class="ic re">&#10007;</i><span class="ft"><em>Bundler</em> detected</span></div>
+      </div>
+      <div class="stats">
+        <div class="si"><span>Sell</span><b class="y">&#10003;</b></div>
+        <div class="si"><span>Freeze</span><b class="n">ON</b></div>
+        <div class="si"><span>LP</span><b class="w">7D</b></div>
+        <div class="si"><span>Liq</span><b class="n">$4K</b></div>
+      </div>
+    </div>
+    <div class="card r">
+      <div class="cbar"></div>
+      <div class="tk"><b>SCAM</b> totallylegittoken</div>
+      <div class="verdict">RUG PULL</div>
+      <div class="score"><b>87</b> / 1000</div>
+      <div class="sbar"><div class="sbar-fill"></div></div>
+      <div class="flags">
+        <div class="f"><i class="ic re">&#10007;</i><span class="ft"><em>Honeypot</em></span></div>
+        <div class="f"><i class="ic re">&#10007;</i><span class="ft"><em>Mint</em> active</span></div>
+        <div class="f"><i class="ic re">&#10007;</i><span class="ft"><em>Freeze</em> active</span></div>
+      </div>
+      <div class="stats">
+        <div class="si"><span>Sell</span><b class="n">&#10007;</b></div>
+        <div class="si"><span>Mint</span><b class="n">ON</b></div>
+        <div class="si"><span>Freeze</span><b class="n">ON</b></div>
+        <div class="si"><span>Liq</span><b class="n">$180</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="bottom-left"><span>&#9733;</span> Free Chrome Extension</div>
+    <div class="bottom-right">antares-website.vercel.app</div>
+  </div>
+</div>
+<button id="dl" onclick="downloadOG()">Download og-image.png (1200x630)</button>
+<script>
+function downloadOG(){
+  const el=document.getElementById('og');
+  import('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.esm.js').then(m=>{
+    m.default(el,{width:1200,height:630,scale:1,backgroundColor:'#08080a'}).then(c=>{
+      const a=document.createElement('a');a.download='og-image.png';a.href=c.toDataURL('image/png');a.click();
+    });
+  });
+}
+</script>
+</body>
+</html>
