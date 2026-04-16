@@ -91,16 +91,16 @@ footer span{color:var(--c)}
 </style>
 </head>
 <body>
-<div class="stripe"></div>
+<div class="stripe" role="presentation" aria-hidden="true"></div>
 <div class="cursor-glow" id="cursor-glow"></div>
 <canvas id="particles-canvas"></canvas>
 <div class="shell">
 
-<nav>
+<header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html" class="active">Sources</a></div>
   <div class="tag">v1.1.0 // SOLANA</div>
-</nav>
+</nav></header><main>
 
 <section class="page-hero">
   <div class="eyebrow reveal">Data Sources</div>
@@ -153,7 +153,7 @@ footer span{color:var(--c)}
   <p>When sources disagree, Antares always resolves to the most conservative (most dangerous) verdict. A failed source is skipped gracefully without blocking the scan. The system is designed to over-protect, never under-protect.</p>
 </div>
 
-<footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
+</main><footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 <script>
 ;(function(){
