@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="topLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff0040"/>
+      <stop offset="25%" stop-color="#ff00ff"/>
+      <stop offset="50%" stop-color="#00ffff"/>
+      <stop offset="75%" stop-color="#00ff80"/>
+      <stop offset="100%" stop-color="#ffff00"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#0a0a0f"/>
+  <rect width="1200" height="3" fill="url(#topLine)"/>
+  <!-- Title -->
+  <text x="60" y="120" font-family="monospace" font-size="28" font-weight="bold" fill="#ffffff" letter-spacing="6">ANTARES</text>
+  <rect x="220" y="100" width="180" height="28" rx="4" fill="none" stroke="#444" stroke-width="1"/>
+  <text x="235" y="119" font-family="monospace" font-size="11" fill="#888">SOLANA TOKEN SCANNER</text>
+  <!-- Main headline -->
+  <text x="60" y="200" font-family="Arial,sans-serif" font-size="72" font-weight="900" fill="#ffffff">STOP GETTING </text>
+  <text x="688" y="200" font-family="Arial,sans-serif" font-size="72" font-weight="900" fill="#ff4057">SCAMMED.</text>
+  <!-- Subtitle -->
+  <text x="60" y="240" font-family="monospace" font-size="14" fill="#666">7 sources. 6 layers. 1000-point score. Real-time protection.</text>
+  <!-- Card 1: SAFE -->
+  <rect x="40" y="280" width="260" height="220" rx="8" fill="#111118" stroke="#00ff80" stroke-width="1.5"/>
+  <text x="60" y="320" font-family="monospace" font-size="11" fill="#555">WIF dogwifhat</text>
+  <text x="60" y="360" font-family="Arial,sans-serif" font-size="36" font-weight="900" fill="#00ff80">SAFE</text>
+  <text x="60" y="385" font-family="monospace" font-size="13" fill="#00ff80">847</text>
+  <text x="95" y="385" font-family="monospace" font-size="13" fill="#555">/ 1000</text>
+  <text x="60" y="420" font-family="monospace" font-size="11" fill="#00ff80">✓ No critical flags</text>
+  <line x1="60" y1="445" x2="280" y2="445" stroke="#222" stroke-width="1"/>
+  <text x="60" y="475" font-family="monospace" font-size="12" fill="#00ff80">✓</text>
+  <text x="110" y="475" font-family="monospace" font-size="11" fill="#555">OFF</text>
+  <text x="170" y="475" font-family="monospace" font-size="11" fill="#555">OFF</text>
+  <text x="230" y="475" font-family="monospace" font-size="11" fill="#00ff80">BURN</text>
+  <!-- Card 2: CAUTION -->
+  <rect x="320" y="280" width="260" height="220" rx="8" fill="#111118" stroke="#ffcc00" stroke-width="1.5"/>
+  <text x="340" y="320" font-family="monospace" font-size="11" fill="#555">MICHI michi</text>
+  <text x="340" y="360" font-family="Arial,sans-serif" font-size="36" font-weight="900" fill="#ffcc00">CAUTION</text>
+  <text x="340" y="385" font-family="monospace" font-size="13" fill="#ffcc00">523</text>
+  <text x="375" y="385" font-family="monospace" font-size="13" fill="#555">/ 1000</text>
+  <text x="340" y="415" font-family="monospace" font-size="11" fill="#ff4057">✗ Wash trading</text>
+  <text x="340" y="435" font-family="monospace" font-size="11" fill="#ffcc00">! LP not locked</text>
+  <line x1="340" y1="450" x2="560" y2="450" stroke="#222" stroke-width="1"/>
+  <text x="340" y="475" font-family="monospace" font-size="12" fill="#00ff80">✓</text>
+  <text x="390" y="475" font-family="monospace" font-size="11" fill="#555">OFF</text>
+  <text x="450" y="475" font-family="monospace" font-size="11" fill="#ff4057">NO</text>
+  <text x="510" y="475" font-family="monospace" font-size="11" fill="#ffcc00">$47K</text>
+  <!-- Card 3: DANGER -->
+  <rect x="600" y="280" width="260" height="220" rx="8" fill="#111118" stroke="#ff4057" stroke-width="1.5"/>
+  <text x="620" y="320" font-family="monospace" font-size="11" fill="#555">FAKE elonmusktoken</text>
+  <text x="620" y="360" font-family="Arial,sans-serif" font-size="36" font-weight="900" fill="#ff4057">DANGER</text>
+  <text x="620" y="385" font-family="monospace" font-size="13" fill="#ff4057">285</text>
+  <text x="655" y="385" font-family="monospace" font-size="13" fill="#555">/ 1000</text>
+  <text x="620" y="415" font-family="monospace" font-size="11" fill="#ff4057">✗ Freeze active</text>
+  <text x="620" y="435" font-family="monospace" font-size="11" fill="#ff4057">✗ Bundler detected</text>
+  <line x1="620" y1="450" x2="840" y2="450" stroke="#222" stroke-width="1"/>
+  <text x="620" y="475" font-family="monospace" font-size="12" fill="#00ff80">✓</text>
+  <text x="670" y="475" font-family="monospace" font-size="11" fill="#ff4057">ON</text>
+  <text x="730" y="475" font-family="monospace" font-size="11" fill="#ff4057">7D</text>
+  <text x="790" y="475" font-family="monospace" font-size="11" fill="#ff4057">$4K</text>
+  <!-- Card 4: RUG PULL -->
+  <rect x="880" y="280" width="280" height="220" rx="8" fill="#111118" stroke="#ff0040" stroke-width="1.5"/>
+  <text x="900" y="320" font-family="monospace" font-size="11" fill="#555">SCAM totallylegittoken</text>
+  <text x="900" y="360" font-family="Arial,sans-serif" font-size="36" font-weight="900" fill="#ff0040">RUG PULL</text>
+  <text x="900" y="385" font-family="monospace" font-size="13" fill="#ff0040">87</text>
+  <text x="925" y="385" font-family="monospace" font-size="13" fill="#555">/ 1000</text>
+  <text x="900" y="415" font-family="monospace" font-size="11" fill="#ff4057">✗ Honeypot</text>
+  <text x="900" y="435" font-family="monospace" font-size="11" fill="#ff4057">✗ Mint active</text>
+  <text x="900" y="455" font-family="monospace" font-size="11" fill="#ff4057">✗ Freeze active</text>
+  <line x1="900" y1="465" x2="1140" y2="465" stroke="#222" stroke-width="1"/>
+  <text x="900" y="485" font-family="monospace" font-size="12" fill="#ff4057">✗</text>
+  <text x="950" y="485" font-family="monospace" font-size="11" fill="#ff4057">ON</text>
+  <text x="1010" y="485" font-family="monospace" font-size="11" fill="#ff4057">ON</text>
+  <text x="1070" y="485" font-family="monospace" font-size="11" fill="#ff4057">$1.89</text>
+  <!-- Footer -->
+  <text x="60" y="570" font-family="monospace" font-size="11" fill="#00ff80">★ FREE CHROME EXTENSION</text>
+  <text x="900" y="570" font-family="monospace" font-size="10" fill="#555">antares-website.vercel.app</text>
+</svg>
