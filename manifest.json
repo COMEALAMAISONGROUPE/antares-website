@@ -1,0 +1,16 @@
+{
+  "name": "Antares — Solana Token Scanner",
+  "short_name": "Antares",
+  "description": "Stop getting scammed. 7 sources, 6 layers, 1000-point score. Real-time Solana token protection.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0c",
+  "theme_color": "#00e5b0",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
