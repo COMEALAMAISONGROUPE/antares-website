@@ -196,17 +196,17 @@ footer span{color:var(--c)}
 </head>
 <body>
 
-<div class="stripe"></div>
-<div class="cursor-glow" id="cursor-glow"></div>
-<canvas id="particles-canvas"></canvas>
+<div class="stripe" role="presentation" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+<canvas id="particles-canvas" aria-hidden="true"></canvas>
 
 <div class="shell">
 
-<nav>
+<header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html">Sources</a></div>
   <div class="tag">v1.1.0 // SOLANA</div>
-</nav>
+</nav></header><main>
 
 <!-- ═══════ HERO ═══════ -->
 <section class="hero" style="position:relative">
@@ -274,7 +274,7 @@ footer span{color:var(--c)}
 </section>
 
 <!-- ═══════ MARQUEE ═══════ -->
-<div class="marquee-wrap">
+<div class="marquee-wrap" aria-hidden="true">
   <div class="marquee-inner">
     <span class="mi"><span class="hi">DEXSCREENER</span> &middot; RUGCHECK &middot; GOPLUS &middot; HELIUS &middot; <span class="hi">SOLSCAN</span> &middot; </span>
     <span class="mi">REAL-TIME &middot; <span class="hi">6 LAYERS</span> &middot; 1000 POINTS &middot; SAFE GATE &middot; </span>
@@ -300,7 +300,7 @@ footer span{color:var(--c)}
   </div>
 </div>
 
-<footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
+</main><footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 
 <script>
