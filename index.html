@@ -192,9 +192,12 @@ footer span{color:var(--c)}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:none}
 }
+    .skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#0f0f11;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none;transition:top .2s}
+    .skip-link:focus{top:0}
 </style>
 </head>
 <body>
+      <a href="#main-content" class="skip-link">Skip to content</a>
 
 <div class="stripe" role="presentation" aria-hidden="true"></div>
 <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
@@ -206,7 +209,7 @@ footer span{color:var(--c)}
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html">Sources</a></div>
   <div class="tag">v1.1.0 // SOLANA</div>
-</nav></header><main>
+      </nav></header><main id="main-content">
 
 <!-- ═══════ HERO ═══════ -->
 <section class="hero" style="position:relative">
