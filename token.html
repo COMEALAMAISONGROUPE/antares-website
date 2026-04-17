@@ -204,26 +204,29 @@ footer span{color:var(--c)}
 
 #particles-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;
   pointer-events:none;z-index:0;opacity:.4}
+      .skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#0f0f11;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none;transition:top .2s}
+    .skip-link:focus{top:0}
 </style></head>
 <body>
-<div class="stripe"></div>
-<canvas id="particles-canvas"></canvas>
-<div class="shell">
+      <a href="#main-content" class="skip-link">Skip to content</a>
+      <div class="stripe" role="presentation" aria-hidden="true"></div>
+          <canvas id="particles-canvas" aria-hidden="true"></canvas>
+    <main id="main-content" class="shell">
 
-<nav>
+          <nav aria-label="Main navigation">
   <a href="/" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <a href="/">← Back</a>
 </nav>
 
 <div class="hero-row">
   <div class="hero-left">
-    <img id="token-logo" class="token-logo" alt="">
+            <img id="token-logo" class="token-logo" alt="Token logo">
     <div class="hero-text">
       <div class="eyebrow" id="token-eyebrow">TOKEN ANALYSIS</div>
       <div class="tname glitch" data-text="" id="token-name">Loading…</div>
       <div class="tca">
         <span id="token-ca-text"></span>
-        <span class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('token-ca-text').textContent)">COPY</span>
+                    <button type="button" class="copy-btn" aria-label="Copy token address" onclick="navigator.clipboard.writeText(document.getElementById('token-ca-text').textContent)">COPY</button>
       </div>
       <div class="changes-row" id="changes-row"></div>
       <div class="tdesc" id="token-desc">Scanning token…</div>
@@ -280,7 +283,7 @@ footer span{color:var(--c)}
 <div class="src-grid" id="sources-grid"></div>
 
 <footer>Antares v4.5.3 — <span>No mercy for scammers.</span></footer>
-</div>
+    </main>
 
 <script>
 const API="https://antares-extension.vercel.app/api/scan"

@@ -192,23 +192,26 @@ footer span{color:var(--c)}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:none}
 }
+    .skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#0f0f11;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none;transition:top .2s}
+    .skip-link:focus{top:0}
 </style>
 <!-- Structured Data -->
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Antares","applicationCategory":"BrowserApplication","operatingSystem":"Chrome","description":"Solana token scanner Chrome extension. 7 sources, 6 layers, 1000-point score. Real-time protection against scams, rug pulls, and honeypots.","url":"https://antares-website.vercel.app/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","ratingCount":"1"}}</script>
 </head>
 <body>
+      <a href="#main-content" class="skip-link">Skip to content</a>
 
-<div class="stripe"></div>
-<div class="cursor-glow" id="cursor-glow"></div>
-<canvas id="particles-canvas"></canvas>
+<div class="stripe" role="presentation" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+<canvas id="particles-canvas" aria-hidden="true"></canvas>
 
 <div class="shell">
 
-<nav>
+<header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html">Sources</a></div>
   <div class="tag">v1.1.0 // SOLANA</div>
-</nav>
+      </nav></header><main id="main-content">
 
 <!-- ═══════ HERO ═══════ -->
 <section class="hero" style="position:relative">
@@ -276,7 +279,7 @@ footer span{color:var(--c)}
 </section>
 
 <!-- ═══════ MARQUEE ═══════ -->
-<div class="marquee-wrap">
+<div class="marquee-wrap" aria-hidden="true">
   <div class="marquee-inner">
     <span class="mi"><span class="hi">DEXSCREENER</span> &middot; RUGCHECK &middot; GOPLUS &middot; HELIUS &middot; <span class="hi">SOLSCAN</span> &middot; </span>
     <span class="mi">REAL-TIME &middot; <span class="hi">6 LAYERS</span> &middot; 1000 POINTS &middot; SAFE GATE &middot; </span>
@@ -302,7 +305,7 @@ footer span{color:var(--c)}
   </div>
 </div>
 
-<footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
+</main><footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
 </div>
 
 <script>
