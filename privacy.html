@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy — Antares</title>
+<meta name="description" content="Antares privacy policy. No data collection, no tracking, no accounts.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--border:#1a1a1e;--txt:#c8c8cc}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{max-width:760px;margin:0 auto;padding:80px 32px 60px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);max-width:760px;margin:0 auto}
+nav a.brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none}
+nav a.back{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+nav a.back:hover{color:var(--c)}
+h1{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#eaeaea;margin-bottom:8px}
+.updated{font-size:10px;color:#3a3a3f;letter-spacing:.12em;text-transform:uppercase;margin-bottom:40px}
+h2{font-size:13px;color:var(--c);letter-spacing:.1em;text-transform:uppercase;margin:32px 0 12px;font-weight:600}
+p{font-size:12px;color:#6a6a72;line-height:1.8;margin-bottom:16px}
+ul{font-size:12px;color:#6a6a72;line-height:1.8;margin:0 0 16px 20px}
+li{margin-bottom:4px}
+.highlight{background:rgba(0,229,176,.04);border-left:2px solid var(--c);padding:12px 16px;margin:20px 0;font-size:12px;color:#8a8a92}
+footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;max-width:760px;margin:0 auto}
+footer span{color:var(--c)}
+</style>
+</head>
+<body>
+<div class="stripe" role="presentation"></div>
+<nav><a href="./index.html" class="brand">ANTARES</a><a href="./index.html" class="back">← Back</a></nav>
+<main class="shell">
+<h1>Privacy Policy</h1>
+<p class="updated">Last updated: April 2026</p>
+<div class="highlight">Antares does not collect, store, or transmit any personal data. Period.</div>
+<h2>What We Collect</h2>
+<p>Nothing. Antares runs entirely in your browser. No accounts, no sign-ups, no analytics, no cookies, no tracking pixels.</p>
+<h2>How It Works</h2>
+<p>When you visit a page containing a Solana token address, the extension queries public APIs (DexScreener, RugCheck, GoPlus, Helius, Solscan) to fetch token data. These requests are made directly from your browser. Antares does not proxy, log, or intercept any of this data.</p>
+<h2>Data Storage</h2>
+<p>All data is processed locally and discarded after the scan result is displayed. Nothing is saved to disk, cloud, or any server.</p>
+<h2>Third-Party Services</h2>
+<p>Antares queries the following public APIs for token data:</p>
+<ul>
+<li>DexScreener API</li>
+<li>RugCheck API</li>
+<li>GoPlus Security API</li>
+<li>Helius RPC</li>
+<li>Solscan API</li>
+</ul>
+<p>These services have their own privacy policies. Antares does not send any personal information to them — only the token address being scanned.</p>
+<h2>Permissions</h2>
+<p>The Chrome extension requires minimal permissions to detect Solana addresses on web pages and display scan results. No access to passwords, forms, or browsing history.</p>
+<h2>Contact</h2>
+<p>Questions? Reach out on Twitter: <a href="https://twitter.com/antaresantiscam" style="color:var(--c)">@antaresantiscam</a></p>
+</main>
+<footer>Antares — <span>No mercy for scammers.</span></footer>
+</body>
+</html>
