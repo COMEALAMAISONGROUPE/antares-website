@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 — Antares</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--border:#1a1a1e}
+body{background:var(--bg);color:#c8c8cc;font-family:'IBM Plex Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.code{font:400 clamp(120px,20vw,200px)/1 'Bebas Neue',sans-serif;letter-spacing:.08em;color:rgba(255,255,255,.03);margin-bottom:-20px}
+.verdict{font:400 clamp(48px,8vw,80px)/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#ff2244;text-shadow:0 0 40px rgba(255,34,68,.2);margin-bottom:16px}
+.msg{font-size:13px;color:#4a4a52;line-height:1.8;max-width:420px;margin-bottom:36px}
+.back{padding:15px 32px;font:700 11px/1 'IBM Plex Mono',monospace;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;background:var(--c);color:var(--bg);transition:all .3s;box-shadow:3px 3px 0 rgba(255,255,255,.8)}
+.back:hover{box-shadow:0 0 30px rgba(0,229,176,.12),4px 4px 0 #fff;transform:translate(-2px,-2px)}
+.score{margin-top:32px;font-size:10px;color:#2a2a2f;letter-spacing:.14em;text-transform:uppercase}
+.score b{color:#ff2244;font-weight:600}
+footer{position:fixed;bottom:24px;font-size:10px;color:#1a1a1e;letter-spacing:.15em;text-transform:uppercase}
+footer span{color:var(--c)}
+</style>
+</head>
+<body>
+<div class="stripe" role="presentation"></div>
+<div class="code" aria-hidden="true">404</div>
+<h1 class="verdict">PAGE NOT FOUND</h1>
+<p class="msg">This address doesn't match any known token or page.<br>It might have been rugged — or it never existed.</p>
+<a href="./index.html" class="back" role="link">Back to Safety</a>
+<div class="score">Trust score: <b>0 / 1000</b></div>
+<footer>Antares — <span>No mercy for scammers.</span></footer>
+</body>
+</html>
