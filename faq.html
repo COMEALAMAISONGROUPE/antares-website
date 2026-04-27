@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<title>FAQ — Antares</title>
+<meta name="description" content="Frequently asked questions about Antares: how the verdict works, false positives, privacy, accuracy, multichain, install help.">
+<meta name="author" content="Antares">
+<link rel="canonical" href="https://antares-website.vercel.app/faq">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://antares-website.vercel.app/faq">
+<meta property="og:title" content="FAQ — Antares">
+<meta property="og:description" content="How the verdict works, false positives, privacy, accuracy, multichain, install help.">
+<meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Antares">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@antaresantiscam">
+<meta name="twitter:title" content="FAQ — Antares">
+<meta name="twitter:description" content="How the verdict works, false positives, privacy, accuracy, multichain, install help.">
+<meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:880px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);max-width:880px;margin:0 auto;padding-left:32px;padding-right:32px}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+.page-hero{padding:80px 0 32px}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+h1{font:400 clamp(48px,8vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+.qa{margin-bottom:24px;background:var(--card);border:1px solid var(--border);padding:24px 28px;border-radius:2px}
+.qa h3{font-size:13px;color:var(--c);letter-spacing:.06em;margin-bottom:10px;font-weight:700}
+.qa p{font-size:12px;color:#7a7a82;line-height:1.85;margin-bottom:10px}
+.qa p:last-child{margin-bottom:0}
+.qa code{background:#15151a;padding:1px 6px;border-radius:2px;color:#bbb;font-size:11px}
+.qa a{color:var(--c)}
+.qa b{color:#aaa;font-weight:600}
+footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px;max-width:880px;margin:60px auto 0}
+footer span{color:var(--c)}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does CAUTION mean?","acceptedAnswer":{"@type":"Answer","text":"CAUTION (score 600-899) means at least one risk signal was detected but no Safe Gate trigger fired. Common causes: top-10 holders concentrate >50% supply, vol/liq ratio above wash-trading threshold, or a young token with limited holder base."}},{"@type":"Question","name":"Can a SAFE token still rug?","acceptedAnswer":{"@type":"Answer","text":"Yes. Antares is a probabilistic risk screen, not a guarantee. The verdict reflects what 6 independent sources can detect at scan time. Novel exploits, coordinated dumps via secondary wallets, or social-engineering-only rugs may not register."}},{"@type":"Question","name":"Does Antares collect my data?","acceptedAnswer":{"@type":"Answer","text":"No personal data. The API receives the contract address you scan plus standard HTTPS metadata (IP, user-agent) used for rate-limiting only. No accounts, no tracking, no analytics. See the full privacy policy."}}]}</script>
+</head>
+<body>
+<div class="stripe" role="presentation"></div>
+<nav><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./features.html">Features</a><a href="./demo.html">Demo</a><a href="./compare.html">Compare</a><a href="./faq.html" class="active">FAQ</a></div></nav>
+<main class="shell">
+
+<section class="page-hero">
+  <div class="eyebrow">Frequently asked questions</div>
+  <h1>FAQ</h1>
+</section>
+
+<div class="qa"><h3>1. What do SAFE / CAUTION / DANGER / RUG actually mean?</h3>
+<p>The verdict is a band on the 1000-point score, with hard overrides:</p>
+<p><b>SAFE</b> (score &ge;900, &ge;5 sources active): no critical signals across 6 layers.<br><b>CAUTION</b> (600-899): at least one risk signal but nothing critical &mdash; e.g. concentrated top-10 holders, mild wash-trading ratio, very young token.<br><b>DANGER</b> (350-599): multiple risk signals or one critical signal partially mitigated by maturity.<br><b>RUG</b> (&lt;350 or Safe Gate triggered): hard kill &mdash; LP open, honeypot, mint/freeze active, or deceptive name.</p>
+</div>
+
+<div class="qa"><h3>2. Can a SAFE token still rug?</h3>
+<p>Yes. Antares is a probabilistic risk screen, not a guarantee. We can detect what 6 independent sources surface at scan time &mdash; novel exploits, coordinated dumps via fresh wallets, or social-engineering attacks may not register.</p>
+<p>The Time-to-Rug ring and Outcome Histogram are <b>indicative</b>, derived from a heuristic profile match against historical clusters &mdash; they are not validated forecasts. See the <a href="./terms.html">Terms</a> for the full disclaimer.</p>
+</div>
+
+<div class="qa"><h3>3. Why is this token flagged DANGER when it looks fine?</h3>
+<p>False positives are real and unavoidable. Common causes:</p>
+<p>&bull; <b>LP not burned but token is mature &amp; liquid</b> &mdash; we still penalise unburned LP because the dev <em>can</em> rug at any time, even if the project looks legitimate (e.g. Fartcoin, DeFade). The <code>established-bonus</code> rule unlocks SAFE for tokens 30+ days old with 50k+ holders + GoPlus clean.</p>
+<p>&bull; <b>Volume/liquidity ratio above 5&times;</b> &mdash; flagged as wash-trading risk even on legitimate flash-pool venues where that ratio is structural.</p>
+<p>&bull; <b>Deceptive name detection</b> sometimes catches generic financial terms ("Vanguard Capital" matching "Vanguard"). We&rsquo;re tightening this.</p>
+<p>If you think a verdict is wrong, <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">open an issue</a> with the token CA.</p>
+</div>
+
+<div class="qa"><h3>4. What data does Antares collect about me?</h3>
+<p>None personal. The API receives the contract address you scan plus standard HTTPS metadata (IP, user-agent) used for rate-limiting only. We don&rsquo;t store profiles, we don&rsquo;t correlate scans across users, we don&rsquo;t sell anything.</p>
+<p>Full disclosure with retention windows per system: <a href="./privacy.html">/privacy</a>.</p>
+</div>
+
+<div class="qa"><h3>5. Why does the extension require <code>activeTab</code> and <code>tabs</code> permissions?</h3>
+<p>To detect Solana contract addresses on the supported trading platforms (DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN). The Extension reads the URL and visible page DOM on those sites only. It does <b>not</b> read form fields, credentials, cookies, or browsing history.</p>
+</div>
+
+<div class="qa"><h3>6. How fast is a scan?</h3>
+<p>Typical: 3&ndash;5 seconds end-to-end (6 concurrent upstream calls + AI summary + insider graph + scoring). Cached scans return in under 100ms.</p>
+<p>Slower than RugCheck (&lt;1s, single source) by design &mdash; we trade speed for depth (6 sources + clustering + holder activity).</p>
+</div>
+
+<div class="qa"><h3>7. Multichain support? Ethereum / BSC / Base?</h3>
+<p>Solana only for v1. Multichain is on the roadmap but not committed for the first public release. Phase 0 (DexScreener + GoPlus EVM) is the entry point; full feature parity (Critical Actors / Holder Activity / Outcome Stats on EVM) is multi-week work.</p>
+</div>
+
+<div class="qa"><h3>8. Is the AI summary reliable?</h3>
+<p>It&rsquo;s a Google Gemini 2.5-flash output grounded in the actual scan data (verdict, top flags, holder concentration, vol/liq, age). It can occasionally hallucinate or misinterpret &mdash; treat it as plain-English context, not authoritative analysis. The raw flag list and verdict are the ground truth.</p>
+<p>If Gemini is unreachable, a local fallback dictionary covers the 12 most common flag explanations so the AI Verdict card never goes empty.</p>
+</div>
+
+<div class="qa"><h3>9. The Time-to-Rug ring says &ldquo;4h 12m median&rdquo;. Is that accurate?</h3>
+<p><b>It&rsquo;s indicative, not predictive.</b> The number is a heuristic profile match against historical clusters of comparable launches. Hardcoded distributions per profile (fast-rug / high-risk / slow-death). The corpus-based KNN matcher (the J3-J5 backtest harness) is in development &mdash; until then, treat the ring as &ldquo;tokens like this typically die in this window&rdquo; not &ldquo;this specific token will die at 4h 12m.&rdquo;</p>
+</div>
+
+<div class="qa"><h3>10. How do I report a false positive / false negative / bug?</h3>
+<p>Open an issue at <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">github.com/COMEALAMAISONGROUPE/antares-extension/issues</a> with: the token CA, what verdict you got, what you expected, and the timestamp of the scan (visible in the extension&rsquo;s metric tab as <code>requestId</code>).</p>
+<p>Security issues should use Private Vulnerability Reporting per <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/SECURITY.md">SECURITY.md</a> &mdash; do not include exploit details in a public issue.</p>
+</div>
+
+</main>
+<footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
+</body>
+</html>

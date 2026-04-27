@@ -99,7 +99,7 @@ footer span{color:var(--c)}
 
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
-  <div class="links"><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html" class="active">Sources</a></div>
+  <div class="links"><a href="./demo.html" style="color:#00e5b0">Demo</a><a href="./compare.html">Compare</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html" class="active">Sources</a></div>
   <div class="tag">v1.2.1 // SOLANA</div>
 </nav></header><main>
 
@@ -123,8 +123,8 @@ footer span{color:var(--c)}
   </div>
 
   <div class="source reveal delay-3">
-    <div class="source-name"><h3>GoPlus</h3><div class="role">Contract Security</div></div>
-    <div class="source-body"><p>Performs a simulated transaction to detect contract vulnerabilities. Also checks proxy contracts, blacklist functions, transfer restrictions, and hidden fees. A honeypot detection is an immediate Safe Gate trigger regardless of other scores.</p><div class="data-tags"><span>Honeypot</span><span>Proxy</span><span>Blacklist</span><span>Fees</span><span>Sellability</span></div></div>
+    <div class="source-name"><h3>GoPlus</h3><div class="role">Contract Security <em style="font-size:9px;color:#5a3a3a;letter-spacing:.16em;text-transform:uppercase;font-style:normal;margin-left:6px">when available</em></div></div>
+    <div class="source-body"><p>Performs a simulated transaction to detect contract vulnerabilities &mdash; honeypots, proxy contracts, blacklist functions, transfer restrictions, hidden fees. Used opportunistically: when the GoPlus public endpoint is rate-limited or unavailable for a given token, the source is gracefully skipped and the verdict is computed from the remaining 5 layers.</p><div class="data-tags"><span>Honeypot</span><span>Proxy</span><span>Blacklist</span><span>Fees</span><span>Sellability</span></div></div>
   </div>
 
   <div class="source reveal delay-4">
@@ -143,8 +143,18 @@ footer span{color:var(--c)}
   </div>
 
   <div class="source reveal">
-    <div class="source-name"><h3>Identity Registry</h3><div class="role">Internal DB</div></div>
-    <div class="source-body"><p>Powers the Identity Validation layer. Cross-references every token name and ticker against a curated database of known legitimate projects. Catches exact clones, unicode spoofing, zero-width character tricks, and ticker collisions.</p><div class="data-tags"><span>Name Match</span><span>Unicode</span><span>Zero-Width</span><span>Ticker</span></div></div>
+    <div class="source-name"><h3>Insider Graph</h3><div class="role">Internal Engine</div></div>
+    <div class="source-body"><p>Powers the Critical Actors cluster card. Pulls Helius transaction signatures for the top 20 holders, builds a wallet-to-wallet transfer graph, and runs union-find to detect coordinated sibling clusters. Cached per-mint with a 5-minute TTL so repeat scans of overlapping holders skip the Helius round-trip.</p><div class="data-tags"><span>Sibling wallets</span><span>Transfer graph</span><span>Union-find</span><span>Cluster pct</span></div></div>
+  </div>
+
+  <div class="source reveal">
+    <div class="source-name"><h3>Verdict History</h3><div class="role">Redis ZSET</div></div>
+    <div class="source-body"><p>Per-token verdict timeline persisted in a Redis sorted set keyed <code style="font-family:'IBM Plex Mono',monospace;color:#888;font-size:10px;background:#15151a;padding:1px 4px">vh:{ca}</code>. Each scan appends one entry &mdash; deduped within 60s, capped at 50 entries, 30-day TTL. Powers the Verdict Timeline tab so users see a token bounce CAUTION &rarr; DANGER &rarr; RUG over time, not just a snapshot.</p><div class="data-tags"><span>ZADD</span><span>ZRANGE</span><span>30-day TTL</span><span>per-token</span></div></div>
+  </div>
+
+  <div class="source reveal">
+    <div class="source-name"><h3>Google Gemini</h3><div class="role">AI Verdict</div></div>
+    <div class="source-body"><p>Powers the AI Verdict synthesis card. Gemini-2.5-flash, 8s timeout, 350 max tokens, temp 0.35. Prompt receives the verdict, the top critical flags, and the live data (holder concentration, vol/liq, age, creator reputation). Output: 2&ndash;4 plain-English sentences referencing the actual numbers. Local fallback dictionary covers the case where the LLM is unreachable so the card never goes empty.</p><div class="data-tags"><span>Gemini-2.5-flash</span><span>8s timeout</span><span>Plain English</span><span>Local fallback</span></div></div>
   </div>
 
 </div>
@@ -154,7 +164,7 @@ footer span{color:var(--c)}
   <p>When sources disagree, Antares always resolves to the most conservative (most dangerous) verdict. A failed source is skipped gracefully without blocking the scan. The system is designed to over-protect, never under-protect.</p>
 </div>
 
-</main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
+</main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:10px;font-size:9px;line-height:1.9"><a href="./demo.html" style="color:#454550;text-decoration:none;margin:0 6px">Demo</a>&middot;<a href="./compare.html" style="color:#454550;text-decoration:none;margin:0 6px">Compare</a>&middot;<a href="./faq.html" style="color:#454550;text-decoration:none;margin:0 6px">FAQ</a>&middot;<a href="./install.html" style="color:#454550;text-decoration:none;margin:0 6px">Install</a>&middot;<a href="./changelog.html" style="color:#454550;text-decoration:none;margin:0 6px">Changelog</a>&middot;<a href="./about.html" style="color:#454550;text-decoration:none;margin:0 6px">About</a>&middot;<a href="./api.html" style="color:#454550;text-decoration:none;margin:0 6px">API</a><br><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 6px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 6px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 6px">GitHub</a></div></footer>
 </div>
 <script>
 ;(function(){

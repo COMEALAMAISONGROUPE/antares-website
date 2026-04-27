@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Install Antares — Step by Step</title>
+<meta name="description" content="Install the Antares Chrome extension in 3 steps. Free, no signup, no data collection. Works on Chrome, Brave, Edge, Arc.">
+<meta name="author" content="Antares">
+<link rel="canonical" href="https://antares-website.vercel.app/install">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://antares-website.vercel.app/install">
+<meta property="og:title" content="Install Antares — Step by Step">
+<meta property="og:description" content="Install the Antares Chrome extension in 3 steps. Free, no signup, no data collection.">
+<meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Antares">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@antaresantiscam">
+<meta name="twitter:title" content="Install Antares — Step by Step">
+<meta name="twitter:description" content="Install the Antares Chrome extension in 3 steps. Free, no signup, no data collection.">
+<meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);max-width:920px;margin:0 auto;padding-left:32px;padding-right:32px}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+.page-hero{padding:80px 0 32px}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+h1{font:400 clamp(48px,8vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+h1 .accent{color:var(--c)}
+.sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:600px;border-left:2px solid var(--c);padding-left:16px;margin-bottom:48px}
+.step{display:grid;grid-template-columns:80px 1fr;gap:32px;padding:36px 0;border-bottom:1px solid var(--border);align-items:start}
+.step-n{font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.15)}
+.step-body h3{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#e0e0e0;margin-bottom:12px}
+.step-body p{font-size:12.5px;color:#7a7a82;line-height:1.85;margin-bottom:14px}
+.step-body p code{background:#15151a;padding:2px 6px;border-radius:2px;color:#bbb;font-size:11.5px}
+.step-body a{color:var(--c)}
+.step-body .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:14px 28px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;margin-top:8px;transition:transform .2s,box-shadow .2s}
+.step-body .cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,229,176,.25)}
+.note-box{background:rgba(0,229,176,.04);border-left:2px solid var(--c);padding:14px 18px;font-size:11px;color:#888;line-height:1.85;margin-top:14px}
+.warn-box{background:rgba(245,208,0,.04);border-left:2px solid #f5d000;padding:14px 18px;font-size:11px;color:#a8a060;line-height:1.85;margin-top:14px}
+.compat{display:flex;gap:24px;flex-wrap:wrap;margin:32px 0 0;font-size:11px;color:#666}
+.compat span{display:flex;align-items:center;gap:8px}
+.compat span::before{content:'✓';color:var(--c);font-weight:700}
+footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px;max-width:920px;margin:60px auto 0}
+footer span{color:var(--c)}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Install Antares Chrome Extension","description":"3-step install guide for the Antares Solana token scanner","step":[{"@type":"HowToStep","name":"Open Chrome Web Store","text":"Visit the Antares listing on the Chrome Web Store"},{"@type":"HowToStep","name":"Add to Chrome","text":"Click 'Add to Chrome' and confirm permissions"},{"@type":"HowToStep","name":"Browse","text":"Antares activates automatically on supported Solana trading platforms"}]}</script>
+</head>
+<body>
+<div class="stripe" role="presentation"></div>
+<nav><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./features.html">Features</a><a href="./demo.html">Demo</a><a href="./faq.html">FAQ</a><a href="./install.html" class="active">Install</a></div></nav>
+<main class="shell">
+
+<section class="page-hero">
+  <div class="eyebrow">Install in 60 seconds</div>
+  <h1>GET <span class="accent">ANTARES.</span></h1>
+  <p class="sub">Free Chrome extension. No account, no signup, no data collection. Works on Chrome, Brave, Edge, Arc, and any Chromium-based browser. Activates automatically on supported Solana trading platforms.</p>
+</section>
+
+<div class="step">
+  <div class="step-n">01</div>
+  <div class="step-body">
+    <h3>Open the Chrome Web Store</h3>
+    <p>Antares is published on the Chrome Web Store. Click the button below to open the listing.</p>
+    <a class="cta" href="https://github.com/COMEALAMAISONGROUPE/antares-extension" target="_blank" rel="noopener noreferrer">⚡ Open Web Store listing</a>
+    <div class="warn-box"><b style="color:#a8a060">Listing pending approval.</b> Until the Chrome Web Store review is complete, the link above goes to the GitHub repository where you can sideload the extension manually (load unpacked from the latest <code>build/chrome-mv3-prod</code>). Once the listing is live, this page will update automatically.</div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-n">02</div>
+  <div class="step-body">
+    <h3>Click "Add to Chrome"</h3>
+    <p>The Web Store will show a permission dialog. Antares requests minimum permissions:</p>
+    <p>&bull; <code>storage</code> &mdash; remember your settings locally (theme, alert thresholds)<br>&bull; <code>notifications</code> &mdash; alert you when a token&rsquo;s verdict escalates<br>&bull; <code>activeTab</code> + <code>tabs</code> &mdash; read the URL and visible DOM on supported sites only<br>&bull; <code>alarms</code> &mdash; periodic background re-scans</p>
+    <div class="note-box">No password access, no form-fill access, no browsing history. The extension is dormant on every site that isn&rsquo;t a supported Solana platform. Full breakdown in <a href="./privacy.html">/privacy</a>.</div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-n">03</div>
+  <div class="step-body">
+    <h3>Browse normally</h3>
+    <p>Antares activates automatically when you land on a supported Solana platform:</p>
+    <p>&bull; DexScreener (Solana pairs)<br>&bull; pump.fun<br>&bull; Axiom<br>&bull; Photon<br>&bull; Birdeye<br>&bull; GeckoTerminal<br>&bull; GMGN.ai<br>&bull; Telemetry</p>
+    <p>Every Solana contract address you encounter triggers an automatic scan. The verdict appears as an overlay panel within 2&ndash;5 seconds. The Chrome toolbar icon shows a colour-coded badge (✓ / ! / ✕) at a glance.</p>
+    <div class="compat">
+      <span>Chrome 120+</span><span>Brave</span><span>Edge</span><span>Arc</span><span>Opera</span>
+    </div>
+  </div>
+</div>
+
+<div class="step" style="border-bottom:none">
+  <div class="step-n">04</div>
+  <div class="step-body">
+    <h3>Try the demo first</h3>
+    <p>Not sure what the verdict looks like? Test Antares without installing &mdash; paste any Solana CA in the live demo and see the full scan inline.</p>
+    <a class="cta" href="./demo.html" style="background:transparent;color:var(--c);border:1px solid var(--c)">↗ Open the demo</a>
+  </div>
+</div>
+
+</main>
+<footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
+</body>
+</html>
