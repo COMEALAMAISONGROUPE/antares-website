@@ -83,9 +83,6 @@ footer span{color:var(--c)}
 .safegate-box::before{content:'SAFE GATE';position:absolute;top:50%;right:40px;transform:translateY(-50%);font:400 100px/1 'Bebas Neue',sans-serif;color:rgba(255,34,68,.03);pointer-events:none}
 .safegate-box h3{font:400 36px/1 'Bebas Neue',sans-serif;color:var(--red);letter-spacing:.06em;margin-bottom:12px}
 .safegate-box p{font-size:11px;color:#5a3a3a;line-height:1.8;max-width:560px;margin-bottom:16px}
-.safegate-triggers{display:flex;flex-wrap:wrap;gap:8px}
-.safegate-triggers span{font-size:9px;color:#663030;border:1px solid rgba(255,34,68,.12);padding:6px 12px;letter-spacing:.08em;text-transform:uppercase;transition:.3s}
-.safegate-triggers span:hover{border-color:rgba(255,34,68,.3);color:var(--red);background:rgba(255,34,68,.03)}
 .score-visual{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:80px}
 .sv-item{background:var(--card);padding:36px 24px;text-align:center;transition:background .3s}
 .sv-item:hover{background:rgba(0,229,176,.02)}
@@ -176,17 +173,7 @@ footer span{color:var(--c)}
 
 <div class="safegate-box reveal">
   <h3 class="glitch" data-text="SAFE GATE">SAFE GATE</h3>
-  <p>Hard verdict overrides &mdash; even a high numeric score can&rsquo;t unlock a token if any of these is true. They reflect risks that can never be soft-unlocked by maturity or holder count.</p>
-  <div class="safegate-triggers">
-    <span>&#10007; LP not burned / locked</span>
-    <span>&#10007; Honeypot &mdash; cannot sell</span>
-    <span>&#10007; Mint authority active</span>
-    <span>&#10007; Freeze authority active</span>
-    <span>&#10007; Deceptive name (impersonation)</span>
-    <span>&#10007; Bundle / sniper detected</span>
-    <span>&#10007; Liquidity &lt; $500</span>
-    <span>&#10007; &lt; 15 holders</span>
-  </div>
+  <p>Hard verdict overrides on top of the numeric score. Some risks reflect attack surfaces that can never be soft-unlocked by maturity or holder count &mdash; when one of them fires, the gate keeps the verdict at DANGER or RUG no matter how high the rest of the score lands. The score band tells you how a token <em style="color:#888;font-style:normal">looks</em>; the Safe Gate tells you when it doesn&rsquo;t matter.</p>
 </div>
 
 </main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:10px;font-size:9px;line-height:1.9"><a href="./demo.html" style="color:#454550;text-decoration:none;margin:0 6px">Demo</a>&middot;<a href="./compare.html" style="color:#454550;text-decoration:none;margin:0 6px">Compare</a>&middot;<a href="./faq.html" style="color:#454550;text-decoration:none;margin:0 6px">FAQ</a>&middot;<a href="./install.html" style="color:#454550;text-decoration:none;margin:0 6px">Install</a>&middot;<a href="./changelog.html" style="color:#454550;text-decoration:none;margin:0 6px">Changelog</a>&middot;<a href="./about.html" style="color:#454550;text-decoration:none;margin:0 6px">About</a>&middot;<a href="./api.html" style="color:#454550;text-decoration:none;margin:0 6px">API</a><br><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 6px">Privacy</a>&middot;<a href="./security.html" style="color:#454550;text-decoration:none;margin:0 6px">Security</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 6px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 6px">GitHub</a></div></footer>
