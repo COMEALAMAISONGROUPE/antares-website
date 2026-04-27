@@ -145,26 +145,15 @@ footer span{color:var(--c)}
 </table>
 </div>
 
-<div class="section-label"><span>Honest Trade-offs</span></div>
-<div class="win-grid">
+<div class="section-label"><span>Why Pick Antares</span></div>
+<div class="win-grid" style="grid-template-columns:1fr">
   <div class="win-card up">
-    <h3>WHY PICK ANTARES</h3>
     <ul>
       <li><b>You see what nobody else shows.</b> Live Holder Activity, Verdict Timeline, Critical Actors with prior-rug count, Time-to-Rug ring, Score Radar. None of these exist in RugCheck or DexScreener.</li>
       <li><b>One verdict from 6 sources.</b> Geometric mean of DexScreener + RugCheck + GoPlus + Helius + Solscan + in-house Chart engine. A single false-positive can&rsquo;t flip a clean token to RUG; a single false-clean can&rsquo;t hide real risk.</li>
       <li><b>Ambient protection.</b> Browser extension scans automatically on every Solana address you encounter (Twitter, Telegram, Discord, every DEX). You don&rsquo;t need to remember to check.</li>
       <li><b>AI explanation grounded in your data.</b> Plain English &mdash; &ldquo;coordinated wallets bought together at launch and now control 41% of supply&rdquo; &mdash; not boilerplate.</li>
       <li><b>Open source.</b> Audit the scoring logic yourself. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:var(--c)">github.com/COMEALAMAISONGROUPE/antares-extension</a></li>
-    </ul>
-  </div>
-  <div class="win-card down">
-    <h3>WHY YOU MIGHT NOT</h3>
-    <ul>
-      <li><b>Solana only (for now).</b> If you trade on Ethereum / BSC / Base / Arbitrum, you need DexScreener + GoPlus today. Multichain support is on the roadmap.</li>
-      <li><b>Slower than RugCheck.</b> Antares makes 6 concurrent calls + AI summary + insider graph. Typical scan is 3&ndash;5s vs RugCheck&rsquo;s &lt;1s. We trade speed for depth.</li>
-      <li><b>Time-to-Rug is heuristic, not validated.</b> The &ldquo;4h 12m median&rdquo; is a profile match against historical patterns, not a backtested forecast. Indicative, not predictive.</li>
-      <li><b>Insider clustering is shallower than BubbleMaps.</b> We analyse top 20 holders and recent 20 transactions. BubbleMaps does much deeper transaction graph analysis &mdash; if you want full graph topology, use them.</li>
-      <li><b>Bundle detection is best in RugCheck.</b> RugCheck&rsquo;s report parser extracts bundle %% explicitly; Antares uses RugCheck for that signal but doesn&rsquo;t out-detect them.</li>
     </ul>
   </div>
 </div>
