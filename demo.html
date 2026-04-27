@@ -108,10 +108,14 @@ footer span{color:var(--c)}
 
 <div class="try-row">
   <span class="lbl">Click a token:</span>
-  <button type="button" data-ca="9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump">FARTCOIN</button>
-  <button type="button" data-ca="J3NKxxXZcnNiMjKw9hYb2K4LUxgwB6t1FtPtQVsv3KFr">SPX</button>
-  <button type="button" data-ca="5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2">TROLL</button>
+  <!-- Order is intentional: SAFE → CAUTION → DANGER → RUG so the four
+       chips read left-to-right as a risk progression. The verdicts
+       below all match what /api/scan returns live (verified with curl
+       at time of writing) and feed the prebaked fallback identically. -->
   <button type="button" data-ca="2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv">PENGU</button>
+  <button type="button" data-ca="9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump">FARTCOIN</button>
+  <button type="button" data-ca="Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump">PIPPIN</button>
+  <button type="button" data-ca="4GFe6MBDorSy5bLbiUMrgETr6pZcjyfxMDm5ehSgpump">HAWK</button>
   <button type="button" class="reset" id="reset-pos" title="Reset overlay position">↺ Reset position</button>
 </div>
 
@@ -123,7 +127,7 @@ footer span{color:var(--c)}
 <div class="browser-frame" id="browser-frame">
   <div class="browser-bar">
     <div class="dots-bar"><i></i><i></i><i></i></div>
-    <div class="url-bar"><span class="lock">▣</span><span class="path"><b>dexscreener.com</b><span id="url-path">/solana/9BB6NF…gpump</span></span></div>
+    <div class="url-bar"><span class="lock">▣</span><span class="path"><b>dexscreener.com</b><span id="url-path">/solana/2zMMhc…ouauv</span></span></div>
   </div>
   <div class="browser-stack" id="browser-stack">
     <iframe class="chart" id="chart" loading="lazy" title="Live price chart" src=""></iframe>
@@ -687,33 +691,40 @@ footer span{color:var(--c)}
       ],
       aiSummary:'Fartcoin lands on CAUTION because a single wallet holds 11% of supply — a meaningful concentration risk even with otherwise solid fundamentals. LP is fully burned, mint and freeze authorities are revoked, no honeypot, and the token has 30d+ of trading history. The verdict is not DANGER because the rest of the structural posture is clean; it is not SAFE because the concentrated wallet alone has enough leverage to swing the price.'
     },
-    'J3NKxxXZcnNiMjKw9hYb2K4LUxgwB6t1FtPtQVsv3KFr':{
-      risk:'SAFE',score:942,confidence:100,
-      tokenSymbol:'SPX',tokenName:'SPX6900',
+    'Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump':{
+      // PIPPIN — DANGER 525 captured live from /api/scan. Two
+      // concentration flags stack: a single wallet at 27% (critical
+      // hard-block via the "concentration" SafeBlockedReason) plus
+      // top-10 wallets at 67% (warning soft-block). LP is burned
+      // and contract is clean otherwise — that's why DANGER not RUG.
+      risk:'DANGER',score:525,confidence:100,
+      tokenSymbol:'pippin',tokenName:'Pippin',
       mintAuthority:false,freezeAuthority:false,honeypot:false,
-      lpBurned:true,lpLocked:false,liquidity:1750000,marketCap:1180000000,
+      lpBurned:true,lpLocked:false,liquidity:4448431,marketCap:26242298,
       flags:[
-        {severity:'warning',label:'Buy/sell imbalance (coordinated pump)'},
+        {severity:'critical',label:'Single wallet holds 27% of supply'},
+        {severity:'warning',label:'Top 10 wallets hold 67% of supply'},
         {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
-        {severity:'bonus',label:'Well distributed supply ✓'}
-      ],
-      aiSummary:'SPX shows a SAFE profile — LP burned, supply well distributed across many holders, no contract-level red flags. Recent buy/sell imbalance hints at coordinated trading worth monitoring, but the underlying security posture is solid. All 7 layers align.'
-    },
-    '5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2':{
-      // info-severity flag retained in the payload (mirrors what
-      // /api/scan returns) but filtered out at render time by the
-      // "drop info + unavailable" filter applied to fAll and the
-      // Critical Flags panel. The Conf 80% header conveys that the
-      // GoPlus source was unreachable on this scan.
-      risk:'SAFE',score:1000,confidence:80,
-      tokenSymbol:'TROLL',tokenName:'TROLL',
-      mintAuthority:false,freezeAuthority:false,honeypot:false,
-      lpBurned:false,lpLocked:false,liquidity:1484350,marketCap:17814174,
-      flags:[
-        {severity:'info',label:'GoPlus unavailable'},
         {severity:'bonus',label:'Established token (30d+) ✓'}
       ],
-      aiSummary:'TROLL earns a SAFE verdict with confidence dropped to 80% because the GoPlus contract-security source was unreachable on this scan. Mint and freeze authorities are both revoked, no honeypot detected, 30-day+ established trading history. Cross-source consensus from the remaining layers aligns on safe.'
+      aiSummary:'Pippin lands on DANGER because of stacked concentration risk — a single wallet holds 27% of supply and the top 10 wallets together control 67%. Either of those alone would already trigger a soft block; together they make a coordinated dump trivially possible. The LP is burned and the contract is clean (no mint, no freeze, no honeypot), which keeps the verdict from collapsing all the way to RUG, but the holder structure alone is enough to treat this as exit-liquidity risk.'
+    },
+    '4GFe6MBDorSy5bLbiUMrgETr6pZcjyfxMDm5ehSgpump':{
+      // HAWK (Hawk Tuah) — RUG 105 captured live from /api/scan.
+      // Single wallet at 44% triggers forceRug in the Helius layer
+      // (>30% threshold). Even with LP burned + 30d+ trading
+      // history the wallet alone can crash the price, so the verdict
+      // bottoms out. Canonical pump-launch concentration rug.
+      risk:'RUG',score:105,confidence:100,
+      tokenSymbol:'HawkTuah',tokenName:'Hawk Tuah',
+      mintAuthority:false,freezeAuthority:false,honeypot:false,
+      lpBurned:true,lpLocked:false,liquidity:71186,marketCap:157299,
+      flags:[
+        {severity:'critical',label:'Single wallet holds 44% of supply'},
+        {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
+        {severity:'bonus',label:'Established token (30d+) ✓'}
+      ],
+      aiSummary:'Hawk Tuah is the textbook concentration rug — a single wallet holds 44% of total supply, more than enough to crash the price to zero in one transaction. LP is technically burned and the token has 30d+ of trading history, but those signals are completely overridden by the wallet concentration: the dev (or whoever controls that wallet) can dump at any moment and the remaining holders cannot defend the price. Hard kill. Treat any remaining liquidity as exit-only.'
     },
     '2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv':{
       risk:'SAFE',score:880,confidence:80,
@@ -854,7 +865,7 @@ footer span{color:var(--c)}
   if(initialCa&&DEMO_PREBAKED[initialCa]){
     positionThenScan(initialCa);
   }else{
-    positionThenScan('9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump');
+    positionThenScan('2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv');
   }
 })();
 </script>
