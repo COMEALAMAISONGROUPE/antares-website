@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <title>Antares — Data Sources</title>
-            <meta name="description" content="Antares data sources: DexScreener, RugCheck, GoPlus, Helius, Solscan, OHLCV charts, creator history. How each source contributes to the score.">
+            <meta name="description" content="Antares data sources: 6 external APIs (DexScreener, RugCheck, GoPlus, Helius, Solscan, GeckoTerminal) plus 3 internal systems (Insider Graph, Verdict History, Gemini AI). How each one contributes to the verdict.">
     <meta name="author" content="Antares">
     <link rel="canonical" href="https://antares-website.vercel.app/sources">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://antares-website.vercel.app/sources">
     <meta property="og:title" content="Antares — Data Sources">
-    <meta property="og:description" content="DexScreener, RugCheck, GoPlus, Helius, Solscan, OHLCV charts. Every source Antares uses to score Solana tokens.">
+    <meta property="og:description" content="6 external APIs plus 3 internal systems. Every source Antares uses to score Solana tokens — DexScreener, RugCheck, GoPlus, Helius, Solscan, GeckoTerminal, Insider Graph, Verdict History, Gemini AI.">
     <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@antaresantiscam">
     <meta name="twitter:title" content="Antares — Data Sources">
-    <meta name="twitter:description" content="DexScreener, RugCheck, GoPlus, Helius, Solscan, OHLCV charts. Every source Antares uses to score Solana tokens.">
+    <meta name="twitter:description" content="6 external APIs plus 3 internal systems — every source Antares uses to score Solana tokens.">
     <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
     <!-- Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,7 +89,7 @@ footer span{color:var(--c)}
 @media(max-width:900px){.source{grid-template-columns:1fr}.source-name{border-right:none;border-bottom:1px solid var(--border);padding:24px}}
 
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Antares — Data Sources","description":"DexScreener, RugCheck, GoPlus, Helius, Solscan, OHLCV charts. Every source Antares uses to score Solana tokens.","url":"https://antares-website.vercel.app/sources","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"},"about":{"@type":"SoftwareApplication","name":"Antares","applicationCategory":"BrowserApplication","operatingSystem":"Chrome","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Antares — Data Sources","description":"6 external APIs plus 3 internal systems — every source Antares uses to score Solana tokens.","url":"https://antares-website.vercel.app/sources","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"},"about":{"@type":"SoftwareApplication","name":"Antares","applicationCategory":"BrowserApplication","operatingSystem":"Chrome","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}}</script>
 </head>
 <body>
 <div class="stripe" role="presentation" aria-hidden="true"></div>
@@ -105,11 +105,11 @@ footer span{color:var(--c)}
 
 <section class="page-hero">
   <div class="eyebrow reveal">Data Sources</div>
-  <h1 class="reveal delay-1"><span class="glitch" data-text="7 SOURCES.">7 SOURCES.</span><br><span class="accent glitch" data-text="ZERO TRUST.">ZERO TRUST.</span></h1>
-  <p class="sub reveal delay-2">Antares never trusts a single source. Seven independent APIs are queried in parallel on every scan. Each covers a distinct attack surface. When sources conflict, the most conservative verdict wins.</p>
+  <h1 class="reveal delay-1"><span class="glitch" data-text="9 SOURCES.">9 SOURCES.</span><br><span class="accent glitch" data-text="ZERO TRUST.">ZERO TRUST.</span></h1>
+  <p class="sub reveal delay-2">Antares never trusts a single source. <b>Six external APIs</b> are queried in parallel on every scan, plus <b>three internal systems</b> for cluster detection, verdict history and AI synthesis. Each covers a distinct attack surface. When sources conflict, the most conservative verdict wins.</p>
 </section>
 
-<div class="section-label reveal"><span>API Sources</span></div>
+<div class="section-label reveal"><span>External APIs &mdash; 6 sources</span></div>
 <div class="source-grid">
 
   <div class="source reveal delay-1">
@@ -141,6 +141,10 @@ footer span{color:var(--c)}
     <div class="source-name"><h3>GeckoTerminal</h3><div class="role">Chart Data</div></div>
     <div class="source-body"><p>OHLCV candle data provider for the Chart Intelligence layer. Raw price candles across 5m, 1h, 6h, and 24h windows. Pump-and-dump detection, blow-off top analysis, and wash trading identification depend on this feed.</p><div class="data-tags"><span>OHLCV</span><span>5m</span><span>1h</span><span>6h</span><span>24h</span></div></div>
   </div>
+</div>
+
+<div class="section-label reveal"><span>Internal Systems &mdash; 3 sources</span></div>
+<div class="source-grid">
 
   <div class="source reveal">
     <div class="source-name"><h3>Insider Graph</h3><div class="role">Internal Engine</div></div>
