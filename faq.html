@@ -72,7 +72,7 @@ footer span{color:var(--c)}
 
 <div class="qa"><h3>2. Can a SAFE token still rug?</h3>
 <p>Yes. Antares is a probabilistic risk screen, not a guarantee. We can detect what 6 independent sources surface at scan time &mdash; novel exploits, coordinated dumps via fresh wallets, or social-engineering attacks may not register.</p>
-<p>The Time-to-Rug ring and Outcome Histogram are <b>indicative</b>, derived from a heuristic profile match against historical clusters &mdash; they are not validated forecasts. See the <a href="./terms.html">Terms</a> for the full disclaimer.</p>
+<p>The Outcome Histogram is <b>indicative</b>, derived from a heuristic profile match against historical clusters &mdash; it is not a validated forecast. See the <a href="./terms.html">Terms</a> for the full disclaimer.</p>
 </div>
 
 <div class="qa"><h3>3. Why is this token flagged DANGER when it looks fine?</h3>
@@ -106,11 +106,7 @@ footer span{color:var(--c)}
 <p>If Gemini is unreachable, a local fallback dictionary covers the 12 most common flag explanations so the AI Verdict card never goes empty.</p>
 </div>
 
-<div class="qa"><h3>9. The Time-to-Rug ring says &ldquo;4h 12m median&rdquo;. Is that accurate?</h3>
-<p><b>It&rsquo;s indicative, not predictive.</b> The number is a heuristic profile match against historical clusters of comparable launches. Hardcoded distributions per profile (fast-rug / high-risk / slow-death). The corpus-based KNN matcher (the J3-J5 backtest harness) is in development &mdash; until then, treat the ring as &ldquo;tokens like this typically die in this window&rdquo; not &ldquo;this specific token will die at 4h 12m.&rdquo;</p>
-</div>
-
-<div class="qa"><h3>10. How do I report a false positive / false negative / bug?</h3>
+<div class="qa"><h3>9. How do I report a false positive / false negative / bug?</h3>
 <p>Open an issue at <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">github.com/COMEALAMAISONGROUPE/antares-extension/issues</a> with: the token CA, what verdict you got, what you expected, and the timestamp of the scan (visible in the extension&rsquo;s metric tab as <code>requestId</code>).</p>
 <p>Security issues should use Private Vulnerability Reporting per <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/SECURITY.md">SECURITY.md</a> &mdash; do not include exploit details in a public issue.</p>
 </div>
