@@ -78,6 +78,8 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 
 .disclaimer{font-size:10.5px;color:#555;line-height:1.85;margin-top:24px;padding:18px 22px;background:rgba(0,229,176,.03);border-left:2px solid var(--c)}
 .disclaimer b{color:#888;font-weight:600}
+.demo-notice{font-size:10.5px;color:#a8a060;line-height:1.7;margin-bottom:16px;padding:12px 18px;background:rgba(245,208,0,.04);border-left:2px solid #f5d000;letter-spacing:.02em}
+.demo-notice b{color:#d4b040;font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:9.5px;display:block;margin-bottom:4px}
 .cta-final{margin:80px 0 60px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
 .cta-final h2{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:12px;color:#eaeaea;position:relative}
@@ -113,6 +115,11 @@ footer span{color:var(--c)}
   <button type="button" class="reset" id="reset-pos" title="Reset overlay position">↺ Reset position</button>
 </div>
 
+<div class="demo-notice">
+  <b>⚠ Demonstrative scores</b>
+  The verdicts shown for these four tokens are point-in-time snapshots used to illustrate how the overlay looks across the SAFE / CAUTION / DANGER / RUG bands. <b style="display:inline;text-transform:none;letter-spacing:normal;font-size:inherit;color:#d4b040;margin:0">Real verdicts evolve in real time</b> with the market &mdash; liquidity moves, holders rebalance, scores drift &mdash; so the score you see in the live extension on a given token can differ from what this demo shows. The on-chain truth is whatever <code style="color:#a07e2a;background:rgba(0,0,0,.2);padding:1px 4px;font-size:10px">/api/scan</code> returns at the moment you scan.
+</div>
+
 <div class="browser-frame" id="browser-frame">
   <div class="browser-bar">
     <div class="dots-bar"><i></i><i></i><i></i></div>
@@ -125,7 +132,7 @@ footer span{color:var(--c)}
 </div>
 
 <div class="disclaimer">
-  <b>How this works.</b> The chart is the real DexScreener embed. The overlay on top is the same Antares popup that runs in the extension &mdash; same Shadow DOM, same SHADOW_CSS, same buildResultNode tree, same skeleton during scan, same Critical Flags &amp; AI Summary panels, same drag pattern. Every verdict is a <b>real-time</b> call to <code style="color:#888;background:#15151a;padding:1px 5px;font-size:10px">/api/scan?ca={your-address}</code> &mdash; no heuristics, no fallback, no fake numbers. <b>Indicative, not financial advice</b> &mdash; see <a href="./terms.html" style="color:var(--c)">Terms</a>.
+  <b>How this works.</b> The chart is the real DexScreener embed. The overlay on top is the same Antares popup that runs in the extension &mdash; same Shadow DOM, same SHADOW_CSS, same buildResultNode tree, same skeleton during scan, same Critical Flags &amp; AI Summary panels, same drag pattern. Each click attempts a live call to <code style="color:#888;background:#15151a;padding:1px 5px;font-size:10px">/api/scan?ca={your-address}</code>; if the Vercel function is cold-starting we render a captured snapshot for that token so the overlay always renders. <b>The four sample scores are demonstrative</b> &mdash; on-chain state moves, so the live extension may return a different score for the same token at any moment. <b>Indicative, not financial advice</b> &mdash; see <a href="./terms.html" style="color:var(--c)">Terms</a>.
 </div>
 
 <div class="cta-final">
