@@ -108,7 +108,7 @@ footer span{color:var(--c)}
   <span class="lbl">Click a token:</span>
   <button type="button" data-ca="9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump">FARTCOIN</button>
   <button type="button" data-ca="J3NKxxXZcnNiMjKw9hYb2K4LUxgwB6t1FtPtQVsv3KFr">SPX</button>
-  <button type="button" data-ca="A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump">FWOG</button>
+  <button type="button" data-ca="5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2">TROLL</button>
   <button type="button" data-ca="2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv">PENGU</button>
   <button type="button" class="reset" id="reset-pos" title="Reset overlay position">↺ Reset position</button>
 </div>
@@ -672,17 +672,16 @@ footer span{color:var(--c)}
       ],
       aiSummary:'SPX shows a SAFE profile — LP burned, supply well distributed across many holders, no contract-level red flags. Recent buy/sell imbalance hints at coordinated trading worth monitoring, but the underlying security posture is solid. All 7 layers align.'
     },
-    'A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump':{
-      risk:'SAFE',score:1000,confidence:100,
-      tokenSymbol:'FWOG',tokenName:'FWOG',
+    '5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2':{
+      risk:'SAFE',score:1000,confidence:80,
+      tokenSymbol:'TROLL',tokenName:'TROLL',
       mintAuthority:false,freezeAuthority:false,honeypot:false,
-      lpBurned:true,lpLocked:false,liquidity:1266186,marketCap:4526543,
+      lpBurned:false,lpLocked:false,liquidity:1484350,marketCap:17814174,
       flags:[
-        {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
-        {severity:'bonus',label:'Well distributed supply ✓'},
+        {severity:'info',label:'GoPlus unavailable'},
         {severity:'bonus',label:'Established token (30d+) ✓'}
       ],
-      aiSummary:'FWOG earns a maxed-out SAFE verdict — LP burned, supply well distributed across many holders, mint and freeze authorities both revoked, no honeypot, 30-day+ trading history. All 7 detection layers align. The token has the structural posture of a legitimate Solana memecoin with no contract-level red flags surfacing across the cross-source consensus.'
+      aiSummary:'TROLL earns a SAFE verdict with confidence dropped to 80% because the GoPlus contract-security source was unreachable on this scan. Mint and freeze authorities are both revoked, no honeypot detected, 30-day+ established trading history on Solana. Cross-source consensus from the remaining 6 layers aligns on safe; treat the missing GoPlus signal as a reason to re-check rather than a red flag.'
     },
     '2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv':{
       risk:'SAFE',score:880,confidence:80,
