@@ -25,6 +25,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://antares-extension.vercel.app">
+<link rel="preconnect" href="https://api.dexscreener.com">
+<link rel="preconnect" href="https://dexscreener.com">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -110,6 +112,14 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .r-msub{font-size:10px;color:#666;letter-spacing:.04em;margin-top:5px}
 .r-msub.up{color:var(--c)}.r-msub.dn{color:var(--danger)}
 .r-spark{margin-top:6px;display:block}
+.r-chart{margin:0 36px;background:#0a0a0c;border:1px solid var(--border);position:relative;overflow:hidden}
+.r-chart::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--risk-fill),transparent);opacity:.4;z-index:2}
+.r-chart-head{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#555}
+.r-chart-head .src{color:var(--c);font-weight:700;letter-spacing:.16em}
+.r-chart-head a{color:#666;text-decoration:none;transition:color .2s}
+.r-chart-head a:hover{color:var(--c)}
+.r-chart iframe{display:block;width:100%;height:420px;border:0;background:#0a0a0c}
+@media(max-width:760px){.r-chart iframe{height:320px}}
 .r-section-label{display:flex;align-items:center;gap:14px;margin:32px 36px 14px}
 .r-section-label::before{content:'▸';font-size:9px;color:var(--c)}
 .r-section-label span{font-size:10px;color:#3a3a3f;letter-spacing:.24em;text-transform:uppercase}
@@ -292,6 +302,8 @@ footer span{color:var(--c)}
       ? '<div class="r-logo"><img src="'+escapeHtml(logo)+'" alt="'+escapeHtml(sym)+'" onerror="this.parentElement.textContent=this.alt.slice(0,4)"></div>'
       : (sym?'<div class="r-logo">'+escapeHtml(sym.slice(0,4))+'</div>':'');
     var fullUrl='https://antares-extension.vercel.app/token.html?ca='+encodeURIComponent(ca);
+    var chartUrl='https://dexscreener.com/solana/'+encodeURIComponent(ca)+'?embed=1&theme=dark&trades=0&info=0';
+    var chartLink='https://dexscreener.com/solana/'+encodeURIComponent(ca);
     result.innerHTML=''
       +'<section class="r-hero" data-verdict="'+escapeHtml(lb)+'">'
         +'<div class="r-eye">Token Analysis'+(conf!=null?' · Conf '+conf+'%':'')+'</div>'
@@ -302,6 +314,8 @@ footer span{color:var(--c)}
           +'<div class="r-mcard"><div class="r-mlabel">'+(mc?'Market Cap':'Price USD')+'</div><div class="r-mbig alt">'+escapeHtml(mc?fmt(mc):(priceUsd?fmtPrice(priceUsd):'—'))+'</div>'+sparkline+(c24?'<div class="r-msub '+c24.cls+'">'+escapeHtml(c24.txt)+' · 24h</div>':'')+'</div>'
         +'</div>'
       +'</section>'
+      +'<div class="r-section-label"><span>Live Chart</span></div>'
+      +'<div class="r-chart"><div class="r-chart-head"><span class="src">▸ DexScreener</span><a href="'+chartLink+'" target="_blank" rel="noopener noreferrer">Open on DexScreener ↗</a></div><iframe src="'+chartUrl+'" loading="lazy" title="Live price chart"></iframe></div>'
       +'<div class="r-section-label"><span>Critical Flags</span></div>'
       +'<div class="r-flags"><div class="r-flags-head"><span class="lbl">'+escapeHtml(flagsCount)+'</span>'+(flagsSev?'<span class="count">'+escapeHtml(flagsSev)+'</span>':'')+'</div>'+flagRowsHtml+'</div>'
       +'<div class="r-section-label"><span>AI Verdict</span></div>'
@@ -313,20 +327,69 @@ footer span{color:var(--c)}
 
   function showError(msg){result.innerHTML='<div class="result-error"><b>Scan failed</b>'+escapeHtml(msg||'The Antares API did not respond in time. Try another token or refresh in a moment.')+'</div>';}
 
+  // Fallback: build a synthetic scan result from DexScreener public API.
+  // Used when /api/scan is unreachable so the demo always renders something
+  // useful (price, mcap, chart, basic flags) instead of an error wall.
+  function fetchDexscreenerFallback(ca,signal){
+    return fetch('https://api.dexscreener.com/latest/dex/tokens/'+encodeURIComponent(ca),{signal:signal})
+      .then(function(r){if(!r.ok)throw new Error('DexScreener HTTP '+r.status);return r.json();})
+      .then(function(j){
+        var pairs=(j&&j.pairs)||[];
+        if(pairs.length===0)throw new Error('No DexScreener pair for this token.');
+        // pick the most-liquid Solana pair
+        pairs.sort(function(a,b){return ((b.liquidity&&b.liquidity.usd)||0)-((a.liquidity&&a.liquidity.usd)||0);});
+        var p=pairs[0];
+        var liq=(p.liquidity&&p.liquidity.usd)||0;
+        var mc=p.marketCap||p.fdv||null;
+        var pc24=(p.priceChange&&p.priceChange.h24)!=null?p.priceChange.h24:null;
+        var v24=(p.volume&&p.volume.h24)||0;
+        // crude heuristic verdict from DexScreener-only signals
+        var risk='CAUTION',score=600,flags=[];
+        if(liq<5000){risk='RUG';score=180;flags.push({severity:'critical',label:'Liquidity below $5k — exit not guaranteed.'});}
+        else if(liq<25000){risk='DANGER';score=320;flags.push({severity:'critical',label:'Thin liquidity ('+fmt(liq)+') — high slippage risk.'});}
+        else if(liq<100000){risk='CAUTION';score=580;flags.push({severity:'warning',label:'Liquidity ('+fmt(liq)+') still thin.'});}
+        else{risk='SAFE';score=820;}
+        if(pc24!=null&&pc24<-50){if(score>350){score=350;risk='DANGER';}flags.push({severity:'critical',label:'Price down '+pc24.toFixed(0)+'% in 24h.'});}
+        if(v24<1000){flags.push({severity:'warning',label:'24h volume below $1k — illiquid.'});}
+        return {
+          risk:risk, score:score, confidence:35,
+          tokenSymbol:p.baseToken&&p.baseToken.symbol,
+          tokenName:p.baseToken&&p.baseToken.name,
+          tokenLogo:p.info&&p.info.imageUrl,
+          marketCap:mc, priceUsd:p.priceUsd, priceChange24h:pc24,
+          flags:flags,
+          aiSummary:'Indicative read from DexScreener only — Antares full pipeline unreachable. Liquidity '+fmt(liq)+', 24h volume '+fmt(v24)+'. Install the extension for the full 7-source verdict.',
+          layers:{dexscreener:{available:true,trust:risk==='SAFE'?0.85:risk==='CAUTION'?0.55:0.2}},
+          _fallback:true
+        };
+      });
+  }
+
   var inflight=null;
   function loadResult(ca){
     if(!CA_RE.test(ca)){showError('Expected 32–44 base58 characters.');return;}
     if(btn)btn.disabled=true;
     if(inflight){try{inflight.abort();}catch(e){}}
     inflight=new AbortController();
+    var sig=inflight.signal;
     result.innerHTML='<div class="result-loading"><div class="spin"></div>Scanning '+ca.slice(0,6)+'…'+ca.slice(-4)+'…</div>';
-    fetch(API+'?ca='+encodeURIComponent(ca),{signal:inflight.signal})
+    fetch(API+'?ca='+encodeURIComponent(ca),{signal:sig})
       .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
       .then(function(d){
         render(d,ca);
         try{history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca));}catch(e){}
       })
-      .catch(function(e){if(e.name==='AbortError')return;showError(e.message);})
+      .catch(function(e){
+        if(e.name==='AbortError')return;
+        // Antares API down or CORS-blocked — fall back to DexScreener so the
+        // visitor still sees a chart + indicative verdict instead of an error.
+        return fetchDexscreenerFallback(ca,sig)
+          .then(function(d){
+            render(d,ca);
+            try{history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca));}catch(e2){}
+          })
+          .catch(function(e2){if(e2.name==='AbortError')return;showError(e2.message||e.message);});
+      })
       .finally(function(){if(btn)btn.disabled=false;});
   }
 
