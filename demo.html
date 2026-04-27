@@ -6,13 +6,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <title>Antares — Live Demo</title>
-<meta name="description" content="Try Antares without installing. 4 sample tokens pre-loaded — SAFE, CAUTION, DANGER, RUG PULL. Live verdict rendered inline.">
+<meta name="description" content="See the Antares overlay at work. Scan any Solana token live and watch the 7-source verdict appear over the DexScreener chart — exactly what you get after install.">
 <meta name="author" content="Antares">
 <link rel="canonical" href="https://antares-website.vercel.app/demo">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antares-website.vercel.app/demo">
 <meta property="og:title" content="Antares — Live Demo">
-<meta property="og:description" content="Try Antares without installing. 4 sample tokens pre-loaded — SAFE, CAUTION, DANGER, RUG PULL.">
+<meta property="og:description" content="Watch the Antares overlay scan a real Solana token in 4 seconds — exactly what the extension shows after install.">
 <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@antaresantiscam">
 <meta name="twitter:title" content="Antares — Live Demo">
-<meta name="twitter:description" content="Try Antares without installing. 4 sample tokens pre-loaded.">
+<meta name="twitter:description" content="Watch the Antares overlay scan a real Solana token live.">
 <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,25 +58,8 @@ nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;let
 h1{font:400 clamp(40px,7vw,68px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:12px;color:#eaeaea}
 h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:720px;border-left:2px solid var(--c);padding-left:16px;margin-bottom:28px}
-.verdict-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
-.vtab{background:var(--card);border:1px solid var(--border);padding:18px 16px;cursor:pointer;text-align:left;transition:.25s;position:relative;overflow:hidden;font-family:'IBM Plex Mono',monospace}
-.vtab::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:.6;transition:.25s}
-.vtab.t-safe::before{background:var(--safe)}
-.vtab.t-caution::before{background:var(--caution)}
-.vtab.t-danger::before{background:var(--danger)}
-.vtab.t-rug::before{background:var(--rug)}
-.vtab:hover{transform:translateY(-2px);background:#13131a}
-.vtab.active{background:#13131a}
-.vtab.active::before{height:3px;opacity:1}
-.vtab-vlbl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
-.vtab.t-safe .vtab-vlbl{color:var(--safe)}
-.vtab.t-caution .vtab-vlbl{color:var(--caution)}
-.vtab.t-danger .vtab-vlbl{color:var(--danger)}
-.vtab.t-rug .vtab-vlbl{color:var(--rug)}
-.vtab-sym{font:400 26px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#e0e0e0;margin-bottom:4px}
-.vtab-name{font-size:10.5px;color:#666;line-height:1.5}
-@media(max-width:780px){.verdict-tabs{grid-template-columns:repeat(2,1fr)}}
-.demo-form{background:var(--card);border:1px solid var(--border);padding:14px 16px;margin-bottom:32px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+.demo-form{background:var(--card);border:1px solid var(--border);padding:14px 16px;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .demo-form-lbl{font-size:9px;color:#444;letter-spacing:.18em;text-transform:uppercase;margin-right:4px}
 .demo-form input{flex:1;min-width:200px;background:#0a0a0c;border:1px solid var(--border);color:#ddd;font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:10px 12px;letter-spacing:.04em;border-radius:2px;outline:none;transition:border-color .2s}
 .demo-form input:focus{border-color:rgba(0,229,176,.4);box-shadow:0 0 0 1px rgba(0,229,176,.2)}
@@ -84,78 +67,84 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .demo-form button{background:var(--c);color:#0a0a0c;border:none;padding:10px 20px;font:700 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:transform .2s,box-shadow .2s}
 .demo-form button:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,229,176,.25)}
 .demo-form button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.result{background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;min-height:480px}
-.result-loading{padding:80px 32px;text-align:center;color:#444;font-size:11px;letter-spacing:.16em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:18px}
-.result-loading .spin{width:32px;height:32px;border:2px solid #1a1a1e;border-top-color:var(--c);border-radius:50%;animation:sp .7s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-.result-error{padding:60px 32px;text-align:center;font-size:12px;color:#7a4a4a;line-height:1.85}
-.result-error b{color:#a85a5a;font-weight:700;display:block;margin-bottom:8px;font-size:14px}
-.r-hero{padding:36px 36px 24px;position:relative}
-.r-hero::before{content:attr(data-verdict);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:400 280px/1 'Bebas Neue',sans-serif;color:var(--risk);opacity:.012;pointer-events:none;white-space:nowrap;letter-spacing:.06em;z-index:0}
-.r-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--risk);letter-spacing:.28em;text-transform:uppercase;display:flex;align-items:center;gap:10px;position:relative;z-index:1;margin-bottom:14px}
-.r-eye::before{content:'';display:block;width:22px;height:2px;background:var(--risk)}
-.r-verdict-row{display:flex;justify-content:space-between;align-items:center;gap:24px;position:relative;z-index:1;margin-bottom:8px}
-.r-verdict{font:400 clamp(56px,8vw,96px)/.86 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--risk);text-shadow:0 0 60px var(--risk-glow);flex:1;min-width:0}
-.r-logo{width:72px;height:72px;border-radius:50%;border:1.5px solid var(--risk-border);box-shadow:0 0 28px var(--risk-glow);background:#111;display:flex;align-items:center;justify-content:center;font:600 14px 'IBM Plex Mono',monospace;color:#aaa;flex-shrink:0;overflow:hidden}
-.r-logo img{width:100%;height:100%;object-fit:cover}
-.r-tk{font-size:13px;color:#777;letter-spacing:.06em;position:relative;z-index:1;margin-bottom:14px}
-.r-tk b{color:#ddd;font-weight:700;font-size:14px}
-.r-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative;z-index:1;margin-top:14px}
-.r-mcard{background:#0e0e10;border:1px solid var(--border);padding:14px 16px;position:relative;overflow:hidden}
-.r-mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--risk-fill),transparent);opacity:.5}
-.r-mlabel{font-size:9px;color:#444;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
-.r-mbig{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.02em;color:#ddd}
-.r-mbig.alt{color:var(--risk);text-shadow:0 0 18px var(--risk-glow)}
-.r-mbig .denom{font-size:11px;color:#444;margin-left:3px}
-.r-sbar{margin-top:8px;height:2px;background:#181818;border-radius:1px;overflow:hidden}
-.r-sbar-fill{height:100%;background:linear-gradient(90deg,var(--risk-fill),var(--risk));box-shadow:0 0 6px var(--risk-glow);width:0;transition:width 1s cubic-bezier(.22,1,.36,1)}
-.r-msub{font-size:10px;color:#666;letter-spacing:.04em;margin-top:5px}
-.r-msub.up{color:var(--c)}.r-msub.dn{color:var(--danger)}
-.r-spark{margin-top:6px;display:block}
-.r-chart{margin:0 36px;background:#0a0a0c;border:1px solid var(--border);position:relative;overflow:hidden}
-.r-chart::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--risk-fill),transparent);opacity:.4;z-index:2}
-.r-chart-head{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#555}
-.r-chart-head .src{color:var(--c);font-weight:700;letter-spacing:.16em}
-.r-chart-head a{color:#666;text-decoration:none;transition:color .2s}
-.r-chart-head a:hover{color:var(--c)}
-.r-chart iframe{display:block;width:100%;height:420px;border:0;background:#0a0a0c}
-@media(max-width:760px){.r-chart iframe{height:320px}}
-.r-section-label{display:flex;align-items:center;gap:14px;margin:32px 36px 14px}
-.r-section-label::before{content:'▸';font-size:9px;color:var(--c)}
-.r-section-label span{font-size:10px;color:#3a3a3f;letter-spacing:.24em;text-transform:uppercase}
-.r-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.r-flags{margin:0 36px;background:var(--risk-soft);border:1px solid var(--risk-border)}
-.r-flags-head{padding:14px 20px 10px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;align-items:center}
-.r-flags-head .lbl{font-size:9px;color:var(--risk);letter-spacing:.2em;text-transform:uppercase;font-weight:700}
-.r-flags-head .count{font-size:11px;color:#666}
-.r-flag-row{display:flex;align-items:flex-start;gap:11px;padding:11px 20px;border-bottom:1px solid rgba(255,255,255,.025)}
-.r-flag-row:last-child{border:none}
-.r-flag-icon{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;margin-top:2px}
-.r-flag-icon.cr{background:rgba(255,60,80,.18);color:var(--danger)}
-.r-flag-icon.wr{background:rgba(245,208,0,.14);color:var(--caution)}
-.r-flag-label{font-size:12px;font-weight:600;line-height:1.4;color:#e07070}
-.r-flag-row.wr .r-flag-label{color:#d4b040}
-.r-src{margin:0 36px 36px;display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border)}
-.r-src-row{display:grid;grid-template-columns:130px 100px 1fr;align-items:center;gap:16px;padding:12px 16px;background:var(--card);font-size:11px}
-.r-src-name{font:600 12px 'IBM Plex Mono',monospace;color:#ccc}
-.r-src-vrd{font:700 10px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase}
-.r-src-row.bad .r-src-vrd{color:var(--danger)}
-.r-src-row.warn .r-src-vrd{color:var(--caution)}
-.r-src-row.ok .r-src-vrd{color:var(--c)}
-.r-src-row.na .r-src-vrd{color:#555}
-.r-src-note{font-size:10.5px;color:#777;line-height:1.5}
-.r-ai{margin:0 36px;background:rgba(167,139,250,.04);border:1px solid rgba(167,139,250,.18);padding:18px 22px;position:relative;overflow:hidden}
-.r-ai::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,.4),transparent)}
-.r-ai-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.r-ai-head .icon{font-size:13px;color:var(--purple)}
-.r-ai-head h3{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);font-weight:700}
-.r-ai-body{font-size:12px;line-height:1.7;color:#a89fc6;max-width:880px}
-.r-ai-body b{color:#c4b5fd;font-weight:600}
-.r-cta{margin:32px 36px;padding:18px 22px;background:#0a0a0c;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.r-cta-text{font-size:11.5px;color:#888;line-height:1.6}
-.r-cta-text b{color:#bbb;font-weight:700}
-.r-cta-link{display:inline-block;background:var(--c);color:#0a0a0c;padding:10px 22px;font:700 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s;flex-shrink:0}
-.r-cta-link:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,229,176,.25)}
+
+.try-row{font-size:10.5px;color:#444;margin-bottom:24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;letter-spacing:.06em}
+.try-row .lbl{color:#3a3a3f;letter-spacing:.18em;text-transform:uppercase;font-size:9px}
+.try-row a{color:#888;text-decoration:none;border-bottom:1px dashed #2a2a2f;padding-bottom:1px;cursor:pointer;transition:color .2s,border-color .2s;background:none;border-top:none;border-left:none;border-right:none;font:inherit;padding-top:0;padding-left:0;padding-right:0}
+.try-row a:hover{color:var(--c);border-bottom-color:var(--c)}
+
+.browser-frame{background:#0d0d10;border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,.45)}
+.browser-bar{background:#111114;border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:14px}
+.dots{display:flex;gap:6px}
+.dots i{width:10px;height:10px;border-radius:50%;background:#222226;display:block}
+.dots i:nth-child(1){background:#3a2a2a}.dots i:nth-child(2){background:#3a352a}.dots i:nth-child(3){background:#2a3a2c}
+.url-bar{flex:1;background:#0a0a0c;border:1px solid #1a1a1e;border-radius:3px;padding:6px 12px;font-size:10.5px;color:#888;letter-spacing:.04em;font-family:'IBM Plex Mono',monospace;display:flex;align-items:center;gap:8px;min-width:0}
+.url-bar .lock{color:var(--c);font-size:9px}
+.url-bar .path{color:#666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.url-bar .path b{color:#bbb;font-weight:600}
+.browser-stack{position:relative;background:#0a0a0c}
+.browser-stack iframe.chart{display:block;width:100%;height:560px;border:0;background:#0a0a0c}
+@media(max-width:760px){.browser-stack iframe.chart{height:380px}}
+
+.overlay{position:absolute;top:18px;right:18px;width:340px;background:rgba(13,13,16,.96);border:1px solid var(--risk-border);box-shadow:0 24px 64px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.02),0 0 32px var(--risk-glow);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:4px;z-index:5;font-family:'IBM Plex Mono',monospace;overflow:hidden;transition:opacity .35s ease, transform .35s cubic-bezier(.22,1,.36,1), border-color .4s}
+.overlay::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--risk),transparent);opacity:.7}
+.overlay.hidden{opacity:0;transform:translateX(20px) translateY(-6px);pointer-events:none}
+.ovl-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
+.ovl-brand{display:flex;align-items:center;gap:8px;font:600 10px/1 'IBM Plex Mono',monospace;color:#ddd;letter-spacing:.22em}
+.ovl-brand img{width:18px;height:18px}
+.ovl-state{font-size:9px;letter-spacing:.22em;color:var(--risk);font-weight:700;display:flex;align-items:center;gap:6px}
+.ovl-state::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--risk);box-shadow:0 0 8px var(--risk-glow);animation:pulse-dot 1.4s ease infinite}
+@keyframes pulse-dot{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+
+/* SCANNING STATE */
+.ovl-scan{padding:14px 16px}
+.ovl-scan-title{font-size:9px;color:#666;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+.ovl-progress{height:2px;background:#181820;border-radius:1px;overflow:hidden;margin-bottom:14px}
+.ovl-progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--risk-fill),var(--risk));box-shadow:0 0 6px var(--risk-glow);transition:width .25s linear}
+.ovl-layers{display:flex;flex-direction:column;gap:6px}
+.ovl-layer{display:flex;align-items:center;gap:10px;font-size:11px;color:#3a3a3f;padding:5px 8px;background:rgba(255,255,255,.015);border-radius:2px;transition:color .3s, background .3s}
+.ovl-layer .dot{width:8px;height:8px;border-radius:50%;background:#1f1f25;flex-shrink:0;position:relative;transition:background .3s, box-shadow .3s}
+.ovl-layer .label{flex:1;letter-spacing:.06em}
+.ovl-layer .stat{font-size:9px;letter-spacing:.18em;color:#2a2a2f;text-transform:uppercase}
+.ovl-layer.active{color:#9a9aa0}
+.ovl-layer.active .dot{background:var(--c);box-shadow:0 0 8px rgba(0,229,176,.6);animation:pulse-dot 1s ease infinite}
+.ovl-layer.active .stat{color:var(--c)}
+.ovl-layer.done{color:#ccc;background:rgba(0,229,176,.04)}
+.ovl-layer.done .dot{background:var(--c);box-shadow:0 0 4px rgba(0,229,176,.4);animation:none}
+.ovl-layer.done .stat{color:#5a8a78}
+.ovl-layer.done .stat::before{content:'✓ ';color:var(--c)}
+
+/* RESULT STATE */
+.ovl-result{padding:14px 16px}
+.ovl-token{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ovl-logo{width:36px;height:36px;border-radius:50%;background:#1a1a1e;border:1px solid var(--risk-border);display:flex;align-items:center;justify-content:center;font:600 11px 'IBM Plex Mono',monospace;color:#aaa;flex-shrink:0;overflow:hidden}
+.ovl-logo img{width:100%;height:100%;object-fit:cover}
+.ovl-tk{flex:1;min-width:0;overflow:hidden}
+.ovl-sym{font:600 14px 'IBM Plex Mono',monospace;color:#eee;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ovl-name{font-size:10px;color:#666;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.ovl-verdict{font:400 38px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:var(--risk);text-shadow:0 0 24px var(--risk-glow);margin-bottom:6px}
+.ovl-score-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ovl-score-num{font:400 22px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#ddd;flex-shrink:0}
+.ovl-score-num .denom{font-size:9px;color:#444;margin-left:2px}
+.ovl-score-bar{flex:1;height:3px;background:#181820;border-radius:2px;overflow:hidden}
+.ovl-score-fill{height:100%;width:0;background:linear-gradient(90deg,var(--risk-fill),var(--risk));box-shadow:0 0 6px var(--risk-glow);transition:width .9s cubic-bezier(.22,1,.36,1)}
+.ovl-mc{display:flex;justify-content:space-between;font-size:10px;color:#666;letter-spacing:.04em;padding:8px 0;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03);margin-bottom:10px}
+.ovl-mc b{color:#ccc;font-weight:600}
+.ovl-mc .pc.up{color:var(--c)}.ovl-mc .pc.dn{color:var(--danger)}
+.ovl-flags{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;max-height:108px;overflow:hidden}
+.ovl-flag{display:flex;align-items:flex-start;gap:8px;font-size:10.5px;line-height:1.4;color:#a07070;background:rgba(255,60,80,.04);border-left:2px solid var(--danger);padding:6px 9px}
+.ovl-flag.warn{color:#9a8a4a;background:rgba(245,208,0,.04);border-left-color:var(--caution)}
+.ovl-flag.ok{color:#5a8a78;background:rgba(0,229,176,.04);border-left-color:var(--c)}
+.ovl-flag .ico{flex-shrink:0;font-weight:700;font-size:10px;width:11px}
+.ovl-cta{display:block;text-align:center;background:var(--c);color:#0a0a0c;padding:9px;font:700 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .15s,box-shadow .2s}
+.ovl-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,229,176,.3)}
+.ovl-foot{margin-top:8px;font-size:9px;color:#3a3a3f;text-align:center;letter-spacing:.12em}
+
+@media(max-width:780px){
+  .overlay{position:relative;top:auto;right:auto;width:calc(100% - 24px);margin:12px}
+  .browser-stack{display:flex;flex-direction:column}
+}
+
 .disclaimer{font-size:10.5px;color:#555;line-height:1.85;margin-top:24px;padding:18px 22px;background:rgba(0,229,176,.03);border-left:2px solid var(--c)}
 .disclaimer b{color:#888;font-weight:600}
 .cta-final{margin:80px 0 60px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
@@ -166,9 +155,9 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .cta-final .cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
 footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px}
 footer span{color:var(--c)}
-@media(max-width:760px){.demo-form{flex-direction:column;align-items:stretch}.demo-form input{min-width:0}.demo-form button{width:100%}.r-hero{padding:24px 20px 16px}.r-section-label{margin:24px 20px 10px}.r-flags,.r-src,.r-ai,.r-cta{margin-left:20px;margin-right:20px}}
+@media(max-width:760px){.demo-form{flex-direction:column;align-items:stretch}.demo-form input{min-width:0}.demo-form button{width:100%}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Antares — Live Demo","description":"Try Antares without installing. 4 sample tokens pre-loaded — SAFE, CAUTION, DANGER, RUG PULL.","url":"https://antares-website.vercel.app/demo","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Antares — Live Demo","description":"See the Antares overlay scan a real Solana token live — exactly what the extension shows after install.","url":"https://antares-website.vercel.app/demo","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
 </head>
 <body class="r-safe">
 <div class="stripe" role="presentation" aria-hidden="true"></div>
@@ -181,40 +170,75 @@ footer span{color:var(--c)}
 
 <section class="page-hero">
   <div class="eyebrow">Live demo &mdash; no install required</div>
-  <h1>SEE A REAL SCAN<br><span class="accent">RIGHT NOW.</span></h1>
-  <p class="sub">Four sample Solana tokens, one per verdict band. Click any to see the live scan rendered below. No account, no signup, no data stored. Want to test your own? Paste a contract address at the bottom.</p>
+  <h1>WATCH ANTARES<br><span class="accent">SCAN A TOKEN.</span></h1>
+  <p class="sub">This is exactly what the extension does on every Solana page you visit. Paste a contract address (or pick one of the samples) and watch the overlay slide in over the chart, scan 7 sources in real time, then deliver a verdict in under 4 seconds.</p>
 </section>
 
-<div class="verdict-tabs" id="verdict-tabs">
-  <button type="button" class="vtab t-safe active" data-ca="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" data-sym="USDC" data-name="USD Coin">
-    <div class="vtab-vlbl">● Safe</div><div class="vtab-sym">USDC</div><div class="vtab-name">USD Coin &mdash; established stablecoin</div>
-  </button>
-  <button type="button" class="vtab t-caution" data-ca="DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" data-sym="BONK" data-name="Bonk">
-    <div class="vtab-vlbl">● Caution</div><div class="vtab-sym">BONK</div><div class="vtab-name">Solana memecoin &mdash; high concentration</div>
-  </button>
-  <button type="button" class="vtab t-danger" data-ca="6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN" data-sym="TRUMP" data-name="OFFICIAL TRUMP">
-    <div class="vtab-vlbl">● Danger</div><div class="vtab-sym">TRUMP</div><div class="vtab-name">Concentrated supply &mdash; flagged signals</div>
-  </button>
-  <button type="button" class="vtab t-rug" data-ca="HhJpBhRRn4g56VsyLuT8DL5Bv31HkXqsrahTTUCZeZg4" data-sym="USELESS" data-name="Uselesscoin">
-    <div class="vtab-vlbl">● Rug Pull</div><div class="vtab-sym">USELESS</div><div class="vtab-name">Hard kill &mdash; multiple critical flags</div>
-  </button>
-</div>
-
 <form class="demo-form" id="demo-form" onsubmit="return runScan(event)">
-  <span class="demo-form-lbl">Or your own:</span>
-  <input id="ca-input" type="text" placeholder="Paste a Solana CA (32–44 base58 characters)" autocomplete="off" spellcheck="false">
+  <span class="demo-form-lbl">Solana CA:</span>
+  <input id="ca-input" type="text" placeholder="Paste a Solana contract address (32–44 base58 characters)" autocomplete="off" spellcheck="false">
   <button type="submit" id="scan-btn">↗ Scan</button>
 </form>
 
-<div class="result" id="result"><div class="result-loading"><div class="spin"></div>Loading scan…</div></div>
+<div class="try-row">
+  <span class="lbl">Try a sample:</span>
+  <button type="button" data-ca="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v">USDC</button>
+  <button type="button" data-ca="DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263">BONK</button>
+  <button type="button" data-ca="6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN">TRUMP</button>
+  <button type="button" data-ca="HhJpBhRRn4g56VsyLuT8DL5Bv31HkXqsrahTTUCZeZg4">USELESS</button>
+</div>
+
+<div class="browser-frame" id="browser-frame">
+  <div class="browser-bar">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="url-bar"><span class="lock">▣</span><span class="path"><b>dexscreener.com</b><span id="url-path">/solana/EPjFWdd…wyTDt1v</span></span></div>
+  </div>
+  <div class="browser-stack">
+    <iframe class="chart" id="chart" loading="lazy" title="Live price chart" src=""></iframe>
+    <aside class="overlay hidden" id="overlay" aria-live="polite">
+      <div class="ovl-head">
+        <div class="ovl-brand"><img src="icon.png" alt="">ANTARES</div>
+        <div class="ovl-state" id="ovl-state">SCANNING</div>
+      </div>
+      <div class="ovl-scan" id="ovl-scan">
+        <div class="ovl-scan-title">Cross-checking 7 sources&hellip;</div>
+        <div class="ovl-progress"><div class="ovl-progress-bar" id="ovl-progress-bar"></div></div>
+        <div class="ovl-layers" id="ovl-layers">
+          <div class="ovl-layer" data-layer="dexscreener"><span class="dot"></span><span class="label">DexScreener</span><span class="stat">queue</span></div>
+          <div class="ovl-layer" data-layer="rugcheck"><span class="dot"></span><span class="label">RugCheck</span><span class="stat">queue</span></div>
+          <div class="ovl-layer" data-layer="goplus"><span class="dot"></span><span class="label">GoPlus</span><span class="stat">queue</span></div>
+          <div class="ovl-layer" data-layer="helius"><span class="dot"></span><span class="label">Helius</span><span class="stat">queue</span></div>
+          <div class="ovl-layer" data-layer="solscan"><span class="dot"></span><span class="label">Solscan</span><span class="stat">queue</span></div>
+          <div class="ovl-layer" data-layer="chart"><span class="dot"></span><span class="label">Chart Engine</span><span class="stat">queue</span></div>
+          <div class="ovl-layer" data-layer="cross"><span class="dot"></span><span class="label">CrossValidation</span><span class="stat">queue</span></div>
+        </div>
+      </div>
+      <div class="ovl-result" id="ovl-result" hidden>
+        <div class="ovl-token">
+          <div class="ovl-logo" id="ovl-logo">—</div>
+          <div class="ovl-tk"><div class="ovl-sym" id="ovl-sym">—</div><div class="ovl-name" id="ovl-name">—</div></div>
+        </div>
+        <div class="ovl-verdict" id="ovl-verdict">SAFE</div>
+        <div class="ovl-score-row">
+          <div class="ovl-score-num"><span id="ovl-score">0</span><span class="denom">/1000</span></div>
+          <div class="ovl-score-bar"><div class="ovl-score-fill" id="ovl-score-fill"></div></div>
+        </div>
+        <div class="ovl-mc" id="ovl-mc"></div>
+        <div class="ovl-flags" id="ovl-flags"></div>
+        <a class="ovl-cta" id="ovl-cta" href="" target="_blank" rel="noopener noreferrer">↗ Full v5 analysis</a>
+        <div class="ovl-foot" id="ovl-foot">7 sources &middot; geometric mean</div>
+      </div>
+    </aside>
+  </div>
+</div>
 
 <div class="disclaimer">
-  <b>How it works.</b> Each click fetches <code style="color:#888;background:#15151a;padding:1px 5px;font-size:10px">/api/scan?ca={your-address}</code> from the Antares backend and renders the verdict, flags and source breakdown right here. The verdict labels on the four tabs above are <b>typical</b> &mdash; the actual scan is live and may differ as on-chain state evolves. <b>Indicative, not financial advice</b> &mdash; see <a href="./terms.html" style="color:var(--c)">Terms</a>.
+  <b>How this works.</b> The chart is the real DexScreener embed. The overlay is a faithful replica of what the extension injects on every Solana page after install. Scan calls <code style="color:#888;background:#15151a;padding:1px 5px;font-size:10px">/api/scan?ca={your-address}</code>; if the Antares pipeline is briefly unreachable we fall back to DexScreener-only signals so the demo still renders. <b>Indicative, not financial advice</b> &mdash; see <a href="./terms.html" style="color:var(--c)">Terms</a>.
 </div>
 
 <div class="cta-final">
-  <h2>Liked what you saw?</h2>
-  <p>Install the extension and get the same scan automatically &mdash; on every Solana address you encounter on Twitter, Telegram, DexScreener, pump.fun&hellip;</p>
+  <h2>Get this on every Solana page.</h2>
+  <p>Install the extension and the overlay appears automatically &mdash; on Twitter, Telegram, DexScreener, pump.fun, Birdeye, Photon, Axiom and more.</p>
   <a class="cta" href="https://github.com/COMEALAMAISONGROUPE/antares-extension" target="_blank" rel="noopener noreferrer">⚡ Install Free &mdash; Chrome</a>
 </div>
 
@@ -225,10 +249,18 @@ footer span{color:var(--c)}
 (function(){
   var API='https://antares-extension.vercel.app/api/scan';
   var CA_RE=/^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
-  var result=document.getElementById('result');
   var input=document.getElementById('ca-input');
   var btn=document.getElementById('scan-btn');
-  var tabs=document.querySelectorAll('.vtab');
+  var chart=document.getElementById('chart');
+  var urlPath=document.getElementById('url-path');
+  var overlay=document.getElementById('overlay');
+  var ovlState=document.getElementById('ovl-state');
+  var ovlScan=document.getElementById('ovl-scan');
+  var ovlResult=document.getElementById('ovl-result');
+  var ovlBar=document.getElementById('ovl-progress-bar');
+  var layers=document.querySelectorAll('#ovl-layers .ovl-layer');
+  var samples=document.querySelectorAll('.try-row button[data-ca]');
+
   var RC={SAFE:'safe',CAUTION:'caution',DANGER:'danger',RUG:'rug'};
   var LB={SAFE:'SAFE',CAUTION:'CAUTION',DANGER:'DANGER',RUG:'RUG PULL'};
 
@@ -237,186 +269,208 @@ footer span{color:var(--c)}
   function fmtPrice(p){if(!p)return '—';var n=parseFloat(p);if(n<0.000001)return '$'+n.toExponential(2);if(n<0.01)return '$'+n.toFixed(6);if(n<1)return '$'+n.toFixed(4);return '$'+n.toFixed(2);}
   function pct(n){if(n==null)return null;var s=n>0?'+':'';var cls=n>0?'up':n<0?'dn':'';return {txt:s+(+n).toFixed(2)+'%',cls:cls};}
 
-  function buildSparkline(candles){
-    if(!Array.isArray(candles)||candles.length<2)return '';
-    var closes=candles.map(function(c){return c&&typeof c.close==='number'?c.close:null;}).filter(function(v){return v!=null;});
-    if(closes.length<2)return '';
-    var w=200,h=32,min=Math.min.apply(null,closes),max=Math.max.apply(null,closes),range=max-min||1;
-    var points=closes.map(function(v,i){var x=(i/(closes.length-1))*w;var y=h-((v-min)/range)*(h-4)-2;return x.toFixed(1)+','+y.toFixed(1);}).join(' ');
-    return '<svg class="r-spark" width="100%" height="32" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><polyline points="'+points+'" fill="none" stroke="var(--risk)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // ——— OVERLAY STATE TRANSITIONS —————————————————————————————————————————————
+  function resetOverlay(){
+    Array.prototype.forEach.call(layers,function(l){l.classList.remove('active','done');var s=l.querySelector('.stat');if(s)s.textContent='queue';});
+    if(ovlBar)ovlBar.style.width='0%';
+    ovlState.textContent='SCANNING';
+    ovlScan.hidden=false;
+    ovlResult.hidden=true;
   }
 
-  function buildSourceRows(layers){
-    if(!layers)return '';
-    var order=['rugcheck','helius','solscan','chart','dexscreener'];
-    var labels={rugcheck:'RugCheck',helius:'Helius',solscan:'Solscan',chart:'Chart Engine',dexscreener:'DexScreener'};
-    return order.map(function(k){
-      var l=layers[k];
-      if(!l)return '';
-      if(!l.available)return '<div class="r-src-row na"><div class="r-src-name">'+escapeHtml(labels[k])+'</div><div class="r-src-vrd">N/A</div><div class="r-src-note">Source unavailable.</div></div>';
-      var trust=l.trust||0;
-      var cls,vrd,note;
-      if(trust>=0.75){cls='ok';vrd='OK';note=labels[k]+' reports no critical issues.';}
-      else if(trust>=0.4){cls='warn';vrd='Risk';note=labels[k]+' flagged moderate concerns.';}
-      else{cls='bad';vrd='Flagged';note=labels[k]+' flagged significant concerns.';}
-      return '<div class="r-src-row '+cls+'"><div class="r-src-name">'+escapeHtml(labels[k])+'</div><div class="r-src-vrd">'+vrd+'</div><div class="r-src-note">'+escapeHtml(note)+'</div></div>';
-    }).join('');
+  // Run a staggered visual scan of the 7 layers. Decorative — completes
+  // independently of the actual fetch so the overlay always tells a story.
+  // Returns a promise resolved when the animation reaches the last layer.
+  var animTimers=[];
+  function clearAnim(){animTimers.forEach(function(t){clearTimeout(t);});animTimers=[];}
+  function animateLayers(){
+    return new Promise(function(resolve){
+      clearAnim();
+      var total=layers.length;
+      var stepMs=350; // per-layer dwell
+      Array.prototype.forEach.call(layers,function(l,i){
+        var prev=i>0?layers[i-1]:null;
+        animTimers.push(setTimeout(function(){
+          if(prev){prev.classList.remove('active');prev.classList.add('done');var ps=prev.querySelector('.stat');if(ps)ps.textContent='ok';}
+          l.classList.add('active');var s=l.querySelector('.stat');if(s)s.textContent='scan';
+          if(ovlBar)ovlBar.style.width=Math.round(((i+0.5)/total)*100)+'%';
+        },i*stepMs));
+      });
+      animTimers.push(setTimeout(function(){
+        var last=layers[total-1];
+        if(last){last.classList.remove('active');last.classList.add('done');var s=last.querySelector('.stat');if(s)s.textContent='ok';}
+        if(ovlBar)ovlBar.style.width='100%';
+        resolve();
+      },total*stepMs+50));
+    });
   }
 
-  function buildFlagRows(flags){
-    var real=(flags||[]).filter(function(f){var l=String(f.label||f);return f.severity!=='bonus'&&l.toLowerCase().indexOf('unavailable')===-1;}).slice(0,5);
-    if(real.length===0)return '<div class="r-flag-row"><div class="r-flag-icon" style="background:rgba(0,229,176,.12);color:var(--c)">✓</div><div class="r-flag-label" style="color:#559970">No critical flags detected</div></div>';
-    return real.map(function(f){
-      var sev=f.severity||'warning';
-      var isCrit=sev==='critical';
-      var cls=isCrit?'cr':'wr';
-      var ico=isCrit?'✕':'!';
-      return '<div class="r-flag-row '+(isCrit?'':'wr')+'"><div class="r-flag-icon '+cls+'">'+ico+'</div><div class="r-flag-label">'+escapeHtml(f.label||f)+'</div></div>';
-    }).join('');
-  }
-
-  function render(d,ca){
+  function renderResult(d,ca){
     var rc=RC[d.risk]||'danger';
     var lb=LB[d.risk]||d.risk;
     document.body.className='r-'+rc;
     var score=d.score||0;
-    var barW=Math.min(100,Math.round(score/10));
-    var conf=typeof d.confidence==='number'?d.confidence:null;
     var sym=d.tokenSymbol||(d.pair&&d.pair.baseToken&&d.pair.baseToken.symbol)||'';
     var name=d.tokenName||(d.pair&&d.pair.baseToken&&d.pair.baseToken.name)||'';
     var logo=d.tokenLogo||(d.pair&&d.pair.info&&d.pair.info.imageUrl)||null;
     var mc=d.marketCap||(d.pair&&d.pair.marketCap)||null;
     var priceUsd=d.priceUsd||(d.pair&&d.pair.priceUsd)||null;
-    var candles=d.candles||[];
     var pc24=d.priceChange24h!=null?d.priceChange24h:(d.pair&&d.pair.priceChange&&d.pair.priceChange.h24);
     var c24=pct(pc24);
-    var fAll=(d.flags||[]).filter(function(f){return f.severity!=='bonus';});
-    var fCrit=fAll.filter(function(f){return f.severity==='critical';}).length;
-    var flagsCount=fAll.length===0?'No flags':fAll.length+' detected';
-    var flagsSev=fAll.length===0?'':fCrit+' critical · '+(fAll.length-fCrit)+' warning';
-    var sparkline=buildSparkline(candles);
-    var flagRowsHtml=buildFlagRows(fAll);
-    var srcRowsHtml=buildSourceRows(d.layers);
-    var aiBody=d.aiSummary?'<div class="r-ai-body">'+escapeHtml(d.aiSummary)+'</div>':'<div class="r-ai-body" style="color:#5a5170">AI summary still warming up — refresh in 5 seconds.</div>';
-    var logoHtml=logo
-      ? '<div class="r-logo"><img src="'+escapeHtml(logo)+'" alt="'+escapeHtml(sym)+'" onerror="this.parentElement.textContent=this.alt.slice(0,4)"></div>'
-      : (sym?'<div class="r-logo">'+escapeHtml(sym.slice(0,4))+'</div>':'');
-    var fullUrl='https://antares-extension.vercel.app/token.html?ca='+encodeURIComponent(ca);
-    var chartUrl='https://dexscreener.com/solana/'+encodeURIComponent(ca)+'?embed=1&theme=dark&trades=0&info=0';
-    var chartLink='https://dexscreener.com/solana/'+encodeURIComponent(ca);
-    result.innerHTML=''
-      +'<section class="r-hero" data-verdict="'+escapeHtml(lb)+'">'
-        +'<div class="r-eye">Token Analysis'+(conf!=null?' · Conf '+conf+'%':'')+'</div>'
-        +'<div class="r-verdict-row"><h1 class="r-verdict">'+escapeHtml(lb)+'</h1>'+logoHtml+'</div>'
-        +(sym?'<div class="r-tk"><b>'+escapeHtml(sym)+'</b>'+(name?' '+escapeHtml(name):'')+'</div>':'')
-        +'<div class="r-metrics">'
-          +'<div class="r-mcard"><div class="r-mlabel">Risk Score</div><div class="r-mbig">'+score+'<span class="denom">/ 1000</span></div><div class="r-sbar"><div class="r-sbar-fill" id="sbar"></div></div><div class="r-msub">'+escapeHtml(flagsCount)+(flagsSev?' · '+escapeHtml(flagsSev):'')+'</div></div>'
-          +'<div class="r-mcard"><div class="r-mlabel">'+(mc?'Market Cap':'Price USD')+'</div><div class="r-mbig alt">'+escapeHtml(mc?fmt(mc):(priceUsd?fmtPrice(priceUsd):'—'))+'</div>'+sparkline+(c24?'<div class="r-msub '+c24.cls+'">'+escapeHtml(c24.txt)+' · 24h</div>':'')+'</div>'
-        +'</div>'
-      +'</section>'
-      +'<div class="r-section-label"><span>Live Chart</span></div>'
-      +'<div class="r-chart"><div class="r-chart-head"><span class="src">▸ DexScreener</span><a href="'+chartLink+'" target="_blank" rel="noopener noreferrer">Open on DexScreener ↗</a></div><iframe src="'+chartUrl+'" loading="lazy" title="Live price chart"></iframe></div>'
-      +'<div class="r-section-label"><span>Critical Flags</span></div>'
-      +'<div class="r-flags"><div class="r-flags-head"><span class="lbl">'+escapeHtml(flagsCount)+'</span>'+(flagsSev?'<span class="count">'+escapeHtml(flagsSev)+'</span>':'')+'</div>'+flagRowsHtml+'</div>'
-      +'<div class="r-section-label"><span>AI Verdict</span></div>'
-      +'<div class="r-ai"><div class="r-ai-head"><span class="icon">⬡</span><h3>Synthesis</h3></div>'+aiBody+'</div>'
-      +(srcRowsHtml?'<div class="r-section-label"><span>Source Breakdown</span></div><div class="r-src">'+srcRowsHtml+'</div>':'')
-      +'<div class="r-cta"><div class="r-cta-text"><b>Want the full v5 analysis?</b> Score Radar, Critical Actors, Holder Activity tab, Verdict Timeline and Outcome Histogram are in the extension.</div><a class="r-cta-link" href="'+fullUrl+'" target="_blank" rel="noopener noreferrer">↗ Full analysis</a></div>';
-    setTimeout(function(){var sb=document.getElementById('sbar');if(sb)sb.style.width=barW+'%';},200);
+    var flagsAll=(d.flags||[]).filter(function(f){return f.severity!=='bonus';});
+
+    // Logo
+    var logoEl=document.getElementById('ovl-logo');
+    if(logo){
+      logoEl.textContent='';
+      var img=document.createElement('img');
+      img.src=logo;img.alt=sym||'';
+      img.onerror=function(){logoEl.textContent=(sym||'?').slice(0,3);};
+      logoEl.appendChild(img);
+    }else{logoEl.textContent=(sym||'?').slice(0,3);}
+
+    document.getElementById('ovl-sym').textContent=sym||ca.slice(0,4)+'…'+ca.slice(-4);
+    document.getElementById('ovl-name').textContent=name||'Solana token';
+    document.getElementById('ovl-verdict').textContent=lb;
+    document.getElementById('ovl-score').textContent=score;
+
+    // Market cap row
+    var mcHtml='';
+    if(mc!=null)mcHtml+='<span>MCap: <b>'+escapeHtml(fmt(mc))+'</b></span>';
+    else if(priceUsd!=null)mcHtml+='<span>Price: <b>'+escapeHtml(fmtPrice(priceUsd))+'</b></span>';
+    if(c24)mcHtml+='<span class="pc '+c24.cls+'">'+escapeHtml(c24.txt)+' &middot; 24h</span>';
+    document.getElementById('ovl-mc').innerHTML=mcHtml;
+
+    // Flags — top 3 critical, then warnings
+    var flagsToShow=flagsAll.slice().sort(function(a,b){
+      var sa=a.severity==='critical'?0:a.severity==='warning'?1:2;
+      var sb=b.severity==='critical'?0:b.severity==='warning'?1:2;
+      return sa-sb;
+    }).slice(0,3);
+    var flagsHtml;
+    if(flagsToShow.length===0){
+      flagsHtml='<div class="ovl-flag ok"><span class="ico">✓</span><span>No critical flags detected across all sources.</span></div>';
+    }else{
+      flagsHtml=flagsToShow.map(function(f){
+        var sev=f.severity||'warning';
+        var cls=sev==='critical'?'':'warn';
+        var ico=sev==='critical'?'✕':'!';
+        return '<div class="ovl-flag '+cls+'"><span class="ico">'+ico+'</span><span>'+escapeHtml(f.label||f)+'</span></div>';
+      }).join('');
+    }
+    document.getElementById('ovl-flags').innerHTML=flagsHtml;
+    document.getElementById('ovl-cta').href='https://antares-extension.vercel.app/token.html?ca='+encodeURIComponent(ca);
+    document.getElementById('ovl-foot').textContent=d._fallback?'DexScreener fallback · install for 7-source':'7 sources · geometric mean';
+
+    ovlState.textContent=lb;
+    ovlScan.hidden=true;
+    ovlResult.hidden=false;
+    setTimeout(function(){
+      var fill=document.getElementById('ovl-score-fill');
+      if(fill)fill.style.width=Math.min(100,Math.round(score/10))+'%';
+    },80);
   }
 
-  function showError(msg){result.innerHTML='<div class="result-error"><b>Scan failed</b>'+escapeHtml(msg||'The Antares API did not respond in time. Try another token or refresh in a moment.')+'</div>';}
+  function showOverlayError(msg){
+    ovlState.textContent='ERROR';
+    ovlScan.hidden=true;
+    ovlResult.hidden=false;
+    document.getElementById('ovl-verdict').textContent='—';
+    document.getElementById('ovl-flags').innerHTML='<div class="ovl-flag"><span class="ico">✕</span><span>'+escapeHtml(msg||'Scan failed. Try again.')+'</span></div>';
+  }
 
-  // Fallback: build a synthetic scan result from DexScreener public API.
-  // Used when /api/scan is unreachable so the demo always renders something
-  // useful (price, mcap, chart, basic flags) instead of an error wall.
+  // ——— FALLBACK: DexScreener-only verdict —————————————————————————————————————
   function fetchDexscreenerFallback(ca,signal){
     return fetch('https://api.dexscreener.com/latest/dex/tokens/'+encodeURIComponent(ca),{signal:signal})
       .then(function(r){if(!r.ok)throw new Error('DexScreener HTTP '+r.status);return r.json();})
       .then(function(j){
         var pairs=(j&&j.pairs)||[];
         if(pairs.length===0)throw new Error('No DexScreener pair for this token.');
-        // pick the most-liquid Solana pair
         pairs.sort(function(a,b){return ((b.liquidity&&b.liquidity.usd)||0)-((a.liquidity&&a.liquidity.usd)||0);});
         var p=pairs[0];
         var liq=(p.liquidity&&p.liquidity.usd)||0;
         var mc=p.marketCap||p.fdv||null;
         var pc24=(p.priceChange&&p.priceChange.h24)!=null?p.priceChange.h24:null;
         var v24=(p.volume&&p.volume.h24)||0;
-        // crude heuristic verdict from DexScreener-only signals
         var risk='CAUTION',score=600,flags=[];
         if(liq<5000){risk='RUG';score=180;flags.push({severity:'critical',label:'Liquidity below $5k — exit not guaranteed.'});}
-        else if(liq<25000){risk='DANGER';score=320;flags.push({severity:'critical',label:'Thin liquidity ('+fmt(liq)+') — high slippage risk.'});}
+        else if(liq<25000){risk='DANGER';score=320;flags.push({severity:'critical',label:'Thin liquidity ('+fmt(liq)+') — high slippage.'});}
         else if(liq<100000){risk='CAUTION';score=580;flags.push({severity:'warning',label:'Liquidity ('+fmt(liq)+') still thin.'});}
         else{risk='SAFE';score=820;}
-        if(pc24!=null&&pc24<-50){if(score>350){score=350;risk='DANGER';}flags.push({severity:'critical',label:'Price down '+pc24.toFixed(0)+'% in 24h.'});}
-        if(v24<1000){flags.push({severity:'warning',label:'24h volume below $1k — illiquid.'});}
+        if(pc24!=null&&pc24<-50){if(score>350){score=350;risk='DANGER';}flags.push({severity:'critical',label:'Down '+pc24.toFixed(0)+'% in 24h.'});}
+        if(v24<1000)flags.push({severity:'warning',label:'24h volume below $1k.'});
         return {
-          risk:risk, score:score, confidence:35,
+          risk:risk, score:score,
           tokenSymbol:p.baseToken&&p.baseToken.symbol,
           tokenName:p.baseToken&&p.baseToken.name,
           tokenLogo:p.info&&p.info.imageUrl,
           marketCap:mc, priceUsd:p.priceUsd, priceChange24h:pc24,
           flags:flags,
-          aiSummary:'Indicative read from DexScreener only — Antares full pipeline unreachable. Liquidity '+fmt(liq)+', 24h volume '+fmt(v24)+'. Install the extension for the full 7-source verdict.',
-          layers:{dexscreener:{available:true,trust:risk==='SAFE'?0.85:risk==='CAUTION'?0.55:0.2}},
           _fallback:true
         };
       });
   }
 
+  // ——— ORCHESTRATION ——————————————————————————————————————————————————————————
   var inflight=null;
   function loadResult(ca){
-    if(!CA_RE.test(ca)){showError('Expected 32–44 base58 characters.');return;}
+    if(!CA_RE.test(ca)){showOverlayError('Expected 32–44 base58 characters.');overlay.classList.remove('hidden');return;}
     if(btn)btn.disabled=true;
     if(inflight){try{inflight.abort();}catch(e){}}
     inflight=new AbortController();
     var sig=inflight.signal;
-    result.innerHTML='<div class="result-loading"><div class="spin"></div>Scanning '+ca.slice(0,6)+'…'+ca.slice(-4)+'…</div>';
-    fetch(API+'?ca='+encodeURIComponent(ca),{signal:sig})
+
+    // Update chart + URL bar
+    var chartUrl='https://dexscreener.com/solana/'+encodeURIComponent(ca)+'?embed=1&theme=dark&trades=0&info=0';
+    chart.src=chartUrl;
+    if(urlPath)urlPath.textContent='/solana/'+ca.slice(0,6)+'…'+ca.slice(-6);
+
+    // Show overlay in scanning state and animate the 7 layers
+    resetOverlay();
+    overlay.classList.remove('hidden');
+    var anim=animateLayers();
+
+    // Call /api/scan with DexScreener fallback
+    var scan=fetch(API+'?ca='+encodeURIComponent(ca),{signal:sig})
       .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-      .then(function(d){
-        render(d,ca);
+      .catch(function(e){
+        if(e.name==='AbortError')throw e;
+        return fetchDexscreenerFallback(ca,sig);
+      });
+
+    // Render only after BOTH the animation reached the end AND the data arrived
+    Promise.all([anim,scan])
+      .then(function(arr){
+        var d=arr[1];
+        renderResult(d,ca);
         try{history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca));}catch(e){}
       })
       .catch(function(e){
-        if(e.name==='AbortError')return;
-        // Antares API down or CORS-blocked — fall back to DexScreener so the
-        // visitor still sees a chart + indicative verdict instead of an error.
-        return fetchDexscreenerFallback(ca,sig)
-          .then(function(d){
-            render(d,ca);
-            try{history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca));}catch(e2){}
-          })
-          .catch(function(e2){if(e2.name==='AbortError')return;showError(e2.message||e.message);});
+        if(e&&e.name==='AbortError')return;
+        showOverlayError(e&&e.message);
       })
-      .finally(function(){if(btn)btn.disabled=false;});
+      .then(function(){if(btn)btn.disabled=false;});
   }
 
   function runScan(e){e.preventDefault();if(input)loadResult(input.value.trim());return false;}
   window.runScan=runScan;
 
-  Array.prototype.forEach.call(tabs,function(t){
-    t.addEventListener('click',function(){
-      Array.prototype.forEach.call(tabs,function(o){o.classList.remove('active');});
-      t.classList.add('active');
-      var ca=t.dataset.ca;
+  Array.prototype.forEach.call(samples,function(b){
+    b.addEventListener('click',function(){
+      var ca=b.dataset.ca;
       if(input)input.value=ca;
       loadResult(ca);
     });
   });
 
+  // Initial load — from ?ca= or default to USDC
   var params=new URLSearchParams(location.search);
   var initialCa=params.get('ca');
   if(initialCa&&CA_RE.test(initialCa)){
     if(input)input.value=initialCa;
-    var matched=false;
-    Array.prototype.forEach.call(tabs,function(t){if(t.dataset.ca===initialCa){Array.prototype.forEach.call(tabs,function(o){o.classList.remove('active');});t.classList.add('active');matched=true;}});
-    if(!matched)Array.prototype.forEach.call(tabs,function(t){t.classList.remove('active');});
     loadResult(initialCa);
   }else{
-    var first=document.querySelector('.vtab.active');
-    if(first)loadResult(first.dataset.ca);
+    loadResult('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
   }
 })();
 </script>
