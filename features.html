@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <title>Antares — Features</title>
-            <meta name="description" content="Antares features: Safe Gate, real-time scanning, 7-source analysis, chart intel, wash trading detection. Free Chrome extension for Solana.">
+            <meta name="description" content="Antares features: 6-source verdict, Time-to-Rug ring, Critical Actors detection, real-time Holder Activity, Verdict Timeline, insider clustering. Free Chrome extension for Solana.">
     <meta name="author" content="Antares">
     <link rel="canonical" href="https://antares-website.vercel.app/features">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://antares-website.vercel.app/features">
     <meta property="og:title" content="Antares — Features">
-    <meta property="og:description" content="Safe Gate, real-time scanning, 7-source analysis, chart intel, wash trading detection. Free Solana token scanner.">
+    <meta property="og:description" content="6-source verdict, Time-to-Rug ring, Critical Actors detection, real-time Holder Activity, Verdict Timeline. Free Solana token scanner.">
     <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@antaresantiscam">
     <meta name="twitter:title" content="Antares — Features">
-    <meta name="twitter:description" content="Safe Gate, real-time scanning, 7-source analysis, chart intel, wash trading detection. Free Solana token scanner.">
+    <meta name="twitter:description" content="6-source verdict, Time-to-Rug ring, Critical Actors, Holder Activity, Verdict Timeline. Free Solana token scanner.">
     <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
     <!-- Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,7 +101,7 @@ footer span{color:var(--c)}
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./features.html" class="active">Features</a><a href="./engine.html">Engine</a><a href="./sources.html">Sources</a></div>
-  <div class="tag">v1.1.0 // SOLANA</div>
+  <div class="tag">v1.2.1 // SOLANA</div>
 </nav></header><main>
 
 <section class="page-hero">
@@ -114,60 +114,72 @@ footer span{color:var(--c)}
 
 <div class="feat-grid">
   <div class="feat-card reveal delay-1">
-    <div class="icon">&#128737;&#65039;</div>
-    <h3>Passive Scanning</h3>
-    <div class="benefit">Zero manual input required.</div>
-    <p>Every time a Solana address appears on any page you visit &mdash; Twitter, Telegram, Discord, any DEX &mdash; the scan fires automatically. The overlay appears in under 2 seconds. The Chrome extension icon updates with a &#10003;, !, or &#10007; badge at a glance.</p>
+    <div class="icon">&#9201;</div>
+    <h3>Time-to-Rug Ring</h3>
+    <div class="benefit">Acute urgency, displayed as a countdown.</div>
+    <p>For RUG and DANGER verdicts the hero shows a circular ring with the median time-to-rug for comparable launches (e.g. <em>4h&nbsp;12m</em>). No competitor turns the verdict label into an operational deadline. Indicative — based on a heuristic profile match against pump.fun-style historical clusters.</p>
   </div>
   <div class="feat-card reveal delay-2">
-    <div class="icon">&#128279;</div>
-    <h3>7-Source Cross-Validation</h3>
-    <div class="benefit">No single source is trusted alone.</div>
-    <p>Antares queries 7 independent APIs simultaneously. Each source covers a different attack surface. If sources conflict, the most conservative verdict wins. A burst rate limiter (5 req / 10s) queues scans gracefully.</p>
+    <div class="icon">&#128100;</div>
+    <h3>Critical Actors</h3>
+    <div class="benefit">Who holds what, in 3 cards.</div>
+    <p>Dev wallet reputation (prior tokens launched, prior rugs), insider sniper position, coordinated cluster size and coordination score. Each card surfaces the structural risk vector behind the score, not just a number.</p>
   </div>
   <div class="feat-card reveal delay-3">
-    <div class="icon">&#128202;</div>
-    <h3>Chart Intelligence</h3>
-    <div class="benefit">See the dump before it happens.</div>
-    <p>OHLCV candle data from GeckoTerminal across four time windows (5m, 1h, 6h, 24h) detects manipulation patterns: parabolic pumps, blow-off tops, and wash trading designed to fake volume.</p>
+    <div class="icon">&#128260;</div>
+    <h3>Holder Activity (live)</h3>
+    <div class="benefit">See dev/whales dumping in real time.</div>
+    <p>Last-60-minute movement classification per top holder: <em>Holding · Selling · Splitting · Reducing · Buying · Static</em>. Net-flow footer (e.g. <em>-3.2% pre-dump signature</em>). Catches what static screenshots miss.</p>
   </div>
   <div class="feat-card reveal delay-4">
-    <div class="icon">&#129518;</div>
-    <h3>Wash Trading Detection</h3>
-    <div class="benefit">Fake volume exposed instantly.</div>
-    <p>Cross-validates volume from multiple sources to flag artificial activity. Abnormal volume/liquidity ratios, coordinated bot transactions, and pump patterns are detected and penalized.</p>
+    <div class="icon">&#128203;</div>
+    <h3>Verdict Timeline</h3>
+    <div class="benefit">Watch the verdict trajectory, not a snapshot.</div>
+    <p>Per-token history of verdict changes across recent scans (CAUTION &rarr; DANGER &rarr; RUG with timestamps and the event that triggered the shift). Persisted server-side; you see the story of a token, not a frozen frame.</p>
   </div>
   <div class="feat-card reveal delay-5">
-    <div class="icon">&#127760;</div>
-    <h3>Universal Coverage</h3>
-    <div class="benefit">Protected on every website.</div>
-    <p>Unlike tools that only work on specific DEXs, Antares activates on any webpage. A tweet, a Telegram channel, a project site &mdash; if there is a Solana address visible, it's already scanned.</p>
+    <div class="icon">&#127919;</div>
+    <h3>5-dimension Score Radar</h3>
+    <div class="benefit">Score broken down, not abstract.</div>
+    <p>The 1000-point composite score is decomposed across five axes: <em>LP&nbsp;Security &middot; Holder&nbsp;Distribution &middot; Trading&nbsp;Authenticity &middot; Token&nbsp;Maturity &middot; Source&nbsp;Consensus</em>. SVG pentagon radar shows where a token actually fails &mdash; not a single gauge.</p>
   </div>
   <div class="feat-card reveal delay-6">
-    <div class="icon">&#9889;</div>
-    <h3>Safe Gate</h3>
-    <div class="benefit">Hardcoded kill switch for Solana scams.</div>
-    <p>One critical flag &mdash; active mint, active freeze, bundler detected, sniper activity, or near-zero liquidity &mdash; and the token is blocked. No override. Safe Gate fires before you can click buy.</p>
+    <div class="icon">&#128737;&#65039;</div>
+    <h3>6-Source Consensus</h3>
+    <div class="benefit">No single source can lie alone.</div>
+    <p>DexScreener, RugCheck, GoPlus, Helius, Solscan and our in-house Chart engine. Geometric mean of 6 layers means a single false-clean source can&rsquo;t override real risk &mdash; and a single false-positive can&rsquo;t flip a healthy token to RUG.</p>
   </div>
 </div>
 
 <section class="detail-section">
-  <div class="section-label reveal"><span>How It Protects You</span></div>
+  <div class="section-label reveal"><span>What Else You Get</span></div>
   <div class="detail-block reveal">
-    <div class="label">Real-Time Alerts</div>
-    <div class="content"><h4>Escalation Notifications</h4><p>If a previously scanned token's risk level escalates, Antares fires a Chrome notification automatically. You don't need to re-check &mdash; the system watches for you continuously.</p></div>
+    <div class="label">Source Breakdown</div>
+    <div class="content"><h4>One row per upstream</h4><p>RugCheck, Helius, Solscan, Chart Engine, DexScreener &mdash; each with its own derived verdict (<em>OK</em> / <em>Risk</em> / <em>Flagged</em> / <em>N/A</em>) and a one-line note. Open the accordion at the bottom of any analysis to see exactly which source said what. Forensic provenance, not a black-box score.</p></div>
   </div>
   <div class="detail-block reveal">
-    <div class="label">Rate Limiting</div>
-    <div class="content"><h4>Graceful Queue</h4><p>A burst rate limiter (5 requests per 10 seconds) queues scans gracefully during high-frequency browsing without dropping any result. Every token gets scanned, even during a memecoin frenzy.</p></div>
+    <div class="label">Outcome Histogram</div>
+    <div class="content"><h4>Where this token sits in the distribution</h4><p>36-bucket histogram showing how comparable launches died across 0h &rarr; 30d+. The current token&rsquo;s expected position is marked with a <em>YOU</em> bar. Plus three most-similar past launches with their actual losses. Indicative model &mdash; useful as context, not forecast.</p></div>
   </div>
   <div class="detail-block reveal">
-    <div class="label">Badge System</div>
-    <div class="content"><h4>Instant Visual Verdict</h4><p>The Chrome extension icon updates with a color-coded badge &mdash; green check, yellow warning, or red cross. The verdict is visible at a glance without ever opening the popup.</p></div>
+    <div class="label">Exit Liquidity Calculator</div>
+    <div class="content"><h4>How much can you actually sell</h4><p>Slippage tiers from $100 to $20K against the live LP, computed with the constant-product AMM formula. Color-coded: green for safe exits, yellow for tax, red for &ldquo;you&rsquo;d crash the price&rdquo;. Tells you the size you can realistically dump before you ape in.</p></div>
+  </div>
+  <div class="detail-block reveal">
+    <div class="label">AI Verdict Synthesis</div>
+    <div class="content"><h4>Plain English, not jargon</h4><p>Gemini-powered explanation of why the verdict landed where it did, in 2-4 sentences. References the actual data: dev wallet history, holder concentration, last-hour flow. Explains the mechanism (&ldquo;coordinated wallets bought together at launch and now control a large share&rdquo;), not just the verdict.</p></div>
+  </div>
+  <div class="detail-block reveal">
+    <div class="label">Foldable Sections</div>
+    <div class="content"><h4>Read at your pace</h4><p>Critical Flags, AI Verdict, Security strip, Critical Actors, Deep Analysis, Source Breakdown &mdash; every section is independently collapsible. Power users keep everything open; quick scans collapse to just the verdict + critical flags.</p></div>
+  </div>
+  <div class="detail-block reveal">
+    <div class="label">Universal Coverage</div>
+    <div class="content"><h4>Wherever a Solana address appears</h4><p>Activates on Twitter, Telegram, Discord, every Solana DEX (DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN). Detects the address, runs the scan, surfaces the verdict before you can click buy.</p></div>
   </div>
 </section>
 
-</main><footer>Antares v1.1.0 &mdash; <span>No mercy for scammers.</span></footer>
+</main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
 </div>
 <script>
 ;(function(){
