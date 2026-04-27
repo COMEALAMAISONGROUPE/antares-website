@@ -108,7 +108,7 @@ footer span{color:var(--c)}
   <span class="lbl">Click a token:</span>
   <button type="button" data-ca="9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump">FARTCOIN</button>
   <button type="button" data-ca="J3NKxxXZcnNiMjKw9hYb2K4LUxgwB6t1FtPtQVsv3KFr">SPX</button>
-  <button type="button" data-ca="Ce2gx9KGXJ6C9Mp5b5x1sn9Mg87JwEbrQby4Zqo3pump">NEET</button>
+  <button type="button" data-ca="A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump">FWOG</button>
   <button type="button" data-ca="2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv">PENGU</button>
   <button type="button" class="reset" id="reset-pos" title="Reset overlay position">↺ Reset position</button>
 </div>
@@ -672,17 +672,17 @@ footer span{color:var(--c)}
       ],
       aiSummary:'SPX shows a SAFE profile — LP burned, supply well distributed across many holders, no contract-level red flags. Recent buy/sell imbalance hints at coordinated trading worth monitoring, but the underlying security posture is solid. All 7 layers align.'
     },
-    'Ce2gx9KGXJ6C9Mp5b5x1sn9Mg87JwEbrQby4Zqo3pump':{
-      risk:'DANGER',score:500,confidence:100,
-      tokenSymbol:'neet',tokenName:'NEET',
+    'A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump':{
+      risk:'SAFE',score:1000,confidence:100,
+      tokenSymbol:'FWOG',tokenName:'FWOG',
       mintAuthority:false,freezeAuthority:false,honeypot:false,
-      lpBurned:false,lpLocked:false,liquidity:1300000,marketCap:32000000,
+      lpBurned:true,lpLocked:false,liquidity:1266186,marketCap:4526543,
       flags:[
-        {severity:'warning',label:'LP not burned or locked — dev can rug liquidity'},
+        {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
         {severity:'bonus',label:'Well distributed supply ✓'},
         {severity:'bonus',label:'Established token (30d+) ✓'}
       ],
-      aiSummary:'NEET earns a DANGER verdict despite established trading and a well-distributed supply. The LP is neither burned nor locked, meaning the dev wallet can pull all liquidity in one transaction at any moment — classic exit-liquidity setup. Treat as high tail risk.'
+      aiSummary:'FWOG earns a maxed-out SAFE verdict — LP burned, supply well distributed across many holders, mint and freeze authorities both revoked, no honeypot, 30-day+ trading history. All 7 detection layers align. The token has the structural posture of a legitimate Solana memecoin with no contract-level red flags surfacing across the cross-source consensus.'
     },
     '2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv':{
       risk:'SAFE',score:880,confidence:80,
