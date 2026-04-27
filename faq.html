@@ -67,7 +67,7 @@ footer span{color:var(--c)}
 
 <div class="qa"><h3>1. What do SAFE / CAUTION / DANGER / RUG actually mean?</h3>
 <p>The verdict is a band on the 1000-point score, with hard overrides:</p>
-<p><b>SAFE</b> (score &ge;900, &ge;5 sources active): no critical signals across 6 layers.<br><b>CAUTION</b> (600-899): at least one risk signal but nothing critical &mdash; e.g. concentrated top-10 holders, mild wash-trading ratio, very young token.<br><b>DANGER</b> (350-599): multiple risk signals or one critical signal partially mitigated by maturity.<br><b>RUG</b> (&lt;350 or Safe Gate triggered): hard kill &mdash; LP open, honeypot, mint/freeze active, or deceptive name.</p>
+<p><b>SAFE</b> (score &ge;900, &ge;5 sources active): no critical signals across all 7 layers.<br><b>CAUTION</b> (600-899): at least one risk signal but nothing critical &mdash; e.g. concentrated top-10 holders, mild wash-trading ratio, very young token.<br><b>DANGER</b> (350-599): multiple risk signals or one critical signal partially mitigated by maturity.<br><b>RUG</b> (&lt;350 or Safe Gate triggered): hard kill &mdash; LP open, honeypot, mint/freeze active, or deceptive name.</p>
 </div>
 
 <div class="qa"><h3>2. Can a SAFE token still rug?</h3>
@@ -94,7 +94,7 @@ footer span{color:var(--c)}
 
 <div class="qa"><h3>6. How fast is a scan?</h3>
 <p>Typical: 3&ndash;5 seconds end-to-end (6 concurrent upstream calls + AI summary + insider graph + scoring). Cached scans return in under 100ms.</p>
-<p>Slower than RugCheck (&lt;1s, single source) by design &mdash; we trade speed for depth (6 sources + clustering + holder activity).</p>
+<p>Slower than RugCheck (&lt;1s, single source) by design &mdash; we trade speed for depth (7 layers + clustering + holder activity).</p>
 </div>
 
 <div class="qa"><h3>7. Multichain support? Ethereum / BSC / Base?</h3>
@@ -116,6 +116,6 @@ footer span{color:var(--c)}
 </div>
 
 </main>
-<footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
+<footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./security.html" style="color:#454550;text-decoration:none;margin:0 8px">Security</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
 </body>
 </html>

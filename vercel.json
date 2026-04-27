@@ -13,7 +13,8 @@
     { "source": "/changelog", "destination": "/changelog.html" },
     { "source": "/install", "destination": "/install.html" },
     { "source": "/about", "destination": "/about.html" },
-    { "source": "/api", "destination": "/api.html" }
+    { "source": "/api", "destination": "/api.html" },
+    { "source": "/security", "destination": "/security.html" }
   ],
   "redirects": [
     {
