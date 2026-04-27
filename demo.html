@@ -85,10 +85,6 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 #antares-host{position:absolute;top:0;left:0;z-index:5;will-change:transform;pointer-events:none}
 #antares-host > *{pointer-events:auto}
 
-.drag-hint{position:absolute;left:18px;bottom:18px;z-index:4;font-size:10px;color:#3a3a40;letter-spacing:.16em;text-transform:uppercase;background:rgba(10,10,12,.8);border:1px solid #1a1a1e;padding:6px 10px;border-radius:2px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity .35s ease}
-.drag-hint b{color:#888;font-weight:600;letter-spacing:.06em}
-.drag-hint.fade{opacity:0;pointer-events:none}
-
 .disclaimer{font-size:10.5px;color:#555;line-height:1.85;margin-top:24px;padding:18px 22px;background:rgba(0,229,176,.03);border-left:2px solid var(--c)}
 .disclaimer b{color:#888;font-weight:600}
 .cta-final{margin:80px 0 60px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
@@ -140,7 +136,6 @@ footer span{color:var(--c)}
   </div>
   <div class="browser-stack" id="browser-stack">
     <iframe class="chart" id="chart" loading="lazy" title="Live price chart" src=""></iframe>
-    <div class="drag-hint" id="drag-hint">Grab the <b>ANTARES</b> header to drag the overlay anywhere on the chart</div>
     <div id="antares-host" aria-live="polite"></div>
   </div>
 </div>
@@ -411,7 +406,6 @@ footer span{color:var(--c)}
     var r=host.getBoundingClientRect();
     dragOX=e.clientX-r.left;dragOY=e.clientY-r.top;
     document.documentElement.style.userSelect='none';
-    if(dragHint)dragHint.classList.add('fade');
     e.preventDefault();
   });
   host.addEventListener('pointermove',function(e){
@@ -432,11 +426,9 @@ footer span{color:var(--c)}
   });
   host.addEventListener('pointercancel',function(){activePointer=null;document.documentElement.style.userSelect='';});
 
-  var dragHint=document.getElementById('drag-hint');
   document.getElementById('reset-pos').addEventListener('click',function(){
     try{localStorage.removeItem(POS_KEY);}catch(e){}
     defaultPos();
-    if(dragHint)dragHint.classList.remove('fade');
   });
 
   // ─── HEADER, SKELETON, RESULT — direct ports of components.ts ────────────
@@ -666,27 +658,83 @@ footer span{color:var(--c)}
   }
 
   // ─── DexScreener fallback (verdict synthesis when /api/scan is down) ────
+  // Heuristic uses every signal DexScreener exposes — liquidity tier, pair
+  // age, pump.fun launch detection, volume/liquidity ratio (wash proxy),
+  // 1h/24h price action, buy/sell imbalance — so verdicts vary even when
+  // the full Antares pipeline isn't available. NEET (pump.fun, no LP burn
+  // signal here) → CAUTION; SPX/PENGU/FARTCOIN (mature, deep liquidity) →
+  // SAFE. Matches roughly what /api/scan returns when it succeeds.
   function fetchDexscreenerFallback(ca,signal){
     return resolveBestPair(ca,signal)
       .then(function(p){
         if(!p)throw new Error('No DexScreener pair for this token.');
         var liq=(p.liquidity&&p.liquidity.usd)||0;
-        var pc24=(p.priceChange&&p.priceChange.h24)!=null?p.priceChange.h24:null;
         var v24=(p.volume&&p.volume.h24)||0;
-        var risk='CAUTION',score=600,flags=[];
-        if(liq<5000){risk='RUG';score=180;flags.push({severity:'critical',label:'Liquidity below $5k — exit not guaranteed.'});}
+        var pc1h=(p.priceChange&&p.priceChange.h1)!=null?p.priceChange.h1:null;
+        var pc24=(p.priceChange&&p.priceChange.h24)!=null?p.priceChange.h24:null;
+        var ageDays=p.pairCreatedAt?(Date.now()-p.pairCreatedAt)/86400000:null;
+        var t24=(p.txns&&p.txns.h24)||{};
+        var buys=t24.buys||0,sells=t24.sells||0;
+        var hasInfo=!!(p.info&&((p.info.socials&&p.info.socials.length)||(p.info.websites&&p.info.websites.length)));
+        var isPumpFun=/pump$/i.test(ca);
+
+        var risk='SAFE',score=850,flags=[];
+
+        // Liquidity tier — strongest single signal
+        if(liq<5000){risk='RUG';score=150;flags.push({severity:'critical',label:'Liquidity below $5k — exit not guaranteed.'});}
         else if(liq<25000){risk='DANGER';score=320;flags.push({severity:'critical',label:'Thin liquidity ('+formatMcap(liq)+') — high slippage.'});}
         else if(liq<100000){risk='CAUTION';score=580;flags.push({severity:'warning',label:'Liquidity ('+formatMcap(liq)+') still thin.'});}
-        else{risk='SAFE';score=820;}
-        if(pc24!=null&&pc24<-50){if(score>350){score=350;risk='DANGER';}flags.push({severity:'critical',label:'Down '+pc24.toFixed(0)+'% in 24h.'});}
+
+        // Pair age — fresh pairs carry tail risk
+        if(ageDays!=null){
+          if(ageDays<1){if(risk==='SAFE'){risk='CAUTION';score=Math.min(score,540);}flags.push({severity:'critical',label:'Pair created less than 24h ago.'});}
+          else if(ageDays<7){if(risk==='SAFE'){risk='CAUTION';score=Math.min(score,620);}flags.push({severity:'warning',label:'Pair only '+Math.round(ageDays)+' days old.'});}
+        }
+
+        // Pump.fun launch — graduated tokens still inherit launch-time risk
+        if(isPumpFun){
+          flags.push({severity:'warning',label:'Pump.fun launch — verify holders & dev history.'});
+          if(risk==='SAFE'){score=Math.min(score-200,650);risk='CAUTION';}
+        }
+
+        // Wash trading proxy: very high vol/liq ratio
+        if(v24>liq*20&&liq>10000){
+          flags.push({severity:'critical',label:'Volume / liquidity '+(v24/liq).toFixed(0)+'x — possible wash trading.'});
+          if(score>500)score=500;
+          if(risk==='SAFE')risk='CAUTION';
+        }
+
+        // 1h crash — strongest exit signal
+        if(pc1h!=null&&pc1h<-25){flags.push({severity:'critical',label:'Down '+pc1h.toFixed(0)+'% in 1h — possible exit in progress.'});if(score>380){score=380;risk='DANGER';}}
+
+        // 24h move
+        if(pc24!=null&&pc24<-50){flags.push({severity:'critical',label:'Down '+pc24.toFixed(0)+'% in 24h.'});if(score>350){score=350;risk='DANGER';}}
+        else if(pc24!=null&&pc24<-25){flags.push({severity:'warning',label:pc24.toFixed(0)+'% decline 24h.'});}
+
+        // Sell pressure: many more sells than buys with meaningful tx count
+        if(sells>buys*3&&(buys+sells)>100){
+          flags.push({severity:'warning',label:'Sell pressure: '+sells+' sells vs '+buys+' buys (24h).'});
+          if(risk==='SAFE'){score-=80;risk='CAUTION';}
+        }
+
+        // Missing socials/website on a young token
+        if(ageDays!=null&&ageDays<30&&!hasInfo){
+          flags.push({severity:'warning',label:'No socials or website detected.'});
+          if(risk==='SAFE')score-=60;
+        }
+
+        // Very low volume floor
         if(v24<1000)flags.push({severity:'warning',label:'24h volume below $1k.'});
+
+        score=Math.max(0,Math.min(1000,score));
+
         return {
-          risk:risk,score:score,
+          risk:risk,score:score,confidence:35,
           tokenSymbol:p.baseToken&&p.baseToken.symbol,
           tokenName:p.baseToken&&p.baseToken.name,
           marketCap:p.marketCap||p.fdv||null,
           priceUsd:p.priceUsd,liquidity:liq,flags:flags,
-          aiSummary:'Indicative read from DexScreener only. Liquidity '+formatMcap(liq)+', 24h volume '+formatMcap(v24)+'. Install the extension for the full 7-source verdict.',
+          aiSummary:'Indicative read from DexScreener only. Liquidity '+formatMcap(liq)+', 24h volume '+formatMcap(v24)+(pc24!=null?', 24h change '+pc24.toFixed(1)+'%':'')+'. Install the extension for the full 7-source Antares verdict.',
           pair:{url:p.url||null,baseToken:p.baseToken,liquidity:p.liquidity}
         };
       });
@@ -740,8 +788,27 @@ footer span{color:var(--c)}
       if(urlPath)urlPath.textContent='/solana/'+p.pairAddress.slice(0,6)+'…'+p.pairAddress.slice(-6);
     }).catch(function(){/* silent */});
 
-    fetch(API+'?ca='+encodeURIComponent(ca),{signal:sig})
-      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    // Cold-start retry: Vercel functions sometimes return 5xx /
+    // FUNCTION_INVOCATION_TIMEOUT on the first hit after idle. The second
+    // attempt almost always succeeds and gives the *real* Antares verdict
+    // (e.g. NEET → DANGER) instead of the DexScreener fallback's generic
+    // SAFE. Retry once with a small delay, then fall back if it still
+    // fails. The second attempt benefits from the warmed-up function +
+    // Helius / RugCheck connections, so latency is similar to a normal
+    // request.
+    function scanWithRetry(){
+      return fetch(API+'?ca='+encodeURIComponent(ca),{signal:sig})
+        .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+        .catch(function(e){
+          if(e.name==='AbortError')throw e;
+          return new Promise(function(resolve){setTimeout(resolve,800);})
+            .then(function(){
+              return fetch(API+'?ca='+encodeURIComponent(ca),{signal:sig})
+                .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();});
+            });
+        });
+    }
+    scanWithRetry()
       .catch(function(e){
         if(e.name==='AbortError')throw e;
         return fetchDexscreenerFallback(ca,sig);
