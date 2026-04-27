@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <title>Antares — Live Demo</title>
-<meta name="description" content="Try Antares without installing. 4 sample tokens pre-loaded — SAFE, CAUTION, DANGER, RUG PULL. See the full v5 verdict in real time.">
+<meta name="description" content="Try Antares without installing. 4 sample tokens pre-loaded — SAFE, CAUTION, DANGER, RUG PULL. Live verdict rendered inline.">
 <meta name="author" content="Antares">
 <link rel="canonical" href="https://antares-website.vercel.app/demo">
 <meta property="og:type" content="website">
@@ -27,48 +27,53 @@
 <link rel="preconnect" href="https://antares-extension.vercel.app">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--safe:#00e5b0;--caution:#f5d000;--danger:#ff5f5f;--rug:#ff2244}
+:root{
+  --c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;
+  --safe:#00e5b0;--caution:#f5d000;--danger:#ff5f5f;--rug:#ff2244;--purple:#a78bfa;
+  --risk:#00e5b0;--risk-soft:rgba(0,229,176,.045);--risk-glow:rgba(0,229,176,.18);--risk-fill:rgba(0,229,176,.55);--risk-border:rgba(0,229,176,.22);
+}
+body.r-safe   {--risk:#00e5b0;--risk-soft:rgba(0,229,176,.045);--risk-glow:rgba(0,229,176,.18);--risk-fill:rgba(0,229,176,.55);--risk-border:rgba(0,229,176,.22)}
+body.r-caution{--risk:#f5d000;--risk-soft:rgba(245,208,0,.04);--risk-glow:rgba(245,208,0,.15);--risk-fill:rgba(245,208,0,.55);--risk-border:rgba(245,208,0,.22)}
+body.r-danger {--risk:#ff5f5f;--risk-soft:rgba(255,95,95,.045);--risk-glow:rgba(255,95,95,.18);--risk-fill:rgba(255,95,95,.55);--risk-border:rgba(255,95,95,.22)}
+body.r-rug    {--risk:#ff2244;--risk-soft:rgba(255,34,68,.05);--risk-glow:rgba(255,34,68,.22);--risk-fill:rgba(255,34,68,.6);--risk-border:rgba(255,34,68,.25)}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden;transition:background .4s}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at top,var(--risk-soft) 0%,transparent 60%);pointer-events:none;z-index:0;transition:background .6s}
 .stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
 @keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
-.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.shell{position:relative;z-index:2;max-width:1140px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
 nav .brand img{height:38px;width:auto}
 nav .links{display:flex;gap:24px}
 nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
 nav .links a:hover,nav .links a.active{color:var(--c)}
 nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;letter-spacing:.08em}
-.page-hero{padding:64px 0 32px}
+.page-hero{padding:48px 0 24px}
 .eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
 @keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
-h1{font:400 clamp(42px,7vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:12px;color:#eaeaea}
+h1{font:400 clamp(40px,7vw,68px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:12px;color:#eaeaea}
 h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
-.sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:700px;border-left:2px solid var(--c);padding-left:16px;margin-bottom:28px}
-
-/* ── 4 verdict tabs ── */
+.sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:720px;border-left:2px solid var(--c);padding-left:16px;margin-bottom:28px}
 .verdict-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
 .vtab{background:var(--card);border:1px solid var(--border);padding:18px 16px;cursor:pointer;text-align:left;transition:.25s;position:relative;overflow:hidden;font-family:'IBM Plex Mono',monospace}
 .vtab::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:.6;transition:.25s}
-.vtab.safe::before{background:var(--safe)}
-.vtab.caution::before{background:var(--caution)}
-.vtab.danger::before{background:var(--danger)}
-.vtab.rug::before{background:var(--rug)}
+.vtab.t-safe::before{background:var(--safe)}
+.vtab.t-caution::before{background:var(--caution)}
+.vtab.t-danger::before{background:var(--danger)}
+.vtab.t-rug::before{background:var(--rug)}
 .vtab:hover{transform:translateY(-2px);background:#13131a}
 .vtab.active{background:#13131a}
 .vtab.active::before{height:3px;opacity:1}
 .vtab-vlbl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
-.vtab.safe .vtab-vlbl{color:var(--safe)}
-.vtab.caution .vtab-vlbl{color:var(--caution)}
-.vtab.danger .vtab-vlbl{color:var(--danger)}
-.vtab.rug .vtab-vlbl{color:var(--rug)}
+.vtab.t-safe .vtab-vlbl{color:var(--safe)}
+.vtab.t-caution .vtab-vlbl{color:var(--caution)}
+.vtab.t-danger .vtab-vlbl{color:var(--danger)}
+.vtab.t-rug .vtab-vlbl{color:var(--rug)}
 .vtab-sym{font:400 26px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#e0e0e0;margin-bottom:4px}
 .vtab-name{font-size:10.5px;color:#666;line-height:1.5}
 @media(max-width:780px){.verdict-tabs{grid-template-columns:repeat(2,1fr)}}
-
-/* ── Custom CA input ── */
 .demo-form{background:var(--card);border:1px solid var(--border);padding:14px 16px;margin-bottom:32px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .demo-form-lbl{font-size:9px;color:#444;letter-spacing:.18em;text-transform:uppercase;margin-right:4px}
 .demo-form input{flex:1;min-width:200px;background:#0a0a0c;border:1px solid var(--border);color:#ddd;font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:10px 12px;letter-spacing:.04em;border-radius:2px;outline:none;transition:border-color .2s}
@@ -77,43 +82,87 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .demo-form button{background:var(--c);color:#0a0a0c;border:none;padding:10px 20px;font:700 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:transform .2s,box-shadow .2s}
 .demo-form button:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,229,176,.25)}
 .demo-form button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-
-/* ── Result iframe ── */
-.iframe-wrap{position:relative;border:1px solid var(--border);background:var(--card);min-height:1100px;overflow:hidden;border-radius:2px}
-.iframe-loading{position:absolute;top:80px;left:50%;transform:translateX(-50%);font-size:10px;color:#444;letter-spacing:.18em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:14px;z-index:2;text-align:center}
-.iframe-loading .spin{width:32px;height:32px;border:2px solid #1a1a1e;border-top-color:var(--c);border-radius:50%;animation:sp .7s linear infinite}
+.result{background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;min-height:480px}
+.result-loading{padding:80px 32px;text-align:center;color:#444;font-size:11px;letter-spacing:.16em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:18px}
+.result-loading .spin{width:32px;height:32px;border:2px solid #1a1a1e;border-top-color:var(--c);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.iframe-loading .ca{font-size:10px;color:#666;letter-spacing:.06em;text-transform:none;margin-top:4px;font-family:'IBM Plex Mono',monospace}
-.iframe-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;background:var(--card);z-index:3}
-.iframe-fallback h3{font:400 36px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#e0e0e0;margin-bottom:12px}
-.iframe-fallback p{font-size:12px;color:#7a7a82;line-height:1.85;margin-bottom:20px;max-width:540px}
-.iframe-fallback .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:14px 28px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s}
-.iframe-fallback .cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,229,176,.25)}
-.iframe-fallback .reload-link{margin-top:14px;font-size:10px;color:#666;letter-spacing:.06em}
-.iframe-fallback .reload-link a{color:var(--c);text-decoration:none}
-.iframe-wrap iframe{width:100%;min-height:1400px;border:none;display:block;background:var(--bg);opacity:0;transition:opacity .3s}
-.iframe-wrap iframe.loaded{opacity:1}
-
+.result-error{padding:60px 32px;text-align:center;font-size:12px;color:#7a4a4a;line-height:1.85}
+.result-error b{color:#a85a5a;font-weight:700;display:block;margin-bottom:8px;font-size:14px}
+.r-hero{padding:36px 36px 24px;position:relative}
+.r-hero::before{content:attr(data-verdict);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:400 280px/1 'Bebas Neue',sans-serif;color:var(--risk);opacity:.012;pointer-events:none;white-space:nowrap;letter-spacing:.06em;z-index:0}
+.r-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--risk);letter-spacing:.28em;text-transform:uppercase;display:flex;align-items:center;gap:10px;position:relative;z-index:1;margin-bottom:14px}
+.r-eye::before{content:'';display:block;width:22px;height:2px;background:var(--risk)}
+.r-verdict-row{display:flex;justify-content:space-between;align-items:center;gap:24px;position:relative;z-index:1;margin-bottom:8px}
+.r-verdict{font:400 clamp(56px,8vw,96px)/.86 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--risk);text-shadow:0 0 60px var(--risk-glow);flex:1;min-width:0}
+.r-logo{width:72px;height:72px;border-radius:50%;border:1.5px solid var(--risk-border);box-shadow:0 0 28px var(--risk-glow);background:#111;display:flex;align-items:center;justify-content:center;font:600 14px 'IBM Plex Mono',monospace;color:#aaa;flex-shrink:0;overflow:hidden}
+.r-logo img{width:100%;height:100%;object-fit:cover}
+.r-tk{font-size:13px;color:#777;letter-spacing:.06em;position:relative;z-index:1;margin-bottom:14px}
+.r-tk b{color:#ddd;font-weight:700;font-size:14px}
+.r-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative;z-index:1;margin-top:14px}
+.r-mcard{background:#0e0e10;border:1px solid var(--border);padding:14px 16px;position:relative;overflow:hidden}
+.r-mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--risk-fill),transparent);opacity:.5}
+.r-mlabel{font-size:9px;color:#444;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+.r-mbig{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.02em;color:#ddd}
+.r-mbig.alt{color:var(--risk);text-shadow:0 0 18px var(--risk-glow)}
+.r-mbig .denom{font-size:11px;color:#444;margin-left:3px}
+.r-sbar{margin-top:8px;height:2px;background:#181818;border-radius:1px;overflow:hidden}
+.r-sbar-fill{height:100%;background:linear-gradient(90deg,var(--risk-fill),var(--risk));box-shadow:0 0 6px var(--risk-glow);width:0;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.r-msub{font-size:10px;color:#666;letter-spacing:.04em;margin-top:5px}
+.r-msub.up{color:var(--c)}.r-msub.dn{color:var(--danger)}
+.r-spark{margin-top:6px;display:block}
+.r-section-label{display:flex;align-items:center;gap:14px;margin:32px 36px 14px}
+.r-section-label::before{content:'▸';font-size:9px;color:var(--c)}
+.r-section-label span{font-size:10px;color:#3a3a3f;letter-spacing:.24em;text-transform:uppercase}
+.r-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.r-flags{margin:0 36px;background:var(--risk-soft);border:1px solid var(--risk-border)}
+.r-flags-head{padding:14px 20px 10px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;align-items:center}
+.r-flags-head .lbl{font-size:9px;color:var(--risk);letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+.r-flags-head .count{font-size:11px;color:#666}
+.r-flag-row{display:flex;align-items:flex-start;gap:11px;padding:11px 20px;border-bottom:1px solid rgba(255,255,255,.025)}
+.r-flag-row:last-child{border:none}
+.r-flag-icon{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;margin-top:2px}
+.r-flag-icon.cr{background:rgba(255,60,80,.18);color:var(--danger)}
+.r-flag-icon.wr{background:rgba(245,208,0,.14);color:var(--caution)}
+.r-flag-label{font-size:12px;font-weight:600;line-height:1.4;color:#e07070}
+.r-flag-row.wr .r-flag-label{color:#d4b040}
+.r-src{margin:0 36px 36px;display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border)}
+.r-src-row{display:grid;grid-template-columns:130px 100px 1fr;align-items:center;gap:16px;padding:12px 16px;background:var(--card);font-size:11px}
+.r-src-name{font:600 12px 'IBM Plex Mono',monospace;color:#ccc}
+.r-src-vrd{font:700 10px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase}
+.r-src-row.bad .r-src-vrd{color:var(--danger)}
+.r-src-row.warn .r-src-vrd{color:var(--caution)}
+.r-src-row.ok .r-src-vrd{color:var(--c)}
+.r-src-row.na .r-src-vrd{color:#555}
+.r-src-note{font-size:10.5px;color:#777;line-height:1.5}
+.r-ai{margin:0 36px;background:rgba(167,139,250,.04);border:1px solid rgba(167,139,250,.18);padding:18px 22px;position:relative;overflow:hidden}
+.r-ai::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(167,139,250,.4),transparent)}
+.r-ai-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.r-ai-head .icon{font-size:13px;color:var(--purple)}
+.r-ai-head h3{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);font-weight:700}
+.r-ai-body{font-size:12px;line-height:1.7;color:#a89fc6;max-width:880px}
+.r-ai-body b{color:#c4b5fd;font-weight:600}
+.r-cta{margin:32px 36px;padding:18px 22px;background:#0a0a0c;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.r-cta-text{font-size:11.5px;color:#888;line-height:1.6}
+.r-cta-text b{color:#bbb;font-weight:700}
+.r-cta-link{display:inline-block;background:var(--c);color:#0a0a0c;padding:10px 22px;font:700 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s;flex-shrink:0}
+.r-cta-link:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,229,176,.25)}
 .disclaimer{font-size:10.5px;color:#555;line-height:1.85;margin-top:24px;padding:18px 22px;background:rgba(0,229,176,.03);border-left:2px solid var(--c)}
 .disclaimer b{color:#888;font-weight:600}
-
 .cta-final{margin:80px 0 60px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
 .cta-final h2{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:12px;color:#eaeaea;position:relative}
 .cta-final p{font-size:12.5px;color:#5a5a62;margin-bottom:24px;position:relative}
 .cta-final .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:18px 36px;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;position:relative;transition:transform .2s,box-shadow .2s}
 .cta-final .cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
-
 footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px}
 footer span{color:var(--c)}
-@media(max-width:760px){.demo-form{flex-direction:column;align-items:stretch}.demo-form input{min-width:0}.demo-form button{width:100%}}
+@media(max-width:760px){.demo-form{flex-direction:column;align-items:stretch}.demo-form input{min-width:0}.demo-form button{width:100%}.r-hero{padding:24px 20px 16px}.r-section-label{margin:24px 20px 10px}.r-flags,.r-src,.r-ai,.r-cta{margin-left:20px;margin-right:20px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Antares — Live Demo","description":"Try Antares without installing. 4 sample tokens pre-loaded — SAFE, CAUTION, DANGER, RUG PULL.","url":"https://antares-website.vercel.app/demo","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
 </head>
-<body>
+<body class="r-safe">
 <div class="stripe" role="presentation" aria-hidden="true"></div>
 <div class="shell">
-
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
   <div class="links"><a href="./demo.html" class="active" style="color:#00e5b0">Demo</a><a href="./compare.html">Compare</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html">Sources</a></div>
@@ -123,29 +172,21 @@ footer span{color:var(--c)}
 <section class="page-hero">
   <div class="eyebrow">Live demo &mdash; no install required</div>
   <h1>SEE A REAL SCAN<br><span class="accent">RIGHT NOW.</span></h1>
-  <p class="sub">Four sample Solana tokens, one per verdict band. Click any to load the full v5 analysis below &mdash; same engine the Chrome extension uses, identical UI. No account, no signup, no data stored. Or paste your own token address at the bottom.</p>
+  <p class="sub">Four sample Solana tokens, one per verdict band. Click any to see the live scan rendered below. No account, no signup, no data stored. Want to test your own? Paste a contract address at the bottom.</p>
 </section>
 
 <div class="verdict-tabs" id="verdict-tabs">
-  <button type="button" class="vtab safe active" data-ca="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" data-sym="USDC" data-name="USD Coin">
-    <div class="vtab-vlbl">● Safe</div>
-    <div class="vtab-sym">USDC</div>
-    <div class="vtab-name">USD Coin &mdash; established stablecoin</div>
+  <button type="button" class="vtab t-safe active" data-ca="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" data-sym="USDC" data-name="USD Coin">
+    <div class="vtab-vlbl">● Safe</div><div class="vtab-sym">USDC</div><div class="vtab-name">USD Coin &mdash; established stablecoin</div>
   </button>
-  <button type="button" class="vtab caution" data-ca="DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" data-sym="BONK" data-name="Bonk">
-    <div class="vtab-vlbl">● Caution</div>
-    <div class="vtab-sym">BONK</div>
-    <div class="vtab-name">Solana memecoin &mdash; high concentration</div>
+  <button type="button" class="vtab t-caution" data-ca="DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" data-sym="BONK" data-name="Bonk">
+    <div class="vtab-vlbl">● Caution</div><div class="vtab-sym">BONK</div><div class="vtab-name">Solana memecoin &mdash; high concentration</div>
   </button>
-  <button type="button" class="vtab danger" data-ca="6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN" data-sym="TRUMP" data-name="OFFICIAL TRUMP">
-    <div class="vtab-vlbl">● Danger</div>
-    <div class="vtab-sym">TRUMP</div>
-    <div class="vtab-name">Concentrated supply &mdash; flagged signals</div>
+  <button type="button" class="vtab t-danger" data-ca="6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN" data-sym="TRUMP" data-name="OFFICIAL TRUMP">
+    <div class="vtab-vlbl">● Danger</div><div class="vtab-sym">TRUMP</div><div class="vtab-name">Concentrated supply &mdash; flagged signals</div>
   </button>
-  <button type="button" class="vtab rug" data-ca="HhJpBhRRn4g56VsyLuT8DL5Bv31HkXqsrahTTUCZeZg4" data-sym="USELESS" data-name="Uselesscoin">
-    <div class="vtab-vlbl">● Rug Pull</div>
-    <div class="vtab-sym">USELESS</div>
-    <div class="vtab-name">Hard kill &mdash; multiple critical flags</div>
+  <button type="button" class="vtab t-rug" data-ca="HhJpBhRRn4g56VsyLuT8DL5Bv31HkXqsrahTTUCZeZg4" data-sym="USELESS" data-name="Uselesscoin">
+    <div class="vtab-vlbl">● Rug Pull</div><div class="vtab-sym">USELESS</div><div class="vtab-name">Hard kill &mdash; multiple critical flags</div>
   </button>
 </div>
 
@@ -155,12 +196,10 @@ footer span{color:var(--c)}
   <button type="submit" id="scan-btn">↗ Scan</button>
 </form>
 
-<div class="iframe-wrap" id="result-wrap">
-  <div class="iframe-loading" id="loader"><div class="spin"></div>Loading scan…<div class="ca" id="loader-ca"></div></div>
-</div>
+<div class="result" id="result"><div class="result-loading"><div class="spin"></div>Loading scan…</div></div>
 
 <div class="disclaimer">
-  <b>How it works.</b> The result panel above loads <code style="color:#888;background:#15151a;padding:1px 5px;font-size:10px">https://antares-extension.vercel.app/token.html?ca={your-address}</code> &mdash; the exact same page the Chrome extension renders. Scans typically complete in 3&ndash;5 seconds, longer on first scan of a fresh token. Verdicts shown for the 4 sample tabs above are <b>typical</b> &mdash; the actual verdict is computed live and may differ as on-chain state evolves. <b>Indicative, not financial advice</b> &mdash; see <a href="./terms.html" style="color:var(--c)">Terms</a>.
+  <b>How it works.</b> Each click fetches <code style="color:#888;background:#15151a;padding:1px 5px;font-size:10px">/api/scan?ca={your-address}</code> from the Antares backend and renders the verdict, flags and source breakdown right here. The verdict labels on the four tabs above are <b>typical</b> &mdash; the actual scan is live and may differ as on-chain state evolves. <b>Indicative, not financial advice</b> &mdash; see <a href="./terms.html" style="color:var(--c)">Terms</a>.
 </div>
 
 <div class="cta-final">
@@ -174,114 +213,147 @@ footer span{color:var(--c)}
 
 <script>
 (function(){
-  const CA_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
-  const wrap = document.getElementById('result-wrap');
-  const input = document.getElementById('ca-input');
-  const btn = document.getElementById('scan-btn');
-  const tabs = document.querySelectorAll('.vtab');
-  let currentIframe = null;
-  let loadTimer = null;
-  let fallbackTimer = null;
+  var API='https://antares-extension.vercel.app/api/scan';
+  var CA_RE=/^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
+  var result=document.getElementById('result');
+  var input=document.getElementById('ca-input');
+  var btn=document.getElementById('scan-btn');
+  var tabs=document.querySelectorAll('.vtab');
+  var RC={SAFE:'safe',CAUTION:'caution',DANGER:'danger',RUG:'rug'};
+  var LB={SAFE:'SAFE',CAUTION:'CAUTION',DANGER:'DANGER',RUG:'RUG PULL'};
 
-  function shortCa(ca){ return ca && ca.length > 12 ? ca.slice(0,6)+'…'+ca.slice(-4) : ca; }
+  function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];});}
+  function fmt(n){if(n==null)return '—';if(n>=1e9)return '$'+(n/1e9).toFixed(2)+'B';if(n>=1e6)return '$'+(n/1e6).toFixed(2)+'M';if(n>=1e3)return '$'+(n/1e3).toFixed(1)+'K';return '$'+(+n).toFixed(0);}
+  function fmtPrice(p){if(!p)return '—';var n=parseFloat(p);if(n<0.000001)return '$'+n.toExponential(2);if(n<0.01)return '$'+n.toFixed(6);if(n<1)return '$'+n.toFixed(4);return '$'+n.toFixed(2);}
+  function pct(n){if(n==null)return null;var s=n>0?'+':'';var cls=n>0?'up':n<0?'dn':'';return {txt:s+(+n).toFixed(2)+'%',cls:cls};}
 
-  function clearTimers(){
-    if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
-    if (fallbackTimer) { clearTimeout(fallbackTimer); fallbackTimer = null; }
+  function buildSparkline(candles){
+    if(!Array.isArray(candles)||candles.length<2)return '';
+    var closes=candles.map(function(c){return c&&typeof c.close==='number'?c.close:null;}).filter(function(v){return v!=null;});
+    if(closes.length<2)return '';
+    var w=200,h=32,min=Math.min.apply(null,closes),max=Math.max.apply(null,closes),range=max-min||1;
+    var points=closes.map(function(v,i){var x=(i/(closes.length-1))*w;var y=h-((v-min)/range)*(h-4)-2;return x.toFixed(1)+','+y.toFixed(1);}).join(' ');
+    return '<svg class="r-spark" width="100%" height="32" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><polyline points="'+points+'" fill="none" stroke="var(--risk)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 
-  function showFallback(ca){
-    clearTimers();
-    const url = 'https://antares-extension.vercel.app/token.html?ca='+encodeURIComponent(ca);
-    wrap.innerHTML = '<div class="iframe-fallback"><h3>Inline preview unavailable</h3><p>Your browser is blocking the embedded scan, or the extension server hasn’t finished deploying. Open the full scan in a new tab — it works the same way.</p><a class="cta" href="'+url+'" target="_blank" rel="noopener noreferrer">⇗ Open scan in new tab</a><div class="reload-link"><a href="javascript:location.reload()">Reload demo</a></div></div>';
+  function buildSourceRows(layers){
+    if(!layers)return '';
+    var order=['rugcheck','helius','solscan','chart','dexscreener'];
+    var labels={rugcheck:'RugCheck',helius:'Helius',solscan:'Solscan',chart:'Chart Engine',dexscreener:'DexScreener'};
+    return order.map(function(k){
+      var l=layers[k];
+      if(!l)return '';
+      if(!l.available)return '<div class="r-src-row na"><div class="r-src-name">'+escapeHtml(labels[k])+'</div><div class="r-src-vrd">N/A</div><div class="r-src-note">Source unavailable.</div></div>';
+      var trust=l.trust||0;
+      var cls,vrd,note;
+      if(trust>=0.75){cls='ok';vrd='OK';note=labels[k]+' reports no critical issues.';}
+      else if(trust>=0.4){cls='warn';vrd='Risk';note=labels[k]+' flagged moderate concerns.';}
+      else{cls='bad';vrd='Flagged';note=labels[k]+' flagged significant concerns.';}
+      return '<div class="r-src-row '+cls+'"><div class="r-src-name">'+escapeHtml(labels[k])+'</div><div class="r-src-vrd">'+vrd+'</div><div class="r-src-note">'+escapeHtml(note)+'</div></div>';
+    }).join('');
   }
 
-  function loadResult(ca, opts){
-    if (!CA_RE.test(ca)) {
-      wrap.innerHTML = '<div class="iframe-fallback"><h3>Invalid Solana address</h3><p>Expected 32–44 base58 characters. Try one of the 4 sample tokens above, or check the address you pasted.</p></div>';
-      return;
-    }
-    if (btn) btn.disabled = true;
-    clearTimers();
-
-    // Loading state
-    wrap.innerHTML = '<div class="iframe-loading" id="loader"><div class="spin"></div>Loading scan…<div class="ca">'+shortCa(ca)+'</div></div>';
-
-    // Pre-warm /api/scan so the iframe loads against a hot cache
-    try { fetch('https://antares-extension.vercel.app/api/scan?ca='+encodeURIComponent(ca), {mode:'cors'}).catch(function(){}); } catch(e){}
-
-    const url = 'https://antares-extension.vercel.app/token.html?ca='+encodeURIComponent(ca);
-    const iframe = document.createElement('iframe');
-    iframe.src = url;
-    iframe.title = 'Antares scan result for '+ca;
-    iframe.loading = 'eager';
-    iframe.referrerPolicy = 'no-referrer-when-downgrade';
-
-    let loaded = false;
-    iframe.onload = function(){
-      loaded = true;
-      clearTimers();
-      iframe.classList.add('loaded');
-      const loader = document.getElementById('loader');
-      if (loader) loader.remove();
-      if (btn) btn.disabled = false;
-    };
-
-    // If iframe fails to fire onload within 12s, show fallback
-    fallbackTimer = setTimeout(function(){
-      if (!loaded) {
-        showFallback(ca);
-        if (btn) btn.disabled = false;
-      }
-    }, 12000);
-
-    // Append iframe shortly after — gives loader visibility
-    loadTimer = setTimeout(function(){
-      try {
-        wrap.appendChild(iframe);
-        currentIframe = iframe;
-      } catch(e) {
-        showFallback(ca);
-      }
-    }, 100);
-
-    // Update URL with ?ca= for shareability
-    try { history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca)); } catch(e){}
+  function buildFlagRows(flags){
+    var real=(flags||[]).filter(function(f){var l=String(f.label||f);return f.severity!=='bonus'&&l.toLowerCase().indexOf('unavailable')===-1;}).slice(0,5);
+    if(real.length===0)return '<div class="r-flag-row"><div class="r-flag-icon" style="background:rgba(0,229,176,.12);color:var(--c)">✓</div><div class="r-flag-label" style="color:#559970">No critical flags detected</div></div>';
+    return real.map(function(f){
+      var sev=f.severity||'warning';
+      var isCrit=sev==='critical';
+      var cls=isCrit?'cr':'wr';
+      var ico=isCrit?'✕':'!';
+      return '<div class="r-flag-row '+(isCrit?'':'wr')+'"><div class="r-flag-icon '+cls+'">'+ico+'</div><div class="r-flag-label">'+escapeHtml(f.label||f)+'</div></div>';
+    }).join('');
   }
 
-  function runScan(e){
-    e.preventDefault();
-    if (input) loadResult(input.value.trim(), {fromInput:true});
-    return false;
+  function render(d,ca){
+    var rc=RC[d.risk]||'danger';
+    var lb=LB[d.risk]||d.risk;
+    document.body.className='r-'+rc;
+    var score=d.score||0;
+    var barW=Math.min(100,Math.round(score/10));
+    var conf=typeof d.confidence==='number'?d.confidence:null;
+    var sym=d.tokenSymbol||(d.pair&&d.pair.baseToken&&d.pair.baseToken.symbol)||'';
+    var name=d.tokenName||(d.pair&&d.pair.baseToken&&d.pair.baseToken.name)||'';
+    var logo=d.tokenLogo||(d.pair&&d.pair.info&&d.pair.info.imageUrl)||null;
+    var mc=d.marketCap||(d.pair&&d.pair.marketCap)||null;
+    var priceUsd=d.priceUsd||(d.pair&&d.pair.priceUsd)||null;
+    var candles=d.candles||[];
+    var pc24=d.priceChange24h!=null?d.priceChange24h:(d.pair&&d.pair.priceChange&&d.pair.priceChange.h24);
+    var c24=pct(pc24);
+    var fAll=(d.flags||[]).filter(function(f){return f.severity!=='bonus';});
+    var fCrit=fAll.filter(function(f){return f.severity==='critical';}).length;
+    var flagsCount=fAll.length===0?'No flags':fAll.length+' detected';
+    var flagsSev=fAll.length===0?'':fCrit+' critical · '+(fAll.length-fCrit)+' warning';
+    var sparkline=buildSparkline(candles);
+    var flagRowsHtml=buildFlagRows(fAll);
+    var srcRowsHtml=buildSourceRows(d.layers);
+    var aiBody=d.aiSummary?'<div class="r-ai-body">'+escapeHtml(d.aiSummary)+'</div>':'<div class="r-ai-body" style="color:#5a5170">AI summary still warming up — refresh in 5 seconds.</div>';
+    var logoHtml=logo
+      ? '<div class="r-logo"><img src="'+escapeHtml(logo)+'" alt="'+escapeHtml(sym)+'" onerror="this.parentElement.textContent=this.alt.slice(0,4)"></div>'
+      : (sym?'<div class="r-logo">'+escapeHtml(sym.slice(0,4))+'</div>':'');
+    var fullUrl='https://antares-extension.vercel.app/token.html?ca='+encodeURIComponent(ca);
+    result.innerHTML=''
+      +'<section class="r-hero" data-verdict="'+escapeHtml(lb)+'">'
+        +'<div class="r-eye">Token Analysis'+(conf!=null?' · Conf '+conf+'%':'')+'</div>'
+        +'<div class="r-verdict-row"><h1 class="r-verdict">'+escapeHtml(lb)+'</h1>'+logoHtml+'</div>'
+        +(sym?'<div class="r-tk"><b>'+escapeHtml(sym)+'</b>'+(name?' '+escapeHtml(name):'')+'</div>':'')
+        +'<div class="r-metrics">'
+          +'<div class="r-mcard"><div class="r-mlabel">Risk Score</div><div class="r-mbig">'+score+'<span class="denom">/ 1000</span></div><div class="r-sbar"><div class="r-sbar-fill" id="sbar"></div></div><div class="r-msub">'+escapeHtml(flagsCount)+(flagsSev?' · '+escapeHtml(flagsSev):'')+'</div></div>'
+          +'<div class="r-mcard"><div class="r-mlabel">'+(mc?'Market Cap':'Price USD')+'</div><div class="r-mbig alt">'+escapeHtml(mc?fmt(mc):(priceUsd?fmtPrice(priceUsd):'—'))+'</div>'+sparkline+(c24?'<div class="r-msub '+c24.cls+'">'+escapeHtml(c24.txt)+' · 24h</div>':'')+'</div>'
+        +'</div>'
+      +'</section>'
+      +'<div class="r-section-label"><span>Critical Flags</span></div>'
+      +'<div class="r-flags"><div class="r-flags-head"><span class="lbl">'+escapeHtml(flagsCount)+'</span>'+(flagsSev?'<span class="count">'+escapeHtml(flagsSev)+'</span>':'')+'</div>'+flagRowsHtml+'</div>'
+      +'<div class="r-section-label"><span>AI Verdict</span></div>'
+      +'<div class="r-ai"><div class="r-ai-head"><span class="icon">⬡</span><h3>Synthesis</h3></div>'+aiBody+'</div>'
+      +(srcRowsHtml?'<div class="r-section-label"><span>Source Breakdown</span></div><div class="r-src">'+srcRowsHtml+'</div>':'')
+      +'<div class="r-cta"><div class="r-cta-text"><b>Want the full v5 analysis?</b> Score Radar, Critical Actors, Holder Activity tab, Verdict Timeline and Outcome Histogram are in the extension.</div><a class="r-cta-link" href="'+fullUrl+'" target="_blank" rel="noopener noreferrer">↗ Full analysis</a></div>';
+    setTimeout(function(){var sb=document.getElementById('sbar');if(sb)sb.style.width=barW+'%';},200);
   }
-  window.runScan = runScan;
 
-  tabs.forEach(function(t){
-    t.addEventListener('click', function(){
-      tabs.forEach(function(o){ o.classList.remove('active'); });
+  function showError(msg){result.innerHTML='<div class="result-error"><b>Scan failed</b>'+escapeHtml(msg||'The Antares API did not respond in time. Try another token or refresh in a moment.')+'</div>';}
+
+  var inflight=null;
+  function loadResult(ca){
+    if(!CA_RE.test(ca)){showError('Expected 32–44 base58 characters.');return;}
+    if(btn)btn.disabled=true;
+    if(inflight){try{inflight.abort();}catch(e){}}
+    inflight=new AbortController();
+    result.innerHTML='<div class="result-loading"><div class="spin"></div>Scanning '+ca.slice(0,6)+'…'+ca.slice(-4)+'…</div>';
+    fetch(API+'?ca='+encodeURIComponent(ca),{signal:inflight.signal})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+      .then(function(d){
+        render(d,ca);
+        try{history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca));}catch(e){}
+      })
+      .catch(function(e){if(e.name==='AbortError')return;showError(e.message);})
+      .finally(function(){if(btn)btn.disabled=false;});
+  }
+
+  function runScan(e){e.preventDefault();if(input)loadResult(input.value.trim());return false;}
+  window.runScan=runScan;
+
+  Array.prototype.forEach.call(tabs,function(t){
+    t.addEventListener('click',function(){
+      Array.prototype.forEach.call(tabs,function(o){o.classList.remove('active');});
       t.classList.add('active');
-      const ca = t.dataset.ca;
-      if (input) input.value = ca;
+      var ca=t.dataset.ca;
+      if(input)input.value=ca;
       loadResult(ca);
     });
   });
 
-  // Auto-load: ?ca= from URL > else SAFE example
-  const params = new URLSearchParams(location.search);
-  const initialCa = params.get('ca');
-  if (initialCa && CA_RE.test(initialCa)) {
-    if (input) input.value = initialCa;
-    // If matches one of the tabs, mark active; else clear active
-    let matched = false;
-    tabs.forEach(function(t){
-      if (t.dataset.ca === initialCa) { tabs.forEach(function(o){ o.classList.remove('active'); }); t.classList.add('active'); matched = true; }
-    });
-    if (!matched) tabs.forEach(function(t){ t.classList.remove('active'); });
+  var params=new URLSearchParams(location.search);
+  var initialCa=params.get('ca');
+  if(initialCa&&CA_RE.test(initialCa)){
+    if(input)input.value=initialCa;
+    var matched=false;
+    Array.prototype.forEach.call(tabs,function(t){if(t.dataset.ca===initialCa){Array.prototype.forEach.call(tabs,function(o){o.classList.remove('active');});t.classList.add('active');matched=true;}});
+    if(!matched)Array.prototype.forEach.call(tabs,function(t){t.classList.remove('active');});
     loadResult(initialCa);
-  } else {
-    // Default: SAFE example (USDC), already marked active
-    const first = document.querySelector('.vtab.active');
-    if (first) loadResult(first.dataset.ca);
+  }else{
+    var first=document.querySelector('.vtab.active');
+    if(first)loadResult(first.dataset.ca);
   }
 })();
 </script>
