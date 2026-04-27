@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<title>About — Antares</title>
+<meta name="description" content="Open-source Solana token scanner. Built by COMEALAMAISONGROUPE. No VC, no token, no paywall. Why Antares exists and how it stays free.">
+<meta name="author" content="Antares">
+<link rel="canonical" href="https://antares-website.vercel.app/about">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://antares-website.vercel.app/about">
+<meta property="og:title" content="About — Antares">
+<meta property="og:description" content="Open-source Solana token scanner. Built by COMEALAMAISONGROUPE. No VC, no token, no paywall.">
+<meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Antares">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@antaresantiscam">
+<meta name="twitter:title" content="About — Antares">
+<meta name="twitter:description" content="Open-source Solana token scanner. No VC, no token, no paywall.">
+<meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:780px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);max-width:780px;margin:0 auto;padding-left:32px;padding-right:32px}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+.page-hero{padding:80px 0 32px}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+h1{font:400 clamp(48px,8vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+h2{font-size:13px;color:var(--c);letter-spacing:.1em;text-transform:uppercase;margin:40px 0 12px;font-weight:700}
+p{font-size:13px;color:#7a7a82;line-height:1.85;margin-bottom:14px}
+p b{color:#aaa;font-weight:600}
+p a{color:var(--c)}
+.values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:24px 0 32px}
+.val-card{background:var(--card);padding:24px 28px}
+.val-card h3{font:400 22px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#e0e0e0;margin-bottom:8px}
+.val-card p{font-size:11.5px;color:#888;line-height:1.75;margin:0}
+footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px;max-width:780px;margin:60px auto 0}
+footer span{color:var(--c)}
+@media(max-width:760px){.values-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="stripe" role="presentation"></div>
+<nav><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./features.html">Features</a><a href="./demo.html">Demo</a><a href="./compare.html">Compare</a><a href="./about.html" class="active">About</a></div></nav>
+<main class="shell">
+
+<section class="page-hero">
+  <div class="eyebrow">About the project</div>
+  <h1>WHY THIS EXISTS</h1>
+</section>
+
+<p><b>Antares started because Solana memecoin trading is a minefield.</b> RugCheck does one thing well, GoPlus does another, DexScreener gives you the price chart, BubbleMaps shows the wallet graph &mdash; and you have to alt-tab between four sites every time you see a contract address on Twitter. By the time you&rsquo;ve cross-referenced everything, the price has moved 30%.</p>
+
+<p>So we built the layer that bundles the signals into one verdict, adds what nobody else does (live holder activity, verdict timeline, insider clustering), and overlays it on every site you already use.</p>
+
+<h2>What Antares is, what it isn&rsquo;t</h2>
+<p>Antares is a <b>risk-screening tool</b>. It tells you what 6 independent sources detect about a Solana token in 3-5 seconds. It is <b>not</b> financial advice, it does not predict the future, and it cannot guarantee a SAFE token won&rsquo;t rug. False positives and false negatives both happen &mdash; we trade off in favour of safety (better one false alarm than one missed honeypot).</p>
+
+<p>The Time-to-Rug ring and Outcome Histogram are <b>indicative</b> &mdash; based on a heuristic profile match against historical patterns, not validated forecasts. Treat them as context, not certainty. See <a href="./terms.html">Terms</a> for the full disclaimer.</p>
+
+<h2>How it stays free</h2>
+<div class="values-grid">
+  <div class="val-card"><h3>No VC</h3><p>No outside investors, no funding round. The project is funded out-of-pocket and runs on free-tier infrastructure (Vercel hobby + Upstash free + free Helius + free Gemini).</p></div>
+  <div class="val-card"><h3>No token</h3><p>No ANTARES coin, no airdrop, no points. The project will never launch a token. If you see one, it&rsquo;s a scam impersonating us.</p></div>
+  <div class="val-card"><h3>No paywall</h3><p>The extension is and will remain free. Power-user features (custom alerts, watchlists, public API) may eventually be a tip-funded layer, but the core verdict will always be free.</p></div>
+  <div class="val-card"><h3>Open source</h3><p>The full source is on GitHub. Audit the scoring logic, fork it, self-host it. The license is permissive and the API is documented.</p></div>
+</div>
+
+<h2>Who&rsquo;s behind it</h2>
+<p>Antares is operated by the <b>COMEALAMAISONGROUPE</b> open-source project, based in France. The maintainer is <a href="https://twitter.com/antaresantiscam">@antaresantiscam</a> on Twitter. Bug reports and feature requests are tracked publicly at <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">github.com/COMEALAMAISONGROUPE/antares-extension/issues</a>.</p>
+
+<p>If you want to contribute &mdash; code, signals data, false-positive reports, edge-case rugs that slipped through &mdash; PRs and issues are welcome. Security disclosures via Private Vulnerability Reporting per <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/SECURITY.md">SECURITY.md</a>.</p>
+
+<h2>Roadmap</h2>
+<p>Short-term: tighten the scoring engine, fix high-rate false positives, ship the corpus-backed Time-to-Rug matcher (replacing the current heuristic). Mid-term: multichain support (Ethereum, BSC, Base &mdash; phase 0 already scoped). Long-term: public API for third-party integrations, browser extension on Firefox, custom alerts.</p>
+
+<p>The next 30 days: get the Chrome Web Store listing live, start observing real traffic, fix what breaks. Everything else is downstream of that.</p>
+
+</main>
+<footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
+</body>
+</html>

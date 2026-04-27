@@ -5,7 +5,29 @@
     { "source": "/engine", "destination": "/engine.html" },
     { "source": "/features", "destination": "/features.html" },
     { "source": "/sources", "destination": "/sources.html" },
-    { "source": "/token", "destination": "/token.html" }
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/demo", "destination": "/demo.html" },
+    { "source": "/compare", "destination": "/compare.html" },
+    { "source": "/faq", "destination": "/faq.html" },
+    { "source": "/changelog", "destination": "/changelog.html" },
+    { "source": "/install", "destination": "/install.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/api", "destination": "/api.html" }
+  ],
+  "redirects": [
+    {
+      "source": "/token",
+      "destination": "https://antares-extension.vercel.app/token.html",
+      "permanent": false,
+      "has": [{ "type": "query", "key": "ca" }]
+    },
+    {
+      "source": "/token.html",
+      "destination": "https://antares-extension.vercel.app/token.html",
+      "permanent": false,
+      "has": [{ "type": "query", "key": "ca" }]
+    }
   ],
   "headers": [
     {

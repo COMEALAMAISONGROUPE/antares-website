@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Antares — Live Demo</title>
+<meta name="description" content="Try Antares without installing. Paste any Solana token address and see the full v5 verdict — score, flags, Critical Actors, Holder Activity, Verdict Timeline, AI Synthesis.">
+<meta name="author" content="Antares">
+<link rel="canonical" href="https://antares-website.vercel.app/demo">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://antares-website.vercel.app/demo">
+<meta property="og:title" content="Antares — Live Demo">
+<meta property="og:description" content="Try Antares without installing. Paste any Solana token address and see the full v5 verdict.">
+<meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Antares">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@antaresantiscam">
+<meta name="twitter:title" content="Antares — Live Demo">
+<meta name="twitter:description" content="Try Antares without installing. Paste any Solana token address and see the full v5 verdict.">
+<meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--glow:rgba(0,229,176,.12)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;letter-spacing:.08em}
+.page-hero{padding:80px 0 40px}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+h1{font:400 clamp(48px,8vw,84px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
+.sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:640px;border-left:2px solid var(--c);padding-left:16px;margin-bottom:40px}
+
+.demo-form{background:var(--card);border:1px solid var(--border);padding:28px;margin-bottom:32px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.demo-form input{flex:1;min-width:240px;background:#0a0a0c;border:1px solid var(--border);color:#ddd;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:14px 16px;letter-spacing:.04em;border-radius:2px;outline:none;transition:border-color .2s}
+.demo-form input:focus{border-color:rgba(0,229,176,.4);box-shadow:0 0 0 1px rgba(0,229,176,.2)}
+.demo-form input::placeholder{color:#3a3a40}
+.demo-form button{background:var(--c);color:#0a0a0c;border:none;padding:14px 28px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:transform .2s,box-shadow .2s}
+.demo-form button:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,229,176,.25)}
+.demo-form button:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.examples{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.examples-lbl{font-size:9px;color:#444;letter-spacing:.18em;text-transform:uppercase;margin-right:6px;align-self:center}
+.example-chip{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;color:#888;background:#0e0e10;border:1px solid var(--border);padding:6px 12px;letter-spacing:.04em;cursor:pointer;border-radius:2px;transition:.2s;font-family:'IBM Plex Mono',monospace}
+.example-chip:hover{border-color:rgba(0,229,176,.3);color:var(--c)}
+.example-chip .verdict{font-weight:700;font-size:9px;letter-spacing:.14em}
+.example-chip .verdict.safe{color:var(--c)}
+.example-chip .verdict.caution{color:#f5d000}
+.example-chip .verdict.danger{color:#ff5f5f}
+.example-chip .verdict.rug{color:#ff2244}
+
+.iframe-wrap{position:relative;border:1px solid var(--border);background:var(--card);min-height:600px;overflow:hidden;border-radius:2px}
+.iframe-empty{padding:80px 32px;text-align:center;color:#3a3a40;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.iframe-empty b{color:#666;font-weight:700}
+.iframe-loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#444;letter-spacing:.18em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:14px}
+.iframe-loading .spin{width:28px;height:28px;border:2px solid #1a1a1e;border-top-color:var(--c);border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.iframe-wrap iframe{width:100%;min-height:1400px;border:none;display:block;background:var(--bg)}
+.disclaimer{font-size:10.5px;color:#555;line-height:1.85;margin-top:24px;padding:18px 22px;background:rgba(0,229,176,.03);border-left:2px solid var(--c)}
+.disclaimer b{color:#888;font-weight:600}
+
+.cta-final{margin:80px 0 60px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
+.cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
+.cta-final h2{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:12px;color:#eaeaea;position:relative}
+.cta-final p{font-size:12.5px;color:#5a5a62;margin-bottom:24px;position:relative}
+.cta-final .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:18px 36px;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;position:relative;transition:transform .2s,box-shadow .2s}
+.cta-final .cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+
+footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px}
+footer span{color:var(--c)}
+@media(max-width:760px){.demo-form{flex-direction:column;align-items:stretch}.demo-form input{min-width:0}.demo-form button{width:100%}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Antares — Live Demo","description":"Try Antares without installing. Paste any Solana token address and see the full v5 verdict.","url":"https://antares-website.vercel.app/demo","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+</head>
+<body>
+<div class="stripe" role="presentation" aria-hidden="true"></div>
+<div class="shell">
+
+<header><nav aria-label="Main navigation">
+  <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
+  <div class="links"><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html">Sources</a><a href="./demo.html" class="active">Demo</a><a href="./compare.html">Compare</a></div>
+  <div class="tag">v1.2.1 // SOLANA</div>
+</nav></header><main>
+
+<section class="page-hero">
+  <div class="eyebrow">Live demo &mdash; no install required</div>
+  <h1>TRY IT.<br><span class="accent">RIGHT NOW.</span></h1>
+  <p class="sub">Paste any Solana token contract address below. The full v5 verdict loads inline &mdash; same engine the Chrome extension uses, identical UI. No account, no signup, no data stored.</p>
+</section>
+
+<form class="demo-form" id="demo-form" onsubmit="return runScan(event)">
+  <input id="ca-input" type="text" placeholder="Paste a Solana CA (e.g. EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v)" autocomplete="off" spellcheck="false">
+  <button type="submit" id="scan-btn">↗ Scan</button>
+</form>
+
+<div class="examples">
+  <span class="examples-lbl">Try:</span>
+  <button class="example-chip" type="button" data-ca="So11111111111111111111111111111111111111112">SOL <span class="verdict safe">SAFE</span></button>
+  <button class="example-chip" type="button" data-ca="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v">USDC <span class="verdict safe">SAFE</span></button>
+  <button class="example-chip" type="button" data-ca="EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm">WIF <span class="verdict safe">SAFE</span></button>
+  <button class="example-chip" type="button" data-ca="DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263">BONK <span class="verdict safe">SAFE</span></button>
+</div>
+
+<div class="iframe-wrap" id="result-wrap">
+  <div class="iframe-empty"><b>Paste an address above</b><br>or click an example to try.</div>
+</div>
+
+<div class="disclaimer">
+  <b>How it works.</b> The result iframe above loads <code style="color:#888;background:#15151a;padding:1px 5px;font-size:10px">https://antares-extension.vercel.app/token.html?ca={your-address}</code> &mdash; the exact same page the Chrome extension renders. Scans typically complete in 3&ndash;5 seconds, longer on first scan of a fresh token (cold cache + Helius RPC). Verdicts are <b>indicative</b>, not financial advice; see <a href="./terms.html" style="color:var(--c)">Terms</a>.
+</div>
+
+<div class="cta-final">
+  <h2>Liked what you saw?</h2>
+  <p>Install the extension and get the same scan automatically, on every Solana address you encounter on Twitter, Telegram, DexScreener, pump.fun&hellip;</p>
+  <a class="cta" href="https://github.com/COMEALAMAISONGROUPE/antares-extension" target="_blank" rel="noopener noreferrer">⚡ Install Free &mdash; Chrome</a>
+</div>
+
+</main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
+</div>
+<script>
+const CA_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
+const wrap = document.getElementById('result-wrap');
+const input = document.getElementById('ca-input');
+const btn = document.getElementById('scan-btn');
+
+function loadResult(ca){
+  if (!CA_RE.test(ca)) {
+    wrap.innerHTML = '<div class="iframe-empty" style="color:#7a4a4a"><b>Invalid Solana address</b><br>Expected 32&ndash;44 base58 characters.</div>';
+    return;
+  }
+  btn.disabled = true;
+  wrap.innerHTML = '<div class="iframe-loading"><div class="spin"></div>Loading scan…</div>';
+  // Pre-warm via the API so the iframe load is faster (cache hit on extension side)
+  fetch('https://antares-extension.vercel.app/api/scan?ca='+encodeURIComponent(ca)).catch(()=>{});
+  const url = 'https://antares-extension.vercel.app/token.html?ca='+encodeURIComponent(ca);
+  const iframe = document.createElement('iframe');
+  iframe.src = url;
+  iframe.title = 'Antares scan result for '+ca;
+  iframe.loading = 'eager';
+  iframe.onload = ()=>{ btn.disabled = false; };
+  setTimeout(()=>{
+    wrap.innerHTML = '';
+    wrap.appendChild(iframe);
+  }, 80);
+  // Update URL with ?ca= for shareability
+  try { history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca)); } catch(e) {}
+}
+
+function runScan(e){
+  e.preventDefault();
+  loadResult(input.value.trim());
+  return false;
+}
+
+document.querySelectorAll('.example-chip').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    const ca = b.dataset.ca;
+    input.value = ca;
+    loadResult(ca);
+  });
+});
+
+// Auto-load if ?ca= in URL
+const params = new URLSearchParams(location.search);
+const initialCa = params.get('ca');
+if (initialCa) {
+  input.value = initialCa;
+  loadResult(initialCa);
+}
+</script>
+</body>
+</html>

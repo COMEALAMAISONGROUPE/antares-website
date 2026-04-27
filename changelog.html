@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Changelog — Antares</title>
+<meta name="description" content="Antares release notes — what shipped in each version. Links to GitHub PRs.">
+<meta name="author" content="Antares">
+<link rel="canonical" href="https://antares-website.vercel.app/changelog">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://antares-website.vercel.app/changelog">
+<meta property="og:title" content="Changelog — Antares">
+<meta property="og:description" content="Antares release notes — what shipped in each version.">
+<meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Antares">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@antaresantiscam">
+<meta name="twitter:title" content="Changelog — Antares">
+<meta name="twitter:description" content="Antares release notes — what shipped in each version.">
+<meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:880px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);max-width:880px;margin:0 auto;padding-left:32px;padding-right:32px}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+.page-hero{padding:80px 0 32px}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+h1{font:400 clamp(48px,8vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+.release{margin-bottom:48px;padding:28px 32px;background:var(--card);border:1px solid var(--border)}
+.release-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:18px;flex-wrap:wrap;gap:8px}
+.release-v{font:400 36px/1 'Bebas Neue',sans-serif;color:var(--c);letter-spacing:.04em}
+.release-date{font-size:11px;color:#555;letter-spacing:.14em;text-transform:uppercase}
+.release h3{font-size:11px;color:#888;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin:18px 0 8px}
+.release ul{margin:0 0 0 20px;font-size:12px;color:#7a7a82;line-height:1.85}
+.release ul li{margin-bottom:6px}
+.release ul li b{color:#bbb;font-weight:600}
+.release ul li a{color:var(--c)}
+.release ul li code{background:#15151a;padding:1px 5px;border-radius:2px;color:#bbb;font-size:11px}
+.unreleased{border-color:rgba(245,208,0,.2);background:linear-gradient(135deg,rgba(245,208,0,.02),transparent)}
+.unreleased .release-v{color:#f5d000}
+.full-link{font-size:11px;color:#666;letter-spacing:.06em;margin-top:32px;text-align:center}
+.full-link a{color:var(--c)}
+footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px;max-width:880px;margin:60px auto 0}
+footer span{color:var(--c)}
+</style>
+</head>
+<body>
+<div class="stripe" role="presentation"></div>
+<nav><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./features.html">Features</a><a href="./demo.html">Demo</a><a href="./faq.html">FAQ</a><a href="./changelog.html" class="active">Changelog</a></div></nav>
+<main class="shell">
+
+<section class="page-hero">
+  <div class="eyebrow">Release notes</div>
+  <h1>CHANGELOG</h1>
+</section>
+
+<div class="release">
+  <div class="release-head"><div class="release-v">v1.2.1</div><div class="release-date">27 April 2026</div></div>
+  <h3>v5 backend wave — real data behind every section</h3>
+  <ul>
+    <li><b>Critical Actors</b> composer ships real per-token data: dev reputation (prior tokens, prior rugs), insider sniper position, coordinated cluster from insider-graph union-find. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/321">#321</a></li>
+    <li><b>Verdict Timeline</b> persisted in Redis ZSET <code>vh:{ca}</code>. Each scan appends a snapshot; the tab renders real verdict progression instead of a static bookend. 60s dedupe, 50-entry cap, 30-day TTL. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/322">#322</a></li>
+    <li><b>Holder Activity</b> tab now classifies last-60min on-chain activity per top holder (Holding / Selling / Buying / Splitting / Reducing / Static) from <code>recentTransfers</code>. Net-flow footer detects pre-dump signature. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/323">#323</a></li>
+    <li><b>Outcome Stats</b> &mdash; TTR ring + Outcome Histogram &mdash; powered by a heuristic profile matcher (fast-rug / high-risk / slow-death). Indicative; corpus-backed KNN matcher coming. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/324">#324</a></li>
+    <li>TTR ring rendered only for RUG and DANGER verdicts (was previously also showing on CAUTION with misleading slow-death framing). <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/326">#326</a></li>
+    <li>Holder Activity tab shows honest empty-state when backend returns <code>rows=[]</code> instead of falling back to mock content. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/325">#325</a></li>
+    <li>Cache prefix bumped <code>antares:v3:</code> &rarr; <code>antares:v4:</code> to invalidate stale results pre-dating the v5 fields.</li>
+    <li>34 new tests added (composers + Redis-mocked verdict-history). Branch coverage 74.6%.</li>
+  </ul>
+</div>
+
+<div class="release">
+  <div class="release-head"><div class="release-v">v1.2.0</div><div class="release-date">25 April 2026</div></div>
+  <h3>v5 design + token page architecture</h3>
+  <ul>
+    <li>Foldable, click-to-collapse sections everywhere (Critical Flags, AI Verdict, Security, Holders, Deep Analysis, Source Breakdown). <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/316">#316</a></li>
+    <li>Deep Analysis 5-tab widget &mdash; Timeline, Holder Activity, Score Breakdown (radar), Outcome Histogram, Exit Liquidity. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/317">#317</a></li>
+    <li>SVG radar pentagon over 5 dimensions (LP / Holders / Trading / Maturity / Sources).</li>
+    <li>Critical Actors preview with 3 cards (Dev / Insider / Cluster).</li>
+    <li>Time-to-Rug ring in hero for RUG / DANGER verdicts.</li>
+    <li>Source Breakdown accordion: per-upstream verdict (OK / Risk / Flagged / N/A) with one-line note.</li>
+    <li>Custom inline-SVG tab icons replacing emoji glyphs.</li>
+    <li>Glitch animation on the verdict <code>h1</code>; Ask-Antares FAB with contextual question pills.</li>
+  </ul>
+  <h3>Backend resilience</h3>
+  <ul>
+    <li>Per-fetch deadline with graceful degradation when one upstream stalls. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/275">#275</a></li>
+    <li>Runtime Zod validation for upstream GoPlus / RugCheck / Helius responses. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/276">#276</a></li>
+    <li>Structured <code>scan.outcome</code> + <code>scan.cache_hit</code> telemetry. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/277">#277</a> <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/279">#279</a></li>
+    <li>Rate limiting can key on <code>(IP, install)</code> &mdash; closes shared-NAT quota starvation.</li>
+    <li>GoPlus <code>holder_count</code> finally read &mdash; the field was already in the response, just unused.</li>
+    <li>Asymmetric Redis cache TTL: bad verdicts cache long, young-token safe verdicts cache short.</li>
+  </ul>
+</div>
+
+<div class="release">
+  <div class="release-head"><div class="release-v">v1.1.0</div><div class="release-date">15 April 2026</div></div>
+  <h3>Production hardening</h3>
+  <ul>
+    <li>7-source verdict (DexScreener, RugCheck, GoPlus, Helius, Solscan, Chart, CrossValidation).</li>
+    <li>Safe Gate hard overrides on critical flags (LP open, honeypot, mint/freeze, deceptive name).</li>
+    <li>1000-point composite score with geometric mean + diminishing penalties.</li>
+    <li>Wash trading detection via vol/liq ratio + Solscan transfer signature analysis.</li>
+    <li>Chart pattern engine (parabolic / blow-off / staircase / wick trap / dead-cat bounce).</li>
+    <li>Established-token bypass (30+ days, 50k+ holders, GoPlus clean) for legitimate blue chips.</li>
+  </ul>
+</div>
+
+<div class="full-link">Full changelog with all merged PRs: <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/CHANGELOG.md">CHANGELOG.md</a></div>
+
+</main>
+<footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
+</body>
+</html>
