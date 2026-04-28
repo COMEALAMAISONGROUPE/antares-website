@@ -266,14 +266,28 @@ footer span{color:var(--c)}
 </section>
 
 <!-- ═══════ PROOF / BACKTEST ═══════ -->
-<!-- Tested against a real corpus, numbers verifiable. The home page
-     surfaces the headline; engine.html shows the confusion matrix. -->
+<!-- Three contracts the engine has to honor every night. No vanity
+     numbers, only the binary outcomes that matter to a user about to
+     trade: did a real rug ever pass as SAFE, did a real blue-chip
+     ever get flagged DANGER, is the engine still being checked. -->
 <section class="proof-section">
   <div class="section-label reveal"><span>Tested in production</span></div>
   <div class="proof-grid">
-    <div class="proof-stat reveal delay-1"><div class="proof-num accent">0</div><div class="proof-label">confirmed rugs<br>returned as SAFE</div></div>
-    <div class="proof-stat reveal delay-2"><div class="proof-num accent">0</div><div class="proof-label">blue-chips returned<br>as DANGER / RUG</div></div>
-    <div class="proof-stat reveal delay-3"><div class="proof-num">nightly</div><div class="proof-label">drift check<br>re-tests the corpus</div></div>
+    <div class="proof-stat reveal delay-1">
+      <div class="proof-accent-bar"></div>
+      <div class="proof-num accent">0</div>
+      <div class="proof-label">confirmed rugs<br>returned as SAFE</div>
+    </div>
+    <div class="proof-stat reveal delay-2">
+      <div class="proof-accent-bar"></div>
+      <div class="proof-num accent">0</div>
+      <div class="proof-label">blue-chips returned<br>as DANGER / RUG</div>
+    </div>
+    <div class="proof-stat reveal delay-3">
+      <div class="proof-accent-bar"></div>
+      <div class="proof-num accent live"><span class="proof-pulse"></span>live</div>
+      <div class="proof-label">drift check &mdash; auto-issue<br>on every regression</div>
+    </div>
   </div>
   <div class="proof-blurb reveal delay-4">
     Every fixture is captured live against the same <code>/api/scan</code> endpoint users hit &mdash; no mocks, no synthetic data. A nightly drift check re-scans the corpus and auto-opens an issue if any verdict regresses.
@@ -282,36 +296,24 @@ footer span{color:var(--c)}
 </section>
 
 <style>
-.proof-section{padding:90px 0 60px}
-.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:30px}
-.proof-stat{background:rgba(15,15,18,.5);border:1px solid var(--border);padding:30px 24px;text-align:left;transition:.25s}
-.proof-stat:hover{border-color:rgba(0,229,176,.3);background:rgba(15,15,18,.7)}
-.proof-num{font-size:48px;font-weight:600;color:#fff;line-height:1;margin-bottom:8px;letter-spacing:-.02em}
+.proof-section{padding:100px 0 80px}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:36px}
+.proof-stat{position:relative;background:linear-gradient(180deg,rgba(0,229,176,.03),rgba(15,15,18,.5));border:1px solid var(--border);padding:36px 28px;text-align:left;transition:.3s;overflow:hidden}
+.proof-stat:hover{border-color:rgba(0,229,176,.4);background:linear-gradient(180deg,rgba(0,229,176,.06),rgba(15,15,18,.7));transform:translateY(-2px)}
+.proof-accent-bar{position:absolute;top:0;left:0;height:2px;width:0;background:var(--c);transition:width .5s ease}
+.proof-stat:hover .proof-accent-bar{width:100%}
+.proof-num{font-size:56px;font-weight:600;color:#fff;line-height:1;margin-bottom:14px;letter-spacing:-.02em;font-family:"IBM Plex Mono",monospace}
 .proof-num.accent{color:var(--c)}
-.proof-label{font-size:11px;color:#888;letter-spacing:.05em;line-height:1.6}
+.proof-num.live{font-size:38px;display:flex;align-items:center;gap:14px;text-transform:lowercase;letter-spacing:.02em;padding-top:10px}
+.proof-pulse{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 0 rgba(0,229,176,.6);animation:proof-pulse 2s infinite}
+@keyframes proof-pulse{0%{box-shadow:0 0 0 0 rgba(0,229,176,.6)}70%{box-shadow:0 0 0 12px rgba(0,229,176,0)}100%{box-shadow:0 0 0 0 rgba(0,229,176,0)}}
+.proof-label{font-size:11px;color:#888;letter-spacing:.06em;line-height:1.7;text-transform:uppercase}
 .proof-blurb{font-size:13.5px;color:#aaa;line-height:1.8;max-width:780px;margin:0 auto;text-align:center;padding:0 20px}
 .proof-blurb code{color:#aaa;font-size:11.5px;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:2px}
-.proof-link{display:block;margin-top:14px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.proof-link{display:block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase}
 .proof-link:hover{text-decoration:underline}
-@media(max-width:780px){.proof-grid{grid-template-columns:repeat(2,1fr)}.proof-num{font-size:36px}}
+@media(max-width:780px){.proof-grid{grid-template-columns:1fr}.proof-num{font-size:44px}.proof-num.live{font-size:30px}}
 </style>
-
-<!-- ═══════ WHAT MAKES IT DIFFERENT ═══════ -->
-<!-- Index keeps a tight 3-bullet teaser of the killer differentiators.
-     Full feature catalogue lives on /features so the home page stops
-     repeating what the dedicated page already explains in depth. -->
-<section class="feat-section">
-  <div class="sl glitch reveal" data-text="What's different">What&rsquo;s different</div>
-  <div class="sl-sub reveal delay-1">The three things no competitor does.</div>
-  <div class="features" style="grid-template-columns:repeat(3,1fr)">
-    <div class="fc reveal delay-1"><div class="icon">&#128260;</div><h3>Live Holder Activity</h3><div class="benefit">See dev/whales dumping in real time.</div><p>Last-60-min movement classified per top holder &mdash; Selling, Reducing, Splitting, Buying. No static screenshot. Catches pre-dump signatures the moment they form.</p></div>
-    <div class="fc reveal delay-2"><div class="icon">&#128203;</div><h3>Verdict Timeline</h3><div class="benefit">The trajectory, not a snapshot.</div><p>Per-token history of verdict changes across recent scans. CAUTION &rarr; DANGER &rarr; RUG with the event that triggered each shift &mdash; persisted server-side so you see the story, not a frozen frame.</p></div>
-    <div class="fc reveal delay-3"><div class="icon">&#128737;&#65039;</div><h3>7-layer geometric mean</h3><div class="benefit">No single source can flip the verdict.</div><p>Seven independent layers (DexScreener, RugCheck, GoPlus, Helius, Solscan, Chart engine, CrossValidation) combined by geometric mean. One false-clean source can&rsquo;t hide real risk.</p></div>
-  </div>
-  <div style="text-align:center;margin-top:36px" class="reveal delay-4">
-    <a href="./features.html" style="display:inline-block;font-size:11px;color:var(--c);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(0,229,176,.3);padding:14px 28px;transition:.25s">Explore all features &rarr;</a>
-  </div>
-</section>
 
 <!-- ═══════ MARQUEE ═══════ -->
 <div class="marquee-wrap" aria-hidden="true">
