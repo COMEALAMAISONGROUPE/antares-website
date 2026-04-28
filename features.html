@@ -71,6 +71,9 @@ footer span{color:var(--c)}
 .page-hero h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .page-hero .sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:560px;border-left:2px solid var(--c);padding-left:16px}
 .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-bottom:80px}
+/* The 5th feature card spans both columns so the bottom row has no
+   empty cell. The grid stays a clean 2×2 + 1 full-width hero. */
+.feat-grid > .feat-card:nth-child(5){grid-column:1 / -1}
 .feat-card{background:var(--card);padding:48px 36px;position:relative;overflow:hidden;transition:all .35s cubic-bezier(.22,1,.36,1)}
 .feat-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--c);opacity:.06;transition:.35s}
 .feat-card:hover::before{opacity:1}
@@ -166,10 +169,6 @@ footer span{color:var(--c)}
   <div class="detail-block reveal">
     <div class="label">Foldable Sections</div>
     <div class="content"><h4>Read at your pace</h4><p>Critical Flags, AI Verdict, Security strip, Critical Actors, Deep Analysis, Source Breakdown &mdash; every section is independently collapsible. Power users keep everything open; quick scans collapse to just the verdict + critical flags.</p></div>
-  </div>
-  <div class="detail-block reveal">
-    <div class="label">Universal Coverage</div>
-    <div class="content"><h4>Wherever a Solana address appears</h4><p>Activates on Twitter, Telegram, Discord, every Solana DEX (DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN). Detects the address, runs the scan, surfaces the verdict before you can click buy.</p></div>
   </div>
 </section>
 
