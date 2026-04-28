@@ -114,10 +114,10 @@ footer span{color:var(--c)}
 
 <div class="section-label reveal"><span>Score Ranges</span></div>
 <div class="score-visual reveal">
-  <div class="sv-item"><div class="sv-val red">&lt;350</div><div class="sv-label">Rug Pull</div></div>
+  <div class="sv-item"><div class="sv-val red">0&ndash;349</div><div class="sv-label">Rug Pull</div></div>
   <div class="sv-item"><div class="sv-val orange">350&ndash;599</div><div class="sv-label">Danger</div></div>
   <div class="sv-item"><div class="sv-val yellow">600&ndash;899</div><div class="sv-label">Caution</div></div>
-  <div class="sv-item"><div class="sv-val green">900+</div><div class="sv-label">Safe</div></div>
+  <div class="sv-item"><div class="sv-val green">900&ndash;1000</div><div class="sv-label">Safe</div></div>
 </div>
 
 <div class="section-label reveal"><span>Score Breakdown — 5 Dimensions</span></div>
@@ -191,7 +191,7 @@ footer span{color:var(--c)}
       <div class="bt-label">blue-chips returned<br>as DANGER / RUG</div>
     </div>
     <div class="bt-stat">
-      <div class="bt-num">nightly</div>
+      <div class="bt-num bt-good bt-live"><span class="bt-pulse"></span>live</div>
       <div class="bt-label">drift check &mdash;<br>auto-issue on regression</div>
     </div>
   </div>
@@ -212,8 +212,11 @@ footer span{color:var(--c)}
 .backtest-box>p{color:#bbb;line-height:1.7;font-size:13.5px;max-width:780px}
 .backtest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:36px 0 36px}
 .bt-stat{background:rgba(15,15,18,.6);border:1px solid var(--border);padding:22px 20px;text-align:left}
-.bt-num{font-size:38px;font-weight:600;color:#fff;line-height:1;margin-bottom:6px;letter-spacing:-.02em}
+.bt-num{font-size:38px;font-weight:600;color:#fff;line-height:1;margin-bottom:6px;letter-spacing:-.02em;font-family:"IBM Plex Mono",monospace}
 .bt-num.bt-good{color:var(--c)}
+.bt-num.bt-live{font-size:30px;display:flex;align-items:center;gap:12px;text-transform:lowercase;letter-spacing:.02em;padding-top:6px}
+.bt-pulse{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 0 0 rgba(0,229,176,.6);animation:bt-pulse 2s infinite}
+@keyframes bt-pulse{0%{box-shadow:0 0 0 0 rgba(0,229,176,.6)}70%{box-shadow:0 0 0 11px rgba(0,229,176,0)}100%{box-shadow:0 0 0 0 rgba(0,229,176,0)}}
 .bt-label{font-size:11px;color:#888;letter-spacing:.05em;line-height:1.5}
 .bt-source-block{margin-top:24px;padding-top:24px;border-top:1px solid rgba(0,229,176,.1)}
 .bt-source-block p{font-size:13px;color:#aaa;line-height:1.7;margin:0 0 14px}
