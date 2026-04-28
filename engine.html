@@ -178,14 +178,10 @@ footer span{color:var(--c)}
 
 <div id="backtest" class="section-label reveal"><span>Backtest &mdash; Live</span></div>
 <div class="backtest-box reveal">
-  <h3 class="glitch" data-text="TESTED ON 214 MEMECOINS.">TESTED ON 214 MEMECOINS.</h3>
-  <p style="margin-bottom:32px">The engine is re-tested every night against a corpus of 214 real Solana memecoins captured directly from <code style="color:#888;font-size:11px">/api/scan</code>. No mocks, no synthetic data &mdash; the same code path users hit. Drift is auto-detected and surfaces as a GitHub issue.</p>
+  <h3 class="glitch" data-text="TESTED LIVE.">TESTED LIVE.</h3>
+  <p style="margin-bottom:32px">The engine is re-tested every night against a corpus of real Solana memecoins captured directly from <code style="color:#888;font-size:11px">/api/scan</code>. No mocks, no synthetic data &mdash; the same code path users hit. Drift is auto-detected and surfaces as a GitHub issue.</p>
 
   <div class="backtest-grid">
-    <div class="bt-stat">
-      <div class="bt-num">214</div>
-      <div class="bt-label">real memecoins<br>scanned live</div>
-    </div>
     <div class="bt-stat">
       <div class="bt-num bt-good">0</div>
       <div class="bt-label">confirmed rugs<br>returned as SAFE</div>
@@ -214,7 +210,7 @@ footer span{color:var(--c)}
 .backtest-box{background:linear-gradient(135deg,rgba(0,229,176,.04),rgba(0,229,176,.01));border:1px solid rgba(0,229,176,.2);padding:50px 40px;margin:40px 0 30px;position:relative}
 .backtest-box h3{font-size:24px;margin:0 0 16px;letter-spacing:.04em;color:var(--c)}
 .backtest-box>p{color:#bbb;line-height:1.7;font-size:13.5px;max-width:780px}
-.backtest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:36px 0 36px}
+.backtest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:36px 0 36px}
 .bt-stat{background:rgba(15,15,18,.6);border:1px solid var(--border);padding:22px 20px;text-align:left}
 .bt-num{font-size:38px;font-weight:600;color:#fff;line-height:1;margin-bottom:6px;letter-spacing:-.02em}
 .bt-num.bt-good{color:var(--c)}
