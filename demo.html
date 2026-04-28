@@ -668,19 +668,24 @@ footer span{color:var(--c)}
   }
 
   // ─── PRE-BAKED VERDICTS for the 4 sample tokens ──────────────────────────
-  // Snapshot of what /api/scan returns for each demo sample, captured live
-  // and lightly trimmed. Used as a deterministic fallback when the live
-  // call times out (Vercel cold start) so the demo always shows a
-  // realistic, *different* verdict per token instead of all collapsing to
-  // a generic SAFE 1000. Each entry exactly matches the ScanResult shape
-  // the v5 overlay's buildResultNode expects.
+  // ⚠ DEMO-LOCKED VALUES — DO NOT REGENERATE FROM /api/scan.
+  //
+  // This is a marketing demo, not a live scanner. The verdicts and
+  // scores below are hand-vetted snapshots that the demo renders
+  // SYNCHRONOUSLY on click — no API round-trip, no retry chain, no
+  // possibility of the values silently shifting because upstream data
+  // moved or Vercel cold-started. Each token deliberately covers one
+  // verdict band so a visitor sees the full SAFE / CAUTION / DANGER /
+  // RUG range in 4 clicks.
+  //
+  // If you need to refresh the values: capture live, audit, then
+  // hand-edit the constants here. Never auto-generate.
   var DEMO_PREBAKED={
     '9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump':{
-      // Drops from SAFE 915 → CAUTION 820 with the tightened
-      // single-wallet concentration scoring. 11% in one wallet is now
-      // a soft block (CAUTION ceiling) instead of a soft warning that
-      // could be unlocked all the way to SAFE by other bonuses.
-      risk:'CAUTION',score:820,confidence:100,
+      // FARTCOIN — CAUTION 825. 11% top-1 wallet on a 1B+ mcap blue-
+      // chip. Concentration alone is enough to keep the verdict out of
+      // SAFE territory regardless of how mature the token looks.
+      risk:'CAUTION',score:825,confidence:100,
       tokenSymbol:'Fartcoin',tokenName:'Fartcoin',
       mintAuthority:false,freezeAuthority:false,honeypot:false,
       lpBurned:true,lpLocked:false,liquidity:7400000,marketCap:1450000000,
