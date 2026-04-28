@@ -51,8 +51,9 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0
 nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none}
 nav .links{display:flex;gap:24px}
 nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s,transform .2s}
-nav .links a:hover{color:var(--c);transform:translateY(-1px)}
-nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;letter-spacing:.08em}
+nav .links a:hover,nav .links a.active{color:var(--c);transform:translateY(-1px)}
+nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
 
 /* ── SCROLL REVEAL ── */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
@@ -76,12 +77,6 @@ nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;let
 .cta.main:hover::before{width:300px;height:300px}
 .cta.main:hover{box-shadow:0 0 30px var(--glow),0 0 60px rgba(0,229,176,.08),4px 4px 0 #fff;transform:translate(-2px,-2px)}
 .cta.main:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #fff;transition-duration:.06s}
-
-/* ── TRUST BADGES ── */
-.trust-row{display:flex;gap:8px;flex-wrap:wrap}
-.tbadge{font-size:9px;color:var(--dim);border:1px solid #1e1e22;padding:6px 12px;letter-spacing:.08em;text-transform:uppercase;transition:all .3s}
-.tbadge:hover{border-color:rgba(0,229,176,.3);color:var(--c);background:rgba(0,229,176,.03)}
-.tbadge span{color:var(--c);margin-right:4px}
 
 /* ── POPUP PREVIEW ── */
 #pv-wrap{width:290px;transition:all .5s cubic-bezier(.22,1,.36,1)}
@@ -131,29 +126,6 @@ nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;let
 .how-item h3{font-size:13px;color:var(--txt);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;font-weight:600}
 .how-item p{font-size:11px;color:#4a4a52;line-height:1.7}
 
-/* ── FEATURES ── */
-.feat-section{padding:100px 0}
-.sl{font:400 52px/1 'Bebas Neue',sans-serif;letter-spacing:.1em;margin-bottom:8px;padding-bottom:12px;border-bottom:2px solid var(--border);position:relative;display:inline-block}
-.sl::after{content:'';position:absolute;bottom:-2px;left:0;width:50px;height:2px;background:var(--c)}
-.sl-sub{font-size:11px;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:40px;margin-top:10px}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-.fc{background:var(--card);padding:36px 28px;transition:all .35s cubic-bezier(.22,1,.36,1);cursor:default;position:relative;overflow:hidden}
-.fc::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--c);opacity:.06;transition:.35s}
-.fc:hover::before{opacity:1}
-.fc:hover{background:#13131a;transform:translateY(-3px)}
-.fc .icon{font-size:22px;margin-bottom:14px;transition:transform .3s}
-.fc:hover .icon{transform:scale(1.15)}
-.fc h3{font-size:11px;letter-spacing:.1em;margin-bottom:8px;color:var(--txt);text-transform:uppercase;font-weight:600}
-.fc .benefit{font-size:12px;color:var(--c);margin-bottom:8px;font-weight:600}
-.fc p{font-size:10px;color:#4a4a52;line-height:1.7}
-
-/* ── MARQUEE ── */
-.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 0}
-.marquee-inner{display:flex;animation:scroll 30s linear infinite;white-space:nowrap}
-@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.mi{font:400 18px/1 'Bebas Neue',sans-serif;color:#252528;letter-spacing:.12em;padding:0 28px}
-.mi .hi{color:var(--c)}
-
 /* ── CTA FINAL ── */
 .cta-final{text-align:center;padding:140px 48px;margin:100px 0 80px;border:1px solid var(--border);background:var(--card);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
 .cta-final::before{content:'ANTARES';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:400 280px/1 'Bebas Neue',sans-serif;color:rgba(255,255,255,.012);pointer-events:none;white-space:nowrap}
@@ -164,8 +136,11 @@ nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;let
 .cta-final h2 span{color:var(--c);text-shadow:0 0 80px rgba(0,229,176,.2)}
 
 /* ── FOOTER ── */
-footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase}
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase}
 footer span{color:var(--c)}
+footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
+footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a:hover{color:var(--c)}
 
 /* ── GLITCH ── */
 .glitch{position:relative;display:inline-block;cursor:default;user-select:none}
@@ -187,7 +162,7 @@ footer span{color:var(--c)}
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;gap:40px;min-height:auto;padding:80px 0 40px}
   #pv-wrap{display:none}
-  .how-grid,.features{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:1fr}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:none}
 }
@@ -208,8 +183,8 @@ footer span{color:var(--c)}
 
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
-  <div class="links"><a href="./demo.html" style="color:#00e5b0">Demo</a><a href="./compare.html">Compare</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./sources.html">Sources</a></div>
-  <div class="tag">v1.2.1 // SOLANA</div>
+  <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./faq.html">FAQ</a></div>
+  <a href="./install.html" class="nav-cta">Install &rarr;</a>
       </nav></header><main id="main-content">
 
 <!-- ═══════ HERO ═══════ -->
@@ -218,7 +193,7 @@ footer span{color:var(--c)}
     <div class="hero-eye reveal">Solana Token Scanner</div>
     <h1 class="reveal delay-1"><span class="glitch" data-text="STOP">STOP</span><br><span class="glitch" data-text="GETTING">GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
     <p class="hero-sub reveal delay-2">7 detection layers. 1000-point composite score. Critical Actors, live Holder Activity and Verdict Timeline &mdash; the verdict before you click buy.</p>
-    <div class="cta-row reveal delay-3"><a class="cta main" href="https://github.com/COMEALAMAISONGROUPE/antares-extension" target="_blank" rel="noopener noreferrer">&#9889; Install Free &mdash; Chrome</a></div>
+    <div class="cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
   </div>
   <div class="reveal delay-3" style="display:flex;justify-content:flex-end">
     <div id="pv-wrap" style="width:290px">
@@ -312,10 +287,10 @@ footer span{color:var(--c)}
 <div class="cta-final reveal">
   <div class="cta-threat">The next rug pull won&#x27;t warn you.</div>
   <h2 class="glitch" data-text="ANTARES WILL."><span>ANTARES</span> WILL.</h2>
-  <a class="cta main" href="https://github.com/COMEALAMAISONGROUPE/antares-extension" target="_blank" rel="noopener noreferrer">&#9889; Install Now &mdash; Free Forever</a>
+  <a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a>
 </div>
 
-</main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:10px;font-size:9px;line-height:1.9"><a href="./demo.html" style="color:#454550;text-decoration:none;margin:0 6px">Demo</a>&middot;<a href="./compare.html" style="color:#454550;text-decoration:none;margin:0 6px">Compare</a>&middot;<a href="./faq.html" style="color:#454550;text-decoration:none;margin:0 6px">FAQ</a>&middot;<a href="./install.html" style="color:#454550;text-decoration:none;margin:0 6px">Install</a>&middot;<a href="./changelog.html" style="color:#454550;text-decoration:none;margin:0 6px">Changelog</a>&middot;<a href="./about.html" style="color:#454550;text-decoration:none;margin:0 6px">About</a>&middot;<a href="./api.html" style="color:#454550;text-decoration:none;margin:0 6px">API</a><br><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 6px">Privacy</a>&middot;<a href="./security.html" style="color:#454550;text-decoration:none;margin:0 6px">Security</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 6px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 6px">GitHub</a></div></footer>
+</main><footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 </div>
 
 <script>

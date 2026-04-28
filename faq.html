@@ -38,6 +38,8 @@ nav .brand img{height:38px;width:auto}
 nav .links{display:flex;gap:24px}
 nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
 nav .links a:hover,nav .links a.active{color:var(--c)}
+nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
 .page-hero{padding:80px 0 32px}
 .eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
 .eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
@@ -50,14 +52,17 @@ h1{font:400 clamp(48px,8vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em
 .qa code{background:#15151a;padding:1px 6px;border-radius:2px;color:#bbb;font-size:11px}
 .qa a{color:var(--c)}
 .qa b{color:#aaa;font-weight:600}
-footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px;max-width:880px;margin:60px auto 0}
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px;max-width:880px;margin:60px auto 0}
 footer span{color:var(--c)}
+footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
+footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a:hover{color:var(--c)}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does CAUTION mean?","acceptedAnswer":{"@type":"Answer","text":"CAUTION (score 600-899) means at least one risk signal was detected but no Safe Gate trigger fired. Common causes: top-10 holders concentrate >50% supply, vol/liq ratio above wash-trading threshold, or a young token with limited holder base."}},{"@type":"Question","name":"Can a SAFE token still rug?","acceptedAnswer":{"@type":"Answer","text":"Yes. Antares is a probabilistic risk screen, not a guarantee. The verdict reflects what 6 independent sources can detect at scan time. Novel exploits, coordinated dumps via secondary wallets, or social-engineering-only rugs may not register."}},{"@type":"Question","name":"Does Antares collect my data?","acceptedAnswer":{"@type":"Answer","text":"No personal data. The API receives the contract address you scan plus standard HTTPS metadata (IP, user-agent) used for rate-limiting only. No accounts, no tracking, no analytics. See the full privacy policy."}}]}</script>
 </head>
 <body>
 <div class="stripe" role="presentation"></div>
-<nav><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./features.html">Features</a><a href="./demo.html">Demo</a><a href="./compare.html">Compare</a><a href="./faq.html" class="active">FAQ</a></div></nav>
+<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./faq.html" class="active">FAQ</a></div><a href="./install.html" class="nav-cta">Install &rarr;</a></nav>
 <main class="shell">
 
 <section class="page-hero">
@@ -112,6 +117,6 @@ footer span{color:var(--c)}
 </div>
 
 </main>
-<footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:8px;font-size:9px"><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 8px">Privacy</a>&middot;<a href="./security.html" style="color:#454550;text-decoration:none;margin:0 8px">Security</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 8px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 8px">GitHub</a></div></footer>
+<footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 </body>
 </html>

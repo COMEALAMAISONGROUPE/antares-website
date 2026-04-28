@@ -44,7 +44,8 @@ nav .links{display:flex;gap:24px}
 nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s,transform .2s}
 nav .links a:hover{color:var(--c);transform:translateY(-1px)}
 nav .links a.active{color:var(--c)}
-nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;letter-spacing:.08em}
+nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}.delay-4{transition-delay:.4s}.delay-5{transition-delay:.5s}.delay-6{transition-delay:.6s}
@@ -56,8 +57,11 @@ nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;let
 .glitch:hover::after{animation:gl-b .45s steps(2,end) infinite}
 @keyframes gl-a{0%{transform:translate(-3px,0);opacity:.75}50%{transform:translate(-2px,0);opacity:.75}100%{transform:translate(-3px,0);opacity:0}}
 @keyframes gl-b{0%{transform:translate(3px,0);opacity:.55}66%{transform:translate(2px,0);opacity:.55}100%{transform:translate(3px,0);opacity:0}}
-footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:80px}
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:80px}
 footer span{color:var(--c)}
+footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
+footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a:hover{color:var(--c)}
 .section-label{display:flex;align-items:center;gap:16px;margin-bottom:50px}
 .section-label span{font-size:10px;color:#2a2a2f;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -102,8 +106,8 @@ footer span{color:var(--c)}
 
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
-  <div class="links"><a href="./demo.html" style="color:#00e5b0">Demo</a><a href="./compare.html">Compare</a><a href="./features.html">Features</a><a href="./engine.html" class="active">Engine</a><a href="./sources.html">Sources</a></div>
-  <div class="tag">v1.2.1 // SOLANA</div>
+  <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html" class="active">Engine</a><a href="./compare.html">Compare</a><a href="./faq.html">FAQ</a></div>
+  <a href="./install.html" class="nav-cta">Install &rarr;</a>
 </nav></header><main>
 
 <section class="page-hero">
@@ -228,7 +232,7 @@ footer span{color:var(--c)}
 @media(max-width:780px){.backtest-grid{grid-template-columns:repeat(2,1fr)}.bt-num{font-size:30px}}
 </style>
 
-</main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:10px;font-size:9px;line-height:1.9"><a href="./demo.html" style="color:#454550;text-decoration:none;margin:0 6px">Demo</a>&middot;<a href="./compare.html" style="color:#454550;text-decoration:none;margin:0 6px">Compare</a>&middot;<a href="./faq.html" style="color:#454550;text-decoration:none;margin:0 6px">FAQ</a>&middot;<a href="./install.html" style="color:#454550;text-decoration:none;margin:0 6px">Install</a>&middot;<a href="./changelog.html" style="color:#454550;text-decoration:none;margin:0 6px">Changelog</a>&middot;<a href="./about.html" style="color:#454550;text-decoration:none;margin:0 6px">About</a>&middot;<a href="./api.html" style="color:#454550;text-decoration:none;margin:0 6px">API</a><br><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 6px">Privacy</a>&middot;<a href="./security.html" style="color:#454550;text-decoration:none;margin:0 6px">Security</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 6px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 6px">GitHub</a></div></footer>
+</main><footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 </div>
 <script>
 ;(function(){
