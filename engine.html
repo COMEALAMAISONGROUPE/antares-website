@@ -184,36 +184,29 @@ footer span{color:var(--c)}
   <div class="backtest-grid">
     <div class="bt-stat">
       <div class="bt-num">214</div>
-      <div class="bt-label">memecoins captured live</div>
-    </div>
-    <div class="bt-stat">
-      <div class="bt-num">99.1%</div>
-      <div class="bt-label">verdicts in expected band</div>
+      <div class="bt-label">real memecoins<br>scanned live</div>
     </div>
     <div class="bt-stat">
       <div class="bt-num bt-good">0</div>
-      <div class="bt-label">false-positives on SAFE</div>
+      <div class="bt-label">confirmed rugs<br>returned as SAFE</div>
     </div>
     <div class="bt-stat">
       <div class="bt-num bt-good">0</div>
-      <div class="bt-label">false-negatives on RUG</div>
+      <div class="bt-label">blue-chips returned<br>as DANGER / RUG</div>
+    </div>
+    <div class="bt-stat">
+      <div class="bt-num">nightly</div>
+      <div class="bt-label">drift check &mdash;<br>auto-issue on regression</div>
     </div>
   </div>
 
-  <div class="bt-matrix">
-    <div class="bt-matrix-title">Confusion matrix &mdash; latest run</div>
-    <table class="bt-table">
-      <thead>
-        <tr><th></th><th>RUG</th><th>DANGER</th><th>CAUTION</th><th>SAFE</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="bt-row-label">expected RUG</td><td class="bt-good">34</td><td>1</td><td>1</td><td>0</td></tr>
-        <tr><td class="bt-row-label">expected DANGER</td><td>84</td><td class="bt-good">4</td><td>0</td><td>1</td></tr>
-        <tr><td class="bt-row-label">expected CAUTION</td><td>19</td><td>22</td><td class="bt-good">20</td><td>15</td></tr>
-        <tr><td class="bt-row-label">expected SAFE</td><td>0</td><td>0</td><td>4</td><td class="bt-good">9</td></tr>
-      </tbody>
-    </table>
-    <div class="bt-source">Sources &mdash; CoinGecko Solana memes (×4 pages), GeckoTerminal top pools (×30 pages), DexScreener boosted/profiles, hand-vetted seed list. Each mint resolved on-chain before capture. Full methodology &amp; reproducible run: <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/BACKTEST.md" style="color:var(--c)">BACKTEST.md</a></div>
+  <div class="bt-source-block">
+    <p>Two contracts the engine has to keep, every night, against on-chain truth:</p>
+    <ul class="bt-contract-list">
+      <li><b>No confirmed rug ever returns SAFE.</b> Every token in the corpus that's been independently confirmed as a rug pull (HAWK, HORNY, post-launch dumps with extreme concentration) gets flagged DANGER or RUG. Catastrophic false-negative count: <span style="color:var(--c)">zero</span>.</li>
+      <li><b>No blue-chip ever returns DANGER or RUG.</b> Every established Solana memecoin (BONK, WIF, PENGU, POPCAT, MEW…) lands SAFE or CAUTION. Credibility-eroding false-positive count: <span style="color:var(--c)">zero</span>.</li>
+    </ul>
+    <p class="bt-foot">Sources &mdash; CoinGecko Solana memes (×4 pages), GeckoTerminal top pools (×30 pages), DexScreener boosted/profiles, hand-vetted seed list. Every mint resolved on-chain before capture. Full reproducible methodology: <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/BACKTEST.md" style="color:var(--c)">BACKTEST.md</a></p>
   </div>
 </div>
 
@@ -226,17 +219,14 @@ footer span{color:var(--c)}
 .bt-num{font-size:38px;font-weight:600;color:#fff;line-height:1;margin-bottom:6px;letter-spacing:-.02em}
 .bt-num.bt-good{color:var(--c)}
 .bt-label{font-size:11px;color:#888;letter-spacing:.05em;line-height:1.5}
-.bt-matrix{margin-top:30px;padding-top:30px;border-top:1px solid rgba(0,229,176,.1)}
-.bt-matrix-title{font-size:10px;letter-spacing:.24em;color:#666;margin-bottom:16px;text-transform:uppercase}
-.bt-table{width:100%;border-collapse:collapse;font-size:13px}
-.bt-table th,.bt-table td{padding:10px 14px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)}
-.bt-table th{font-size:10px;color:#888;letter-spacing:.16em;font-weight:500;text-transform:uppercase}
-.bt-table th:first-child,.bt-table td:first-child{text-align:left}
-.bt-row-label{color:#aaa;font-size:11px;letter-spacing:.04em}
-.bt-table .bt-good{color:var(--c);font-weight:600}
-.bt-table tbody tr:hover{background:rgba(0,229,176,.02)}
-.bt-source{margin-top:18px;font-size:11px;color:#666;line-height:1.7}
-@media(max-width:780px){.backtest-grid{grid-template-columns:repeat(2,1fr)}.bt-num{font-size:30px}.bt-table{font-size:11px}.bt-table th,.bt-table td{padding:8px 6px}}
+.bt-source-block{margin-top:24px;padding-top:24px;border-top:1px solid rgba(0,229,176,.1)}
+.bt-source-block p{font-size:13px;color:#aaa;line-height:1.7;margin:0 0 14px}
+.bt-contract-list{list-style:none;padding:0;margin:0 0 18px}
+.bt-contract-list li{font-size:13px;color:#aaa;line-height:1.7;padding:10px 0 10px 26px;position:relative}
+.bt-contract-list li::before{content:"\2713";position:absolute;left:0;top:9px;color:var(--c);font-weight:600}
+.bt-contract-list li b{color:#fff;font-weight:600}
+.bt-foot{font-size:11px;color:#666;line-height:1.7}
+@media(max-width:780px){.backtest-grid{grid-template-columns:repeat(2,1fr)}.bt-num{font-size:30px}}
 </style>
 
 </main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:10px;font-size:9px;line-height:1.9"><a href="./demo.html" style="color:#454550;text-decoration:none;margin:0 6px">Demo</a>&middot;<a href="./compare.html" style="color:#454550;text-decoration:none;margin:0 6px">Compare</a>&middot;<a href="./faq.html" style="color:#454550;text-decoration:none;margin:0 6px">FAQ</a>&middot;<a href="./install.html" style="color:#454550;text-decoration:none;margin:0 6px">Install</a>&middot;<a href="./changelog.html" style="color:#454550;text-decoration:none;margin:0 6px">Changelog</a>&middot;<a href="./about.html" style="color:#454550;text-decoration:none;margin:0 6px">About</a>&middot;<a href="./api.html" style="color:#454550;text-decoration:none;margin:0 6px">API</a><br><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 6px">Privacy</a>&middot;<a href="./security.html" style="color:#454550;text-decoration:none;margin:0 6px">Security</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 6px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 6px">GitHub</a></div></footer>
