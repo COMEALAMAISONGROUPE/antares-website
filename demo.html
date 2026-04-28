@@ -791,7 +791,6 @@ footer span{color:var(--c)}
     if(urlPath)urlPath.textContent='/solana/'+ca.slice(0,6)+'…'+ca.slice(-6);
 
     boxEl.className='box';
-    boxEl.replaceChildren(buildSkeletonNode());
     showBox();
     var cb=shadow.getElementById('ant-close');if(cb)cb.addEventListener('click',hideBox,{once:true});
 
@@ -814,19 +813,26 @@ footer span{color:var(--c)}
       try{history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca));}catch(e){}
     }
 
+    // ─── DEMO-FIRST: render prebaked instantly for the 4 sample tokens ───
+    // This is a marketing demo, not a live scanner — the user expects
+    // to see the verdict immediately when they click a sample chip.
+    // Every sample CA has a hand-vetted prebaked verdict (distinct
+    // scores per token, no generic SAFE 1000 fallback), so we render
+    // it synchronously instead of waiting on a /api/scan round-trip
+    // (which can be 800ms-3s on cold start) + retry chain.
+    var prebaked=DEMO_PREBAKED[ca];
+    if(prebaked){
+      applyResult(prebaked);
+      return;
+    }
+
+    // ─── Non-sample CA (deep-link with unknown ca) — live scan path ──
+    // Show skeleton then fire /api/scan with cold-start retry.
+    boxEl.replaceChildren(buildSkeletonNode());
     scanRealtime(ca,sig)
       .then(applyResult)
       .catch(function(e){
         if(e&&e.name==='AbortError')return;
-        // Live API failed even after the cold-start retry. If the CA
-        // matches a known sample, render its prebaked verdict (each
-        // sample has a distinct score so users see real variety, not
-        // four identical SAFE 1000s). Otherwise surface a soft error.
-        var prebaked=DEMO_PREBAKED[ca];
-        if(prebaked){
-          applyResult(prebaked);
-          return;
-        }
         boxEl.className='box';
         boxEl.replaceChildren();
         boxEl.appendChild(el('div',{'class':'topbar','style':'background:linear-gradient(90deg,transparent,#3a3a3f,transparent)'}));
