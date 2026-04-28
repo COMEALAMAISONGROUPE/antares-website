@@ -70,19 +70,22 @@ footer span{color:var(--c)}
 .page-hero h1{font:400 clamp(52px,9vw,100px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:20px;color:#eaeaea}
 .page-hero h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .page-hero .sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:560px;border-left:2px solid var(--c);padding-left:16px}
-.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-bottom:80px}
-/* The 5th feature card spans both columns so the bottom row has no
-   empty cell. The grid stays a clean 2×2 + 1 full-width hero. */
+/* Refined feature cards — minimal, mono-typed, faint counter in the
+   corner. Replaces the previous chunky "tile" style (big Bebas
+   titles + emoji icons) which felt loud against the rest of the
+   page. The 5th card still spans both columns so the bottom row
+   has no empty cell — clean 2×2 + 1 full-width hero. */
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:80px}
 .feat-grid > .feat-card:nth-child(5){grid-column:1 / -1}
-.feat-card{background:var(--card);padding:48px 36px;position:relative;overflow:hidden;transition:all .35s cubic-bezier(.22,1,.36,1)}
-.feat-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--c);opacity:.06;transition:.35s}
-.feat-card:hover::before{opacity:1}
-.feat-card:hover{background:#13131a;transform:translateY(-2px)}
-.feat-card .icon{font-size:26px;margin-bottom:16px;transition:transform .3s}
-.feat-card:hover .icon{transform:scale(1.15)}
-.feat-card h3{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.08em;margin-bottom:8px;color:#e0e0e0}
-.feat-card .benefit{font-size:12px;color:var(--c);margin-bottom:10px;font-weight:600}
-.feat-card p{font-size:11px;color:#4a4a52;line-height:1.75}
+.feat-card{background:var(--bg);padding:40px 36px 36px;position:relative;overflow:hidden;transition:background .4s}
+.feat-card:hover{background:#0e0e11}
+.feat-card::before{content:attr(data-num);position:absolute;top:24px;right:32px;font:500 10px/1 'IBM Plex Mono',monospace;color:#2a2a30;letter-spacing:.22em;transition:color .4s}
+.feat-card:hover::before{color:rgba(0,229,176,.55)}
+.feat-card .icon{display:none}
+.feat-card h3{font-size:13px;color:var(--txt);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;font-weight:600}
+.feat-card .benefit{font:500 12px/1.5 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.02em;margin-bottom:14px}
+.feat-card p{font-size:12px;color:#5a5a62;line-height:1.8}
+.feat-card p em{color:#8a8a92;font-style:normal;background:rgba(255,255,255,.03);padding:1px 5px;border-radius:2px;font-size:11px}
 .detail-section{padding:60px 0}
 .detail-block{display:grid;grid-template-columns:.4fr .6fr;gap:60px;align-items:start;padding:50px 0;border-bottom:1px solid var(--border)}
 .detail-block:last-child{border-bottom:none}
@@ -116,32 +119,27 @@ footer span{color:var(--c)}
 <div class="section-label reveal"><span>Core Features</span></div>
 
 <div class="feat-grid">
-  <div class="feat-card reveal delay-1">
-    <div class="icon">&#128100;</div>
+  <div class="feat-card reveal delay-1" data-num="01">
     <h3>Critical Actors</h3>
     <div class="benefit">Who holds what, in 3 cards.</div>
     <p>Dev wallet reputation (prior tokens launched, prior rugs), insider sniper position, coordinated cluster size and coordination score. Each card surfaces the structural risk vector behind the score, not just a number.</p>
   </div>
-  <div class="feat-card reveal delay-2">
-    <div class="icon">&#128260;</div>
+  <div class="feat-card reveal delay-2" data-num="02">
     <h3>Holder Activity (live)</h3>
     <div class="benefit">See dev/whales dumping in real time.</div>
     <p>Last-60-minute movement classification per top holder: <em>Holding · Selling · Splitting · Reducing · Buying · Static</em>. Net-flow footer (e.g. <em>-3.2% pre-dump signature</em>). Catches what static screenshots miss.</p>
   </div>
-  <div class="feat-card reveal delay-3">
-    <div class="icon">&#128203;</div>
+  <div class="feat-card reveal delay-3" data-num="03">
     <h3>Verdict Timeline</h3>
     <div class="benefit">Watch the verdict trajectory, not a snapshot.</div>
     <p>Per-token history of verdict changes across recent scans (CAUTION &rarr; DANGER &rarr; RUG with timestamps and the event that triggered the shift). Persisted server-side; you see the story of a token, not a frozen frame.</p>
   </div>
-  <div class="feat-card reveal delay-4">
-    <div class="icon">&#127919;</div>
+  <div class="feat-card reveal delay-4" data-num="04">
     <h3>5-dimension Score Radar</h3>
     <div class="benefit">Score broken down, not abstract.</div>
     <p>The 1000-point composite score is decomposed across five axes: <em>LP&nbsp;Security &middot; Holder&nbsp;Distribution &middot; Trading&nbsp;Authenticity &middot; Token&nbsp;Maturity &middot; Source&nbsp;Consensus</em>. SVG pentagon radar shows where a token actually fails &mdash; not a single gauge.</p>
   </div>
-  <div class="feat-card reveal delay-5">
-    <div class="icon">&#128737;&#65039;</div>
+  <div class="feat-card reveal delay-5" data-num="05">
     <h3>7-Layer Consensus</h3>
     <div class="benefit">No single source can lie alone.</div>
     <p>DexScreener, RugCheck, GoPlus, Helius, Solscan, the in-house Chart engine and a CrossValidation layer that catches inter-source disagreements. Geometric mean of all 7 layers means a single false-clean source can&rsquo;t override real risk &mdash; and a single false-positive can&rsquo;t flip a healthy token to RUG.</p>
