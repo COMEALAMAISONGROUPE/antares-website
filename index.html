@@ -159,11 +159,31 @@ footer .foot-links a:hover{color:var(--c)}
 .scroll-indicator span{font-size:8px;color:#3a3a40;letter-spacing:.2em;text-transform:uppercase}
 .scroll-indicator .arrow{font-size:16px;color:var(--c)}
 
+/* ── LOSS HERO ── */
+.loss-hero{min-height:calc(100vh - 80px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 0;position:relative}
+.loss-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:#7a4040;letter-spacing:.32em;text-transform:uppercase;margin-bottom:36px;display:inline-flex;align-items:center;gap:10px}
+.loss-eye::before{content:'';width:24px;height:2px;background:var(--red);animation:loss-pulse 2s ease infinite}
+@keyframes loss-pulse{0%,100%{opacity:.5;width:24px}50%{opacity:1;width:32px;background:#ff5f5f}}
+.loss-num{font:400 clamp(120px,21vw,280px)/.86 'Bebas Neue',sans-serif;letter-spacing:-.015em;color:var(--red);margin-bottom:18px;display:flex;align-items:baseline;justify-content:center;gap:0;text-shadow:0 0 90px rgba(255,34,68,.32),0 0 30px rgba(255,34,68,.18)}
+.loss-currency{font-size:.55em;align-self:flex-start;margin-top:.16em;margin-right:8px;opacity:.85}
+#loss-counter{font-feature-settings:"tnum";display:inline-block;min-width:1.2ch}
+.loss-unit{font-size:.55em;align-self:flex-start;margin-top:.16em;margin-left:8px;opacity:.85}
+.loss-sub{font:400 clamp(22px,2.8vw,38px)/1.25 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#aaa;margin-bottom:62px}
+.loss-pivot{font-size:14px;color:#7a7a82;line-height:1.85;letter-spacing:.04em;margin-bottom:46px;max-width:560px;padding:0 20px}
+.loss-pivot b.accent{color:var(--c);font-weight:700;text-shadow:0 0 24px rgba(0,229,176,.25)}
+.loss-pivot em{display:inline-block;margin-top:8px;color:#9a9aa2;font-style:italic;letter-spacing:.04em}
+.loss-tag-d{color:#ff5f5f;font-weight:600;letter-spacing:.06em}
+.loss-tag-r{color:var(--red);font-weight:700;letter-spacing:.06em}
+.loss-cta-row{display:flex;justify-content:center}
+.loss-foot{font-size:10px;color:#3a3a40;letter-spacing:.06em;margin-top:62px;line-height:1.85;max-width:520px;padding:0 24px}
+.loss-foot a{color:#5a5a62;text-decoration:none;border-bottom:1px solid #2a2a30;padding-bottom:1px;transition:.2s}
+.loss-foot a:hover{color:var(--c);border-bottom-color:var(--c)}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;gap:40px;min-height:auto;padding:80px 0 40px}
-  #pv-wrap{display:none}
-  .how-grid{grid-template-columns:1fr}
+  .loss-hero{min-height:auto;padding:90px 0 60px}
+  .loss-num{font-size:clamp(80px,18vw,140px)}
+  .loss-sub{margin-bottom:42px}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:none}
 }
@@ -188,47 +208,19 @@ footer .foot-links a:hover{color:var(--c)}
   <a href="./install.html" class="nav-cta">Install &rarr;</a>
       </nav></header><main id="main-content">
 
-<!-- ═══════ HERO ═══════ -->
-<section class="hero" style="position:relative">
-  <div>
-    <div class="hero-eye reveal">Solana Token Scanner</div>
-    <h1 class="reveal delay-1"><span class="glitch" data-text="STOP">STOP</span><br><span class="glitch" data-text="GETTING">GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
-    <p class="hero-sub reveal delay-2">7 detection layers. 1000-point composite score. Critical Actors, live Holder Activity and Verdict Timeline &mdash; the verdict before you click buy.</p>
-    <div class="cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
-  </div>
-  <div class="reveal delay-3" style="display:flex;justify-content:flex-end">
-    <div id="pv-wrap" style="width:290px">
-      <div class="p s">
-        <div class="bar"></div>
-        <div class="hd"><span>ANTARES</span><div class="x">&times;</div></div>
-        <div class="tk"><b>WIF</b> dogwifhat</div>
-        <div class="vb"><h1>SAFE</h1></div>
-        <div class="sr"><span class="n"><b>847</b> / 1000</span><div class="dots"><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt off"></div></div></div>
-        <div class="sbar"><div class="sbar-fill"></div></div>
-        <div class="sum">No issues found</div>
-        <div class="sep"></div>
-        <div class="ss"><div class="si"><span>Sell</span><b class="y">&#10003;</b></div><div class="si"><span>Mint</span><b class="y">&#10003;</b></div><div class="si"><span>Freeze</span><b class="y">&#10003;</b></div><div class="si"><span>LP Burned</span><b class="y">&#10003;</b></div><div class="si"><span>Liq</span><b class="y">$184K</b></div></div>
-        <div class="fo"><span class="cf-btn">&#9888; Critical Flags</span><a href="#">Full Analysis &rarr;</a><span class="ai-btn">&#11041; AI Summary</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="scroll-indicator"><span>Scroll</span><div class="arrow">&#8595;</div></div>
-</section>
-
-<!-- ═══════ HOW IT WORKS ═══════ -->
-<section class="how-section">
-  <div class="section-label reveal"><span>How it works</span></div>
-  <div class="how-grid">
-    <div class="how-item reveal delay-1">
-      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
-    </div>
-    <div class="how-item reveal delay-2">
-      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
-    </div>
-    <div class="how-item reveal delay-3">
-      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
-    </div>
-  </div>
+<!-- ═══════ LOSS HERO ═══════ -->
+<!-- The stake before the pitch. One giant animated number telling
+     visitors what they're up against, followed by Antares's track
+     record on the same problem. -->
+<section class="loss-hero">
+  <div class="loss-eye reveal">2024 on Solana</div>
+  <h1 class="loss-num reveal delay-1">
+    <span class="loss-currency">$</span><span id="loss-counter" data-target="1.4">0.0</span><span class="loss-unit">B</span>
+  </h1>
+  <p class="loss-sub reveal delay-2">stolen in memecoin rug pulls.</p>
+  <p class="loss-pivot reveal delay-3">Antares would have flagged <b class="accent">87%</b> of them as <span class="loss-tag-d">DANGER</span> or <span class="loss-tag-r">RUG</span> before the rug.<br><em>You'd have known.</em></p>
+  <div class="loss-cta-row reveal delay-4"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
+  <div class="loss-foot reveal delay-5">Loss estimate: public Solana rug-pull tracking, Chainalysis 2024 reports. Antares hit-rate: <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/BACKTEST.md" target="_blank" rel="noopener noreferrer">internal backtest &middot; 214-token corpus</a>.</div>
 </section>
 
 <!-- ═══════ PROOF / BACKTEST ═══════ -->
@@ -329,10 +321,34 @@ footer .foot-links a:hover{color:var(--c)}
     '<div class="p r"><div class="bar"></div><div class="hd"><span>ANTARES</span><div class="x">&times;</div></div><div class="tk"><b>HAWK</b> Hawk Tuah</div><div class="vb"><h1>RUG PULL</h1></div><div class="sr"><span class="n"><b>120</b> / 1000</span><div class="dots"><div class="dt on"></div><div class="dt off"></div><div class="dt off"></div><div class="dt off"></div><div class="dt off"></div></div></div><div class="sbar"><div class="sbar-fill"></div></div><div class="sum">44% wallet — coordinated dump confirmed</div><div class="sep"></div><div class="ss"><div class="si"><span>Sell</span><b class="n">✗</b></div><div class="si"><span>Mint</span><b class="y">✓</b></div><div class="si"><span>Freeze</span><b class="y">✓</b></div><div class="si"><span>LP Lock</span><b class="n">✗</b></div><div class="si"><span>Top 1</span><b class="n">44%</b></div></div><div class="fo"><span class="cf-btn">⚠ Critical Flags</span><a href="#">Full Analysis →</a><span class="ai-btn">⬡ AI Summary</span></div></div>'
   ];
   var ci=0,pw=document.getElementById('pv-wrap');
-  setInterval(function(){
-    pw.style.opacity='0';pw.style.transform='translateY(10px) scale(.98)';
-    setTimeout(function(){ci=(ci+1)%cards.length;pw.innerHTML=cards[ci];pw.style.opacity='1';pw.style.transform='translateY(0) scale(1)'},400);
-  },4500);
+  if(pw){
+    setInterval(function(){
+      pw.style.opacity='0';pw.style.transform='translateY(10px) scale(.98)';
+      setTimeout(function(){ci=(ci+1)%cards.length;pw.innerHTML=cards[ci];pw.style.opacity='1';pw.style.transform='translateY(0) scale(1)'},400);
+    },4500);
+  }
+
+  // ── LOSS COUNTER (count-up on visible) ──
+  var counter=document.getElementById('loss-counter');
+  if(counter){
+    var target=parseFloat(counter.dataset.target||'1.4');
+    var dur=2400;
+    function easeOut(t){return 1-Math.pow(1-t,3)}
+    var started=false;
+    function tick(start){
+      var now=performance.now();
+      var p=Math.min(1,(now-start)/dur);
+      var v=target*easeOut(p);
+      counter.textContent=v.toFixed(1);
+      if(p<1)requestAnimationFrame(function(){tick(start)});
+    }
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting && !started){started=true;requestAnimationFrame(function(){tick(performance.now())});io.disconnect()}
+      });
+    },{threshold:0.3});
+    io.observe(counter);
+  }
 })()
 </script>
 </body>
