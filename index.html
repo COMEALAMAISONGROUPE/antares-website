@@ -268,54 +268,101 @@ footer .foot-links a:hover{color:var(--c)}
   </div>
 </section>
 
-<!-- ═══════ PROOF / BACKTEST ═══════ -->
-<!-- Three contracts the engine has to honor every night. No vanity
-     numbers, only the binary outcomes that matter to a user about to
-     trade: did a real rug ever pass as SAFE, did a real blue-chip
-     ever get flagged DANGER, is the engine still being checked. -->
+<!-- ═══════ PROOF / CONFUSION MATRIX ═══════ -->
+<!-- The full 4×4 confusion matrix from the live backtest. Diagonal
+     cells are 'engine got it right'. The two highlighted zeros are
+     the contract we promise: no real rug ever returned as SAFE, no
+     real blue-chip ever returned as RUG. -->
 <section class="proof-section">
   <div class="section-label reveal"><span>Tested in production</span></div>
-  <div class="proof-grid">
-    <div class="proof-stat reveal delay-1">
-      <div class="proof-accent-bar"></div>
-      <div class="proof-num accent">0</div>
-      <div class="proof-label">confirmed rugs<br>returned as SAFE</div>
-    </div>
-    <div class="proof-stat reveal delay-2">
-      <div class="proof-accent-bar"></div>
-      <div class="proof-num accent">0</div>
-      <div class="proof-label">blue-chips returned<br>as DANGER / RUG</div>
-    </div>
-    <div class="proof-stat reveal delay-3">
-      <div class="proof-accent-bar"></div>
-      <div class="proof-num accent live"><span class="proof-pulse"></span>live</div>
-      <div class="proof-label">drift check &mdash; auto-issue<br>on every regression</div>
-    </div>
+  <div class="cm-wrap reveal">
+    <div class="cm-meta"><b>214</b> Solana memecoins &middot; backtested live every night against the same <code>/api/scan</code> endpoint users hit</div>
+    <table class="cm">
+      <thead>
+        <tr><th class="cm-corner"></th><th colspan="4" class="cm-axis-h">Antares verdict</th></tr>
+        <tr>
+          <th class="cm-corner-2">Expected label</th>
+          <th class="cm-h-rug">RUG</th>
+          <th class="cm-h-danger">DANGER</th>
+          <th class="cm-h-caution">CAUTION</th>
+          <th class="cm-h-safe">SAFE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th><span class="cm-r-name">RUG</span><span class="cm-r-count">n=36</span></th>
+          <td class="cm-match">34</td>
+          <td>1</td>
+          <td>1</td>
+          <td class="cm-zero cm-zero-critical"><span class="cm-num">0</span><span class="cm-tag">no rug ever called SAFE</span></td>
+        </tr>
+        <tr>
+          <th><span class="cm-r-name">DANGER</span><span class="cm-r-count">n=89</span></th>
+          <td>84</td>
+          <td class="cm-match">4</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <th><span class="cm-r-name">CAUTION</span><span class="cm-r-count">n=76</span></th>
+          <td>19</td>
+          <td>22</td>
+          <td class="cm-match">20</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <th><span class="cm-r-name">SAFE</span><span class="cm-r-count">n=13</span></th>
+          <td class="cm-zero cm-zero-critical"><span class="cm-num">0</span><span class="cm-tag">no blue-chip ever called RUG</span></td>
+          <td>0</td>
+          <td>4</td>
+          <td class="cm-match">9</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <div class="proof-blurb reveal delay-4">
-    Every fixture is captured live against the same <code>/api/scan</code> endpoint users hit &mdash; no mocks, no synthetic data. A nightly drift check re-scans the corpus and auto-opens an issue if any verdict regresses.
+    Diagonal = engine got it right. The two teal zeros are the contract: <b>no real rug ever returned as SAFE</b>, <b>no real blue-chip ever returned as RUG</b>. CI fails if either breaks &mdash; the engine doesn't ship.
     <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/BACKTEST.md" class="proof-link" target="_blank" rel="noopener noreferrer">Methodology &rarr;</a>
   </div>
 </section>
 
 <style>
-.proof-section{padding:100px 0 80px}
-.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:36px}
-.proof-stat{position:relative;background:linear-gradient(180deg,rgba(0,229,176,.03),rgba(15,15,18,.5));border:1px solid var(--border);padding:36px 28px;text-align:left;transition:.3s;overflow:hidden}
-.proof-stat:hover{border-color:rgba(0,229,176,.4);background:linear-gradient(180deg,rgba(0,229,176,.06),rgba(15,15,18,.7));transform:translateY(-2px)}
-.proof-accent-bar{position:absolute;top:0;left:0;height:2px;width:0;background:var(--c);transition:width .5s ease}
-.proof-stat:hover .proof-accent-bar{width:100%}
-.proof-num{font-size:56px;font-weight:600;color:#fff;line-height:1;margin-bottom:14px;letter-spacing:-.02em;font-family:"IBM Plex Mono",monospace}
-.proof-num.accent{color:var(--c)}
-.proof-num.live{font-size:38px;display:flex;align-items:center;gap:14px;text-transform:lowercase;letter-spacing:.02em;padding-top:10px}
-.proof-pulse{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 0 rgba(0,229,176,.6);animation:proof-pulse 2s infinite}
-@keyframes proof-pulse{0%{box-shadow:0 0 0 0 rgba(0,229,176,.6)}70%{box-shadow:0 0 0 12px rgba(0,229,176,0)}100%{box-shadow:0 0 0 0 rgba(0,229,176,0)}}
-.proof-label{font-size:11px;color:#888;letter-spacing:.06em;line-height:1.7;text-transform:uppercase}
+.proof-section{padding:120px 0 100px}
+.cm-wrap{max-width:880px;margin:0 auto 36px;border:1px solid var(--border);background:linear-gradient(180deg,rgba(0,229,176,.02),rgba(15,15,18,.4));padding:32px 28px 28px;position:relative;overflow:hidden}
+.cm-wrap::before{content:'';position:absolute;top:0;left:0;height:2px;width:100%;background:linear-gradient(90deg,transparent,var(--c),transparent);opacity:.3}
+.cm-meta{font-size:11px;color:#7a7a82;letter-spacing:.14em;text-transform:uppercase;text-align:center;margin-bottom:24px;font-family:'IBM Plex Mono',monospace;line-height:1.7}
+.cm-meta b{color:var(--c);font-weight:700}
+.cm-meta code{font-size:11px;color:#aaa;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:2px}
+.cm{width:100%;border-collapse:separate;border-spacing:0;font-family:'IBM Plex Mono',monospace}
+.cm th,.cm td{padding:14px 10px;text-align:center;font-size:14px;border:1px solid #15151a;color:#5a5a62}
+.cm thead .cm-axis-h{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:#3a3a40;font-weight:500;border:none;padding-bottom:10px;text-align:center}
+.cm-corner,.cm-corner-2{background:transparent;border:none}
+.cm-corner-2{font-size:9px;letter-spacing:.18em;color:#3a3a40;text-transform:uppercase;text-align:left;padding-left:14px;font-weight:500}
+.cm thead th{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;background:rgba(255,255,255,.015)}
+.cm-h-rug{color:#ff2244 !important}
+.cm-h-danger{color:#ff5f5f !important}
+.cm-h-caution{color:#f5d000 !important}
+.cm-h-safe{color:#00e5b0 !important}
+.cm tbody th{text-align:left;padding:14px 14px;background:rgba(255,255,255,.015);font-weight:600}
+.cm-r-name{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#aaa;font-weight:700;margin-bottom:4px}
+.cm-r-count{display:block;font-size:9px;color:#5a5a62;letter-spacing:.06em;font-weight:400}
+.cm-match{color:#7a7a82 !important;background:rgba(0,229,176,.04);font-weight:600}
+.cm-zero-critical{background:rgba(0,229,176,.1)!important;position:relative;padding:10px 8px !important}
+.cm-zero-critical .cm-num{display:block;color:var(--c)!important;font-size:32px;font-weight:400;line-height:1;margin-bottom:4px;font-family:'Bebas Neue',sans-serif;letter-spacing:.02em;text-shadow:0 0 18px rgba(0,229,176,.3)}
+.cm-zero-critical .cm-tag{display:block;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-weight:600;line-height:1.4}
 .proof-blurb{font-size:13.5px;color:#aaa;line-height:1.8;max-width:780px;margin:0 auto;text-align:center;padding:0 20px}
+.proof-blurb b{color:var(--c);font-weight:600}
 .proof-blurb code{color:#aaa;font-size:11.5px;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:2px}
 .proof-link{display:block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase}
 .proof-link:hover{text-decoration:underline}
-@media(max-width:780px){.proof-grid{grid-template-columns:1fr}.proof-num{font-size:44px}.proof-num.live{font-size:30px}}
+@media(max-width:780px){
+  .cm-wrap{padding:18px 14px}
+  .cm th,.cm td{padding:8px 4px;font-size:11px}
+  .cm-zero-critical .cm-num{font-size:22px}
+  .cm-zero-critical .cm-tag{font-size:7px;letter-spacing:.06em}
+  .cm-r-count{display:none}
+  .cm-corner-2{display:none}
+}
 </style>
 
 <!-- ═══════ CTA FINAL ═══════ -->
