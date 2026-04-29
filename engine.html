@@ -38,13 +38,15 @@ body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace
 .cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(0,229,176,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
 #particles-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:.35}
 .shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;position:sticky;top:3px;z-index:100}
+nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
 nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none}
 nav .links{display:flex;gap:24px}
 nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s,transform .2s}
 nav .links a:hover{color:var(--c);transform:translateY(-1px)}
 nav .links a.active{color:var(--c)}
-nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;letter-spacing:.08em}
+nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}.delay-4{transition-delay:.4s}.delay-5{transition-delay:.5s}.delay-6{transition-delay:.6s}
@@ -56,8 +58,11 @@ nav .tag{font-size:10px;color:#333;border:1px solid #1e1e22;padding:5px 12px;let
 .glitch:hover::after{animation:gl-b .45s steps(2,end) infinite}
 @keyframes gl-a{0%{transform:translate(-3px,0);opacity:.75}50%{transform:translate(-2px,0);opacity:.75}100%{transform:translate(-3px,0);opacity:0}}
 @keyframes gl-b{0%{transform:translate(3px,0);opacity:.55}66%{transform:translate(2px,0);opacity:.55}100%{transform:translate(3px,0);opacity:0}}
-footer{text-align:center;padding:32px;color:#2a2a2f;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:80px}
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:80px}
 footer span{color:var(--c)}
+footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
+footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a:hover{color:var(--c)}
 .section-label{display:flex;align-items:center;gap:16px;margin-bottom:50px}
 .section-label span{font-size:10px;color:#2a2a2f;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -102,8 +107,8 @@ footer span{color:var(--c)}
 
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
-  <div class="links"><a href="./demo.html" style="color:#00e5b0">Demo</a><a href="./compare.html">Compare</a><a href="./features.html">Features</a><a href="./engine.html" class="active">Engine</a><a href="./sources.html">Sources</a></div>
-  <div class="tag">v1.2.1 // SOLANA</div>
+  <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html" class="active">Engine</a><a href="./compare.html">Compare</a><a href="./faq.html">FAQ</a></div>
+  <a href="./install.html" class="nav-cta">Install &rarr;</a>
 </nav></header><main>
 
 <section class="page-hero">
@@ -118,46 +123,6 @@ footer span{color:var(--c)}
   <div class="sv-item"><div class="sv-val orange">350&thinsp;&ndash;&thinsp;599</div><div class="sv-label">Danger</div></div>
   <div class="sv-item"><div class="sv-val yellow">600&thinsp;&ndash;&thinsp;899</div><div class="sv-label">Caution</div></div>
   <div class="sv-item"><div class="sv-val green">900&thinsp;&ndash;&thinsp;1000</div><div class="sv-label">Safe</div></div>
-</div>
-
-<div class="section-label reveal"><span>Score Breakdown — 5 Dimensions</span></div>
-<div style="background:var(--card);border:1px solid var(--border);padding:48px 36px;margin-bottom:60px;display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center" class="reveal">
-  <div style="display:flex;justify-content:center">
-    <svg viewBox="-150 -150 300 300" style="width:100%;max-width:240px">
-      <polygon points="0,-100 95.1,-30.9 58.8,80.9 -58.8,80.9 -95.1,-30.9" fill="none" stroke="#1e1e22" stroke-width="1"/>
-      <polygon points="0,-80 76.1,-24.7 47,64.7 -47,64.7 -76.1,-24.7" fill="none" stroke="#1e1e22" stroke-width="1"/>
-      <polygon points="0,-60 57,-18.5 35.3,48.5 -35.3,48.5 -57,-18.5" fill="none" stroke="#1e1e22" stroke-width="1"/>
-      <polygon points="0,-40 38,-12.4 23.5,32.4 -23.5,32.4 -38,-12.4" fill="none" stroke="#1e1e22" stroke-width="1"/>
-      <polygon points="0,-20 19,-6.2 11.8,16.2 -11.8,16.2 -19,-6.2" fill="none" stroke="#1e1e22" stroke-width="1"/>
-      <line x1="0" y1="0" x2="0" y2="-100" stroke="#1a1a1e"/>
-      <line x1="0" y1="0" x2="95.1" y2="-30.9" stroke="#1a1a1e"/>
-      <line x1="0" y1="0" x2="58.8" y2="80.9" stroke="#1a1a1e"/>
-      <line x1="0" y1="0" x2="-58.8" y2="80.9" stroke="#1a1a1e"/>
-      <line x1="0" y1="0" x2="-95.1" y2="-30.9" stroke="#1a1a1e"/>
-      <polygon points="0,-90 60,-19 18,25 -28,38 -75,-25" fill="rgba(0,229,176,.15)" stroke="#00e5b0" stroke-width="1.5"/>
-      <circle cx="0" cy="-90" r="3" fill="#00e5b0"/>
-      <circle cx="60" cy="-19" r="3" fill="#00e5b0"/>
-      <circle cx="18" cy="25" r="3" fill="#00e5b0"/>
-      <circle cx="-28" cy="38" r="3" fill="#00e5b0"/>
-      <circle cx="-75" cy="-25" r="3" fill="#00e5b0"/>
-      <text x="0" y="-118" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#666" letter-spacing=".14em">LP SEC</text>
-      <text x="105" y="-32" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="9" fill="#666" letter-spacing=".14em">HOLDERS</text>
-      <text x="65" y="92" text-anchor="start" font-family="IBM Plex Mono,monospace" font-size="9" fill="#666" letter-spacing=".14em">TRADING</text>
-      <text x="-65" y="92" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="#666" letter-spacing=".14em">MATURITY</text>
-      <text x="-105" y="-32" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="#666" letter-spacing=".14em">SOURCES</text>
-    </svg>
-  </div>
-  <div>
-    <h3 style="font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#e0e0e0;margin-bottom:14px">5-Axis Pentagon</h3>
-    <p style="font-size:11.5px;color:#6a6a72;line-height:1.85;margin-bottom:14px">The 1000-point score is decomposed across five orthogonal dimensions. The radar shows precisely where a token passes and where it fails &mdash; instead of a single mysterious gauge.</p>
-    <ul style="font-size:11.5px;color:#6a6a72;line-height:1.95;margin:0 0 0 18px">
-      <li><strong style="color:#aaa">LP Security</strong> &mdash; burn / lock status, extractable USD</li>
-      <li><strong style="color:#aaa">Holder Distribution</strong> &mdash; top 10 concentration, single-wallet risk</li>
-      <li><strong style="color:#aaa">Trading Authenticity</strong> &mdash; vol/liq ratio, wash signals</li>
-      <li><strong style="color:#aaa">Token Maturity</strong> &mdash; on-chain age, holder growth curve</li>
-      <li><strong style="color:#aaa">Source Consensus</strong> &mdash; how many upstreams agree</li>
-    </ul>
-  </div>
 </div>
 
 <div class="section-label reveal"><span>Detection Layers</span></div>
@@ -176,59 +141,7 @@ footer span{color:var(--c)}
   <p>Hard verdict overrides on top of the numeric score. Some risks reflect attack surfaces that can never be soft-unlocked by maturity or holder count &mdash; when one of them fires, the gate keeps the verdict at DANGER or RUG no matter how high the rest of the score lands. The score band tells you how a token <em style="color:#888;font-style:normal">looks</em>; the Safe Gate tells you when it doesn&rsquo;t matter.</p>
 </div>
 
-<div id="backtest" class="section-label reveal"><span>Backtest &mdash; Live</span></div>
-<div class="backtest-box reveal">
-  <h3 class="glitch" data-text="TESTED LIVE.">TESTED LIVE.</h3>
-  <p style="margin-bottom:32px">The engine is re-tested every night against a corpus of real Solana memecoins captured directly from <code style="color:#888;font-size:11px">/api/scan</code>. No mocks, no synthetic data &mdash; the same code path users hit. Drift is auto-detected and surfaces as a GitHub issue.</p>
-
-  <div class="backtest-grid">
-    <div class="bt-stat">
-      <div class="bt-num bt-good">0</div>
-      <div class="bt-label">confirmed rugs<br>returned as SAFE</div>
-    </div>
-    <div class="bt-stat">
-      <div class="bt-num bt-good">0</div>
-      <div class="bt-label">blue-chips returned<br>as DANGER / RUG</div>
-    </div>
-    <div class="bt-stat">
-      <div class="bt-num bt-good bt-live"><span class="bt-pulse"></span>live</div>
-      <div class="bt-label">drift check &mdash;<br>auto-issue on regression</div>
-    </div>
-  </div>
-
-  <div class="bt-source-block">
-    <p>Two contracts the engine has to keep, every night, against on-chain truth:</p>
-    <ul class="bt-contract-list">
-      <li><b>No confirmed rug ever returns SAFE.</b> Every token in the corpus that's been independently confirmed as a rug pull (HAWK, HORNY, post-launch dumps with extreme concentration) gets flagged DANGER or RUG. Catastrophic false-negative count: <span style="color:var(--c)">zero</span>.</li>
-      <li><b>No blue-chip ever returns DANGER or RUG.</b> Every established Solana memecoin (BONK, WIF, PENGU, POPCAT, MEW…) lands SAFE or CAUTION. Credibility-eroding false-positive count: <span style="color:var(--c)">zero</span>.</li>
-    </ul>
-    <p class="bt-foot">Sources &mdash; CoinGecko Solana memes (×4 pages), GeckoTerminal top pools (×30 pages), DexScreener boosted/profiles, hand-vetted seed list. Every mint resolved on-chain before capture. Full reproducible methodology: <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/BACKTEST.md" style="color:var(--c)">BACKTEST.md</a></p>
-  </div>
-</div>
-
-<style>
-.backtest-box{background:linear-gradient(135deg,rgba(0,229,176,.04),rgba(0,229,176,.01));border:1px solid rgba(0,229,176,.2);padding:50px 40px;margin:40px 0 30px;position:relative}
-.backtest-box h3{font-size:24px;margin:0 0 16px;letter-spacing:.04em;color:var(--c)}
-.backtest-box>p{color:#bbb;line-height:1.7;font-size:13.5px;max-width:780px}
-.backtest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:36px 0 36px}
-.bt-stat{background:rgba(15,15,18,.6);border:1px solid var(--border);padding:22px 20px;text-align:left}
-.bt-num{font-size:38px;font-weight:600;color:#fff;line-height:1;margin-bottom:6px;letter-spacing:-.02em;font-family:"IBM Plex Mono",monospace}
-.bt-num.bt-good{color:var(--c)}
-.bt-num.bt-live{font-size:30px;display:flex;align-items:center;gap:12px;text-transform:lowercase;letter-spacing:.02em;padding-top:6px}
-.bt-pulse{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 0 0 rgba(0,229,176,.6);animation:bt-pulse 2s infinite}
-@keyframes bt-pulse{0%{box-shadow:0 0 0 0 rgba(0,229,176,.6)}70%{box-shadow:0 0 0 11px rgba(0,229,176,0)}100%{box-shadow:0 0 0 0 rgba(0,229,176,0)}}
-.bt-label{font-size:11px;color:#888;letter-spacing:.05em;line-height:1.5}
-.bt-source-block{margin-top:24px;padding-top:24px;border-top:1px solid rgba(0,229,176,.1)}
-.bt-source-block p{font-size:13px;color:#aaa;line-height:1.7;margin:0 0 14px}
-.bt-contract-list{list-style:none;padding:0;margin:0 0 18px}
-.bt-contract-list li{font-size:13px;color:#aaa;line-height:1.7;padding:10px 0 10px 26px;position:relative}
-.bt-contract-list li::before{content:"\2713";position:absolute;left:0;top:9px;color:var(--c);font-weight:600}
-.bt-contract-list li b{color:#fff;font-weight:600}
-.bt-foot{font-size:11px;color:#666;line-height:1.7}
-@media(max-width:780px){.backtest-grid{grid-template-columns:repeat(2,1fr)}.bt-num{font-size:30px}}
-</style>
-
-</main><footer>Antares v1.2.1 &mdash; <span>No mercy for scammers.</span><div style="margin-top:10px;font-size:9px;line-height:1.9"><a href="./demo.html" style="color:#454550;text-decoration:none;margin:0 6px">Demo</a>&middot;<a href="./compare.html" style="color:#454550;text-decoration:none;margin:0 6px">Compare</a>&middot;<a href="./faq.html" style="color:#454550;text-decoration:none;margin:0 6px">FAQ</a>&middot;<a href="./install.html" style="color:#454550;text-decoration:none;margin:0 6px">Install</a>&middot;<a href="./changelog.html" style="color:#454550;text-decoration:none;margin:0 6px">Changelog</a>&middot;<a href="./about.html" style="color:#454550;text-decoration:none;margin:0 6px">About</a>&middot;<a href="./api.html" style="color:#454550;text-decoration:none;margin:0 6px">API</a><br><a href="./privacy.html" style="color:#454550;text-decoration:none;margin:0 6px">Privacy</a>&middot;<a href="./security.html" style="color:#454550;text-decoration:none;margin:0 6px">Security</a>&middot;<a href="./terms.html" style="color:#454550;text-decoration:none;margin:0 6px">Terms</a>&middot;<a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:#454550;text-decoration:none;margin:0 6px">GitHub</a></div></footer>
+</main><footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 </div>
 <script>
 ;(function(){
