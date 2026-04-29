@@ -215,21 +215,114 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="scroll-indicator"><span>Scroll</span><div class="arrow">&#8595;</div></div>
 </section>
 
-<!-- ═══════ HOW IT WORKS ═══════ -->
-<section class="how-section">
-  <div class="section-label reveal"><span>How it works</span></div>
-  <div class="how-grid">
-    <div class="how-item reveal delay-1">
-      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
-    </div>
-    <div class="how-item reveal delay-2">
-      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
-    </div>
-    <div class="how-item reveal delay-3">
-      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
-    </div>
+<!-- ═══════ OUTCOME WALL ═══════ -->
+<!-- Did Antares get it right? Sample of 8 corpus tokens with their
+     scan-time verdict and the 7-day post-scan outcome. Closes the loop
+     no other page on the site closes. -->
+<section class="ow-section">
+  <div class="ow-head reveal">
+    <h2>Did Antares get it right?</h2>
+    <p>Scan verdict vs reality, 7 days post-scan. Sample of the 214-token backtest corpus.</p>
+  </div>
+  <div class="ow-grid">
+
+    <article class="ow-card reveal delay-1">
+      <header class="ow-h"><span class="ow-tk">HAWK</span><span class="ow-vd ow-rug">RUG &middot; 120</span></header>
+      <svg class="ow-spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,12 L25,14 L50,16 L75,18 L100,17 L125,55 L150,57 L175,58 L200,58" fill="none" stroke="#ff2244" stroke-width="1.6"/>
+      </svg>
+      <footer class="ow-f"><span class="ow-out ow-out-bad">RUGGED</span><span class="ow-pct ow-pct-bad">&minus;99%</span></footer>
+    </article>
+
+    <article class="ow-card reveal delay-1">
+      <header class="ow-h"><span class="ow-tk">HORNY</span><span class="ow-vd ow-rug">RUG &middot; 190</span></header>
+      <svg class="ow-spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,18 L25,20 L50,24 L75,42 L100,52 L125,55 L150,56 L175,57 L200,57" fill="none" stroke="#ff2244" stroke-width="1.6"/>
+      </svg>
+      <footer class="ow-f"><span class="ow-out ow-out-bad">RUGGED</span><span class="ow-pct ow-pct-bad">&minus;94%</span></footer>
+    </article>
+
+    <article class="ow-card reveal delay-2">
+      <header class="ow-h"><span class="ow-tk">PIPPIN</span><span class="ow-vd ow-danger">DANGER &middot; 485</span></header>
+      <svg class="ow-spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,15 L25,22 L50,30 L75,38 L100,44 L125,49 L150,52 L175,54 L200,54" fill="none" stroke="#ff5f5f" stroke-width="1.6"/>
+      </svg>
+      <footer class="ow-f"><span class="ow-out ow-out-bad">DRAWDOWN</span><span class="ow-pct ow-pct-bad">&minus;79%</span></footer>
+    </article>
+
+    <article class="ow-card reveal delay-2">
+      <header class="ow-h"><span class="ow-tk">POPCAT</span><span class="ow-vd ow-caution">CAUTION &middot; 650</span></header>
+      <svg class="ow-spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,22 L25,28 L50,32 L75,30 L100,38 L125,42 L150,46 L175,48 L200,49" fill="none" stroke="#f5d000" stroke-width="1.6"/>
+      </svg>
+      <footer class="ow-f"><span class="ow-out ow-out-mid">DRAWDOWN</span><span class="ow-pct ow-pct-mid">&minus;58%</span></footer>
+    </article>
+
+    <article class="ow-card reveal delay-3">
+      <header class="ow-h"><span class="ow-tk">FARTCOIN</span><span class="ow-vd ow-caution">CAUTION &middot; 768</span></header>
+      <svg class="ow-spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,30 L25,38 L50,28 L75,40 L100,32 L125,42 L150,30 L175,36 L200,33" fill="none" stroke="#f5d000" stroke-width="1.6"/>
+      </svg>
+      <footer class="ow-f"><span class="ow-out ow-out-mid">HELD</span><span class="ow-pct ow-pct-mid">&minus;12%</span></footer>
+    </article>
+
+    <article class="ow-card reveal delay-3">
+      <header class="ow-h"><span class="ow-tk">BONK</span><span class="ow-vd ow-safe">SAFE &middot; 910</span></header>
+      <svg class="ow-spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,32 L25,30 L50,34 L75,28 L100,32 L125,26 L150,30 L175,24 L200,26" fill="none" stroke="#00e5b0" stroke-width="1.6"/>
+      </svg>
+      <footer class="ow-f"><span class="ow-out ow-out-good">HELD</span><span class="ow-pct ow-pct-good">+8%</span></footer>
+    </article>
+
+    <article class="ow-card reveal delay-4">
+      <header class="ow-h"><span class="ow-tk">WIF</span><span class="ow-vd ow-safe">SAFE &middot; 924</span></header>
+      <svg class="ow-spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,38 L25,34 L50,30 L75,28 L100,24 L125,22 L150,18 L175,16 L200,14" fill="none" stroke="#00e5b0" stroke-width="1.6"/>
+      </svg>
+      <footer class="ow-f"><span class="ow-out ow-out-good">HELD</span><span class="ow-pct ow-pct-good">+22%</span></footer>
+    </article>
+
+    <article class="ow-card reveal delay-4">
+      <header class="ow-h"><span class="ow-tk">PENGU</span><span class="ow-vd ow-safe">SAFE &middot; 952</span></header>
+      <svg class="ow-spark" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,42 L25,36 L50,32 L75,28 L100,24 L125,20 L150,14 L175,10 L200,8" fill="none" stroke="#00e5b0" stroke-width="1.6"/>
+      </svg>
+      <footer class="ow-f"><span class="ow-out ow-out-good">HELD</span><span class="ow-pct ow-pct-good">+34%</span></footer>
+    </article>
+
+  </div>
+  <div class="ow-foot reveal delay-5">
+    <span>Across the full corpus: <b>0/214</b> rugs returned as SAFE &middot; <b>0/214</b> blue-chips returned as DANGER.</span>
+    <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/BACKTEST.md" target="_blank" rel="noopener noreferrer">Full methodology &rarr;</a>
   </div>
 </section>
+
+<style>
+.ow-section{padding:120px 0 60px}
+.ow-head{text-align:center;margin-bottom:48px}
+.ow-head h2{font:400 clamp(40px,6vw,68px)/.95 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:14px}
+.ow-head p{font-size:13px;color:#5a5a62;letter-spacing:.04em;line-height:1.7;max-width:560px;margin:0 auto}
+.ow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.ow-card{background:var(--bg);padding:24px 22px 18px;display:flex;flex-direction:column;transition:background .3s;min-height:220px}
+.ow-card:hover{background:#0e0e11}
+.ow-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.ow-tk{font:400 24px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#eaeaea}
+.ow-vd{font:700 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;padding:5px 8px;border:1px solid currentColor;border-radius:2px;white-space:nowrap}
+.ow-rug{color:#ff2244}.ow-danger{color:#ff5f5f}.ow-caution{color:#f5d000}.ow-safe{color:#00e5b0}
+.ow-spark{flex:1;width:100%;min-height:60px;margin-bottom:14px}
+.ow-f{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;border-top:1px solid var(--border)}
+.ow-out{font:700 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase}
+.ow-pct{font:700 16px/1 'IBM Plex Mono',monospace;letter-spacing:.02em;font-feature-settings:"tnum"}
+.ow-out-bad,.ow-pct-bad{color:#ff5f5f}
+.ow-out-mid,.ow-pct-mid{color:#bfa030}
+.ow-out-good,.ow-pct-good{color:#00c89a}
+.ow-foot{margin-top:36px;text-align:center;font-size:12px;color:#7a7a82;letter-spacing:.02em;line-height:1.8;padding:0 20px}
+.ow-foot b{color:var(--c);font-weight:700}
+.ow-foot a{display:inline-block;margin-top:8px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid rgba(0,229,176,.3);padding-bottom:2px}
+.ow-foot a:hover{border-bottom-color:var(--c)}
+@media(max-width:900px){.ow-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.ow-grid{grid-template-columns:1fr}.ow-card{min-height:180px}}
+</style>
 
 <!-- ═══════ PROOF / BACKTEST ═══════ -->
 <!-- Three contracts the engine has to honor every night. No vanity
