@@ -116,9 +116,8 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 
 /* ── HOW IT WORKS ── */
 .how-section{padding:120px 0}
-.section-label{display:flex;align-items:center;gap:16px;margin-bottom:60px}
+.section-label{text-align:center;margin-bottom:60px}
 .section-label span{font-size:10px;color:#2a2a2f;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
 .how-item{background:var(--bg);padding:56px 40px;position:relative;transition:background .4s}
 .how-item:hover{background:#0e0e11}
@@ -164,7 +163,6 @@ footer .foot-links a:hover{color:var(--c)}
 .loss-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at center,rgba(255,34,68,.04) 0%,transparent 70%);pointer-events:none}
 .loss-strip .section-label{position:relative;z-index:1}
 .section-label-loss span{color:#5a3030}
-.section-label-loss::after{background:linear-gradient(90deg,rgba(255,34,68,.25) 0%,var(--border) 40%)}
 .loss-strip-inner{position:relative;max-width:780px;margin:0 auto;padding:0 32px;text-align:center}
 .loss-strip-num{font:400 clamp(64px,10vw,118px)/.9 'Bebas Neue',sans-serif;letter-spacing:.02em;color:var(--red);margin-bottom:14px;text-shadow:0 0 50px rgba(255,34,68,.22),0 0 16px rgba(255,34,68,.12);display:flex;align-items:baseline;justify-content:center;gap:0}
 .ls-currency,.ls-unit{font-size:.55em;align-self:flex-start;margin-top:.18em;opacity:.85}
@@ -270,7 +268,7 @@ footer .foot-links a:hover{color:var(--c)}
       <div class="proof-accent-bar"></div>
       <div class="ps3-eye">Canonical blue-chips in our test</div>
       <div class="ps3-num"><b>100%</b></div>
-      <div class="ps3-msg">stayed at SAFE or CAUTION.<br><em>BONK, WIF, PENGU, MEW &mdash; even blue-chips can drift to CAUTION when liquidity drops or holder concentration spikes. None were ever falsely flagged as DANGER or RUG.</em></div>
+      <div class="ps3-msg">flagged as SAFE or CAUTION.<br><em>Blue-chips can drift to CAUTION when liquidity drops or holder concentration spikes. None were ever falsely flagged as DANGER or RUG.</em></div>
     </div>
     <div class="proof-stat reveal delay-3">
       <div class="proof-accent-bar"></div>
