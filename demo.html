@@ -78,8 +78,6 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 #antares-host{position:absolute;top:0;left:0;z-index:5;will-change:transform;pointer-events:none}
 #antares-host > *{pointer-events:auto}
 
-.disclaimer{font-size:10.5px;color:#555;line-height:1.85;margin-top:24px;padding:18px 22px;background:rgba(0,229,176,.03);border-left:2px solid var(--c)}
-.disclaimer b{color:#888;font-weight:600}
 .demo-notice{font-size:10.5px;color:#a8a060;line-height:1.7;margin-bottom:16px;padding:12px 18px;background:rgba(245,208,0,.04);border-left:2px solid #f5d000;letter-spacing:.02em}
 .demo-notice b{color:#d4b040;font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:9.5px;display:block;margin-bottom:4px}
 .cta-final{margin:80px 0 60px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
@@ -138,10 +136,6 @@ footer .foot-links a:hover{color:var(--c)}
     <iframe class="chart" id="chart" loading="lazy" title="Live price chart" src=""></iframe>
     <div id="antares-host" aria-live="polite"></div>
   </div>
-</div>
-
-<div class="disclaimer">
-  <b>How this works.</b> The chart is the real DexScreener embed. The overlay on top is the same Antares popup that runs in the extension &mdash; same Shadow DOM, same SHADOW_CSS, same buildResultNode tree, same skeleton during scan, same Critical Flags &amp; AI Summary panels, same drag pattern. Each click attempts a live call to <code style="color:#888;background:#15151a;padding:1px 5px;font-size:10px">/api/scan?ca={your-address}</code>; if the Vercel function is cold-starting we render a captured snapshot for that token so the overlay always renders. <b>The four sample scores are demonstrative</b> &mdash; on-chain state moves, so the live extension may return a different score for the same token at any moment. <b>Indicative, not financial advice</b> &mdash; see <a href="./terms.html" style="color:var(--c)">Terms</a>.
 </div>
 
 <div class="cta-final">
