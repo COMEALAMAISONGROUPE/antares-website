@@ -159,13 +159,111 @@ footer .foot-links a:hover{color:var(--c)}
 .scroll-indicator span{font-size:8px;color:#3a3a40;letter-spacing:.2em;text-transform:uppercase}
 .scroll-indicator .arrow{font-size:16px;color:var(--c)}
 
+/* ── CINEMATIC HERO ── */
+.cine-hero{padding:60px 0 100px;text-align:center;position:relative}
+.cine-eye{display:inline-flex;align-items:center;gap:10px;font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:22px}
+.cine-eye::before{content:'';display:block;width:24px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+.cine-h1{font:400 clamp(56px,9vw,118px)/.92 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:24px;color:#eaeaea}
+.cine-h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.2)}
+.cine-sub{font-size:14px;color:#7a7a82;line-height:1.7;max-width:580px;margin:0 auto 30px;letter-spacing:.02em}
+.cine-cta-row{display:flex;justify-content:center;margin-bottom:64px}
+.cine-stage{position:relative;max-width:980px;margin:0 auto}
+.cine-caption{margin-top:18px;font-size:11px;color:#4a4a52;letter-spacing:.06em;font-style:italic}
+.cine-caption a{color:var(--c);text-decoration:none;border-bottom:1px solid rgba(0,229,176,.3)}
+.cine-caption a:hover{border-bottom-color:var(--c)}
+
+/* Chrome window frame */
+.cw{position:relative;background:#0c0c0e;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 60px 120px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.02) inset}
+.cw-bar{display:flex;align-items:center;height:38px;padding:0 16px;background:linear-gradient(180deg,#15151a,#0e0e11);border-bottom:1px solid var(--border);gap:14px}
+.cw-dots{display:flex;gap:6px;flex-shrink:0}
+.cw-dots i{width:11px;height:11px;border-radius:50%;display:block;background:#2a2a30}
+.cw-dots i:nth-child(1){background:#ff5f56}
+.cw-dots i:nth-child(2){background:#ffbd2e}
+.cw-dots i:nth-child(3){background:#27c93f}
+.cw-url{flex:1;background:rgba(0,0,0,.3);border:1px solid #1a1a1f;border-radius:4px;padding:6px 12px;font:400 10.5px/1.2 'IBM Plex Mono',monospace;color:#787880;letter-spacing:.04em;text-align:center;max-width:460px;margin:0 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cw-url b{color:#bababa;font-weight:600}
+.cw-lock{color:#5a5a62;margin-right:6px}
+.cw-spacer{width:60px;flex-shrink:0}
+.cw-body{position:relative;height:480px;background:#0a0a0c;overflow:hidden}
+
+/* Fake DexScreener context */
+.dex-bg{position:absolute;inset:0;padding:18px 22px;display:flex;flex-direction:column;animation:dex-fadein 1.4s ease-out}
+@keyframes dex-fadein{from{opacity:0}to{opacity:1}}
+.dex-token-row{display:flex;align-items:center;gap:22px;margin-bottom:12px;padding-bottom:14px;border-bottom:1px solid var(--border);font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.04em}
+.dex-pair{color:#9a9aa2}.dex-pair b{color:#eaeaea;font-weight:700}
+.dex-price{color:#ccc;font-weight:600}
+.dex-change{color:#ff5f5f;font-weight:600;letter-spacing:.06em}
+.dex-mc,.dex-liq{color:#5a5a62;font-size:11px;margin-left:auto}
+.dex-liq{margin-left:0}
+.dex-chart{flex:1;width:100%;height:100%}
+.dex-grid-lines line{stroke:#15151a;stroke-width:1}
+.dex-line{stroke:#ff5f5f;stroke-width:1.6;fill:none;stroke-dasharray:2200;stroke-dashoffset:2200;animation:dex-draw 1.6s .2s ease-out forwards}
+.dex-fill{fill:url(#dex-grad);opacity:0;animation:dex-fillin 1.6s 1.4s ease-out forwards}
+@keyframes dex-draw{to{stroke-dashoffset:0}}
+@keyframes dex-fillin{to{opacity:1}}
+
+/* Cursor moving into chart */
+.cine-cursor{position:absolute;width:18px;height:24px;pointer-events:none;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 24'><path fill='%23eaeaea' stroke='%23000' stroke-width='1' d='M2 1l11 11h-5l3 8-3 1-3-8-3 3z'/></svg>") no-repeat;animation:cine-cursor 14s linear infinite;z-index:5;opacity:0}
+@keyframes cine-cursor{
+  0%,12%{top:80%;left:120%;opacity:0}
+  16%{opacity:1}
+  24%{top:55%;left:62%;opacity:1}
+  30%{top:55%;left:62%;opacity:1}
+  34%{top:32%;left:70%}
+  40%{opacity:1;top:32%;left:70%}
+  46%{opacity:0;top:32%;left:70%}
+  100%{opacity:0}
+}
+
+/* Antares overlay enters from top-right */
+.cine-overlay{position:absolute;top:78px;right:32px;width:290px;animation:cine-overlay 14s ease infinite;opacity:0;transform:translateY(20px) scale(.96)}
+@keyframes cine-overlay{
+  0%,32%{opacity:0;transform:translateY(20px) scale(.96)}
+  40%{opacity:1;transform:translateY(0) scale(1)}
+  92%{opacity:1;transform:translateY(0) scale(1)}
+  98%,100%{opacity:0;transform:translateY(20px) scale(.96)}
+}
+.cine-pop{animation:none}
+
+/* Score bar fills as part of the scan */
+.cine-sbar-fill{width:0%;animation:cine-sbar 14s ease infinite}
+@keyframes cine-sbar{
+  0%,42%{width:0%}
+  56%{width:12%}
+  92%{width:12%}
+  100%{width:0%}
+}
+
+/* AI Summary panel slides open */
+.cine-ai{margin:0 14px 6px;border:1px solid rgba(167,139,250,.18);background:rgba(167,139,250,.05);border-radius:3px;overflow:hidden;max-height:0;opacity:0;animation:cine-ai 14s ease infinite}
+@keyframes cine-ai{
+  0%,58%{max-height:0;opacity:0}
+  68%{max-height:160px;opacity:1}
+  92%{max-height:160px;opacity:1}
+  100%{max-height:0;opacity:0}
+}
+.cine-ai-inner{padding:10px 12px;font-size:9.5px;color:#b8a8e8;line-height:1.65;letter-spacing:.02em;text-align:left}
+.cine-ai-inner strong{color:#a78bfa;font-weight:700}
+.cine-ai-btn{animation:cine-ai-btn 14s ease infinite;background:rgba(167,139,250,.05) !important}
+@keyframes cine-ai-btn{
+  0%,58%{background:rgba(167,139,250,.05) !important}
+  68%,92%{background:rgba(167,139,250,.18) !important;border-color:rgba(167,139,250,.5)}
+  100%{background:rgba(167,139,250,.05) !important}
+}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;gap:40px;min-height:auto;padding:80px 0 40px}
-  #pv-wrap{display:none}
-  .how-grid{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .stat:nth-child(2){border-right:none}
+  .cw-body{height:400px}
+  .cine-overlay{width:240px;right:14px;top:70px;transform:scale(.85);transform-origin:top right}
+  .dex-mc,.dex-liq{display:none}
+}
+@media(max-width:640px){
+  .cine-stage{padding:0}
+  .cw-body{height:340px}
+  .cine-overlay{width:200px;transform:scale(.7);transform-origin:top right;right:8px;top:60px}
+  .cw-url{font-size:9px;max-width:200px}
+  .dex-token-row{font-size:10px;gap:10px}
+  .dex-change{font-size:10px}
 }
     .skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#0f0f11;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none;transition:top .2s}
     .skip-link:focus{top:0}
@@ -188,46 +286,73 @@ footer .foot-links a:hover{color:var(--c)}
   <a href="./install.html" class="nav-cta">Install &rarr;</a>
       </nav></header><main id="main-content">
 
-<!-- ═══════ HERO ═══════ -->
-<section class="hero" style="position:relative">
-  <div>
-    <div class="hero-eye reveal">Solana Token Scanner</div>
-    <h1 class="reveal delay-1"><span class="glitch" data-text="STOP">STOP</span><br><span class="glitch" data-text="GETTING">GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
-    <p class="hero-sub reveal delay-2">7 detection layers. 1000-point composite score. Critical Actors, live Holder Activity and Verdict Timeline &mdash; the verdict before you click buy.</p>
-    <div class="cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
-  </div>
-  <div class="reveal delay-3" style="display:flex;justify-content:flex-end">
-    <div id="pv-wrap" style="width:290px">
-      <div class="p s">
-        <div class="bar"></div>
-        <div class="hd"><span>ANTARES</span><div class="x">&times;</div></div>
-        <div class="tk"><b>WIF</b> dogwifhat</div>
-        <div class="vb"><h1>SAFE</h1></div>
-        <div class="sr"><span class="n"><b>847</b> / 1000</span><div class="dots"><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt off"></div></div></div>
-        <div class="sbar"><div class="sbar-fill"></div></div>
-        <div class="sum">No issues found</div>
-        <div class="sep"></div>
-        <div class="ss"><div class="si"><span>Sell</span><b class="y">&#10003;</b></div><div class="si"><span>Mint</span><b class="y">&#10003;</b></div><div class="si"><span>Freeze</span><b class="y">&#10003;</b></div><div class="si"><span>LP Burned</span><b class="y">&#10003;</b></div><div class="si"><span>Liq</span><b class="y">$184K</b></div></div>
-        <div class="fo"><span class="cf-btn">&#9888; Critical Flags</span><a href="#">Full Analysis &rarr;</a><span class="ai-btn">&#11041; AI Summary</span></div>
+<!-- ═══════ CINEMATIC HERO ═══════ -->
+<!-- One big Chrome window mockup. The product shown in its real
+     environment, not a popup floating in a black void. CSS-only
+     animation scripts the experience: chart loads → cursor enters →
+     overlay appears → score fills → AI Summary opens → loop. -->
+<section class="cine-hero">
+  <div class="cine-eye reveal">Live verdict in &lt; 2 seconds</div>
+  <h1 class="cine-h1 reveal delay-1"><span class="glitch" data-text="STOP GETTING">STOP GETTING</span> <span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
+  <p class="cine-sub reveal delay-2">Antares lives on every Solana chart you open. Watch what it does the moment you land on a token.</p>
+  <div class="cine-cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
+
+  <div class="cine-stage reveal delay-4">
+    <div class="cw">
+      <div class="cw-bar">
+        <div class="cw-dots"><i></i><i></i><i></i></div>
+        <div class="cw-url"><span class="cw-lock">&#9866;</span> <b>dexscreener.com</b>/solana/4GFe6MBDor&hellip;Sgpump</div>
+        <div class="cw-spacer"></div>
+      </div>
+      <div class="cw-body">
+        <!-- Fake DexScreener context -->
+        <div class="dex-bg">
+          <div class="dex-token-row">
+            <span class="dex-pair">SOL / <b>HAWK</b></span>
+            <span class="dex-price">$0.00214</span>
+            <span class="dex-change">&#8595; 38.4%</span>
+            <span class="dex-mc">MCap $1.2M</span>
+            <span class="dex-liq">Liq $24K</span>
+          </div>
+          <svg class="dex-chart" viewBox="0 0 800 240" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="dex-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff5f5f" stop-opacity=".25"/>
+                <stop offset="100%" stop-color="#ff5f5f" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g class="dex-grid-lines">
+              <line x1="0" y1="60" x2="800" y2="60"/><line x1="0" y1="120" x2="800" y2="120"/><line x1="0" y1="180" x2="800" y2="180"/>
+            </g>
+            <path class="dex-fill" d="M0,40 L70,55 L140,68 L210,80 L280,72 L350,95 L420,118 L490,135 L560,160 L630,182 L700,200 L800,220 L800,240 L0,240 Z"/>
+            <path class="dex-line" d="M0,40 L70,55 L140,68 L210,80 L280,72 L350,95 L420,118 L490,135 L560,160 L630,182 L700,200 L800,220"/>
+          </svg>
+        </div>
+        <!-- Cursor that moves into the chart -->
+        <div class="cine-cursor" aria-hidden="true"></div>
+        <!-- Antares overlay, floats in -->
+        <div class="cine-overlay">
+          <div class="p r cine-pop">
+            <div class="bar"></div>
+            <div class="hd"><span>ANTARES</span><div class="x">&times;</div></div>
+            <div class="tk"><b>HAWK</b> Hawk Tuah</div>
+            <div class="vb"><h1>RUG PULL</h1></div>
+            <div class="sr"><span class="n"><b>120</b> / 1000</span><div class="dots"><div class="dt on"></div><div class="dt off"></div><div class="dt off"></div><div class="dt off"></div><div class="dt off"></div></div></div>
+            <div class="sbar"><div class="sbar-fill cine-sbar-fill"></div></div>
+            <div class="sum">44% wallet &mdash; coordinated dump confirmed</div>
+            <div class="sep"></div>
+            <div class="ss"><div class="si"><span>Sell</span><b class="n">&times;</b></div><div class="si"><span>Mint</span><b class="y">&#10003;</b></div><div class="si"><span>Freeze</span><b class="y">&#10003;</b></div><div class="si"><span>LP Lock</span><b class="n">&times;</b></div><div class="si"><span>Top 1</span><b class="n">44%</b></div></div>
+            <div class="cine-ai">
+              <div class="cine-ai-inner">
+                <strong>What Antares saw &mdash;</strong> a single wallet cluster controls 44% of supply across 7 addresses that bought together at launch. LP is unlocked. The same pattern preceded 9 confirmed rugs in our backtest corpus.
+              </div>
+            </div>
+            <div class="fo"><span class="cf-btn">&#9888; Critical Flags</span><a href="#">Full Analysis &rarr;</a><span class="ai-btn cine-ai-btn">&#11041; AI Summary</span></div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="scroll-indicator"><span>Scroll</span><div class="arrow">&#8595;</div></div>
-</section>
-
-<!-- ═══════ HOW IT WORKS ═══════ -->
-<section class="how-section">
-  <div class="section-label reveal"><span>How it works</span></div>
-  <div class="how-grid">
-    <div class="how-item reveal delay-1">
-      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
-    </div>
-    <div class="how-item reveal delay-2">
-      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
-    </div>
-    <div class="how-item reveal delay-3">
-      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
-    </div>
+    <div class="cine-caption">&mdash; the overlay you see is the actual product. Try the live version on the <a href="./demo.html">Demo page</a>.</div>
   </div>
 </section>
 
@@ -329,10 +454,12 @@ footer .foot-links a:hover{color:var(--c)}
     '<div class="p r"><div class="bar"></div><div class="hd"><span>ANTARES</span><div class="x">&times;</div></div><div class="tk"><b>HAWK</b> Hawk Tuah</div><div class="vb"><h1>RUG PULL</h1></div><div class="sr"><span class="n"><b>120</b> / 1000</span><div class="dots"><div class="dt on"></div><div class="dt off"></div><div class="dt off"></div><div class="dt off"></div><div class="dt off"></div></div></div><div class="sbar"><div class="sbar-fill"></div></div><div class="sum">44% wallet — coordinated dump confirmed</div><div class="sep"></div><div class="ss"><div class="si"><span>Sell</span><b class="n">✗</b></div><div class="si"><span>Mint</span><b class="y">✓</b></div><div class="si"><span>Freeze</span><b class="y">✓</b></div><div class="si"><span>LP Lock</span><b class="n">✗</b></div><div class="si"><span>Top 1</span><b class="n">44%</b></div></div><div class="fo"><span class="cf-btn">⚠ Critical Flags</span><a href="#">Full Analysis →</a><span class="ai-btn">⬡ AI Summary</span></div></div>'
   ];
   var ci=0,pw=document.getElementById('pv-wrap');
-  setInterval(function(){
-    pw.style.opacity='0';pw.style.transform='translateY(10px) scale(.98)';
-    setTimeout(function(){ci=(ci+1)%cards.length;pw.innerHTML=cards[ci];pw.style.opacity='1';pw.style.transform='translateY(0) scale(1)'},400);
-  },4500);
+  if(pw){
+    setInterval(function(){
+      pw.style.opacity='0';pw.style.transform='translateY(10px) scale(.98)';
+      setTimeout(function(){ci=(ci+1)%cards.length;pw.innerHTML=cards[ci];pw.style.opacity='1';pw.style.transform='translateY(0) scale(1)'},400);
+    },4500);
+  }
 })()
 </script>
 </body>
