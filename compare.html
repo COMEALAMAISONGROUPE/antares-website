@@ -69,17 +69,6 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .partial{color:var(--yellow)}
 .note{color:#666;font-size:10px;font-style:italic;display:block;margin-top:2px}
 
-.win-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin:48px 0 80px}
-.win-card{background:var(--card);padding:36px 32px}
-.win-card.up{background:linear-gradient(135deg,rgba(0,229,176,.04),transparent)}
-.win-card.down{background:linear-gradient(135deg,rgba(255,95,95,.04),transparent)}
-.win-card h3{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:16px}
-.win-card.up h3{color:var(--c)}
-.win-card.down h3{color:var(--red)}
-.win-card ul{margin:0 0 0 18px;font-size:11.5px;color:#888;line-height:1.95}
-.win-card ul li{margin-bottom:10px}
-.win-card ul li b{color:#bbb;font-weight:600}
-
 .cta-final{margin:60px 0;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
 .cta-final h2{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:12px;color:#eaeaea;position:relative}
@@ -139,26 +128,12 @@ footer span{color:var(--c)}
     <tr><td class="feature">LP burn / lock<small>can dev pull liquidity?</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="partial">~</span></td><td class="cell"><span class="partial">~</span></td><td class="cell"><span class="yes">✓</span></td></tr>
     <tr><td class="feature">Mint &amp; freeze authority<small>can dev print or freeze?</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="partial">~</span></td><td class="cell"><span class="partial">~</span></td></tr>
     <tr><td class="feature">Creator reputation<small>prior tokens, prior rugs</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="partial">~</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="yes">✓</span></td></tr>
-    <tr><td class="feature">AI plain-English explanation<small>why this verdict, in 2-4 sentences</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td></tr>
+    <tr><td class="feature">AI explanation<small>why this verdict, in 2-4 sentences</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td></tr>
     <tr><td class="feature">Browser extension overlay<small>scans automatically as you browse</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="no">✕</span><span class="note">web only</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="partial">~</span></td><td class="cell"><span class="no">✕</span></td></tr>
     <tr><td class="feature">Multichain (ETH / BSC / Base)<small>beyond Solana</small></td><td class="cell us"><span class="no">✕</span><span class="note">Q3 2026</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="no">✕</span><span class="note">Solana only</span></td></tr>
-    <tr><td class="feature">Free, no signup<small>no email, no wallet connect, no paywall</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="partial">~</span></td><td class="cell"><span class="yes">✓</span></td><td class="cell"><span class="partial">~</span></td><td class="cell"><span class="yes">✓</span></td></tr>
     <tr><td class="feature">Speed (latency)<small>typical p50</small></td><td class="cell us">3–5s</td><td class="cell">&lt;1s</td><td class="cell">~2s</td><td class="cell">~2s</td><td class="cell">~2s</td><td class="cell">~3s</td></tr>
-    <tr><td class="feature">Open source<small>auditable code</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td></tr>
   </tbody>
 </table>
-</div>
-
-<div class="section-label"><span>Why Pick Antares</span></div>
-<div class="win-grid" style="grid-template-columns:1fr">
-  <div class="win-card up">
-    <ul>
-      <li><b>You see what nobody else shows.</b> Live Holder Activity, Verdict Timeline, Critical Actors with prior-rug count, Score Radar. None of these exist in RugCheck, DeFade or Rugslayer.</li>
-      <li><b>One verdict from 7 layers.</b> DexScreener + RugCheck + GoPlus + Helius + Solscan + in-house Chart engine + CrossValidation, geometric mean. A single false-positive can&rsquo;t flip a clean token to RUG; a single false-clean can&rsquo;t hide real risk.</li>
-      <li><b>Ambient protection.</b> Browser extension scans automatically on every Solana address you encounter (Twitter, Telegram, Discord, every DEX). You don&rsquo;t need to remember to check.</li>
-      <li><b>AI explanation grounded in your data.</b> Plain English &mdash; &ldquo;coordinated wallets bought together at launch and now control 41% of supply&rdquo; &mdash; not boilerplate.</li>
-    </ul>
-  </div>
 </div>
 
 <div class="cta-final">
