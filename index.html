@@ -61,15 +61,18 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .reveal.visible{opacity:1;transform:translateY(0)}
 .delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}.delay-4{transition-delay:.4s}.delay-5{transition-delay:.5s}
 
-/* ── HERO (fullscreen) ── */
-.hero{min-height:calc(100vh - 80px);display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center;padding:60px 0 80px}
-.hero-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+/* ── HERO (cinematic) ── */
+.hero{min-height:calc(100vh - 80px);display:grid;grid-template-columns:1.15fr .85fr;gap:80px;align-items:center;padding:60px 0 80px;position:relative}
+.hero-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:10px}
 .hero-eye::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
 @keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
-.hero h1{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:28px;color:#eaeaea}
-.hero h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.2)}
-.hero-sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:460px;margin-bottom:36px;border-left:2px solid var(--c);padding-left:16px}
-.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.hero h1{font:400 clamp(72px,13vw,168px)/.86 'Bebas Neue',sans-serif;letter-spacing:.02em;margin-bottom:36px;color:#f0f0f3}
+.hero h1 .accent{color:var(--c);text-shadow:0 0 80px rgba(0,229,176,.3),0 0 30px rgba(0,229,176,.15)}
+.hero-sub{font-size:14.5px;color:#888892;line-height:1.7;max-width:480px;margin-bottom:40px;font-weight:400}
+.hero-sub b{color:#d4d4d8;font-weight:600}
+.cta-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.hero-link{font:500 11px/1 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:color .25s;padding:6px 0;border-bottom:1px solid transparent}
+.hero-link:hover{color:var(--c);border-bottom-color:rgba(0,229,176,.3)}
 
 /* ── BUTTONS ── */
 .cta{padding:15px 32px;font:700 11px/1 'IBM Plex Mono',monospace;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;transition:all .3s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;cursor:pointer}
@@ -114,27 +117,70 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .fo .cf-btn{background:rgba(255,95,95,.05);color:#cc7070;border:1px solid rgba(255,95,95,.25)}
 .fo .ai-btn{color:#a78bfa;border:1px solid rgba(167,139,250,.25);background:rgba(167,139,250,.05)}
 
-/* ── HOW IT WORKS ── */
-.how-section{padding:120px 0}
-.section-label{display:flex;align-items:center;gap:16px;margin-bottom:60px}
-.section-label span{font-size:10px;color:#2a2a2f;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
-.how-item{background:var(--bg);padding:56px 40px;position:relative;transition:background .4s}
-.how-item:hover{background:#0e0e11}
-.how-n{font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.04);margin-bottom:16px;transition:.4s}
-.how-item:hover .how-n{color:rgba(0,229,176,.15)}
-.how-item h3{font-size:13px;color:var(--txt);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;font-weight:600}
-.how-item p{font-size:11px;color:#4a4a52;line-height:1.7}
+/* ── SECTION LABEL (shared) ── */
+.section-label{display:flex;align-items:center;gap:16px;margin-bottom:48px}
+.section-label span{font-size:10px;color:#5a5a62;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;font-weight:600}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* ── SCAN SHOW (cinematic verdict reveal) ── */
+.scan-show{padding:140px 0 100px;max-width:880px;margin:0 auto;position:relative}
+.scan-show::before{content:'';position:absolute;top:60px;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--c),transparent);opacity:.4}
+.scan-card{background:linear-gradient(180deg,#0e0e11 0%,#0a0a0c 100%);border:1px solid var(--border);padding:36px 44px 40px;position:relative;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.015) inset}
+.scan-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 20%,var(--c) 50%,transparent 80%);opacity:.6}
+.scan-card::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,229,176,.04),transparent);pointer-events:none;animation:scan-sweep 4.5s ease-in-out infinite}
+@keyframes scan-sweep{0%{left:-60%}50%{left:100%}100%{left:100%}}
+.scan-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:24px;border-bottom:1px solid var(--border);margin-bottom:8px;font:500 11px/1 'IBM Plex Mono',monospace}
+.scan-prompt{color:#5a5a62;letter-spacing:.14em}
+.scan-prompt b{color:#d4d4d8;font-weight:600;letter-spacing:.06em}
+.scan-prompt::before{content:'$ ';color:var(--c);font-weight:600}
+.scan-live{color:var(--c);display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;font-size:10px}
+.scan-live::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 0 0 rgba(0,229,176,.5);animation:proof-pulse 2s infinite}
+.scan-row{display:grid;grid-template-columns:36px 150px 1fr 24px;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid #131316;font-family:'IBM Plex Mono',monospace}
+.scan-row:last-child{border-bottom:none}
+.scan-row-id{color:#3a3a40;font-size:10px;font-weight:600;letter-spacing:.16em}
+.scan-row-name{color:#d4d4d8;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.scan-row-detail{color:#6a6a72;font-size:11.5px;line-height:1.5;letter-spacing:.01em}
+.scan-row-detail b{color:#aaa;font-weight:600}
+.scan-row.flagged .scan-row-detail{color:#a86060}
+.scan-row.flagged .scan-row-detail b{color:#cc7070}
+.scan-row.warn .scan-row-detail{color:#a89060}
+.scan-row.warn .scan-row-detail b{color:#d4b040}
+.scan-row-status{font-size:13px;text-align:center;font-weight:600;opacity:0;transform:translateX(-6px);transition:opacity .35s ease,transform .35s ease}
+.scan-row-status.ok{color:var(--c)}
+.scan-row-status.fail{color:#ff5f5f}
+.scan-row-status.warn{color:#f5d000}
+.scan-show.visible .scan-rows .scan-row:nth-child(1) .scan-row-status{opacity:1;transform:none;transition-delay:.15s}
+.scan-show.visible .scan-rows .scan-row:nth-child(2) .scan-row-status{opacity:1;transform:none;transition-delay:.3s}
+.scan-show.visible .scan-rows .scan-row:nth-child(3) .scan-row-status{opacity:1;transform:none;transition-delay:.45s}
+.scan-show.visible .scan-rows .scan-row:nth-child(4) .scan-row-status{opacity:1;transform:none;transition-delay:.6s}
+.scan-show.visible .scan-rows .scan-row:nth-child(5) .scan-row-status{opacity:1;transform:none;transition-delay:.75s}
+.scan-show.visible .scan-rows .scan-row:nth-child(6) .scan-row-status{opacity:1;transform:none;transition-delay:.9s}
+.scan-show.visible .scan-rows .scan-row:nth-child(7) .scan-row-status{opacity:1;transform:none;transition-delay:1.05s}
+.scan-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border) 30%,var(--border) 70%,transparent);margin:24px 0 28px}
+.scan-verdict{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.scan-verdict-label{font-size:10px;color:#5a5a62;letter-spacing:.28em;text-transform:uppercase;margin-bottom:8px;font-weight:600}
+.scan-verdict-name{font:400 84px/.85 'Bebas Neue',sans-serif;letter-spacing:.02em;color:#ff2244;text-shadow:0 0 40px rgba(255,34,68,.3),0 0 12px rgba(255,34,68,.2);opacity:0;transform:translateY(12px);transition:opacity .6s ease 1.3s,transform .6s ease 1.3s}
+.scan-show.visible .scan-verdict-name{opacity:1;transform:none}
+.scan-verdict-score{text-align:right;opacity:0;transition:opacity .6s ease 1.5s}
+.scan-show.visible .scan-verdict-score{opacity:1}
+.scan-verdict-score b{font:400 56px/.88 'Bebas Neue',sans-serif;color:#fff;letter-spacing:-.01em;display:block}
+.scan-verdict-score span{display:block;font-size:10.5px;color:#5a5a62;letter-spacing:.18em;margin-top:4px;text-transform:uppercase;font-weight:600}
+.scan-bar{height:3px;background:#131316;border-radius:2px;overflow:hidden;margin-top:28px}
+.scan-bar-fill{height:100%;background:linear-gradient(90deg,#ff224422,#ff2244);width:0;transition:width 1.4s cubic-bezier(.22,1,.36,1) 1.5s}
+.scan-show.visible .scan-bar-fill{width:8.7%}
+.scan-caption{text-align:center;margin-top:48px;font:500 11px/1.6 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.18em;text-transform:uppercase}
+.scan-caption b{color:#c8c8cc;font-weight:600}
+.scan-caption .hl{color:var(--c)}
 
 /* ── CTA FINAL ── */
-.cta-final{text-align:center;padding:140px 48px;margin:100px 0 80px;border:1px solid var(--border);background:var(--card);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
-.cta-final::before{content:'ANTARES';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:400 280px/1 'Bebas Neue',sans-serif;color:rgba(255,255,255,.012);pointer-events:none;white-space:nowrap}
-.cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none;animation:cta-pulse 3s ease infinite}
+.cta-final{text-align:center;padding:160px 48px 140px;margin:140px 0 100px;border:1px solid var(--border);background:linear-gradient(180deg,#0e0e11 0%,#0a0a0c 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
+.cta-final::before{content:'ANTARES';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:400 320px/1 'Bebas Neue',sans-serif;color:rgba(255,255,255,.013);pointer-events:none;white-space:nowrap;letter-spacing:.04em}
+.cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:480px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none;animation:cta-pulse 3.5s ease infinite}
 @keyframes cta-pulse{0%,100%{opacity:.5}50%{opacity:1}}
-.cta-threat{font:500 14px/1.4 'IBM Plex Mono',monospace;color:#7a4a4a;letter-spacing:.18em;text-transform:uppercase;margin-bottom:28px;position:relative;z-index:1}
-.cta-final h2{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:56px;position:relative;z-index:1;color:#eaeaea}
-.cta-final h2 span{color:var(--c);text-shadow:0 0 80px rgba(0,229,176,.2)}
+.cta-threat{font:500 12px/1.4 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.28em;text-transform:uppercase;margin-bottom:36px;position:relative;z-index:1;display:flex;align-items:center;gap:14px}
+.cta-threat::before,.cta-threat::after{content:'';display:block;width:32px;height:1px;background:var(--border)}
+.cta-final h2{font:400 clamp(72px,12vw,148px)/.86 'Bebas Neue',sans-serif;letter-spacing:.02em;margin-bottom:60px;position:relative;z-index:1;color:#f0f0f3}
+.cta-final h2 span{color:var(--c);text-shadow:0 0 80px rgba(0,229,176,.25),0 0 24px rgba(0,229,176,.1)}
 
 /* ── FOOTER ── */
 footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase}
@@ -163,7 +209,15 @@ footer .foot-links a:hover{color:var(--c)}
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;gap:40px;min-height:auto;padding:80px 0 40px}
   #pv-wrap{display:none}
-  .how-grid{grid-template-columns:1fr}
+  .scan-show{padding:80px 0 60px}
+  .scan-card{padding:28px 22px 32px}
+  .scan-row{grid-template-columns:32px 1fr 22px;gap:12px;padding:12px 0}
+  .scan-row-name{display:none}
+  .scan-row-detail{font-size:11px}
+  .scan-verdict{grid-template-columns:1fr}
+  .scan-verdict-score{text-align:left}
+  .scan-verdict-name{font-size:64px}
+  .scan-verdict-score b{font-size:42px}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:none}
 }
@@ -189,12 +243,15 @@ footer .foot-links a:hover{color:var(--c)}
       </nav></header><main id="main-content">
 
 <!-- ═══════ HERO ═══════ -->
-<section class="hero" style="position:relative">
+<section class="hero">
   <div>
     <div class="hero-eye reveal">Solana Token Scanner</div>
-    <h1 class="reveal delay-1"><span class="glitch" data-text="STOP">STOP</span><br><span class="glitch" data-text="GETTING">GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
-    <p class="hero-sub reveal delay-2">7 detection layers. 1000-point composite score. Critical Actors, live Holder Activity and Verdict Timeline &mdash; the verdict before you click buy.</p>
-    <div class="cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
+    <h1 class="reveal delay-1"><span class="glitch" data-text="STOP GETTING">STOP GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
+    <p class="hero-sub reveal delay-2">The verdict every Solana CA deserves. <b>7 sources. 2 seconds. Free.</b></p>
+    <div class="cta-row reveal delay-3">
+      <a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a>
+      <a class="hero-link" href="./demo.html">Or try the live demo &rarr;</a>
+    </div>
   </div>
   <div class="reveal delay-3" style="display:flex;justify-content:flex-end">
     <div id="pv-wrap" style="width:290px">
@@ -212,23 +269,79 @@ footer .foot-links a:hover{color:var(--c)}
       </div>
     </div>
   </div>
-  <div class="scroll-indicator"><span>Scroll</span><div class="arrow">&#8595;</div></div>
 </section>
 
-<!-- ═══════ HOW IT WORKS ═══════ -->
-<section class="how-section">
-  <div class="section-label reveal"><span>How it works</span></div>
-  <div class="how-grid">
-    <div class="how-item reveal delay-1">
-      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
+<!-- ═══════ SCAN SHOW ═══════ -->
+<!-- The single visual demonstration of the product. Replaces the
+     three generic "Install / Browse / Protected" steps with one
+     cinematic verdict reveal: 7 layers tick in sequence, then the
+     verdict and score appear. The user sees what Antares actually
+     does in one section, not three abstractions. -->
+<section class="scan-show reveal">
+  <div class="section-label"><span>Anatomy of a verdict</span></div>
+  <div class="scan-card">
+    <div class="scan-header">
+      <span class="scan-prompt">antares scan &middot; <b>9BB6&hellip;gpump</b></span>
+      <span class="scan-live">Live</span>
     </div>
-    <div class="how-item reveal delay-2">
-      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
+    <div class="scan-rows">
+      <div class="scan-row">
+        <span class="scan-row-id">L1</span>
+        <span class="scan-row-name">DexScreener</span>
+        <span class="scan-row-detail">Liquidity <b>$42K</b> &middot; 24h vol $1.2M</span>
+        <span class="scan-row-status ok">&#10003;</span>
+      </div>
+      <div class="scan-row">
+        <span class="scan-row-id">L2</span>
+        <span class="scan-row-name">RugCheck</span>
+        <span class="scan-row-detail">Mint authority <b>renounced</b> &middot; LP burn pending</span>
+        <span class="scan-row-status ok">&#10003;</span>
+      </div>
+      <div class="scan-row">
+        <span class="scan-row-id">L3</span>
+        <span class="scan-row-name">GoPlus</span>
+        <span class="scan-row-detail">No honeypot &middot; sell tax <b>0%</b> &middot; transfers open</span>
+        <span class="scan-row-status ok">&#10003;</span>
+      </div>
+      <div class="scan-row flagged">
+        <span class="scan-row-id">L4</span>
+        <span class="scan-row-name">Helius RPC</span>
+        <span class="scan-row-detail">Top wallet holds <b>31% of supply</b></span>
+        <span class="scan-row-status fail">&#10005;</span>
+      </div>
+      <div class="scan-row flagged">
+        <span class="scan-row-id">L5</span>
+        <span class="scan-row-name">Solscan</span>
+        <span class="scan-row-detail"><b>4 sibling wallets</b> exiting last 60 minutes</span>
+        <span class="scan-row-status fail">&#10005;</span>
+      </div>
+      <div class="scan-row flagged">
+        <span class="scan-row-id">L6</span>
+        <span class="scan-row-name">Chart Engine</span>
+        <span class="scan-row-detail">Blow-off top &middot; <b>&minus;94% in 6h</b></span>
+        <span class="scan-row-status fail">&#10005;</span>
+      </div>
+      <div class="scan-row warn">
+        <span class="scan-row-id">L7</span>
+        <span class="scan-row-name">Cross-Val</span>
+        <span class="scan-row-detail"><b>3 disagreements</b> &middot; 0.7&times; consensus penalty</span>
+        <span class="scan-row-status warn">&#9888;</span>
+      </div>
     </div>
-    <div class="how-item reveal delay-3">
-      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
+    <div class="scan-divider"></div>
+    <div class="scan-verdict">
+      <div>
+        <div class="scan-verdict-label">Verdict</div>
+        <div class="scan-verdict-name">RUG</div>
+      </div>
+      <div class="scan-verdict-score">
+        <b>87</b>
+        <span>/ 1000</span>
+      </div>
     </div>
+    <div class="scan-bar"><div class="scan-bar-fill"></div></div>
   </div>
+  <div class="scan-caption">Every Solana CA you encounter. <span class="hl">In ~2 seconds.</span> <b>Free.</b></div>
 </section>
 
 <!-- ═══════ PROOF / BACKTEST ═══════ -->
@@ -286,7 +399,7 @@ footer .foot-links a:hover{color:var(--c)}
      above already explained everything. The slogan needs the room
      to land. -->
 <div class="cta-final reveal">
-  <div class="cta-threat">The next rug pull won&#x27;t warn you.</div>
+  <div class="cta-threat">The next rug won&rsquo;t warn you</div>
   <h2 class="glitch" data-text="ANTARES WILL."><span>ANTARES</span> WILL.</h2>
   <a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a>
 </div>
