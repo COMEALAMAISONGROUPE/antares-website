@@ -373,20 +373,26 @@ footer span{color:var(--c)}
   <div class="txn-cell"><span>24 hours</span><div class="txn-buysells" id="txn-24h">—</div></div>
 </div>
 
-<div class="sh" style="margin-bottom:18px">
-  <h2 class="glitch" data-text="Holder Activity">Holder Activity</h2>
+<div id="ha-block">
+  <div class="sh" style="margin-bottom:18px">
+    <h2 class="glitch" data-text="Holder Activity">Holder Activity</h2>
+  </div>
+  <div class="ha-section" id="ha-section"></div>
 </div>
-<div class="ha-section" id="ha-section"></div>
 
-<div class="sh" style="margin-bottom:18px">
-  <h2 class="glitch" data-text="Verdict Timeline">Verdict Timeline</h2>
+<div id="vt-block">
+  <div class="sh" style="margin-bottom:18px">
+    <h2 class="glitch" data-text="Verdict Timeline">Verdict Timeline</h2>
+  </div>
+  <div class="vt-section" id="vt-section"></div>
 </div>
-<div class="vt-section" id="vt-section"></div>
 
-<div class="sh" style="margin-bottom:18px">
-  <h2 class="glitch" data-text="Outcome Histogram">Outcome Histogram</h2>
+<div id="oh-block">
+  <div class="sh" style="margin-bottom:18px">
+    <h2 class="glitch" data-text="Outcome Histogram">Outcome Histogram</h2>
+  </div>
+  <div class="oh-section" id="oh-section"></div>
 </div>
-<div class="oh-section" id="oh-section"></div>
 
 <div class="sh">
   <h2 class="glitch" data-text="Analysis Layers">Analysis Layers</h2>
@@ -593,12 +599,27 @@ function render(d,ca){
   // Renders the per-top-holder classification produced by
   // composeHolderActivity in the API. Each row mirrors the
   // HolderActivityRow shape (avatar, label, addr, desc, pctChange,
-  // pctChangeDisp). Empty state when the backend returns rows=[]
-  // (Solscan recentTransfers were unavailable or out of window).
+  // pctChangeDisp).
+  //
+  // Filter rule: rows where the label is "Static" AND the position
+  // change is ±0% AND the description is empty are dropped. The
+  // backend produces these for top holders that exist on-chain but
+  // had zero activity in the last 60-minute window — surfacing six
+  // identical "Static · ±0%" rows reads as "the section doesn't
+  // work" even though the data is technically populated. Honest
+  // empty-state when all rows would be filtered.
   const haSec=document.getElementById("ha-section")
   const ha=d.holderActivity
-  if(ha&&ha.rows&&ha.rows.length>0){
-    const rowsHtml=ha.rows.map(r=>{
+  const allRows=(ha&&Array.isArray(ha.rows))?ha.rows:[]
+  // Active = label !== "Static" OR has non-zero pct change OR has a description
+  const activeRows=allRows.filter(r=>{
+    const isStatic=String(r.label||"").toLowerCase()==="static"
+    const hasPct=typeof r.pctChange==="number"&&Math.abs(r.pctChange)>=0.05
+    const hasDesc=typeof r.desc==="string"&&r.desc.length>0
+    return !isStatic||hasPct||hasDesc
+  })
+  if(activeRows.length>0){
+    const rowsHtml=activeRows.map(r=>{
       const avatarClass=({dev:"dev",coord:"coord",bot:"bot"}[r.role]||"")
       const labelClass=String(r.label||"").toLowerCase()
       const pctClass=r.pctChange>0?"up":r.pctChange<0?"dn":"flat"
@@ -620,7 +641,10 @@ function render(d,ca){
       '<div class="ha-foot"><span class="ha-foot-label">'+flowLabel+'</span>'+
       '<span class="ha-foot-val '+flowClass+'">'+flowDisp+'</span></div>'
   }else{
-    haSec.innerHTML='<div class="ha-empty">No recent transfers available for this token in the last 60 minutes. <b>Holder Activity will populate</b> when Solscan returns transfer history (typical for tokens with active trading).</div>'
+    const reason=allRows.length>0
+      ? "All top holders are static in the last 60 minutes — no transfers in or out."
+      : "No recent transfers available for this token in the last 60 minutes."
+    haSec.innerHTML='<div class="ha-empty">'+reason+' <b>This section populates</b> when top wallets actively move during the window.</div>'
   }
 
   // ── VERDICT TIMELINE ──
@@ -672,11 +696,25 @@ function render(d,ca){
   // (median time-to-rug, % rugged in 24h, % alive at 30d), the
   // 36-bucket distribution with the "YOU" marker on youBucketIndex,
   // and the 3 most-similar past launches with their realized losses.
-  // Output shape mirrors what the corpus-based KNN matcher (J3-J5
-  // backtest harness) will produce once the backend is wired up.
+  //
+  // VERDICT GATE: only render for RUG and DANGER tokens. The backend
+  // composeOutcomeStats currently falls through to the slow-death
+  // cluster for ANY non-RUG verdict (api/_lib/outcome-stats.ts:159),
+  // which means CAUTION tokens like FARTCOIN (top1 11%, score 825,
+  // 12-month-old token with 80k holders) get a fake "2d
+  // time-to-rug" stat that obviously makes no sense. Until the
+  // backend gets the corpus-based KNN matcher (J3-J5 backtest
+  // harness), the histogram is only meaningful for tokens the
+  // engine has already flagged as a clear risk. SAFE/CAUTION tokens
+  // hide the entire section (no header, no card).
+  const ohBlock=document.getElementById("oh-block")
   const ohSec=document.getElementById("oh-section")
+  const verdictUpper=String(d.risk||"").toUpperCase()
+  const showOutcome=verdictUpper==="RUG"||verdictUpper==="RUG PULL"||verdictUpper==="DANGER"
   const os=d.outcomeStats
-  if(os&&Array.isArray(os.distribution)&&os.distribution.length>0){
+  if(!showOutcome){
+    if(ohBlock)ohBlock.style.display="none"
+  }else if(os&&Array.isArray(os.distribution)&&os.distribution.length>0){
     const dist=os.distribution
     const maxVal=Math.max.apply(null,dist)||1
     const youIdx=typeof os.youBucketIndex==="number"?os.youBucketIndex:-1
