@@ -93,15 +93,20 @@ nav a:hover{color:#d0d0d0}
   color:var(--c);letter-spacing:.08em}
 
 .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:44px}
-.mc{background:#141417;border:1px solid #1a1a1d;padding:18px;
-  text-align:center;transition:.2s;cursor:default;position:relative;overflow:hidden}
+/* min-height + flex-column with gap give every cell the same vertical
+   breathing room as the score-card; previous .mc had label + number
+   stuck together with margin-bottom:6px and no min-height, which made
+   short labels (e.g. "Holders") sit cramped at the top of the cell. */
+.mc{background:#141417;border:1px solid #1a1a1d;padding:22px 18px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;
+  min-height:96px;text-align:center;transition:.2s;cursor:default;position:relative;overflow:hidden}
 .mc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
   background:var(--c);transform:scaleX(0);transform-origin:center;transition:.3s}
 .mc:hover::after{transform:scaleX(1)}
 .mc:hover{background:#161619}
 .mc span{display:block;font-size:9px;color:#3a3a3f;
-  letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
-.mc strong{font-size:22px;color:#d0d0d0;font:400 22px/1 'Bebas Neue',sans-serif;letter-spacing:.04em}
+  letter-spacing:.14em;text-transform:uppercase;margin:0}
+.mc strong{font-size:24px;color:#d0d0d0;font:400 24px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;margin:0}
 
 .txns-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:44px}
 .txn-cell{background:#141417;border:1px solid #1a1a1d;padding:14px;text-align:center}
@@ -173,6 +178,104 @@ nav a:hover{color:#d0d0d0}
   color:rgba(0,229,176,.6);letter-spacing:.14em;margin-bottom:4px}
 .src-dot{width:5px;height:5px;border-radius:50%;background:var(--c)}
 .src-time{font-size:9px;color:#2a2a2f;letter-spacing:.08em}
+
+/* ── HOLDER ACTIVITY ─────────────────────────────────────────────── */
+.ha-section{margin-bottom:44px}
+.ha-rows{display:flex;flex-direction:column;gap:2px;background:#1a1a1d;border:1px solid #1a1a1d}
+.ha-row{display:grid;grid-template-columns:90px 110px 1fr 70px;gap:14px;align-items:center;
+  background:#141417;padding:14px 18px;transition:background .2s}
+.ha-row:hover{background:#161619}
+.ha-avatar{font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;
+  color:#888;border:1px solid #1e1e22;padding:6px 10px;text-align:center;border-radius:2px}
+.ha-avatar.dev{color:#ff5f5f;border-color:rgba(255,95,95,.25);background:rgba(255,95,95,.05)}
+.ha-avatar.coord{color:#a78bfa;border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.05)}
+.ha-avatar.bot{color:#f5d000;border-color:rgba(245,208,0,.25);background:rgba(245,208,0,.05)}
+.ha-label{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
+.ha-label.holding{color:#888}
+.ha-label.selling{color:#ff5f5f}
+.ha-label.buying{color:#00e5b0}
+.ha-label.splitting{color:#f5d000}
+.ha-label.reducing{color:#ff5f5f}
+.ha-label.static{color:#3a3a3f}
+.ha-desc{font-size:11px;color:#6a6a72;line-height:1.5}
+.ha-desc b{color:#aaa;font-weight:600}
+.ha-pct{font:400 18px/1 'Bebas Neue',sans-serif;text-align:right;letter-spacing:.04em}
+.ha-pct.up{color:#00e5b0}
+.ha-pct.dn{color:#ff5f5f}
+.ha-pct.flat{color:#6a6a72}
+.ha-foot{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;
+  background:#0e0e10;border:1px solid #1a1a1d;border-top:none;font-size:11px;letter-spacing:.06em}
+.ha-foot-label{color:#5a5a62;letter-spacing:.14em;text-transform:uppercase;font-size:10px}
+.ha-foot-val{font:400 18px/1 'Bebas Neue',sans-serif;letter-spacing:.04em}
+.ha-foot-val.out{color:#ff5f5f}
+.ha-foot-val.in{color:#00e5b0}
+.ha-foot-val.flat{color:#6a6a72}
+.ha-empty{padding:32px;background:#141417;border:1px solid #1a1a1d;text-align:center;
+  font-size:11px;color:#5a5a62;letter-spacing:.04em;line-height:1.7}
+.ha-empty b{color:#888;font-weight:600}
+@media(max-width:760px){
+  .ha-row{grid-template-columns:80px 1fr 60px;row-gap:8px}
+  .ha-row .ha-label{grid-column:2}
+  .ha-row .ha-desc{grid-column:1 / -1;grid-row:2}
+}
+
+/* ── OUTCOME HISTOGRAM ───────────────────────────────────────────── */
+.oh-section{margin-bottom:44px}
+.oh-card{background:#141417;border:1px solid #1a1a1d;padding:24px}
+.oh-header{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:18px;
+  padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #1a1a1d}
+.oh-stat{text-align:left}
+.oh-stat-lbl{font-size:9px;color:#3a3a3f;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.oh-stat-val{font:400 28px/1 'Bebas Neue',sans-serif;color:#e0e0e0;letter-spacing:.04em;margin-bottom:4px}
+.oh-stat-sub{font-size:10px;color:#5a5a62;letter-spacing:.06em}
+.oh-stat.danger .oh-stat-val{color:#ff5f5f}
+.oh-stat.warn .oh-stat-val{color:#f5d000}
+.oh-stat.safe .oh-stat-val{color:#00e5b0}
+.oh-bars{display:flex;align-items:flex-end;gap:2px;height:80px;margin-bottom:6px;position:relative}
+.oh-bar{flex:1;background:rgba(255,95,95,.18);min-height:2px;transition:background .2s}
+.oh-bar.you{background:#00e5b0;box-shadow:0 0 12px rgba(0,229,176,.4);position:relative}
+.oh-bar.you::before{content:'YOU';position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  font:600 8px/1 'IBM Plex Mono',monospace;color:#00e5b0;letter-spacing:.18em;white-space:nowrap}
+.oh-axis{display:flex;justify-content:space-between;font-size:9px;color:#3a3a3f;
+  letter-spacing:.06em;margin-bottom:24px}
+.oh-similar-title{font-size:10px;color:#5a5a62;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}
+.oh-similar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.oh-sim-card{background:#0e0e10;border:1px solid #1a1a1d;padding:12px 14px;border-radius:2px}
+.oh-sim-sym{font:400 18px/1 'Bebas Neue',sans-serif;color:#d0d0d0;letter-spacing:.04em;margin-bottom:4px}
+.oh-sim-meta{font-size:10px;color:#5a5a62;letter-spacing:.04em}
+.oh-sim-loss{color:#ff5f5f;font-weight:600}
+.oh-disclaimer{font-size:10px;color:#3a3a3f;letter-spacing:.06em;margin-top:14px;line-height:1.6}
+.oh-empty{padding:24px;text-align:center;font-size:11px;color:#5a5a62;letter-spacing:.04em}
+
+/* ── VERDICT TIMELINE ────────────────────────────────────────────── */
+.vt-section{margin-bottom:44px}
+.vt-track{background:#141417;border:1px solid #1a1a1d;padding:20px 24px;position:relative}
+.vt-line{position:absolute;left:36px;right:36px;top:50%;height:1px;background:#1e1e22;z-index:0}
+.vt-events{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;flex-wrap:nowrap}
+.vt-event{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.vt-dot{width:14px;height:14px;border-radius:50%;border:2px solid #0f0f11;flex-shrink:0;
+  box-shadow:0 0 0 1px #1a1a1d}
+.vt-dot.s{background:#00e5b0;box-shadow:0 0 0 1px rgba(0,229,176,.4),0 0 12px rgba(0,229,176,.3)}
+.vt-dot.c{background:#f5d000;box-shadow:0 0 0 1px rgba(245,208,0,.4)}
+.vt-dot.d{background:#ff5f5f;box-shadow:0 0 0 1px rgba(255,95,95,.4)}
+.vt-dot.r{background:#ff2244;box-shadow:0 0 0 1px rgba(255,34,68,.4),0 0 12px rgba(255,34,68,.3)}
+.vt-dot.now{transform:scale(1.4)}
+.vt-verdict{font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
+.vt-verdict.s{color:#00e5b0}
+.vt-verdict.c{color:#f5d000}
+.vt-verdict.d{color:#ff5f5f}
+.vt-verdict.r{color:#ff2244}
+.vt-score{font:400 20px/1 'Bebas Neue',sans-serif;color:#aaa;letter-spacing:.04em}
+.vt-time{font-size:9px;color:#3a3a3f;letter-spacing:.04em}
+.vt-event-label{font-size:9px;color:#5a5a62;letter-spacing:.04em;line-height:1.4;
+  max-width:120px;text-align:center;text-transform:none}
+.vt-empty{padding:24px;text-align:center;font-size:11px;color:#5a5a62;letter-spacing:.04em;line-height:1.7}
+.vt-empty b{color:#888;font-weight:600}
+@media(max-width:760px){
+  .vt-events{flex-wrap:wrap;gap:24px;justify-content:center}
+  .vt-event{flex:0 1 calc(50% - 12px)}
+  .vt-line{display:none}
+}
 
 footer{text-align:center;padding:28px;color:#2a2a2f;font-size:10px;
   border-top:1px solid #1a1a1d;letter-spacing:.15em;text-transform:uppercase}
@@ -268,6 +371,27 @@ footer span{color:var(--c)}
   <div class="txn-cell"><span>1 hour</span><div class="txn-buysells" id="txn-1h">—</div></div>
   <div class="txn-cell"><span>6 hours</span><div class="txn-buysells" id="txn-6h">—</div></div>
   <div class="txn-cell"><span>24 hours</span><div class="txn-buysells" id="txn-24h">—</div></div>
+</div>
+
+<div id="ha-block">
+  <div class="sh" style="margin-bottom:18px">
+    <h2 class="glitch" data-text="Holder Activity">Holder Activity</h2>
+  </div>
+  <div class="ha-section" id="ha-section"></div>
+</div>
+
+<div id="vt-block">
+  <div class="sh" style="margin-bottom:18px">
+    <h2 class="glitch" data-text="Verdict Timeline">Verdict Timeline</h2>
+  </div>
+  <div class="vt-section" id="vt-section"></div>
+</div>
+
+<div id="oh-block">
+  <div class="sh" style="margin-bottom:18px">
+    <h2 class="glitch" data-text="Outcome Histogram">Outcome Histogram</h2>
+  </div>
+  <div class="oh-section" id="oh-section"></div>
 </div>
 
 <div class="sh">
@@ -470,6 +594,182 @@ function render(d,ca){
       '<div class="src-status"><div class="src-dot"></div>CONNECTED</div>'+
       '<div class="src-time">'+(SOURCE_DETAILS[s]||"Used in this scan")+'</div></div>'
   }).join("")
+
+  // ── HOLDER ACTIVITY ──
+  // Renders the per-top-holder classification produced by
+  // composeHolderActivity in the API. Each row mirrors the
+  // HolderActivityRow shape (avatar, label, addr, desc, pctChange,
+  // pctChangeDisp).
+  //
+  // Filter rule: rows where the label is "Static" AND the position
+  // change is ±0% AND the description is empty are dropped. The
+  // backend produces these for top holders that exist on-chain but
+  // had zero activity in the last 60-minute window — surfacing six
+  // identical "Static · ±0%" rows reads as "the section doesn't
+  // work" even though the data is technically populated. Honest
+  // empty-state when all rows would be filtered.
+  const haSec=document.getElementById("ha-section")
+  const ha=d.holderActivity
+  const allRows=(ha&&Array.isArray(ha.rows))?ha.rows:[]
+  // Active = label !== "Static" OR has non-zero pct change OR has a description
+  const activeRows=allRows.filter(r=>{
+    const isStatic=String(r.label||"").toLowerCase()==="static"
+    const hasPct=typeof r.pctChange==="number"&&Math.abs(r.pctChange)>=0.05
+    const hasDesc=typeof r.desc==="string"&&r.desc.length>0
+    return !isStatic||hasPct||hasDesc
+  })
+  if(activeRows.length>0){
+    const rowsHtml=activeRows.map(r=>{
+      const avatarClass=({dev:"dev",coord:"coord",bot:"bot"}[r.role]||"")
+      const labelClass=String(r.label||"").toLowerCase()
+      const pctClass=r.pctChange>0?"up":r.pctChange<0?"dn":"flat"
+      const safeLabel=esc(r.label||"")
+      const safeAvatar=esc(r.avatar||"")
+      const safePct=esc(r.pctChangeDisp||"")
+      const safeDesc=esc(r.desc||r.addr||"")
+      return '<div class="ha-row">'+
+        '<div class="ha-avatar '+avatarClass+'">'+safeAvatar+'</div>'+
+        '<div class="ha-label '+labelClass+'">'+safeLabel+'</div>'+
+        '<div class="ha-desc">'+safeDesc+'</div>'+
+        '<div class="ha-pct '+pctClass+'">'+safePct+'</div>'+
+        '</div>'
+    }).join("")
+    const flowClass=ha.netFlowDirection==="out"?"out":ha.netFlowDirection==="in"?"in":"flat"
+    const flowDisp=(ha.netFlowPct>0?"+":"")+(ha.netFlowPct||0).toFixed(1)+"%"
+    const flowLabel=ha.netFlowDirection==="out"?"Net flow OUT (60min)":ha.netFlowDirection==="in"?"Net flow IN (60min)":"Net flow flat (60min)"
+    haSec.innerHTML='<div class="ha-rows">'+rowsHtml+'</div>'+
+      '<div class="ha-foot"><span class="ha-foot-label">'+flowLabel+'</span>'+
+      '<span class="ha-foot-val '+flowClass+'">'+flowDisp+'</span></div>'
+  }else{
+    const reason=allRows.length>0
+      ? "All top holders are static in the last 60 minutes — no transfers in or out."
+      : "No recent transfers available for this token in the last 60 minutes."
+    haSec.innerHTML='<div class="ha-empty">'+reason+' <b>This section populates</b> when top wallets actively move during the window.</div>'
+  }
+
+  // ── VERDICT TIMELINE ──
+  // Renders the per-token verdict history persisted in Redis ZSET
+  // `vh:{ca}`. Oldest first; the most recent is the current scan
+  // marked with the .now class for emphasis.
+  const vtSec=document.getElementById("vt-section")
+  const vh=Array.isArray(d.verdictHistory)?d.verdictHistory:[]
+  if(vh.length>0){
+    const verdictKey=v=>{
+      const u=String(v||"").toUpperCase()
+      if(u==="SAFE")return"s"
+      if(u==="CAUTION")return"c"
+      if(u==="DANGER")return"d"
+      if(u==="RUG"||u==="RUG PULL")return"r"
+      return""
+    }
+    const formatTs=ts=>{
+      if(!ts)return"—"
+      const date=new Date(typeof ts==="number"?ts*1000:ts)
+      const now=Date.now()
+      const diffMs=now-date.getTime()
+      if(diffMs<60_000)return"just now"
+      if(diffMs<3_600_000)return Math.round(diffMs/60_000)+"m ago"
+      if(diffMs<86_400_000)return Math.round(diffMs/3_600_000)+"h ago"
+      return Math.round(diffMs/86_400_000)+"d ago"
+    }
+    const eventsHtml=vh.map((e,i)=>{
+      const k=verdictKey(e.verdict)
+      const isLatest=i===vh.length-1
+      const dotClass="vt-dot "+k+(isLatest?" now":"")
+      const verdictClass="vt-verdict "+k
+      const labelText=isLatest?"Now":esc(e.event||"")
+      return '<div class="vt-event">'+
+        '<div class="'+dotClass+'"></div>'+
+        '<div class="'+verdictClass+'">'+esc(String(e.verdict||"").toUpperCase())+'</div>'+
+        '<div class="vt-score">'+(e.score!=null?e.score:"—")+'</div>'+
+        '<div class="vt-time">'+formatTs(e.ts)+'</div>'+
+        (labelText?'<div class="vt-event-label">'+labelText+'</div>':'')+
+        '</div>'
+    }).join("")
+    vtSec.innerHTML='<div class="vt-track"><div class="vt-line"></div><div class="vt-events">'+eventsHtml+'</div></div>'
+  }else{
+    vtSec.innerHTML='<div class="vt-empty">No verdict history yet — <b>this is the first scan recorded</b> for this token. Come back after a future scan to see how the verdict trajectory evolves.</div>'
+  }
+
+  // ── OUTCOME HISTOGRAM ──
+  // Renders the heuristic profile-match output: hero stats
+  // (median time-to-rug, % rugged in 24h, % alive at 30d), the
+  // 36-bucket distribution with the "YOU" marker on youBucketIndex,
+  // and the 3 most-similar past launches with their realized losses.
+  //
+  // VERDICT GATE: only render for RUG and DANGER tokens. The backend
+  // composeOutcomeStats currently falls through to the slow-death
+  // cluster for ANY non-RUG verdict (api/_lib/outcome-stats.ts:159),
+  // which means CAUTION tokens like FARTCOIN (top1 11%, score 825,
+  // 12-month-old token with 80k holders) get a fake "2d
+  // time-to-rug" stat that obviously makes no sense. Until the
+  // backend gets the corpus-based KNN matcher (J3-J5 backtest
+  // harness), the histogram is only meaningful for tokens the
+  // engine has already flagged as a clear risk. SAFE/CAUTION tokens
+  // hide the entire section (no header, no card).
+  const ohBlock=document.getElementById("oh-block")
+  const ohSec=document.getElementById("oh-section")
+  const verdictUpper=String(d.risk||"").toUpperCase()
+  const showOutcome=verdictUpper==="RUG"||verdictUpper==="RUG PULL"||verdictUpper==="DANGER"
+  const os=d.outcomeStats
+  if(!showOutcome){
+    if(ohBlock)ohBlock.style.display="none"
+  }else if(os&&Array.isArray(os.distribution)&&os.distribution.length>0){
+    const dist=os.distribution
+    const maxVal=Math.max.apply(null,dist)||1
+    const youIdx=typeof os.youBucketIndex==="number"?os.youBucketIndex:-1
+    const barsHtml=dist.map((v,i)=>{
+      const h=Math.max(2,Math.round((v/maxVal)*100))
+      const isYou=i===youIdx
+      return '<div class="oh-bar'+(isYou?" you":"")+'" style="height:'+h+'%"></div>'
+    }).join("")
+    const similar=Array.isArray(os.mostSimilar)?os.mostSimilar:[]
+    const similarHtml=similar.length>0
+      ? similar.slice(0,3).map(s=>{
+          const sym=esc(String(s.symbol||"—"))
+          const hrs=s.ruggedAfterHours
+          const hrsDisp=hrs<24?hrs+"h":Math.round(hrs/24)+"d"
+          const lossDisp=s.loss!=null?s.loss.toFixed(1)+"%":"—"
+          return '<div class="oh-sim-card"><div class="oh-sim-sym">'+sym+'</div>'+
+            '<div class="oh-sim-meta">Rugged after '+hrsDisp+' · <span class="oh-sim-loss">'+lossDisp+'</span></div></div>'
+        }).join("")
+      : ""
+    ohSec.innerHTML='<div class="oh-card">'+
+      '<div class="oh-header">'+
+      '<div class="oh-stat danger"><div class="oh-stat-lbl">Median time-to-rug</div>'+
+      '<div class="oh-stat-val">'+esc(os.timeToRugMedianDisp||"—")+'</div>'+
+      '<div class="oh-stat-sub">across n='+(os.timeToRugSampleSize||"—")+' similar launches</div></div>'+
+      '<div class="oh-stat danger"><div class="oh-stat-lbl">Rugged in 24h</div>'+
+      '<div class="oh-stat-val">'+(os.pctRugged24h!=null?Math.round(os.pctRugged24h)+"%":"—")+'</div>'+
+      '<div class="oh-stat-sub">of similar profiles</div></div>'+
+      '<div class="oh-stat warn"><div class="oh-stat-lbl">Slow death</div>'+
+      '<div class="oh-stat-val">'+(os.pctSlowDeath!=null?Math.round(os.pctSlowDeath)+"%":"—")+'</div>'+
+      '<div class="oh-stat-sub">bled out over weeks</div></div>'+
+      '<div class="oh-stat safe"><div class="oh-stat-lbl">Alive at 30d</div>'+
+      '<div class="oh-stat-val">'+(os.pctAlive30d!=null?Math.round(os.pctAlive30d)+"%":"—")+'</div>'+
+      '<div class="oh-stat-sub">survived the cluster</div></div>'+
+      '</div>'+
+      '<div class="oh-bars">'+barsHtml+'</div>'+
+      '<div class="oh-axis"><span>0h</span><span>4h</span><span>12h</span><span>24h</span><span>3d</span><span>7d</span><span>30d+</span></div>'+
+      (similarHtml?'<div class="oh-similar-title">Most similar past launches</div><div class="oh-similar">'+similarHtml+'</div>':"")+
+      '<div class="oh-disclaimer">Heuristic profile match against historical clusters. Indicative model — context, not forecast. See <a href="./terms.html" style="color:rgba(0,229,176,.55)">Terms</a>.</div>'+
+      '</div>'
+  }else{
+    ohSec.innerHTML='<div class="oh-empty">Outcome distribution unavailable for this verdict band.</div>'
+  }
+}
+
+/** HTML-escape a string for safe innerHTML interpolation. The token
+ *  page renders user-controlled values (token symbols, addresses,
+ *  flag descriptions) coming back from the API; without this, a
+ *  hostile upstream could inject markup. */
+function esc(s){
+  return String(s==null?"":s)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;")
 }
 
 ;(function(){
