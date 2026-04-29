@@ -100,16 +100,16 @@ footer .foot-links a:hover{color:var(--c)}
 
 <div class="qa"><h3>6. How fast is a scan?</h3>
 <p>Typical: 3&ndash;5 seconds end-to-end (6 concurrent upstream calls + AI summary + insider graph + scoring). Cached scans return in under 100ms.</p>
-<p>Slower than RugCheck (&lt;1s, single source) by design &mdash; we trade speed for depth (7 layers + clustering + holder activity).</p>
+<p>Slower than RugCheck (&lt;1s, single source) by design &mdash; we trade speed for depth (7 layers + bundle / coordinated-wallet detection + cross-validation between sources).</p>
 </div>
 
 <div class="qa"><h3>7. Multichain support? Ethereum / BSC / Base?</h3>
-<p>Solana only for v1. Multichain is on the roadmap but not committed for the first public release. Phase 0 (DexScreener + GoPlus EVM) is the entry point; full feature parity (Critical Actors / Holder Activity / Outcome Stats on EVM) is multi-week work.</p>
+<p>Solana only for v1. Multichain is on the roadmap but not committed for the first public release. Phase 0 (DexScreener + GoPlus EVM) is the entry point; full feature parity (Critical Actors, bundle detection, AI verdict synthesis on EVM) is multi-week work.</p>
 </div>
 
 <div class="qa"><h3>8. Is the AI summary reliable?</h3>
-<p>It&rsquo;s a Google Gemini 2.5-flash output grounded in the actual scan data (verdict, top flags, holder concentration, vol/liq, age). It can occasionally hallucinate or misinterpret &mdash; treat it as plain-English context, not authoritative analysis. The raw flag list and verdict are the ground truth.</p>
-<p>If Gemini is unreachable, a local fallback dictionary covers the 12 most common flag explanations so the AI Verdict card never goes empty.</p>
+<p>It&rsquo;s a Google Gemini 2.5-flash output grounded in the actual scan data (verdict, top flags, holder concentration, vol/liq, age, source-by-source status). It can occasionally hallucinate or misinterpret &mdash; treat it as plain-English context, not authoritative analysis. The raw flag list and verdict are the ground truth.</p>
+<p>The output is locked to a 3-paragraph structure (verdict reason &middot; counter-context &middot; boundary case or trader action) and 45&ndash;75 words total &mdash; same shape regardless of verdict band. If Gemini is unreachable or its output drifts off-format, a deterministic structured fallback writes the same 3-paragraph block from the scan data alone, so the AI Verdict card is never empty and never inconsistent across tokens.</p>
 </div>
 
 <div class="qa"><h3>9. How do I report a false positive / false negative / bug?</h3>

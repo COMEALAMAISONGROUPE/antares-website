@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <title>Antares — Features</title>
-            <meta name="description" content="Antares features: 7-layer verdict, Critical Actors detection, real-time Holder Activity, Verdict Timeline, insider clustering. Free Chrome extension for Solana.">
+            <meta name="description" content="Antares features: 7-layer verdict, Critical Actors detection, bundle / coordinated-wallet detection, AI verdict synthesis. Free Chrome extension for Solana.">
     <meta name="author" content="Antares">
     <link rel="canonical" href="https://antares-website.vercel.app/features">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://antares-website.vercel.app/features">
     <meta property="og:title" content="Antares — Features">
-    <meta property="og:description" content="7-layer verdict, Critical Actors detection, real-time Holder Activity, Verdict Timeline. Free Solana token scanner.">
+    <meta property="og:description" content="7-layer verdict, Critical Actors detection, bundle detection, AI verdict synthesis. Free Solana token scanner.">
     <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@antaresantiscam">
     <meta name="twitter:title" content="Antares — Features">
-    <meta name="twitter:description" content="7-layer verdict, Critical Actors, Holder Activity, Verdict Timeline. Free Solana token scanner.">
+    <meta name="twitter:description" content="7-layer verdict, Critical Actors, bundle detection, AI verdict synthesis. Free Solana token scanner.">
     <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
     <!-- Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -130,24 +130,24 @@ footer span{color:var(--c)}
     <p>Dev wallet reputation (prior tokens launched, prior rugs), insider sniper position, coordinated cluster size and coordination score. Each card surfaces the structural risk vector behind the score, not just a number.</p>
   </div>
   <div class="feat-card reveal delay-2" data-num="02">
-    <h3>Holder Activity (live)</h3>
-    <div class="benefit">See dev/whales dumping in real time.</div>
-    <p>Last-60-minute movement classification per top holder: <em>Holding · Selling · Splitting · Reducing · Buying · Static</em>. Net-flow footer (e.g. <em>-3.2% pre-dump signature</em>). Catches what static screenshots miss.</p>
+    <h3>Bundle / Coordinated Detection</h3>
+    <div class="benefit">Catches the invisible concentration.</div>
+    <p>A single entity holding the supply across multiple wallets is invisible to standard top-holder metrics &mdash; Helius and Solscan show "well distributed" while one actor can dump the entire stack in a single tx. Antares cross-checks RugCheck's bundler signals + on-chain co-launch patterns and surfaces the % of supply effectively bundled.</p>
   </div>
   <div class="feat-card reveal delay-3" data-num="03">
-    <h3>Verdict Timeline</h3>
-    <div class="benefit">Watch the verdict trajectory, not a snapshot.</div>
-    <p>Per-token history of verdict changes across recent scans (CAUTION &rarr; DANGER &rarr; RUG with timestamps and the event that triggered the shift). Persisted server-side; you see the story of a token, not a frozen frame.</p>
+    <h3>AI Verdict Synthesis</h3>
+    <div class="benefit">Why this verdict, in 3 short paragraphs.</div>
+    <p>Gemini-powered explanation grounded in your token's data: 1 sentence on the dominant cause, 1&ndash;2 sentences on the counter-context (what's clean and whether it saves the verdict), 1&ndash;2 sentences on the boundary case or trader action. Always 3 paragraphs, always 45&ndash;75 words &mdash; structured the same regardless of verdict band.</p>
   </div>
   <div class="feat-card reveal delay-4" data-num="04">
-    <h3>5-dimension Score Radar</h3>
-    <div class="benefit">Score broken down, not abstract.</div>
-    <p>The 1000-point composite score is decomposed across five axes: <em>LP&nbsp;Security &middot; Holder&nbsp;Distribution &middot; Trading&nbsp;Authenticity &middot; Token&nbsp;Maturity &middot; Source&nbsp;Consensus</em>. SVG pentagon radar shows where a token actually fails &mdash; not a single gauge.</p>
-  </div>
-  <div class="feat-card reveal delay-5" data-num="05">
     <h3>7-Layer Consensus</h3>
     <div class="benefit">No single source can lie alone.</div>
     <p>DexScreener, RugCheck, GoPlus, Helius, Solscan, the in-house Chart engine and a CrossValidation layer that catches inter-source disagreements. Geometric mean of all 7 layers means a single false-clean source can&rsquo;t override real risk &mdash; and a single false-positive can&rsquo;t flip a healthy token to RUG.</p>
+  </div>
+  <div class="feat-card reveal delay-5" data-num="05">
+    <h3>Safe Gate Override</h3>
+    <div class="benefit">Hard kill on critical attack surfaces.</div>
+    <p>Some risks reflect attack surfaces that can never be soft-unlocked by maturity or holder count &mdash; honeypot, LP open, mint or freeze active, deceptive name. When one of them fires the gate keeps the verdict at DANGER or RUG no matter how high the rest of the score lands.</p>
   </div>
 </div>
 
@@ -158,20 +158,12 @@ footer span{color:var(--c)}
     <div class="content"><h4>One row per upstream</h4><p>RugCheck, Helius, Solscan, Chart Engine, DexScreener &mdash; each with its own derived verdict (<em>OK</em> / <em>Risk</em> / <em>Flagged</em> / <em>N/A</em>) and a one-line note. Open the accordion at the bottom of any analysis to see exactly which source said what. Forensic provenance, not a black-box score.</p></div>
   </div>
   <div class="detail-block reveal">
-    <div class="label">Outcome Histogram</div>
-    <div class="content"><h4>Where this token sits in the distribution</h4><p>Where comparable launches actually ended up &mdash; rugged at 1h, 6h, 24h, 7d, slowly bled, or survived. Your token is marked with a <em>YOU</em> bar so you can see its expected position in the distribution. Plus the three most-similar past launches with their realised losses. Indicative model &mdash; context, not forecast.</p></div>
-  </div>
-  <div class="detail-block reveal">
     <div class="label">Exit Liquidity Calculator</div>
     <div class="content"><h4>How much can you actually sell</h4><p>Slippage tiers from $100 to $20K against the live LP, computed with the constant-product AMM formula. Color-coded: green for safe exits, yellow for tax, red for &ldquo;you&rsquo;d crash the price&rdquo;. Tells you the size you can realistically dump before you ape in.</p></div>
   </div>
   <div class="detail-block reveal">
-    <div class="label">AI Verdict Synthesis</div>
-    <div class="content"><h4>Plain English, not jargon</h4><p>Gemini-powered explanation of why the verdict landed where it did, in 2-4 sentences. References the actual data: dev wallet history, holder concentration, last-hour flow. Explains the mechanism (&ldquo;coordinated wallets bought together at launch and now control a large share&rdquo;), not just the verdict.</p></div>
-  </div>
-  <div class="detail-block reveal">
     <div class="label">Foldable Sections</div>
-    <div class="content"><h4>Read at your pace</h4><p>Critical Flags, AI Verdict, Security strip, Critical Actors, Deep Analysis, Source Breakdown &mdash; every section is independently collapsible. Power users keep everything open; quick scans collapse to just the verdict + critical flags.</p></div>
+    <div class="content"><h4>Read at your pace</h4><p>Critical Flags, AI Verdict, Security strip, Critical Actors, Source Breakdown &mdash; every section is independently collapsible. Power users keep everything open; quick scans collapse to just the verdict + critical flags.</p></div>
   </div>
 </section>
 

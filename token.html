@@ -93,15 +93,23 @@ nav a:hover{color:#d0d0d0}
   color:var(--c);letter-spacing:.08em}
 
 .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:44px}
-.mc{background:#141417;border:1px solid #1a1a1d;padding:18px;
-  text-align:center;transition:.2s;cursor:default;position:relative;overflow:hidden}
+/* min-height + flex column with gap give every cell the same vertical
+   breathing room as the score-card right above the row, so the
+   number + label feel centered instead of cramped to the top edge.
+   Previous .mc{padding:18px} + margin-bottom:6px on the label looked
+   collapsed: the strong number sat one line below the label with no
+   air between them and no consistent vertical center across cells of
+   different content lengths. */
+.mc{background:#141417;border:1px solid #1a1a1d;padding:22px 18px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;
+  min-height:96px;text-align:center;transition:.2s;cursor:default;position:relative;overflow:hidden}
 .mc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
   background:var(--c);transform:scaleX(0);transform-origin:center;transition:.3s}
 .mc:hover::after{transform:scaleX(1)}
 .mc:hover{background:#161619}
 .mc span{display:block;font-size:9px;color:#3a3a3f;
-  letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
-.mc strong{font-size:22px;color:#d0d0d0;font:400 22px/1 'Bebas Neue',sans-serif;letter-spacing:.04em}
+  letter-spacing:.14em;text-transform:uppercase;margin:0}
+.mc strong{font-size:24px;color:#d0d0d0;font:400 24px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;margin:0}
 
 .txns-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:44px}
 .txn-cell{background:#141417;border:1px solid #1a1a1d;padding:14px;text-align:center}
