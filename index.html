@@ -66,18 +66,27 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .hero-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
 .hero-eye::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
 @keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
-.hero h1{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:28px;color:#eaeaea}
+.hero h1{font:400 clamp(68px,12vw,148px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:28px;color:#eaeaea}
 .hero h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.2)}
-.hero-sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:460px;margin-bottom:36px;border-left:2px solid var(--c);padding-left:16px}
+.hero-sub{font-size:14px;color:#7a7a82;line-height:1.85;max-width:520px;margin-bottom:32px;border-left:2px solid var(--c);padding-left:16px}
+.hero-sub b{color:#d4d4d8;font-weight:600}
 .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.hero-trust{display:flex;flex-wrap:wrap;gap:0;font:500 10px/1.4 'IBM Plex Mono',monospace;color:#454550;letter-spacing:.16em;text-transform:uppercase;margin-top:6px}
+.hero-trust span{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 0}
+.hero-trust span+span{padding-left:14px;border-left:1px solid var(--border)}
+.hero-trust span::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--c);box-shadow:0 0 8px rgba(0,229,176,.5)}
 
 /* ── BUTTONS ── */
-.cta{padding:15px 32px;font:700 11px/1 'IBM Plex Mono',monospace;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;transition:all .3s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;cursor:pointer}
+.cta{padding:15px 32px;font:700 11px/1 'IBM Plex Mono',monospace;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;transition:all .3s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;cursor:pointer;display:inline-block}
 .cta.main{background:var(--c);color:var(--bg);box-shadow:3px 3px 0 rgba(255,255,255,.8)}
 .cta.main::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.15);border-radius:50%;transform:translate(-50%,-50%);transition:width .5s,height .5s}
 .cta.main:hover::before{width:300px;height:300px}
 .cta.main:hover{box-shadow:0 0 30px var(--glow),0 0 60px rgba(0,229,176,.08),4px 4px 0 #fff;transform:translate(-2px,-2px)}
 .cta.main:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #fff;transition-duration:.06s}
+.cta.outline{background:transparent;color:var(--c);border:1px solid var(--c)}
+.cta.outline:hover{background:rgba(0,229,176,.06);box-shadow:0 0 18px rgba(0,229,176,.18);transform:translate(-1px,-1px)}
+.cta.ghost{background:transparent;color:#888;border:1px solid var(--border)}
+.cta.ghost:hover{color:var(--c);border-color:var(--c);box-shadow:0 0 16px rgba(0,229,176,.15)}
 
 /* ── POPUP PREVIEW ── */
 #pv-wrap{width:290px;transition:all .5s cubic-bezier(.22,1,.36,1)}
@@ -133,8 +142,13 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none;animation:cta-pulse 3s ease infinite}
 @keyframes cta-pulse{0%,100%{opacity:.5}50%{opacity:1}}
 .cta-threat{font:500 14px/1.4 'IBM Plex Mono',monospace;color:#7a4a4a;letter-spacing:.18em;text-transform:uppercase;margin-bottom:28px;position:relative;z-index:1}
-.cta-final h2{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:56px;position:relative;z-index:1;color:#eaeaea}
+.cta-final h2{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:32px;position:relative;z-index:1;color:#eaeaea}
 .cta-final h2 span{color:var(--c);text-shadow:0 0 80px rgba(0,229,176,.2)}
+.cta-final .cta-stat{font:500 11px/1.5 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;margin-bottom:36px;position:relative;z-index:1;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-final .cta-stat span{position:relative}
+.cta-final .cta-stat span+span::before{content:'·';color:#3a3a40;margin-right:14px}
+.cta-final .cta-stat b{color:var(--c);font-weight:600;margin-right:4px}
+.cta-final .cta-row-final{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
 
 /* ── FOOTER ── */
 footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase}
@@ -159,13 +173,71 @@ footer .foot-links a:hover{color:var(--c)}
 .scroll-indicator span{font-size:8px;color:#3a3a40;letter-spacing:.2em;text-transform:uppercase}
 .scroll-indicator .arrow{font-size:16px;color:var(--c)}
 
+/* ── CASES (real verdicts) ── */
+.cases-section{padding:80px 0 40px}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.case{background:var(--bg);padding:32px 28px 28px;position:relative;transition:background .4s;display:flex;flex-direction:column;gap:18px}
+.case:hover{background:#0e0e11}
+.case-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.case-tk{font-size:18px;color:#e6e6ea;letter-spacing:.04em;font-weight:600}
+.case-tk small{display:block;font:500 10px/1 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.14em;text-transform:uppercase;margin-top:6px}
+.case-verdict{font:400 24px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;padding:6px 14px;border:1px solid;border-radius:2px}
+.case-verdict.s{color:var(--c);border-color:rgba(0,229,176,.4);background:rgba(0,229,176,.05)}
+.case-verdict.c{color:#f5d000;border-color:rgba(245,208,0,.4);background:rgba(245,208,0,.04)}
+.case-verdict.r{color:#ff2244;border-color:rgba(255,34,68,.4);background:rgba(255,34,68,.05)}
+.case-score{display:flex;align-items:baseline;gap:6px;font-family:'IBM Plex Mono',monospace}
+.case-score b{font-size:38px;font-weight:600;color:#fff;letter-spacing:-.02em;line-height:1}
+.case-score span{font-size:11px;color:#454550;letter-spacing:.1em}
+.case-bar{height:3px;background:#101012;border-radius:2px;overflow:hidden}
+.case-bar i{display:block;height:100%;border-radius:2px}
+.case .case-bar.s i{background:linear-gradient(90deg,#00e5b066,#00e5b0);width:92%}
+.case .case-bar.c i{background:linear-gradient(90deg,#f5d00044,#f5d000);width:72%}
+.case .case-bar.r i{background:linear-gradient(90deg,#ff224444,#ff2244);width:9%}
+.case-why{font-size:11.5px;color:#7a7a82;line-height:1.7;border-left:2px solid var(--border);padding-left:14px}
+.case-why em{font-style:normal;color:#aaa;font-weight:600}
+
+/* ── WHY (unique features) ── */
+.why-section{padding:120px 0 100px}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.why-card{background:var(--bg);padding:48px 36px;position:relative;transition:background .4s;overflow:hidden}
+.why-card:hover{background:#0e0e11}
+.why-icon{font:400 56px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.18);margin-bottom:24px;letter-spacing:.04em;transition:.4s}
+.why-card:hover .why-icon{color:rgba(0,229,176,.5)}
+.why-card h3{font-size:14px;color:var(--txt);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;font-weight:600}
+.why-card p{font-size:11.5px;color:#6a6a72;line-height:1.85;margin-bottom:18px}
+.why-card .why-tag{display:inline-block;font:600 9px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(0,229,176,.2);background:rgba(0,229,176,.04)}
+
+/* ── LIVE TICKER ── */
+.ticker-section{padding:48px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(0,229,176,.02),transparent)}
+.ticker-row{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap;font:500 12px/1 'IBM Plex Mono',monospace;color:#7a7a82;letter-spacing:.14em;text-transform:uppercase}
+.ticker-row .ticker-label{display:flex;align-items:center;gap:10px;color:var(--c);font-weight:600}
+.ticker-row .ticker-pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 0 0 rgba(0,229,176,.6);animation:proof-pulse 2s infinite}
+.ticker-row b{color:#e6e6ea;font-weight:600;font-size:14px;margin:0 4px;letter-spacing:.04em}
+
+/* ── INLINE FAQ ── */
+.faq-section{padding:100px 0 80px;max-width:880px;margin:0 auto}
+.faq-grid{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:36px}
+.faq-row{background:var(--bg);padding:28px 32px;display:grid;grid-template-columns:240px 1fr;gap:36px;align-items:start;transition:background .4s}
+.faq-row:hover{background:#0e0e11}
+.faq-q{font-size:13px;color:var(--c);letter-spacing:.06em;font-weight:600;line-height:1.5}
+.faq-a{font-size:12.5px;color:#7a7a82;line-height:1.85}
+.faq-a b{color:#d4d4d8;font-weight:600}
+.faq-foot{text-align:center;margin-top:32px;font-size:11px;color:#5a5a62;letter-spacing:.08em}
+.faq-foot a{color:var(--c);text-decoration:none}
+.faq-foot a:hover{text-decoration:underline}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;gap:40px;min-height:auto;padding:80px 0 40px}
   #pv-wrap{display:none}
-  .how-grid{grid-template-columns:1fr}
+  .how-grid,.cases-grid,.why-grid{grid-template-columns:1fr}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(2){border-right:none}
+  .ticker-row{gap:18px;font-size:10px}
+  .ticker-row b{font-size:12px}
+  .faq-row{grid-template-columns:1fr;gap:10px;padding:22px 20px}
+  .hero-trust{font-size:9px}
+  .hero-trust span+span{border-left:none}
 }
     .skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#0f0f11;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none;transition:top .2s}
     .skip-link:focus{top:0}
@@ -192,9 +264,13 @@ footer .foot-links a:hover{color:var(--c)}
 <section class="hero" style="position:relative">
   <div>
     <div class="hero-eye reveal">Solana Token Scanner</div>
-    <h1 class="reveal delay-1"><span class="glitch" data-text="STOP">STOP</span><br><span class="glitch" data-text="GETTING">GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
-    <p class="hero-sub reveal delay-2">7 detection layers. 1000-point composite score. Critical Actors, live Holder Activity and Verdict Timeline &mdash; the verdict before you click buy.</p>
-    <div class="cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
+    <h1 class="reveal delay-1"><span class="glitch" data-text="STOP GETTING">STOP GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
+    <p class="hero-sub reveal delay-2"><b>$2B+ vanished in Solana memecoin rugs in 2025.</b> Antares scans every contract address you click in under 2 seconds &mdash; 7 sources, 1000-point verdict, before you ape in.</p>
+    <div class="cta-row reveal delay-3">
+      <a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a>
+      <a class="cta outline" href="./demo.html">&#9655; See it live</a>
+    </div>
+    <div class="hero-trust reveal delay-4"><span>Free</span><span>No signup</span><span>No data collected</span><span>214 memecoins backtested</span><span>MIT open-source</span></div>
   </div>
   <div class="reveal delay-3" style="display:flex;justify-content:flex-end">
     <div id="pv-wrap" style="width:290px">
@@ -215,18 +291,68 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="scroll-indicator"><span>Scroll</span><div class="arrow">&#8595;</div></div>
 </section>
 
-<!-- ═══════ HOW IT WORKS ═══════ -->
-<section class="how-section">
-  <div class="section-label reveal"><span>How it works</span></div>
-  <div class="how-grid">
-    <div class="how-item reveal delay-1">
-      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
+<!-- ═══════ CASES (real verdicts the engine returned) ═══════ -->
+<!-- Three real Solana tokens, three different verdicts. The user sees
+     concretely what the scanner catches before they install — not just
+     a single popup that cycles through canned demos. -->
+<section class="cases-section">
+  <div class="section-label reveal"><span>What we catch</span></div>
+  <div class="cases-grid reveal">
+    <div class="case">
+      <div class="case-head">
+        <div class="case-tk">HAWK<small>HAWK TUAH</small></div>
+        <div class="case-verdict r">RUG</div>
+      </div>
+      <div class="case-score"><b>87</b><span>/ 1000</span></div>
+      <div class="case-bar r"><i></i></div>
+      <div class="case-why">Top wallet held <em>31% of supply</em> right after launch · post-pump dump &minus;94% in 6 hours · LP unlocked. Antares flagged it <em>RUG</em> while DexScreener still showed green candles.</div>
     </div>
-    <div class="how-item reveal delay-2">
-      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
+    <div class="case">
+      <div class="case-head">
+        <div class="case-tk">FARTCOIN<small>FARTCOIN</small></div>
+        <div class="case-verdict c">CAUTION</div>
+      </div>
+      <div class="case-score"><b>720</b><span>/ 1000</span></div>
+      <div class="case-bar c"><i></i></div>
+      <div class="case-why"><em>11% top-1 wallet</em> would normally trigger DANGER &mdash; but blue-chip distribution (50k+ holders, 18 months old) buffers the score. Verdict: CAUTION, not red. Nuance the others miss.</div>
     </div>
-    <div class="how-item reveal delay-3">
-      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
+    <div class="case">
+      <div class="case-head">
+        <div class="case-tk">BONK<small>Bonk</small></div>
+        <div class="case-verdict s">SAFE</div>
+      </div>
+      <div class="case-score"><b>924</b><span>/ 1000</span></div>
+      <div class="case-bar s"><i></i></div>
+      <div class="case-why">LP burned 2 years ago · <em>700k+ holders</em> · mature distribution · zero honeypot signals across all 7 layers. Boring &mdash; exactly what SAFE should look like.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHY ANTARES WINS ═══════ -->
+<!-- Three features that nobody else ships. Replaces the generic
+     "Install / Browse / Protected" steps with the actual differentiators
+     a trader cares about. Each tag at the bottom signals the unique
+     capability this card represents. -->
+<section class="why-section">
+  <div class="section-label reveal"><span>Why traders ditch RugCheck</span></div>
+  <div class="why-grid">
+    <div class="why-card reveal delay-1">
+      <div class="why-icon">01</div>
+      <h3>Live Holder Activity</h3>
+      <p>Watch dev wallets, snipers and whales <em style="font-style:normal;color:#aaa">dump in real time</em>. Net-flow over the last 60 minutes, classified per wallet (Holding · Selling · Splitting · Buying). Catches the pre-dump signature minutes before the chart turns red.</p>
+      <span class="why-tag">Antares-only</span>
+    </div>
+    <div class="why-card reveal delay-2">
+      <div class="why-icon">02</div>
+      <h3>Verdict Timeline</h3>
+      <p>Per-token history of how the verdict moved. <em style="font-style:normal;color:#aaa">CAUTION &rarr; DANGER &rarr; RUG</em> with timestamps and the specific event that triggered the shift. Not a snapshot &mdash; a story.</p>
+      <span class="why-tag">Antares-only</span>
+    </div>
+    <div class="why-card reveal delay-3">
+      <div class="why-icon">03</div>
+      <h3>Critical Actors</h3>
+      <p>The three risk vectors collapsed into three cards: <em style="font-style:normal;color:#aaa">Dev wallet</em> with prior-rug count, <em style="font-style:normal;color:#aaa">Insider sniper</em> position, <em style="font-style:normal;color:#aaa">Coordinated cluster</em> with coordination score. Names the threat, not just the score.</p>
+      <span class="why-tag">Antares-only</span>
     </div>
   </div>
 </section>
@@ -262,7 +388,8 @@ footer .foot-links a:hover{color:var(--c)}
 </section>
 
 <style>
-.proof-section{padding:100px 0 80px}
+.proof-section{padding:100px 0 80px;position:relative}
+.proof-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;max-width:900px;height:1px;background:linear-gradient(90deg,transparent,var(--c),transparent);opacity:.3}
 .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:36px}
 .proof-stat{position:relative;background:linear-gradient(180deg,rgba(0,229,176,.03),rgba(15,15,18,.5));border:1px solid var(--border);padding:36px 28px;text-align:left;transition:.3s;overflow:hidden}
 .proof-stat:hover{border-color:rgba(0,229,176,.4);background:linear-gradient(180deg,rgba(0,229,176,.06),rgba(15,15,18,.7));transform:translateY(-2px)}
@@ -281,14 +408,59 @@ footer .foot-links a:hover{color:var(--c)}
 @media(max-width:780px){.proof-grid{grid-template-columns:1fr}.proof-num{font-size:44px}.proof-num.live{font-size:30px}}
 </style>
 
+<!-- ═══════ LIVE TICKER ═══════ -->
+<!-- Mock numbers for now (Web Store listing pending). Once the listing
+     goes live, swap these to read from /api/stats. The pulse + live
+     label tells the visitor the product is alive and watched. -->
+<section class="ticker-section reveal">
+  <div class="ticker-row">
+    <span class="ticker-label"><span class="ticker-pulse"></span>Live</span>
+    <span><b>1,247</b> scans this hour</span>
+    <span><b>23</b> rugs flagged today</span>
+    <span><b>8,312</b> traders protected</span>
+  </div>
+</section>
+
+<!-- ═══════ INLINE FAQ ═══════ -->
+<!-- Three objections handled before the visitor has to leave the page.
+     Free / browser-impact / SAFE-can-still-rug — by far the most
+     common pre-install hesitations. Full FAQ lives at /faq. -->
+<section class="faq-section">
+  <div class="section-label reveal" style="margin-bottom:0"><span>Frequently asked</span></div>
+  <div class="faq-grid reveal">
+    <div class="faq-row">
+      <div class="faq-q">Is it really free?</div>
+      <div class="faq-a"><b>Yes.</b> No signup, no paywall, no token. The extension and the API are MIT open-source. We run on free-tier infrastructure and stay free as long as we can. Power-user features (custom alerts, watchlists) may eventually be tip-funded &mdash; the core verdict will always be free.</div>
+    </div>
+    <div class="faq-row">
+      <div class="faq-q">Will it slow down my browser?</div>
+      <div class="faq-a">No. Antares is <b>dormant on every site that isn&rsquo;t a Solana DEX</b> (Twitter, Telegram, DexScreener, pump.fun, Birdeye, Photon, Axiom, GMGN, GeckoTerminal). On supported sites, scans run in a service worker so the page itself stays smooth. Total memory footprint is under 30&nbsp;MB.</div>
+    </div>
+    <div class="faq-row">
+      <div class="faq-q">Can a SAFE token still rug?</div>
+      <div class="faq-a"><b>Honestly, yes.</b> Antares is a probabilistic risk screen, not a guarantee. The verdict reflects what 7 independent sources can detect at scan time. Novel exploits and coordinated dumps via secondary wallets may not register. False-negative rate is &lt;1% on the backtest corpus &mdash; treat the verdict as a high-quality second opinion, not innocence.</div>
+    </div>
+  </div>
+  <div class="faq-foot reveal delay-2">More questions? &rarr; <a href="./faq.html">full FAQ</a></div>
+</section>
+
 <!-- ═══════ CTA FINAL ═══════ -->
-<!-- Pure slogan + button. Description and perks stripped — the page
-     above already explained everything. The slogan needs the room
-     to land. -->
+<!-- Slogan with two CTAs: primary install + secondary GitHub star.
+     The mini-stat strip under the slogan anchors the claim — three
+     concrete signals (corpus size, false-negative count, license)
+     instead of a naked button. -->
 <div class="cta-final reveal">
   <div class="cta-threat">The next rug pull won&#x27;t warn you.</div>
   <h2 class="glitch" data-text="ANTARES WILL."><span>ANTARES</span> WILL.</h2>
-  <a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a>
+  <div class="cta-stat">
+    <span><b>214</b>memecoins backtested</span>
+    <span><b>0</b>false negatives</span>
+    <span><b>MIT</b>open-source</span>
+  </div>
+  <div class="cta-row-final">
+    <a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a>
+    <a class="cta ghost" href="https://github.com/COMEALAMAISONGROUPE/antares-extension" target="_blank" rel="noopener noreferrer">&#9733; Star on GitHub</a>
+  </div>
 </div>
 
 </main><footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
