@@ -128,7 +128,7 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .how-item p{font-size:11px;color:#4a4a52;line-height:1.7}
 
 /* ── CTA FINAL ── */
-.cta-final{text-align:center;padding:140px 48px;margin:100px 0 80px;border:1px solid var(--border);background:var(--card);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
+.cta-final{text-align:center;padding:140px 48px;margin:60px 0 40px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
 .cta-final::before{content:'ANTARES';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:400 280px/1 'Bebas Neue',sans-serif;color:rgba(255,255,255,.012);pointer-events:none;white-space:nowrap}
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none;animation:cta-pulse 3s ease infinite}
 @keyframes cta-pulse{0%,100%{opacity:.5}50%{opacity:1}}
@@ -252,22 +252,6 @@ footer .foot-links a:hover{color:var(--c)}
   </div>
 </section>
 
-<!-- ═══════ HOW IT WORKS ═══════ -->
-<section class="how-section">
-  <div class="section-label reveal"><span>How it works</span></div>
-  <div class="how-grid">
-    <div class="how-item reveal delay-1">
-      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
-    </div>
-    <div class="how-item reveal delay-2">
-      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
-    </div>
-    <div class="how-item reveal delay-3">
-      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ═══════ PROOF / BACKTEST ═══════ -->
 <!-- Three contracts the engine has to honor every night. No vanity
      numbers, only the binary outcomes that matter to a user about to
@@ -331,6 +315,22 @@ footer .foot-links a:hover{color:var(--c)}
   <h2 class="glitch" data-text="ANTARES WILL."><span>ANTARES</span> WILL.</h2>
   <a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a>
 </div>
+
+<!-- ═══════ HOW IT WORKS (moved to last) ═══════ -->
+<section class="how-section">
+  <div class="section-label reveal"><span>How it works</span></div>
+  <div class="how-grid">
+    <div class="how-item reveal delay-1">
+      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
+    </div>
+    <div class="how-item reveal delay-2">
+      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
+    </div>
+    <div class="how-item reveal delay-3">
+      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
+    </div>
+  </div>
+</section>
 
 </main><footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 </div>
