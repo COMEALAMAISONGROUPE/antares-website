@@ -193,7 +193,7 @@ footer .foot-links a:hover{color:var(--c)}
   <div>
     <div class="hero-eye reveal">Solana Token Scanner</div>
     <h1 class="reveal delay-1"><span class="glitch" data-text="STOP">STOP</span><br><span class="glitch" data-text="GETTING">GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
-    <p class="hero-sub reveal delay-2">7 detection layers. 1000-point composite score. Critical Actors, live Holder Activity and Verdict Timeline &mdash; the verdict before you click buy.</p>
+    <p class="hero-sub reveal delay-2">Catches coordinated wallet bundles RugCheck misses. Three live examples below &mdash; flagged before they ran.</p>
     <div class="cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
   </div>
   <div class="reveal delay-3" style="display:flex;justify-content:flex-end">
@@ -212,24 +212,71 @@ footer .foot-links a:hover{color:var(--c)}
       </div>
     </div>
   </div>
-  <div class="scroll-indicator"><span>Scroll</span><div class="arrow">&#8595;</div></div>
 </section>
 
-<!-- ═══════ HOW IT WORKS ═══════ -->
-<section class="how-section">
-  <div class="section-label reveal"><span>How it works</span></div>
-  <div class="how-grid">
-    <div class="how-item reveal delay-1">
-      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
-    </div>
-    <div class="how-item reveal delay-2">
-      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
-    </div>
-    <div class="how-item reveal delay-3">
-      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
-    </div>
+<!-- ═══════ RECEIPTS ═══════ -->
+<!-- Three real catches from the corpus. Each is a memecoin Antares
+     flagged with the specific signal that mattered. No mocks. -->
+<section class="receipts-section">
+  <div class="section-label reveal"><span>Recent catches</span></div>
+  <div class="receipts-grid">
+
+    <article class="receipt reveal delay-1">
+      <div class="r-bar r-bar-r"></div>
+      <div class="r-head">
+        <div class="r-ticker">HAWK</div>
+        <div class="r-verdict r-rug">RUG PULL</div>
+      </div>
+      <div class="r-score"><b>120</b><span> / 1000</span></div>
+      <p class="r-caught"><em>What Antares caught:</em><br>44% of supply held by a single coordinated wallet cluster. Liquidity drained the same week.</p>
+      <div class="r-meta">Hawk Tuah &middot; flagged at launch</div>
+    </article>
+
+    <article class="receipt reveal delay-2">
+      <div class="r-bar r-bar-d"></div>
+      <div class="r-head">
+        <div class="r-ticker">PIPPIN</div>
+        <div class="r-verdict r-danger">DANGER</div>
+      </div>
+      <div class="r-score"><b>485</b><span> / 1000</span></div>
+      <p class="r-caught"><em>What Antares caught:</em><br>Top 10 wallets stacked at 67%. Top 1 alone holds 27% &mdash; classic distribution-trap setup.</p>
+      <div class="r-meta">Pippin &middot; declined before the 80% drawdown</div>
+    </article>
+
+    <article class="receipt reveal delay-3">
+      <div class="r-bar r-bar-c"></div>
+      <div class="r-head">
+        <div class="r-ticker">FARTCOIN</div>
+        <div class="r-verdict r-caution">CAUTION</div>
+      </div>
+      <div class="r-score"><b>768</b><span> / 1000</span></div>
+      <p class="r-caught"><em>What Antares caught:</em><br>Single wallet at 11% &mdash; flagged for monitoring, never escalated. Real data, real nuance.</p>
+      <div class="r-meta">Fartcoin &middot; held the CAUTION band</div>
+    </article>
+
   </div>
 </section>
+
+<style>
+.receipts-section{padding:100px 0 60px}
+.receipts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.receipt{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.015),rgba(15,15,18,.6));border:1px solid var(--border);padding:28px 26px 24px;transition:.3s;overflow:hidden;display:flex;flex-direction:column;min-height:260px}
+.receipt:hover{border-color:rgba(0,229,176,.3);background:linear-gradient(180deg,rgba(0,229,176,.04),rgba(15,15,18,.7));transform:translateY(-2px)}
+.r-bar{position:absolute;top:0;left:0;right:0;height:2px}
+.r-bar-r{background:linear-gradient(90deg,transparent,#ff2244,transparent)}
+.r-bar-d{background:linear-gradient(90deg,transparent,#ff5f5f,transparent)}
+.r-bar-c{background:linear-gradient(90deg,transparent,#f5d000,transparent)}
+.r-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.r-ticker{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#eaeaea}
+.r-verdict{font:700 9px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;padding:5px 9px;border:1px solid currentColor;border-radius:2px}
+.r-rug{color:#ff2244}.r-danger{color:#ff5f5f}.r-caution{color:#f5d000}
+.r-score{font-family:'IBM Plex Mono',monospace;color:#888;font-size:11px;margin-bottom:18px;letter-spacing:.04em}
+.r-score b{font-size:20px;font-weight:700;color:#eaeaea;margin-right:2px}
+.r-caught{font-size:12px;color:#a0a0a8;line-height:1.7;margin-bottom:auto;padding-bottom:14px}
+.r-caught em{font-style:normal;font-weight:600;color:var(--c);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase}
+.r-meta{font-size:9.5px;color:#3a3a40;letter-spacing:.14em;text-transform:uppercase;padding-top:14px;border-top:1px solid var(--border)}
+@media(max-width:780px){.receipts-grid{grid-template-columns:1fr}}
+</style>
 
 <!-- ═══════ PROOF / BACKTEST ═══════ -->
 <!-- Three contracts the engine has to honor every night. No vanity
@@ -241,12 +288,12 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="proof-grid">
     <div class="proof-stat reveal delay-1">
       <div class="proof-accent-bar"></div>
-      <div class="proof-num accent">0</div>
+      <div class="proof-num accent">0<span class="proof-denom">/ 214</span></div>
       <div class="proof-label">confirmed rugs<br>returned as SAFE</div>
     </div>
     <div class="proof-stat reveal delay-2">
       <div class="proof-accent-bar"></div>
-      <div class="proof-num accent">0</div>
+      <div class="proof-num accent">0<span class="proof-denom">/ 214</span></div>
       <div class="proof-label">blue-chips returned<br>as DANGER / RUG</div>
     </div>
     <div class="proof-stat reveal delay-3">
@@ -270,6 +317,7 @@ footer .foot-links a:hover{color:var(--c)}
 .proof-stat:hover .proof-accent-bar{width:100%}
 .proof-num{font-size:56px;font-weight:600;color:#fff;line-height:1;margin-bottom:14px;letter-spacing:-.02em;font-family:"IBM Plex Mono",monospace}
 .proof-num.accent{color:var(--c)}
+.proof-denom{font-size:.42em;color:#3a3a40;margin-left:8px;letter-spacing:.04em;font-weight:400}
 .proof-num.live{font-size:38px;display:flex;align-items:center;gap:14px;text-transform:lowercase;letter-spacing:.02em;padding-top:10px}
 .proof-pulse{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 0 rgba(0,229,176,.6);animation:proof-pulse 2s infinite}
 @keyframes proof-pulse{0%{box-shadow:0 0 0 0 rgba(0,229,176,.6)}70%{box-shadow:0 0 0 12px rgba(0,229,176,0)}100%{box-shadow:0 0 0 0 rgba(0,229,176,0)}}
