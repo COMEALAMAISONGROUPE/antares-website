@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f;--yellow:#f5d000}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff2244;--yellow:#f5d000}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
 .stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
@@ -69,16 +69,6 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .partial{color:var(--yellow)}
 .note{color:#666;font-size:10px;font-style:italic;display:block;margin-top:2px}
 
-.win-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin:48px 0 80px}
-.win-card{background:var(--card);padding:36px 32px}
-.win-card.up{background:linear-gradient(135deg,rgba(0,229,176,.04),transparent)}
-.win-card.down{background:linear-gradient(135deg,rgba(255,95,95,.04),transparent)}
-.win-card h3{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:16px}
-.win-card.up h3{color:var(--c)}
-.win-card.down h3{color:var(--red)}
-.win-card ul{margin:0 0 0 18px;font-size:11.5px;color:#888;line-height:1.95}
-.win-card ul li{margin-bottom:10px}
-.win-card ul li b{color:#bbb;font-weight:600}
 
 .cta-final{margin:60px 0;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
@@ -93,7 +83,7 @@ footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:
 footer .foot-links a:hover{color:var(--c)}
 footer span{color:var(--c)}
 
-@media(max-width:980px){.cmp-table{font-size:10.5px}.cmp-table thead th{padding:10px 6px;font-size:8px}.cmp-table tbody td{padding:10px 6px}.cmp-table .cell{font-size:12px}.win-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.cmp-table{font-size:10.5px}.cmp-table thead th{padding:10px 6px;font-size:8px}.cmp-table tbody td{padding:10px 6px}.cmp-table .cell{font-size:12px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Antares vs RugCheck, DeFade, GoPlus, Birdeye, Rugslayer","description":"Honest side-by-side comparison. Where Antares wins, where competitors win.","url":"https://antares-website.vercel.app/compare","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
 </head>
@@ -110,7 +100,7 @@ footer span{color:var(--c)}
 <section class="page-hero">
   <div class="eyebrow">Side-by-side, no bullshit</div>
   <h1>WHERE ANTARES<br><span class="accent">WINS &amp; LOSES.</span></h1>
-  <p class="sub">Honest comparison vs RugCheck, DeFade, GoPlus, Birdeye, Rugslayer. Antares is not a replacement for all of them &mdash; it&rsquo;s the layer that bundles their best signals into one verdict and adds what they don&rsquo;t do (live holder activity, verdict timeline, insider clustering). On simplicity and speed, RugCheck still wins.</p>
+  <p class="sub">Honest comparison vs RugCheck, DeFade, GoPlus, Birdeye, Rugslayer. Antares bundles the best signals from each into one verdict and adds what none of them ship: live Holder Activity, Verdict Timeline, insider clustering. Below is the matrix &mdash; capability by capability, no marketing.</p>
 </section>
 
 <div class="section-label"><span>Feature Matrix</span></div>
@@ -147,19 +137,6 @@ footer span{color:var(--c)}
     <tr><td class="feature">Open source<small>auditable code</small></td><td class="cell us"><span class="yes">✓</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td><td class="cell"><span class="no">✕</span></td></tr>
   </tbody>
 </table>
-</div>
-
-<div class="section-label"><span>Why Pick Antares</span></div>
-<div class="win-grid" style="grid-template-columns:1fr">
-  <div class="win-card up">
-    <ul>
-      <li><b>You see what nobody else shows.</b> Live Holder Activity, Verdict Timeline, Critical Actors with prior-rug count, Score Radar. None of these exist in RugCheck, DeFade or Rugslayer.</li>
-      <li><b>One verdict from 7 layers.</b> DexScreener + RugCheck + GoPlus + Helius + Solscan + in-house Chart engine + CrossValidation, geometric mean. A single false-positive can&rsquo;t flip a clean token to RUG; a single false-clean can&rsquo;t hide real risk.</li>
-      <li><b>Ambient protection.</b> Browser extension scans automatically on every Solana address you encounter (Twitter, Telegram, Discord, every DEX). You don&rsquo;t need to remember to check.</li>
-      <li><b>AI explanation grounded in your data.</b> Plain English &mdash; &ldquo;coordinated wallets bought together at launch and now control 41% of supply&rdquo; &mdash; not boilerplate.</li>
-      <li><b>Open source.</b> Audit the scoring logic yourself. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension" style="color:var(--c)">github.com/COMEALAMAISONGROUPE/antares-extension</a></li>
-    </ul>
-  </div>
 </div>
 
 <div class="cta-final">
