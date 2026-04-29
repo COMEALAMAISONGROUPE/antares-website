@@ -78,6 +78,8 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .cta.main:hover::before{width:300px;height:300px}
 .cta.main:hover{box-shadow:0 0 30px var(--glow),0 0 60px rgba(0,229,176,.08),4px 4px 0 #fff;transform:translate(-2px,-2px)}
 .cta.main:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #fff;transition-duration:.06s}
+.cta.secondary{background:transparent;color:var(--c);border:1px solid rgba(0,229,176,.4)}
+.cta.secondary:hover{background:rgba(0,229,176,.06);border-color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.18);transform:translate(-1px,-1px)}
 
 /* ── POPUP PREVIEW ── */
 #pv-wrap{width:290px;transition:all .5s cubic-bezier(.22,1,.36,1)}
@@ -193,8 +195,8 @@ footer .foot-links a:hover{color:var(--c)}
   <div>
     <div class="hero-eye reveal">Solana Token Scanner</div>
     <h1 class="reveal delay-1"><span class="glitch" data-text="STOP">STOP</span><br><span class="glitch" data-text="GETTING">GETTING</span><br><span class="accent glitch" data-text="SCAMMED.">SCAMMED.</span></h1>
-    <p class="hero-sub reveal delay-2">7 detection layers. 1000-point composite score. Critical Actors, live Holder Activity and Verdict Timeline &mdash; the verdict before you click buy.</p>
-    <div class="cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a></div>
+    <p class="hero-sub reveal delay-2">Bundle detection. Critical Actors. Verdict Timeline. The Solana scanner that goes deeper than RugCheck &mdash; in under 2 seconds, on every page you visit.</p>
+    <div class="cta-row reveal delay-3"><a class="cta main" href="./install.html">&#9889; Install Free &rarr;</a><a class="cta secondary" href="./demo.html">&#9654; Watch Demo</a></div>
   </div>
   <div class="reveal delay-3" style="display:flex;justify-content:flex-end">
     <div id="pv-wrap" style="width:290px">
@@ -212,23 +214,76 @@ footer .foot-links a:hover{color:var(--c)}
       </div>
     </div>
   </div>
-  <div class="scroll-indicator"><span>Scroll</span><div class="arrow">&#8595;</div></div>
 </section>
 
-<!-- ═══════ HOW IT WORKS ═══════ -->
-<section class="how-section">
-  <div class="section-label reveal"><span>How it works</span></div>
-  <div class="how-grid">
-    <div class="how-item reveal delay-1">
-      <div class="how-n">01</div><h3>Install</h3><p>One click. No account. No config. Just add the Chrome extension and you're done.</p>
+<!-- ═══════ DIFFERENTIATORS ═══════ -->
+<!-- The three signals that no other Solana scanner surfaces. Each
+     points to a feature page where the engine logic is documented. -->
+<section class="diff-section">
+  <div class="section-label reveal"><span>What no one else does</span></div>
+  <div class="diff-grid">
+    <div class="diff-card reveal delay-1">
+      <div class="diff-num">01</div>
+      <h3>Bundle detection</h3>
+      <p>Coordinated wallet clusters that hide a single owner across multiple addresses. Antares spots the relationship pattern &mdash; even when the on-chain holder list looks distributed.</p>
+      <a href="./engine.html" class="diff-link">How the layer works &rarr;</a>
     </div>
-    <div class="how-item reveal delay-2">
-      <div class="how-n">02</div><h3>Browse</h3><p>Go anywhere. Twitter, Telegram, DexScreener. Antares watches silently in the background.</p>
+    <div class="diff-card reveal delay-2">
+      <div class="diff-num">02</div>
+      <h3>Critical Actors</h3>
+      <p>Every wallet that touched the contract within the first hour, ranked by impact. See who minted, who LP'd, who dumped &mdash; before you click buy.</p>
+      <a href="./features.html" class="diff-link">See the panel &rarr;</a>
     </div>
-    <div class="how-item reveal delay-3">
-      <div class="how-n">03</div><h3>Protected</h3><p>Every Solana token is scanned automatically. Verdict delivered in under 2 seconds.</p>
+    <div class="diff-card reveal delay-3">
+      <div class="diff-num">03</div>
+      <h3>Verdict Timeline</h3>
+      <p>Every signal change since launch on one strip. Watch a SAFE drift toward CAUTION as concentration builds &mdash; or a DANGER recover as LP gets locked.</p>
+      <a href="./features.html" class="diff-link">See the timeline &rarr;</a>
     </div>
   </div>
+</section>
+
+<!-- ═══════ VS RUGCHECK STRIP ═══════ -->
+<section class="vs-section">
+  <div class="section-label reveal"><span>Antares vs RugCheck</span></div>
+  <div class="vs-table reveal">
+    <div class="vs-row vs-head">
+      <div class="vs-feat">Feature</div>
+      <div class="vs-cell vs-us">Antares</div>
+      <div class="vs-cell vs-them">RugCheck</div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-feat">Bundle / coordinated wallet detection</div>
+      <div class="vs-cell vs-us"><span class="vs-yes">&#10003;</span></div>
+      <div class="vs-cell vs-them"><span class="vs-no">&times;</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-feat">Critical Actors panel (early-buyer impact)</div>
+      <div class="vs-cell vs-us"><span class="vs-yes">&#10003;</span></div>
+      <div class="vs-cell vs-them"><span class="vs-no">&times;</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-feat">Live Holder Activity feed</div>
+      <div class="vs-cell vs-us"><span class="vs-yes">&#10003;</span></div>
+      <div class="vs-cell vs-them"><span class="vs-no">&times;</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-feat">Verdict Timeline (signal history)</div>
+      <div class="vs-cell vs-us"><span class="vs-yes">&#10003;</span></div>
+      <div class="vs-cell vs-them"><span class="vs-no">&times;</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-feat">AI explanation grounded in your token's data</div>
+      <div class="vs-cell vs-us"><span class="vs-yes">&#10003;</span></div>
+      <div class="vs-cell vs-them"><span class="vs-no">&times;</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-feat">Auto-scan on every page (Twitter, Telegram, DEX)</div>
+      <div class="vs-cell vs-us"><span class="vs-yes">&#10003;</span></div>
+      <div class="vs-cell vs-them"><span class="vs-no">&times;</span></div>
+    </div>
+  </div>
+  <div class="vs-cta reveal"><a href="./compare.html" class="vs-link">See the full comparison matrix &rarr;</a></div>
 </section>
 
 <!-- ═══════ PROOF / BACKTEST ═══════ -->
@@ -241,12 +296,12 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="proof-grid">
     <div class="proof-stat reveal delay-1">
       <div class="proof-accent-bar"></div>
-      <div class="proof-num accent">0</div>
+      <div class="proof-num accent">0<span class="proof-denom">/ 214</span></div>
       <div class="proof-label">confirmed rugs<br>returned as SAFE</div>
     </div>
     <div class="proof-stat reveal delay-2">
       <div class="proof-accent-bar"></div>
-      <div class="proof-num accent">0</div>
+      <div class="proof-num accent">0<span class="proof-denom">/ 214</span></div>
       <div class="proof-label">blue-chips returned<br>as DANGER / RUG</div>
     </div>
     <div class="proof-stat reveal delay-3">
@@ -270,6 +325,7 @@ footer .foot-links a:hover{color:var(--c)}
 .proof-stat:hover .proof-accent-bar{width:100%}
 .proof-num{font-size:56px;font-weight:600;color:#fff;line-height:1;margin-bottom:14px;letter-spacing:-.02em;font-family:"IBM Plex Mono",monospace}
 .proof-num.accent{color:var(--c)}
+.proof-denom{font-size:.42em;color:#3a3a40;margin-left:8px;letter-spacing:.04em;font-weight:400}
 .proof-num.live{font-size:38px;display:flex;align-items:center;gap:14px;text-transform:lowercase;letter-spacing:.02em;padding-top:10px}
 .proof-pulse{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 0 rgba(0,229,176,.6);animation:proof-pulse 2s infinite}
 @keyframes proof-pulse{0%{box-shadow:0 0 0 0 rgba(0,229,176,.6)}70%{box-shadow:0 0 0 12px rgba(0,229,176,0)}100%{box-shadow:0 0 0 0 rgba(0,229,176,0)}}
@@ -279,7 +335,52 @@ footer .foot-links a:hover{color:var(--c)}
 .proof-link{display:block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase}
 .proof-link:hover{text-decoration:underline}
 @media(max-width:780px){.proof-grid{grid-template-columns:1fr}.proof-num{font-size:44px}.proof-num.live{font-size:30px}}
+
+/* ── DIFFERENTIATORS ── */
+.diff-section{padding:120px 0 60px}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.diff-card{background:var(--bg);padding:48px 36px;transition:background .4s;position:relative}
+.diff-card:hover{background:#0e0e11}
+.diff-num{font:400 64px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.18);margin-bottom:18px;letter-spacing:.04em}
+.diff-card h3{font-size:14px;color:#eaeaea;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;font-weight:600}
+.diff-card p{font-size:12px;color:#7a7a82;line-height:1.85;margin-bottom:22px}
+.diff-link{font-size:10px;color:var(--c);letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px;transition:border-color .3s}
+.diff-link:hover{border-bottom-color:var(--c)}
+@media(max-width:780px){.diff-grid{grid-template-columns:1fr}}
+
+/* ── VS RUGCHECK ── */
+.vs-section{padding:80px 0 60px}
+.vs-table{border:1px solid var(--border);background:var(--card)}
+.vs-row{display:grid;grid-template-columns:1.6fr .7fr .7fr;border-bottom:1px solid var(--border)}
+.vs-row:last-child{border-bottom:none}
+.vs-row.vs-head{background:rgba(0,229,176,.04)}
+.vs-feat{padding:18px 24px;font-size:12px;color:#aaa;letter-spacing:.04em;border-right:1px solid var(--border);display:flex;align-items:center}
+.vs-cell{padding:18px 16px;text-align:center;display:flex;align-items:center;justify-content:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.vs-cell.vs-us{color:var(--c);border-right:1px solid var(--border)}
+.vs-cell.vs-them{color:#5a5a62}
+.vs-row.vs-head .vs-feat{color:#3a3a40;font-size:10px;letter-spacing:.22em;text-transform:uppercase}
+.vs-yes{font-size:18px}
+.vs-no{font-size:20px;color:#5a3030}
+.vs-cta{text-align:center;margin-top:24px}
+.vs-link{font-size:11px;color:#888;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid #2a2a2f;padding-bottom:3px;transition:.3s}
+.vs-link:hover{color:var(--c);border-bottom-color:var(--c)}
+@media(max-width:780px){.vs-row{grid-template-columns:1fr 60px 60px}.vs-feat{padding:14px 14px;font-size:11px}.vs-cell{padding:14px 6px}}
+
+/* ── TRUST STRIP ── */
+.trust-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:80px 0 0;background:var(--border);border:1px solid var(--border)}
+.trust-item{background:var(--bg);padding:28px 18px;text-align:center}
+.trust-num{display:block;font:400 36px/1 'Bebas Neue',sans-serif;color:var(--c);letter-spacing:.04em;margin-bottom:6px}
+.trust-lbl{display:block;font-size:9.5px;color:#5a5a62;letter-spacing:.18em;text-transform:uppercase;line-height:1.5}
+@media(max-width:780px){.trust-strip{grid-template-columns:repeat(2,1fr)}}
 </style>
+
+<!-- ═══════ TRUST STRIP ═══════ -->
+<aside class="trust-strip reveal">
+  <div class="trust-item"><span class="trust-num">v1.2.1</span><span class="trust-lbl">Latest stable build</span></div>
+  <div class="trust-item"><span class="trust-num">214</span><span class="trust-lbl">Memecoins backtested nightly</span></div>
+  <div class="trust-item"><span class="trust-num">7</span><span class="trust-lbl">Independent detection layers</span></div>
+  <div class="trust-item"><span class="trust-num">&lt; 2s</span><span class="trust-lbl">End-to-end verdict latency</span></div>
+</aside>
 
 <!-- ═══════ CTA FINAL ═══════ -->
 <!-- Pure slogan + button. Description and perks stripped — the page
