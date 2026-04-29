@@ -566,6 +566,12 @@ footer .foot-links a:hover{color:var(--c)}
   function toggleAiSummary(aiSummary){
     var panel=shadow.getElementById('ant-ai-summary');if(!panel)return;
     if(panel.classList.contains('open')){panel.classList.remove('open');return;}
+    // Mutex: close the Critical Flags panel before opening this one.
+    // Both panels share the same vertical real-estate inside the
+    // overlay; with both open the box overflowed off-screen on
+    // shorter viewports.
+    var sibling=shadow.getElementById('ant-critical-flags');
+    if(sibling)sibling.classList.remove('open');
     if(!panel.dataset.loaded){
       panel.dataset.loaded='1';
       panel.replaceChildren();
@@ -584,6 +590,11 @@ footer .foot-links a:hover{color:var(--c)}
   function toggleCriticalFlags(flags){
     var panel=shadow.getElementById('ant-critical-flags');if(!panel)return;
     if(panel.classList.contains('open')){panel.classList.remove('open');return;}
+    // Mutex: close the AI Summary panel before opening this one. Same
+    // reasoning as toggleAiSummary above — both panels overflow the
+    // box on shorter viewports if they sit open simultaneously.
+    var sibling=shadow.getElementById('ant-ai-summary');
+    if(sibling)sibling.classList.remove('open');
     if(!panel.dataset.loaded){
       panel.dataset.loaded='1';
       panel.replaceChildren();
@@ -624,10 +635,17 @@ footer .foot-links a:hover{color:var(--c)}
   function attachInteractions(d,ca,aiSummary){
     var closeBtn=shadow.getElementById('ant-close');
     if(closeBtn){closeBtn.addEventListener('click',hideBox,{once:true});}
+    // AI Summary + Critical Flags buttons sit inside the .fo footer
+    // which sits inside the draggable overlay box. Without
+    // stopPropagation+preventDefault the click bubbled up to the
+    // drag/scan layer in the live extension, which would re-render
+    // the overlay and wipe the .open class on every panel — visible
+    // to the user as a "blink" that closed both panels at once.
+    // The stop-bubble keeps the click confined to the toggle.
     var ai=shadow.getElementById('ant-ai-summary-btn');
-    if(ai){var freshAi=ai.cloneNode(true);ai.parentNode.replaceChild(freshAi,ai);freshAi.addEventListener('click',function(){toggleAiSummary(aiSummary);});}
+    if(ai){var freshAi=ai.cloneNode(true);ai.parentNode.replaceChild(freshAi,ai);freshAi.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggleAiSummary(aiSummary);});}
     var cf=shadow.getElementById('ant-critical-flags-btn');
-    if(cf){var freshCf=cf.cloneNode(true);cf.parentNode.replaceChild(freshCf,cf);freshCf.addEventListener('click',function(){toggleCriticalFlags(d.flags||[]);});}
+    if(cf){var freshCf=cf.cloneNode(true);cf.parentNode.replaceChild(freshCf,cf);freshCf.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggleCriticalFlags(d.flags||[]);});}
     var fa=shadow.getElementById('ant-full-analysis');
     if(fa){var freshFa=fa.cloneNode(true);fa.parentNode.replaceChild(freshFa,fa);freshFa.addEventListener('click',function(e){e.preventDefault();window.open(ANALYSIS_PAGE+'?ca='+encodeURIComponent(ca),'_blank','noopener,noreferrer');});}
   }
