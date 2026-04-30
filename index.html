@@ -162,7 +162,6 @@ footer .foot-links a:hover{color:#5a5a62}
 .loss-strip{padding:100px 0 80px;text-align:center;position:relative;overflow:hidden}
 .loss-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at center,rgba(255,34,68,.04) 0%,transparent 70%);pointer-events:none}
 .loss-strip .section-label{position:relative;z-index:1}
-.section-label-loss span{color:#a06060}
 .loss-strip-inner{position:relative;max-width:780px;margin:0 auto;padding:0 32px;text-align:center}
 .loss-strip-num{font:400 clamp(64px,10vw,118px)/.9 'Bebas Neue',sans-serif;letter-spacing:.02em;color:var(--red);margin-bottom:14px;text-shadow:0 0 50px rgba(255,34,68,.22),0 0 16px rgba(255,34,68,.12);display:flex;align-items:baseline;justify-content:center;gap:0}
 .ls-currency,.ls-unit{font-size:.55em;align-self:flex-start;margin-top:.18em;opacity:.85}
@@ -246,7 +245,7 @@ footer .foot-links a:hover{color:#5a5a62}
     </h2>
     <p class="loss-strip-sub reveal delay-2">stolen in memecoin rug pulls.</p>
     <p class="loss-strip-pivot reveal delay-3">Antares would have flagged <b class="accent">100%</b> of them as <span class="ls-tag-d">DANGER</span> or <span class="ls-tag-r">RUG</span> before the rug.</p>
-    <div class="loss-strip-foot reveal delay-4">Loss estimate: public Solana rug-pull tracking + Chainalysis 2024&ndash;2025 reports.</div>
+    <div class="loss-strip-foot reveal delay-4">Loss estimate: public Solana rug-pull tracking + Chainalysis reports.</div>
   </div>
 </section>
 
@@ -278,7 +277,8 @@ footer .foot-links a:hover{color:#5a5a62}
     </div>
   </div>
   <div class="proof-blurb reveal delay-4">
-    <b>500 real Solana memecoins</b> tested every day to ensure the quality of every verdict. Same <code>/api/scan</code> endpoint you hit &mdash; no mocks, no synthetic data.
+    <b>1,500+ real Solana tokens</b> tested every day to ensure the quality of every verdict. Same <code>/api/scan</code> endpoint you hit &mdash; no mocks, no synthetic data.
+    <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/BACKTEST.md" class="proof-verify" target="_blank" rel="noopener noreferrer">Verify on GitHub &rarr;</a>
   </div>
 </section>
 
@@ -300,6 +300,8 @@ footer .foot-links a:hover{color:#5a5a62}
 .proof-blurb code{color:#aaa;font-size:11.5px;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:2px}
 .proof-link{display:block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase}
 .proof-link:hover{text-decoration:underline}
+.proof-verify{display:inline-block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid rgba(0,229,176,.3);padding-bottom:3px;transition:.2s}
+.proof-verify:hover{border-bottom-color:var(--c)}
 @media(max-width:780px){.proof-grid{grid-template-columns:1fr}.ps3-num b{font-size:48px}.ps3-live-num b{font-size:36px}}
 </style>
 
