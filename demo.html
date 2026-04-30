@@ -837,10 +837,13 @@ footer .foot-links a:hover{color:var(--c)}
       try{history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca));}catch(e){}
     }
 
-    // Wait for the iframe load event before revealing the overlay. Add a
-    // 1500ms safety timeout in case the iframe is served from cache and
-    // doesn't fire 'load' (common on revisit), so the demo never gets
-    // stuck with no overlay.
+    // Wait for the iframe load event THEN an extra render delay before
+    // revealing the overlay. The 'load' event fires when DexScreener's
+    // HTML/JS is loaded — the chart canvas paints ~800-1200ms LATER. If
+    // we reveal on 'load' alone, the overlay still appears over a blank
+    // chart. So: load → wait 1500ms for candles to actually paint → reveal.
+    // 4s absolute safety fallback in case 'load' never fires (cached
+    // iframe on revisit, network stall) so the demo can't deadlock.
     var revealed=false;
     function reveal(){
       if(revealed)return;
@@ -874,8 +877,8 @@ footer .foot-links a:hover{color:var(--c)}
           var cb2=shadow.getElementById('ant-close');if(cb2)cb2.addEventListener('click',hideBox,{once:true});
         });
     }
-    chart.addEventListener('load',reveal,{once:true});
-    setTimeout(reveal,1500);
+    chart.addEventListener('load',function(){setTimeout(reveal,1500);},{once:true});
+    setTimeout(reveal,4000);
   }
 
   Array.prototype.forEach.call(samples,function(b){
