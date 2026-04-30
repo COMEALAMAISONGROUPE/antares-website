@@ -804,6 +804,12 @@ footer .foot-links a:hover{color:var(--c)}
     inflight=new AbortController();
     var sig=inflight.signal;
 
+    // Hide the overlay until the chart frame finishes loading. Previously
+    // the box flashed in instantly while the iframe was still blank, which
+    // made the demo feel out of order — overlay first, chart later. Now
+    // both surface together: chart paints, then overlay slides in.
+    hideBox();
+
     // Initial chart src uses the token address — DexScreener will pick its
     // default pair, which is fine while we wait for the pair resolver. The
     // src is then upgraded to the resolved pair address (USDC/SOL preferred)
@@ -811,10 +817,6 @@ footer .foot-links a:hover{color:var(--c)}
     // PENGU-SLD pair DexScreener defaults to.
     chart.src='https://dexscreener.com/solana/'+encodeURIComponent(ca)+'?embed=1&theme=dark&trades=0&info=0';
     if(urlPath)urlPath.textContent='/solana/'+ca.slice(0,6)+'…'+ca.slice(-6);
-
-    boxEl.className='box';
-    showBox();
-    var cb=shadow.getElementById('ant-close');if(cb)cb.addEventListener('click',hideBox,{once:true});
 
     // Fire pair resolution alongside the scan so the chart upgrades the
     // moment DexScreener returns (~150ms typically). Failures are silent —
@@ -835,34 +837,48 @@ footer .foot-links a:hover{color:var(--c)}
       try{history.replaceState(null,'','./demo.html?ca='+encodeURIComponent(ca));}catch(e){}
     }
 
-    // ─── DEMO-FIRST: render prebaked instantly for the 4 sample tokens ───
-    // This is a marketing demo, not a live scanner — the user expects
-    // to see the verdict immediately when they click a sample chip.
-    // Every sample CA has a hand-vetted prebaked verdict (distinct
-    // scores per token, no generic SAFE 1000 fallback), so we render
-    // it synchronously instead of waiting on a /api/scan round-trip
-    // (which can be 800ms-3s on cold start) + retry chain.
-    var prebaked=DEMO_PREBAKED[ca];
-    if(prebaked){
-      applyResult(prebaked);
-      return;
-    }
+    // Wait for the iframe load event THEN an extra render delay before
+    // revealing the overlay. The 'load' event fires when DexScreener's
+    // HTML/JS is loaded — the chart canvas paints ~800-1200ms LATER. If
+    // we reveal on 'load' alone, the overlay still appears over a blank
+    // chart. So: load → wait 1500ms for candles to actually paint → reveal.
+    // 4s absolute safety fallback in case 'load' never fires (cached
+    // iframe on revisit, network stall) so the demo can't deadlock.
+    var revealed=false;
+    function reveal(){
+      if(revealed)return;
+      revealed=true;
+      boxEl.className='box';
+      showBox();
+      var cb=shadow.getElementById('ant-close');if(cb)cb.addEventListener('click',hideBox,{once:true});
 
-    // ─── Non-sample CA (deep-link with unknown ca) — live scan path ──
-    // Show skeleton then fire /api/scan with cold-start retry.
-    boxEl.replaceChildren(buildSkeletonNode());
-    scanRealtime(ca,sig)
-      .then(applyResult)
-      .catch(function(e){
-        if(e&&e.name==='AbortError')return;
-        boxEl.className='box';
-        boxEl.replaceChildren();
-        boxEl.appendChild(el('div',{'class':'topbar','style':'background:linear-gradient(90deg,transparent,#3a3a3f,transparent)'}));
-        boxEl.appendChild(buildHeaderNode());
-        boxEl.appendChild(el('div',{'class':'vb'},el('h1',{'style':'color:#666;font-size:32px'},'WARMING UP')));
-        boxEl.appendChild(el('div',{'class':'sum','style':'padding:8px 14px 4px;color:#666'},'Antares pipeline starting. Click another sample to try again.'));
-        var cb2=shadow.getElementById('ant-close');if(cb2)cb2.addEventListener('click',hideBox,{once:true});
-      });
+      var prebaked=DEMO_PREBAKED[ca];
+      if(prebaked){
+        // ─── DEMO-FIRST: render prebaked instantly for the 4 sample tokens ───
+        // This is a marketing demo, not a live scanner — the user expects
+        // to see the verdict immediately once the chart is up.
+        applyResult(prebaked);
+        return;
+      }
+
+      // ─── Non-sample CA (deep-link with unknown ca) — live scan path ──
+      // Show skeleton then fire /api/scan with cold-start retry.
+      boxEl.replaceChildren(buildSkeletonNode());
+      scanRealtime(ca,sig)
+        .then(applyResult)
+        .catch(function(e){
+          if(e&&e.name==='AbortError')return;
+          boxEl.className='box';
+          boxEl.replaceChildren();
+          boxEl.appendChild(el('div',{'class':'topbar','style':'background:linear-gradient(90deg,transparent,#3a3a3f,transparent)'}));
+          boxEl.appendChild(buildHeaderNode());
+          boxEl.appendChild(el('div',{'class':'vb'},el('h1',{'style':'color:#666;font-size:32px'},'WARMING UP')));
+          boxEl.appendChild(el('div',{'class':'sum','style':'padding:8px 14px 4px;color:#666'},'Antares pipeline starting. Click another sample to try again.'));
+          var cb2=shadow.getElementById('ant-close');if(cb2)cb2.addEventListener('click',hideBox,{once:true});
+        });
+    }
+    chart.addEventListener('load',function(){setTimeout(reveal,1500);},{once:true});
+    setTimeout(reveal,4000);
   }
 
   Array.prototype.forEach.call(samples,function(b){
