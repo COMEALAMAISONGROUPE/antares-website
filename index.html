@@ -122,7 +122,29 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .how-item{background:var(--bg);padding:56px 40px;position:relative;transition:background .4s}
 .how-item:hover{background:#0e0e11}
 .how-n{font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.04);margin-bottom:16px;transition:.4s}
-.how-item:hover .how-n{color:rgba(0,229,176,.15)}
+.how-item:hover .how-n{color:rgba(0,229,176,.4);text-shadow:0 0 28px rgba(0,229,176,.35)}
+
+/* Sequential light-up: 01 lights at 0s, 02 at 5s, 03 at 10s,
+   then cycle restarts at 15s. Each number stays bright once it's
+   activated, until the loop resets. */
+.how-grid .how-item:nth-child(1) .how-n{animation:how-light-1 15s ease-in-out infinite}
+.how-grid .how-item:nth-child(2) .how-n{animation:how-light-2 15s ease-in-out infinite}
+.how-grid .how-item:nth-child(3) .how-n{animation:how-light-3 15s ease-in-out infinite}
+@keyframes how-light-1{
+  0%        {color:rgba(0,229,176,.04);text-shadow:none}
+  3%,93%    {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
+  100%      {color:rgba(0,229,176,.04);text-shadow:none}
+}
+@keyframes how-light-2{
+  0%,33%    {color:rgba(0,229,176,.04);text-shadow:none}
+  36%,93%   {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
+  100%      {color:rgba(0,229,176,.04);text-shadow:none}
+}
+@keyframes how-light-3{
+  0%,66%    {color:rgba(0,229,176,.04);text-shadow:none}
+  70%,93%   {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
+  100%      {color:rgba(0,229,176,.04);text-shadow:none}
+}
 .how-item h3{font-size:13px;color:var(--txt);letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px;font-weight:600}
 .how-item p{font-size:13px;color:#888;line-height:1.75}
 
