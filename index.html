@@ -124,25 +124,24 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .how-n{font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.04);margin-bottom:16px;transition:.4s;text-align:center}
 .how-item:hover .how-n{color:rgba(0,229,176,.4);text-shadow:0 0 28px rgba(0,229,176,.35)}
 
-/* Sequential light-up: 01 lights at 0s, 02 at 5s, 03 at 10s,
-   then cycle restarts at 15s. Each number stays bright once it's
-   activated, until the loop resets. */
-.how-grid .how-item:nth-child(1) .how-n{animation:how-light-1 15s ease-in-out infinite}
-.how-grid .how-item:nth-child(2) .how-n{animation:how-light-2 15s ease-in-out infinite}
-.how-grid .how-item:nth-child(3) .how-n{animation:how-light-3 15s ease-in-out infinite}
+/* Sequential light-up: 01 lights at 0s, 02 at 3s, 03 at 6s.
+   Cycle restarts at 12s (6s of all-lit hold before reset). */
+.how-grid .how-item:nth-child(1) .how-n{animation:how-light-1 12s ease-in-out infinite}
+.how-grid .how-item:nth-child(2) .how-n{animation:how-light-2 12s ease-in-out infinite}
+.how-grid .how-item:nth-child(3) .how-n{animation:how-light-3 12s ease-in-out infinite}
 @keyframes how-light-1{
   0%        {color:rgba(0,229,176,.04);text-shadow:none}
-  3%,93%    {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
+  3%,92%    {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
   100%      {color:rgba(0,229,176,.04);text-shadow:none}
 }
 @keyframes how-light-2{
-  0%,33%    {color:rgba(0,229,176,.04);text-shadow:none}
-  36%,93%   {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
+  0%,25%    {color:rgba(0,229,176,.04);text-shadow:none}
+  28%,92%   {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
   100%      {color:rgba(0,229,176,.04);text-shadow:none}
 }
 @keyframes how-light-3{
-  0%,66%    {color:rgba(0,229,176,.04);text-shadow:none}
-  70%,93%   {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
+  0%,50%    {color:rgba(0,229,176,.04);text-shadow:none}
+  53%,92%   {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
   100%      {color:rgba(0,229,176,.04);text-shadow:none}
 }
 .how-item h3{font-size:13px;color:var(--txt);letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px;font-weight:600}
