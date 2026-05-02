@@ -487,18 +487,22 @@ footer .foot-links a:hover{color:#5a5a62}
       FOOTER+'</div>';
   }
 
+  // Same 5 .si fields as the live overlay (Sell / Mint / Freeze / LP /
+  // Liq), in the same order. The values vary per verdict but the
+  // schema is identical card-to-card so the demo reads as one
+  // consistent UI, not four random layouts.
   var cards = [
     card('safe',    'SAFE',     952, 5, 'No issues found', [
       {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Burned',cls:'y',v:'✓'},{k:'Liq',cls:'y',v:'$9.0M'}
     ]),
     card('caution', 'CAUTION',  768, 4, '1 flags detected', [
-      {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Burned',cls:'y',v:'✓'},{k:'Top 1',cls:'w',v:'11%'}
+      {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Burned',cls:'y',v:'✓'},{k:'Liq',cls:'',v:'$32K'}
     ]),
     card('danger',  'DANGER',   485, 2, '3 flags — 1 critical', [
-      {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'Top 1',cls:'n',v:'27%'},{k:'Top 10',cls:'n',v:'67%'}
+      {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'n',v:'✗'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Locked',cls:'y',v:'✓'},{k:'Liq',cls:'',v:'$48K'}
     ]),
     card('rug',     'RUG PULL', 120, 1, '5 flags — 3 critical', [
-      {k:'Sell',cls:'n',v:'✗'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Lock',cls:'n',v:'✗'},{k:'Top 1',cls:'n',v:'44%'}
+      {k:'Sell',cls:'n',v:'✗'},{k:'Mint',cls:'n',v:'✗'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Lock',cls:'n',v:'✗'},{k:'Liq',cls:'n',v:'$1.8K'}
     ])
   ];
 
