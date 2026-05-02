@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Sign in or create an Antares account to manage your Pro / Lifetime licenses.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://antares-website.vercel.app/auth">
+<title>Sign in — Antares</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;min-height:100vh;display:flex;flex-direction:column}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:460px;margin:0 auto;padding:0 32px;flex:1;width:100%;display:flex;flex-direction:column;justify-content:center}
+nav{position:fixed;top:3px;left:0;right:0;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+nav .nav-inner{max-width:1160px;margin:0 auto;padding:18px 32px;display:flex;justify-content:space-between;align-items:center}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+nav .links a:hover{color:var(--c)}
+.skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#0f0f11;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none}
+.skip-link:focus{top:0}
+
+main{padding:120px 0 60px;flex:1;display:flex;flex-direction:column;justify-content:center}
+h1{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:8px;text-align:center}
+h1 span{color:var(--c)}
+.lead{font-size:12px;color:#7a7a82;line-height:1.7;text-align:center;margin-bottom:28px}
+
+.tabs{display:flex;gap:0;justify-content:center;margin:0 0 22px;border:1px solid var(--border);border-radius:2px;overflow:hidden;background:#0a0a0c}
+.tabs button{flex:1;padding:11px 0;background:transparent;border:none;color:#666;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.tabs button.active{color:var(--bg);background:var(--c)}
+.tabs button:not(.active):hover{color:#ccc}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:28px}
+.card label{display:block;font:600 10px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;margin:14px 0 6px}
+.card label:first-child{margin-top:0}
+.card input{width:100%;padding:11px 13px;background:#0a0a0c;color:#eaeaea;border:1px solid var(--border);border-radius:2px;font:400 13px/1.2 'IBM Plex Mono',monospace;letter-spacing:.04em}
+.card input:focus{border-color:var(--c);outline:none}
+.card input.invalid{border-color:var(--red)}
+.card .hint{font-size:10px;color:#5a5a62;margin-top:4px;letter-spacing:.04em}
+.submit{margin-top:22px;width:100%;padding:14px;background:var(--c);color:var(--bg);border:none;border-radius:2px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,229,176,.2)}
+.submit:disabled{opacity:.5;cursor:not-allowed}
+.error{margin-top:14px;padding:11px 13px;background:rgba(255,95,95,.06);border:1px solid rgba(255,95,95,.4);border-radius:2px;color:#ff7070;font-size:12px;letter-spacing:.04em;line-height:1.55}
+.spinner{display:inline-block;width:9px;height:9px;border-radius:50%;background:rgba(10,10,12,.6);margin-right:8px;animation:pulse 1.2s ease-in-out infinite;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.foot{margin-top:18px;text-align:center;font-size:10.5px;color:#5a5a62;letter-spacing:.04em}
+.foot a{color:#888}
+.foot a:hover{color:var(--c)}
+
+footer{text-align:center;padding:24px 32px;color:#3a3a40;font-size:9px;border-top:1px solid var(--border);letter-spacing:.18em;text-transform:uppercase}
+footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px}
+footer .foot-links a:hover{color:var(--c)}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="stripe" role="presentation" aria-hidden="true"></div>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
+    <div class="links"><a href="./pricing.html">Pricing</a><a href="./faq.html">FAQ</a><a href="./install.html">Install</a></div>
+  </div>
+</nav>
+
+<div class="shell">
+<main id="main-content">
+<h1>Your <span>account</span>.</h1>
+<p class="lead">One email + password. Manage your Pro / Lifetime licenses, see your tier, and pay without re-typing email every time.</p>
+
+<div class="tabs" role="tablist">
+  <button type="button" id="tab-login" class="active" role="tab" aria-selected="true">Log in</button>
+  <button type="button" id="tab-signup" role="tab" aria-selected="false">Sign up</button>
+</div>
+
+<section class="card">
+  <label for="auth-email">Email</label>
+  <input type="email" id="auth-email" autocomplete="email" placeholder="you@degen.sol" spellcheck="false">
+
+  <label for="auth-password">Password</label>
+  <input type="password" id="auth-password" autocomplete="current-password" placeholder="********">
+  <div class="hint" id="auth-password-hint">8 characters minimum.</div>
+
+  <button class="submit" id="auth-submit" type="button">Log in</button>
+  <div class="error" id="auth-error" style="display:none"></div>
+  <div class="foot" id="auth-foot">
+    <span id="foot-text">Don't have an account?</span>
+    <a href="#" id="foot-link">Sign up</a>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>Antares <div class="foot-links"><a href="./pricing.html">Pricing</a> &middot; <a href="./account.html">Account</a> &middot; <a href="./privacy.html">Privacy</a></div></footer>
+
+<script>
+(function() {
+  var API = 'https://antares-extension.vercel.app';
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  var emailEl = document.getElementById('auth-email');
+  var passwordEl = document.getElementById('auth-password');
+  var hintEl = document.getElementById('auth-password-hint');
+  var submitBtn = document.getElementById('auth-submit');
+  var errorEl = document.getElementById('auth-error');
+  var tabLogin = document.getElementById('tab-login');
+  var tabSignup = document.getElementById('tab-signup');
+  var footText = document.getElementById('foot-text');
+  var footLink = document.getElementById('foot-link');
+
+  var mode = 'login';
+
+  // If already logged in, jump to /account
+  fetch(API + '/api/auth/me', { credentials: 'include' })
+    .then(function(r) { if (r.ok) window.location.href = './account.html'; })
+    .catch(function() { /* not logged in, stay here */ });
+
+  // Pre-fill email if cached from a previous flow
+  try {
+    var cached = localStorage.getItem('antares_buyer_email') || '';
+    if (cached) emailEl.value = cached;
+  } catch(_) {}
+
+  function setMode(next) {
+    mode = next;
+    var isLogin = next === 'login';
+    tabLogin.classList.toggle('active', isLogin);
+    tabLogin.setAttribute('aria-selected', String(isLogin));
+    tabSignup.classList.toggle('active', !isLogin);
+    tabSignup.setAttribute('aria-selected', String(!isLogin));
+    passwordEl.setAttribute('autocomplete', isLogin ? 'current-password' : 'new-password');
+    submitBtn.textContent = isLogin ? 'Log in' : 'Create account';
+    hintEl.textContent = isLogin ? 'Use the password from when you signed up.' : '8 characters minimum. No password recovery yet — pick one you\'ll remember.';
+    footText.textContent = isLogin ? 'Don\'t have an account?' : 'Already have one?';
+    footLink.textContent = isLogin ? 'Sign up' : 'Log in';
+    setError('');
+  }
+  setMode(window.location.hash === '#signup' ? 'signup' : 'login');
+
+  tabLogin.addEventListener('click', function() { setMode('login'); });
+  tabSignup.addEventListener('click', function() { setMode('signup'); });
+  footLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    setMode(mode === 'login' ? 'signup' : 'login');
+  });
+
+  function setError(msg) {
+    if (msg) {
+      errorEl.textContent = msg;
+      errorEl.style.display = 'block';
+    } else {
+      errorEl.textContent = '';
+      errorEl.style.display = 'none';
+    }
+  }
+
+  function submit() {
+    setError('');
+    emailEl.classList.remove('invalid');
+    passwordEl.classList.remove('invalid');
+    var email = (emailEl.value || '').trim().toLowerCase();
+    var password = passwordEl.value || '';
+    if (!EMAIL_RE.test(email)) {
+      emailEl.classList.add('invalid');
+      setError('Enter a valid email.');
+      return;
+    }
+    if (password.length < 8) {
+      passwordEl.classList.add('invalid');
+      setError('Password must be at least 8 characters.');
+      return;
+    }
+    submitBtn.disabled = true;
+    var origText = submitBtn.textContent;
+    submitBtn.innerHTML = '<span class="spinner"></span>' + (mode === 'login' ? 'Logging in…' : 'Creating account…');
+    var endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/signup';
+    fetch(API + endpoint, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: password })
+    })
+      .then(function(r) { return r.json().then(function(b) { return { status: r.status, body: b }; }); })
+      .then(function(r) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = origText;
+        if (r.status === 200 && r.body && r.body.ok) {
+          try { localStorage.setItem('antares_buyer_email', email); } catch(_) {}
+          // Honour ?return= so we can deep-link back into the pricing
+          // modal, /account, etc. after auth completes.
+          var params = new URLSearchParams(window.location.search);
+          var ret = params.get('return') || './account.html';
+          window.location.href = ret;
+          return;
+        }
+        var reason = r.body && r.body.reason;
+        if (reason === 'already_exists') {
+          setError('That email is already registered. Try logging in instead.');
+          return;
+        }
+        if (reason === 'invalid_credentials') {
+          setError('Email or password is incorrect.');
+          return;
+        }
+        if (reason === 'weak_password') {
+          setError('Password too weak (8 characters minimum).');
+          return;
+        }
+        if (reason === 'invalid_email') {
+          setError('Email format invalid.');
+          return;
+        }
+        if (r.status === 503) {
+          setError('Authentication is being configured. Please try again in a few minutes.');
+          return;
+        }
+        setError('Something went wrong. Please retry.');
+      })
+      .catch(function() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = origText;
+        setError('Network error. Check your connection and retry.');
+      });
+  }
+
+  submitBtn.addEventListener('click', submit);
+  [emailEl, passwordEl].forEach(function(el) {
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submit();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

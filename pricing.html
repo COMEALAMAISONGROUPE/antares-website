@@ -458,6 +458,10 @@ footer span{color:var(--c)}
       <label for="pay-email">Your email (for the license + receipt)</label>
       <input type="email" id="pay-email" name="email" autocomplete="email" placeholder="you@degen.sol" spellcheck="false">
       <div class="pay-email-hint" id="pay-email-hint">We email your license key here. Use it to unlock Pro on any install.</div>
+      <div class="pay-email-authnote" id="pay-email-authnote" style="display:none;font:400 10px/1.5 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.04em;margin-top:4px"></div>
+      <div class="pay-email-loginlink" id="pay-email-loginlink" style="font:400 10px/1.5 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em;margin-top:4px">
+        Already have an account? <a href="./auth.html?return=%2Fpricing.html" style="color:var(--c);text-decoration:none">Log in</a> to skip this step.
+      </div>
     </div>
     <div class="pay-toggle" role="tablist" aria-label="Choose payment token">
       <button type="button" id="pay-toggle-usdc" class="active" data-token="usdc" role="tab" aria-selected="true">USDC</button>
@@ -525,10 +529,27 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   var API_BASE = 'https://antares-extension.vercel.app';
   var INTENT_API = API_BASE + '/api/payment-intent';
   var STATUS_API = API_BASE + '/api/payment-status';
+  var ME_API = API_BASE + '/api/auth/me';
 
   var params = new URLSearchParams(window.location.search);
   var installId = (params.get('install') || '').trim();
   var hasInstall = installId && INSTALL_ID_RE.test(installId);
+
+  // Logged-in state — populated async on page load. When set, we
+  // suppress the email input in the modal and use the session email
+  // for /api/payment-intent (the server reads it from the cookie too,
+  // but populating client-side keeps the UX honest about what we're
+  // about to send).
+  var loggedInEmail = null;
+  fetch(ME_API, { credentials: 'include' })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(body) {
+      if (body && body.ok && body.email) {
+        loggedInEmail = body.email;
+        applyLoggedInUI();
+      }
+    })
+    .catch(function() { /* not authed, stay anonymous */ });
 
   // DOM refs
   var overlay = document.getElementById('pay-overlay');
@@ -548,6 +569,8 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   var toggleSol = document.getElementById('pay-toggle-sol');
   var emailInput = document.getElementById('pay-email');
   var emailHintEl = document.getElementById('pay-email-hint');
+  var emailAuthnoteEl = document.getElementById('pay-email-authnote');
+  var emailLoginLinkEl = document.getElementById('pay-email-loginlink');
   var licenseRow = document.getElementById('pay-license');
   var licenseKeyEl = document.getElementById('pay-license-key');
   var licenseCopyBtn = document.getElementById('pay-license-copy');
@@ -582,6 +605,21 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
     txEl.textContent = '';
     licenseRow.style.display = 'none';
     licenseKeyEl.textContent = '—';
+  }
+
+  // When a session cookie is detected, hide the email input + login
+  // link and show a "logged in as <email>" line instead. Server-side
+  // /api/payment-intent will use the cookie email regardless of body
+  // contents, but matching the UI keeps user trust intact.
+  function applyLoggedInUI() {
+    if (!loggedInEmail) return;
+    emailInput.value = loggedInEmail;
+    emailInput.style.display = 'none';
+    document.querySelector('label[for="pay-email"]').style.display = 'none';
+    emailHintEl.style.display = 'none';
+    emailLoginLinkEl.style.display = 'none';
+    emailAuthnoteEl.style.display = 'block';
+    emailAuthnoteEl.textContent = '✓ Logged in as ' + loggedInEmail + '. License will be linked to this account.';
   }
 
   closeBtn.addEventListener('click', closeModal);
@@ -742,6 +780,10 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
 
     fetch(INTENT_API, {
       method: 'POST',
+      // credentials: 'include' so the session cookie (if any) flows
+      // and the server can attach the license to the logged-in
+      // account regardless of what's in the body.
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     })
