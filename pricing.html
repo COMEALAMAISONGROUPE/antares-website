@@ -227,7 +227,7 @@ footer span{color:var(--c)}
       <li>Beta access to new features</li>
       <li>Priority support</li>
     </ul>
-    <a href="#waitlist" class="tier-cta primary">Join waitlist &rarr;</a>
+    <a href="#waitlist" class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly">Join waitlist &rarr;</a>
     <div class="tier-status"><span class="soon">&middot; Launching June 2026</span></div>
   </div>
 
@@ -247,7 +247,7 @@ footer span{color:var(--c)}
       <li>Direct line to the founder</li>
       <li>Name in Sentinel Hall of Fame</li>
     </ul>
-    <a href="#waitlist" class="tier-cta purple">Reserve a spot &rarr;</a>
+    <a href="#waitlist" class="tier-cta purple" id="cta-lifetime" data-tier="lifetime">Reserve a spot &rarr;</a>
     <div class="lifetime-counter"><b>1000</b> spots opening at launch</div>
   </div>
 
@@ -355,7 +355,7 @@ footer span{color:var(--c)}
 <footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 
 <script>
-// Waitlist form handler — graceful degradation
+// ── Waitlist form handler — graceful degradation ─────────────────────────────
 document.getElementById('waitlist-form').addEventListener('submit', function(e) {
   e.preventDefault();
   var email = this.email.value.trim();
@@ -372,6 +372,108 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   } catch(_) {}
   this.innerHTML = '<div style="color:#00e5b0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-align:center;padding:14px;width:100%">&check; You&rsquo;re on the list. We&rsquo;ll email you at launch.</div>';
 });
+
+// ── Live checkout — only when install_id rides in via the URL ────────────────
+//
+// The extension overlay's quota-badge "→ PRO" link appends ?install=<id>
+// to the pricing URL when the user clicks it. When that param is present
+// AND well-formed we swap the Pro/Lifetime "Join waitlist" CTAs for real
+// Lemonsqueezy checkout buttons that hit /api/checkout to mint a signed
+// URL with install_id baked into custom_data.
+//
+// If the extension isn't installed (no ?install= param) we leave the
+// waitlist flow untouched — visitors who discover the page organically
+// still get a path to engage.
+(function() {
+  var INSTALL_ID_RE = /^[a-zA-Z0-9_-]{8,128}$/;
+  var CHECKOUT_API = 'https://antares-extension.vercel.app/api/checkout';
+
+  var params = new URLSearchParams(window.location.search);
+  var installId = (params.get('install') || '').trim();
+  if (!installId || !INSTALL_ID_RE.test(installId)) return;
+
+  var BTNS = [
+    { id: 'cta-pro-monthly', tier: 'monthly', label: 'Subscribe Pro &rarr;' },
+    { id: 'cta-lifetime', tier: 'lifetime', label: 'Get Lifetime &rarr;' }
+  ];
+
+  function setBtn(btn, html) {
+    btn.innerHTML = html;
+  }
+
+  function wireCheckout(spec) {
+    var btn = document.getElementById(spec.id);
+    if (!btn) return;
+    var originalLabel = spec.label;
+    setBtn(btn, originalLabel);
+    btn.setAttribute('href', '#');
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (btn.dataset.busy === '1') return;
+      btn.dataset.busy = '1';
+      setBtn(btn, '...');
+
+      fetch(CHECKOUT_API + '?tier=' + spec.tier + '&install_id=' + encodeURIComponent(installId), {
+        method: 'GET'
+      }).then(function(res) {
+        return res.json().then(function(body) {
+          return { status: res.status, body: body };
+        });
+      }).then(function(r) {
+        if (r.status === 200 && r.body && r.body.url) {
+          window.location.href = r.body.url;
+          return;
+        }
+        if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
+          setBtn(btn, 'Coming soon');
+          btn.style.opacity = '0.6';
+          setTimeout(function() {
+            setBtn(btn, originalLabel);
+            btn.style.opacity = '';
+            btn.dataset.busy = '0';
+          }, 3000);
+          return;
+        }
+        setBtn(btn, '&times; Retry');
+        setTimeout(function() {
+          setBtn(btn, originalLabel);
+          btn.dataset.busy = '0';
+        }, 2500);
+      }).catch(function() {
+        setBtn(btn, '&times; Network');
+        setTimeout(function() {
+          setBtn(btn, originalLabel);
+          btn.dataset.busy = '0';
+        }, 2500);
+      });
+    });
+  }
+
+  BTNS.forEach(wireCheckout);
+
+  // Surface a small banner so the user knows their install was detected and
+  // the upgrade flow is live. Inserted right after the page hero.
+  var banner = document.createElement('div');
+  banner.setAttribute('role', 'status');
+  banner.style.cssText = [
+    'background:rgba(0,229,176,0.04)',
+    'border:1px solid rgba(0,229,176,0.2)',
+    'border-radius:2px',
+    'padding:10px 16px',
+    'margin:0 auto 32px',
+    'max-width:520px',
+    'text-align:center',
+    'font:600 10px/1 "IBM Plex Mono",monospace',
+    'color:#00e5b0',
+    'letter-spacing:0.22em',
+    'text-transform:uppercase'
+  ].join(';');
+  banner.textContent = '✓ Install detected · upgrade ready';
+  var hero = document.querySelector('.page-hero');
+  if (hero && hero.parentNode) {
+    hero.parentNode.insertBefore(banner, hero.nextSibling);
+  }
+})();
 </script>
 
 </body>
