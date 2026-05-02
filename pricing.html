@@ -61,6 +61,19 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .tier:hover{transform:translateY(-4px);border-color:#252529}
 .tier.featured{border:1px solid var(--c);box-shadow:0 0 0 1px var(--c),0 24px 48px rgba(0,229,176,.08)}
 .tier.featured::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--c);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
+/* Free tier deliberately dimmed — the verdict is genuinely free, but
+   the deep-dive layers (AI Summary, Critical Flags, Full Analysis) are
+   Pro features. The card stays visible so users know what they're
+   getting, but its visual weight is subordinate to Pro/Lifetime so the
+   eye lands on the upgrade options first. */
+.tier.free{background:#0c0c0e;border-color:#16161a;opacity:.86}
+.tier.free:hover{opacity:1;border-color:#1f1f23}
+.tier.free .tier-name{color:#5a5a62}
+.tier.free .tier-price{color:#8a8a92}
+.tier.free .tier-price .currency{color:#4a4a52}
+.tier.free .tier-tagline{color:#5a5a62;border-left-color:#1a1a1e}
+.tier.free .tier-features li{color:#666;border-bottom-color:#0e0e10}
+.tier.free .tier-features li::before{color:#3a7060}
 .tier.lifetime{border:1px solid #2a2a30}
 .tier.lifetime::before{content:'BEST VALUE';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--purple);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
 
@@ -229,25 +242,22 @@ footer span{color:var(--c)}
 
 <div class="tiers">
 
-  <!-- FREE -->
-  <div class="tier">
+  <!-- FREE — minimal, on purpose. The verdict is the hook; everything
+       that explains *why* (AI Summary, Critical Flags, Full Analysis
+       page) lives behind Pro. -->
+  <div class="tier free">
     <div class="tier-name">Free</div>
     <div class="tier-price"><span class="currency">$</span>0</div>
-    <div class="tier-period">Forever &middot; no card required</div>
-    <div class="tier-tagline">Everything Antares does today, capped at 25 scans per day. Enough for casual research, not for full trading sessions.</div>
+    <div class="tier-period">25 scans / day &middot; no card</div>
+    <div class="tier-tagline">The verdict and nothing else. Good enough to taste-test the engine — not enough to trade with.</div>
     <ul class="tier-features">
       <li><b>25 scans per day</b><small>resets at 00:00 UTC</small></li>
-      <li>Full 7-layer verdict (1000-pt scoring)</li>
-      <li>Critical Actors detection</li>
-      <li>Holder Activity (live, 60min window)</li>
-      <li>Verdict Timeline</li>
-      <li>AI Summary explanation</li>
+      <li>SAFE / CAUTION / DANGER / RUG verdict</li>
+      <li>1000-point composite score (under the hood)</li>
       <li>Honeypot, LP, Mint &amp; Freeze checks</li>
-      <li>Insider wallet clustering</li>
-      <li>Wash-trading &amp; chart-pattern detection</li>
       <li>Browser overlay on 7 trading platforms<small>DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN</small></li>
     </ul>
-    <a href="./install.html" class="tier-cta primary">Install free &rarr;</a>
+    <a href="./install.html" class="tier-cta secondary">Install free &rarr;</a>
     <div class="tier-status"><span class="live">&middot; Live now</span></div>
   </div>
 
@@ -259,13 +269,15 @@ footer span{color:var(--c)}
     <div class="tier-tagline">Built for traders who scan 25+ tokens a day. Unlimited scans + features power users actually need. Pay direct in USDC or SOL, zero middleman.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Free, plus:</b></li>
+      <li><b>AI Summary</b><small>plain-English explanation of the verdict, in-overlay</small></li>
+      <li><b>Critical Flags panel</b><small>every risk signal with descriptions, in-overlay</small></li>
+      <li><b>Full Analysis page</b><small>Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection</small></li>
       <li><b>Unlimited scans</b><small>fair-use 30 req/min anti-abuse</small></li>
       <li>Scan history (30 days, server-side)</li>
       <li>Detailed scoring breakdown<small>full layer-by-layer math</small></li>
       <li>Priority cache (fresher data, lower TTL)</li>
       <li>Export CSV / JSON</li>
       <li>No affiliate prompts (clean UI)</li>
-      <li>Beta access to new features</li>
       <li>Priority support</li>
     </ul>
     <button class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly" type="button">Get Pro now &rarr;</button>
@@ -362,8 +374,12 @@ footer span{color:var(--c)}
 
 <div class="section-label"><span>Pricing FAQ</span></div>
 
-<div class="qa"><h3>Will the Free tier ever be downgraded?</h3>
-<p>No. Whatever Free does today &mdash; full 7-layer verdict, AI Summary, Holder Activity, all of it &mdash; stays in Free forever. The only constraint we&rsquo;re adding is the <b>25 scans/day cap</b>, announced upfront, applied from CWS launch day. We&rsquo;re not in the business of shipping a generous free tier and clawing it back six months later.</p>
+<div class="qa"><h3>What does Free actually include?</h3>
+<p>The verdict, the score, and the 25 daily scans &mdash; nothing more. SAFE / CAUTION / DANGER / RUG label, 1000-point score under the hood, and the basic checks you see in the overlay (Sell, Mint, Freeze, LP, Liquidity). The deep-dive layers &mdash; AI Summary, Critical Flags panel, Full Analysis page (Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection) &mdash; are Pro features. Free is the taste-test. Pro is the trading tool.</p>
+</div>
+
+<div class="qa"><h3>Why is Free so minimal?</h3>
+<p>Because we&rsquo;re not running a charity. Free covers the cost of letting people sample the engine on a few tokens before they trust it with a payment. If you&rsquo;re trading new launches every day, the verdict alone isn&rsquo;t enough &mdash; you&rsquo;ll want to see <i>why</i> a token got flagged, the AI summary that translates the math, and the full holder/insider analysis. Those features cost real compute and external API quota to deliver, so they&rsquo;re paid. $24.99 / 30 days for unlimited everything is genuinely cheap if your tooling is part of your P&amp;L.</p>
 </div>
 
 <div class="qa"><h3>Why 25 scans per day specifically?</h3>
