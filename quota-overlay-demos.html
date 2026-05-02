@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Antares — Quota-exhausted overlay design demos">
+<meta name="robots" content="noindex,nofollow">
+<title>Quota Overlay — Design Demos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--red:#ff5f5f;--yellow:#f5d000;--purple:#a78bfa}
+body{background:var(--bg);color:#c8c8cc;font-family:'IBM Plex Mono',monospace;min-height:100vh;padding:40px 20px 80px}
+.shell{max-width:1500px;margin:0 auto}
+header{text-align:center;margin-bottom:50px}
+h1{font:400 56px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:10px}
+h1 span{color:var(--c)}
+.lead{font-size:13px;color:#7a7a82;line-height:1.7;max-width:760px;margin:0 auto}
+.lead b{color:#bbb;font-weight:600}
+.lead a{color:var(--c);text-decoration:none}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,340px));gap:36px 30px;justify-content:center;margin-top:20px}
+.demo-cell{display:flex;flex-direction:column;align-items:center;gap:14px}
+.demo-label{font:600 11px/1 'IBM Plex Mono',monospace;color:#9a9aa2;letter-spacing:.18em;text-transform:uppercase;text-align:center}
+.demo-label b{color:var(--c)}
+.demo-meta{font-size:10px;color:#5a5a62;text-align:center;line-height:1.55;letter-spacing:.04em;max-width:290px}
+
+/* All demo cards share the .box wrapper geometry — 290px wide, dark */
+.box{
+  width:290px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.02) inset;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.4;
+  background:linear-gradient(180deg,#0e0d0a 0%,#0a0a09 100%);
+}
+.box::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:180px;height:100px;border-radius:50%;filter:blur(60px);opacity:.08;z-index:0;pointer-events:none;background:#f5d000}
+.box.danger-tint{background:linear-gradient(180deg,#0e0a0a 0%,#0a0909 100%)}
+.box.danger-tint::before{background:#ff5f5f}
+.box.dark{background:linear-gradient(180deg,#0a0a0c 0%,#070708 100%)}
+.box.dark::before{opacity:.04}
+.topbar{height:2px;background:linear-gradient(90deg,transparent,#f5d000,transparent)}
+.topbar.red{background:linear-gradient(90deg,transparent,#ff5f5f,transparent)}
+.hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 0}
+.hd-right{display:flex;align-items:center;gap:10px}
+.brand{font-size:7px;color:#555;letter-spacing:.55em;text-transform:uppercase}
+.drag-icon, .x{color:#3a3a42;width:13px;height:13px;display:flex;align-items:center;justify-content:center}
+.sep{height:1px;margin:0 14px;background:#1a1a1e}
+
+/* ── DEMO 1: Minimal ─────────────────────────────────────────────────────── */
+.d1-vb{padding:14px 14px 6px;text-align:center}
+.d1-vb h1{font:400 42px/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#f5d000;text-shadow:0 0 24px rgba(245,208,0,.18)}
+.d1-line{padding:2px 14px 14px;text-align:center;font:600 9px/1.5 'IBM Plex Mono',monospace;color:#666;letter-spacing:.16em;text-transform:uppercase}
+.d1-cta{display:block;margin:0 14px 14px;padding:13px;background:var(--c);color:var(--bg) !important;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:2px;transition:.15s;white-space:nowrap}
+.d1-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,229,176,.28)}
+
+/* ── DEMO 2: Bold Red Urgency ────────────────────────────────────────────── */
+.d2-vb{padding:14px 14px 6px}
+.d2-vb h1{font:400 38px/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#ff5f5f;text-shadow:0 0 30px rgba(255,95,95,.25)}
+.d2-vb .sub{font:600 9px/1.4 'IBM Plex Mono',monospace;color:#888;letter-spacing:.16em;text-transform:uppercase;margin-top:4px}
+.d2-meta{padding:8px 14px;display:flex;justify-content:space-between;align-items:center;font:600 10px/1 'IBM Plex Mono',monospace}
+.d2-meta .num{font:700 18px 'Bebas Neue',sans-serif;color:#fff;letter-spacing:.04em}
+.d2-meta .num span{font-size:11px;color:#666}
+.d2-meta .reset{color:#888;letter-spacing:.04em;text-align:right}
+.d2-meta .reset b{color:#ccc;display:block;font:700 14px 'Bebas Neue',sans-serif;letter-spacing:.04em}
+.d2-cta{display:block;margin:8px 14px 14px;padding:14px;background:linear-gradient(90deg,#00e5b0,#00c89a);color:#0a0a0c !important;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:2px;transition:.15s;white-space:nowrap;box-shadow:0 4px 14px rgba(0,229,176,.18)}
+.d2-cta:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,229,176,.4)}
+
+/* ── DEMO 3: Premium / Calm ──────────────────────────────────────────────── */
+.d3-vb{padding:18px 14px 8px;text-align:center}
+.d3-vb h1{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:4px}
+.d3-vb .sub{font:400 10px/1.5 'IBM Plex Mono',monospace;color:#666;letter-spacing:.04em}
+.d3-counter{padding:6px 14px;text-align:center;font:600 10px/1.5 'IBM Plex Mono',monospace;color:#7a7a82;letter-spacing:.04em}
+.d3-counter b{color:#aaa;font-weight:700}
+.d3-cta{display:block;margin:10px 14px 8px;padding:12px;background:transparent;color:var(--c) !important;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;text-align:center;border:1px solid rgba(0,229,176,.6);border-radius:2px;transition:.2s;white-space:nowrap}
+.d3-cta:hover{background:rgba(0,229,176,.08);border-color:var(--c);transform:translateY(-1px)}
+.d3-price{padding:0 14px 14px;text-align:center;font:400 9px/1.5 'IBM Plex Mono',monospace;color:#5a5a62}
+.d3-price b{color:var(--c);font-weight:700}
+
+/* ── DEMO 4: Progress Bar ────────────────────────────────────────────────── */
+.d4-vb{padding:14px 14px 4px;text-align:center}
+.d4-vb h1{font:400 22px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea}
+.d4-progress-wrap{padding:14px 14px 6px}
+.d4-progress-meta{display:flex;justify-content:space-between;font:600 9px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.d4-progress-meta .left{color:#f5d000}
+.d4-progress-bar{height:8px;background:#1a1a1e;border-radius:1px;overflow:hidden;position:relative}
+.d4-progress-fill{height:100%;width:100%;background:linear-gradient(90deg,#00e5b0,#f5d000 60%,#ff5f5f);position:relative}
+.d4-progress-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,transparent 50%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.2) 60%,transparent 60%);animation:d4-shimmer 1.6s infinite linear;background-size:14px 100%}
+@keyframes d4-shimmer{0%{background-position:-14px 0}100%{background-position:14px 0}}
+.d4-reset{padding:6px 14px 0;text-align:center;font:400 10px/1.4 'IBM Plex Mono',monospace;color:#666;letter-spacing:.04em}
+.d4-reset b{color:#aaa}
+.d4-cta{display:block;margin:14px 14px;padding:12px;background:var(--c);color:var(--bg) !important;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:2px;transition:.15s;white-space:nowrap}
+.d4-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,229,176,.28)}
+
+/* ── DEMO 5: Lock + Glow ─────────────────────────────────────────────────── */
+.d5-icon{padding:18px 14px 4px;text-align:center;font-size:32px;color:var(--yellow);text-shadow:0 0 20px rgba(245,208,0,.4)}
+.d5-vb{padding:0 14px 4px;text-align:center}
+.d5-vb h1{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea}
+.d5-line{padding:6px 14px 12px;text-align:center;font:400 10px/1.5 'IBM Plex Mono',monospace;color:#7a7a82;letter-spacing:.02em}
+.d5-line b{color:var(--c);font-weight:700}
+.d5-cta-wrap{padding:0 14px 14px;position:relative}
+.d5-cta-wrap::before{content:'';position:absolute;inset:-2px 14px;background:radial-gradient(ellipse at center,rgba(0,229,176,.25),transparent 60%);filter:blur(12px);pointer-events:none}
+.d5-cta{display:block;padding:13px;background:var(--c);color:var(--bg) !important;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:2px;transition:.15s;position:relative;white-space:nowrap}
+.d5-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,229,176,.45)}
+.d5-foot{padding:0 14px 14px;text-align:center;font:400 9px/1.5 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em}
+
+/* Pick action footer */
+.pick{margin-top:60px;padding:20px;background:#0e0e10;border:1px solid var(--border);border-radius:4px;text-align:center}
+.pick h2{font:400 20px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:8px}
+.pick p{font-size:12px;color:#888;line-height:1.7}
+.pick code{padding:2px 6px;background:#1a1a1e;border-radius:2px;color:var(--c);font-family:inherit}
+</style>
+</head>
+<body>
+
+<div class="shell">
+<header>
+  <h1>Quota overlay — <span>5 designs</span></h1>
+  <p class="lead">
+    Same data on each card (<b>used 25/25 today, resets in 24m</b>). Click any
+    <b>Get Pro</b> CTA to verify the link works to <a href="./pricing.html">/pricing</a>
+    in a new tab. When you've picked one, tell me <b>“ship demo N”</b> and I'll
+    drop it into the extension overlay.
+  </p>
+</header>
+
+<div class="grid">
+
+  <!-- DEMO 1 — MINIMAL -->
+  <div class="demo-cell">
+    <div class="box">
+      <div class="topbar"></div>
+      <div class="hd">
+        <span class="brand">ANTARES</span>
+        <div class="hd-right">
+          <span class="drag-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1L5.5 3h3L7 1Z" fill="currentColor"/><line x1="7" y1="2.5" x2="7" y2="6.5" stroke="currentColor" stroke-width=".9"/><path d="M7 13L5.5 11h3L7 13Z" fill="currentColor"/><line x1="7" y1="11.5" x2="7" y2="7.5" stroke="currentColor" stroke-width=".9"/><path d="M1 7L3 5.5V8.5L1 7Z" fill="currentColor"/><line x1="2.5" y1="7" x2="6.5" y2="7" stroke="currentColor" stroke-width=".9"/><path d="M13 7L11 5.5V8.5L13 7Z" fill="currentColor"/><line x1="11.5" y1="7" x2="7.5" y2="7" stroke="currentColor" stroke-width=".9"/></svg></span>
+          <span class="x"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><line x1="2" y1="2" x2="11" y2="11" stroke="currentColor" stroke-width="1.2"/><line x1="11" y1="2" x2="2" y2="11" stroke="currentColor" stroke-width="1.2"/></svg></span>
+        </div>
+      </div>
+      <div class="d1-vb"><h1>OUT OF SCANS</h1></div>
+      <div class="d1-line">resets in 24m</div>
+      <a class="d1-cta" href="./pricing.html" target="_blank" rel="noopener">⚡ Get Pro</a>
+    </div>
+    <div class="demo-label">Demo <b>1</b> — Minimal</div>
+    <div class="demo-meta">Shortest possible. Headline + reset + button. ~155px tall.</div>
+  </div>
+
+  <!-- DEMO 2 — BOLD RED -->
+  <div class="demo-cell">
+    <div class="box danger-tint">
+      <div class="topbar red"></div>
+      <div class="hd">
+        <span class="brand">ANTARES</span>
+        <div class="hd-right">
+          <span class="drag-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1L5.5 3h3L7 1Z" fill="currentColor"/><line x1="7" y1="2.5" x2="7" y2="6.5" stroke="currentColor" stroke-width=".9"/><path d="M7 13L5.5 11h3L7 13Z" fill="currentColor"/><line x1="7" y1="11.5" x2="7" y2="7.5" stroke="currentColor" stroke-width=".9"/><path d="M1 7L3 5.5V8.5L1 7Z" fill="currentColor"/><line x1="2.5" y1="7" x2="6.5" y2="7" stroke="currentColor" stroke-width=".9"/><path d="M13 7L11 5.5V8.5L13 7Z" fill="currentColor"/><line x1="11.5" y1="7" x2="7.5" y2="7" stroke="currentColor" stroke-width=".9"/></svg></span>
+          <span class="x"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><line x1="2" y1="2" x2="11" y2="11" stroke="currentColor" stroke-width="1.2"/><line x1="11" y1="2" x2="2" y2="11" stroke="currentColor" stroke-width="1.2"/></svg></span>
+        </div>
+      </div>
+      <div class="d2-vb">
+        <h1>BLOCKED</h1>
+        <div class="sub">daily limit hit · upgrade to keep scanning</div>
+      </div>
+      <div class="sep"></div>
+      <div class="d2-meta">
+        <div class="num">25<span>/25 used</span></div>
+        <div class="reset">resets <b>24m</b></div>
+      </div>
+      <a class="d2-cta" href="./pricing.html" target="_blank" rel="noopener">Upgrade to Pro</a>
+    </div>
+    <div class="demo-label">Demo <b>2</b> — Bold red urgency</div>
+    <div class="demo-meta">Loud, risk-aware copy. Red headline, gradient CTA. ~215px tall.</div>
+  </div>
+
+  <!-- DEMO 3 — PREMIUM / CALM -->
+  <div class="demo-cell">
+    <div class="box dark">
+      <div class="topbar"></div>
+      <div class="hd">
+        <span class="brand">ANTARES</span>
+        <div class="hd-right">
+          <span class="drag-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1L5.5 3h3L7 1Z" fill="currentColor"/><line x1="7" y1="2.5" x2="7" y2="6.5" stroke="currentColor" stroke-width=".9"/><path d="M7 13L5.5 11h3L7 13Z" fill="currentColor"/><line x1="7" y1="11.5" x2="7" y2="7.5" stroke="currentColor" stroke-width=".9"/><path d="M1 7L3 5.5V8.5L1 7Z" fill="currentColor"/><line x1="2.5" y1="7" x2="6.5" y2="7" stroke="currentColor" stroke-width=".9"/><path d="M13 7L11 5.5V8.5L13 7Z" fill="currentColor"/><line x1="11.5" y1="7" x2="7.5" y2="7" stroke="currentColor" stroke-width=".9"/></svg></span>
+          <span class="x"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><line x1="2" y1="2" x2="11" y2="11" stroke="currentColor" stroke-width="1.2"/><line x1="11" y1="2" x2="2" y2="11" stroke="currentColor" stroke-width="1.2"/></svg></span>
+        </div>
+      </div>
+      <div class="d3-vb">
+        <h1>Daily limit reached</h1>
+        <div class="sub">resets in 24m</div>
+      </div>
+      <div class="d3-counter">You've used today's <b>25 / 25</b> scans</div>
+      <a class="d3-cta" href="./pricing.html" target="_blank" rel="noopener">Unlock unlimited</a>
+      <div class="d3-price"><b>$24.99</b> for 30 days · USDC or SOL</div>
+    </div>
+    <div class="demo-label">Demo <b>3</b> — Premium / calm</div>
+    <div class="demo-meta">No all-caps drama. Soft outline CTA, price visible. ~210px tall.</div>
+  </div>
+
+  <!-- DEMO 4 — PROGRESS BAR -->
+  <div class="demo-cell">
+    <div class="box">
+      <div class="topbar"></div>
+      <div class="hd">
+        <span class="brand">ANTARES</span>
+        <div class="hd-right">
+          <span class="drag-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1L5.5 3h3L7 1Z" fill="currentColor"/><line x1="7" y1="2.5" x2="7" y2="6.5" stroke="currentColor" stroke-width=".9"/><path d="M7 13L5.5 11h3L7 13Z" fill="currentColor"/><line x1="7" y1="11.5" x2="7" y2="7.5" stroke="currentColor" stroke-width=".9"/><path d="M1 7L3 5.5V8.5L1 7Z" fill="currentColor"/><line x1="2.5" y1="7" x2="6.5" y2="7" stroke="currentColor" stroke-width=".9"/><path d="M13 7L11 5.5V8.5L13 7Z" fill="currentColor"/><line x1="11.5" y1="7" x2="7.5" y2="7" stroke="currentColor" stroke-width=".9"/></svg></span>
+          <span class="x"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><line x1="2" y1="2" x2="11" y2="11" stroke="currentColor" stroke-width="1.2"/><line x1="11" y1="2" x2="2" y2="11" stroke="currentColor" stroke-width="1.2"/></svg></span>
+        </div>
+      </div>
+      <div class="d4-vb"><h1>Daily quota</h1></div>
+      <div class="d4-progress-wrap">
+        <div class="d4-progress-meta"><span class="left">25 / 25 scans</span><span>FULL</span></div>
+        <div class="d4-progress-bar"><div class="d4-progress-fill"></div></div>
+      </div>
+      <div class="d4-reset">resets in <b>24m</b> at 00:00 UTC</div>
+      <a class="d4-cta" href="./pricing.html" target="_blank" rel="noopener">Get Pro · unlimited</a>
+    </div>
+    <div class="demo-label">Demo <b>4</b> — Progress bar</div>
+    <div class="demo-meta">Visual fill (green→yellow→red) tells the story. ~230px tall.</div>
+  </div>
+
+  <!-- DEMO 5 — LOCK + GLOW -->
+  <div class="demo-cell">
+    <div class="box">
+      <div class="topbar"></div>
+      <div class="hd">
+        <span class="brand">ANTARES</span>
+        <div class="hd-right">
+          <span class="drag-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1L5.5 3h3L7 1Z" fill="currentColor"/><line x1="7" y1="2.5" x2="7" y2="6.5" stroke="currentColor" stroke-width=".9"/><path d="M7 13L5.5 11h3L7 13Z" fill="currentColor"/><line x1="7" y1="11.5" x2="7" y2="7.5" stroke="currentColor" stroke-width=".9"/><path d="M1 7L3 5.5V8.5L1 7Z" fill="currentColor"/><line x1="2.5" y1="7" x2="6.5" y2="7" stroke="currentColor" stroke-width=".9"/><path d="M13 7L11 5.5V8.5L13 7Z" fill="currentColor"/><line x1="11.5" y1="7" x2="7.5" y2="7" stroke="currentColor" stroke-width=".9"/></svg></span>
+          <span class="x"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><line x1="2" y1="2" x2="11" y2="11" stroke="currentColor" stroke-width="1.2"/><line x1="11" y1="2" x2="2" y2="11" stroke="currentColor" stroke-width="1.2"/></svg></span>
+        </div>
+      </div>
+      <div class="d5-icon">🔒</div>
+      <div class="d5-vb"><h1>Locked for today</h1></div>
+      <div class="d5-line">25 free scans used · <b>unlock now</b></div>
+      <div class="d5-cta-wrap">
+        <a class="d5-cta" href="./pricing.html" target="_blank" rel="noopener">⚡ Go Pro</a>
+      </div>
+      <div class="d5-foot">resets in 24m if you wait</div>
+    </div>
+    <div class="demo-label">Demo <b>5</b> — Lock + glow CTA</div>
+    <div class="demo-meta">Single icon focal, glowing button, "wait or unlock" framing. ~225px tall.</div>
+  </div>
+
+</div>
+
+<div class="pick">
+  <h2>Pick one</h2>
+  <p>
+    Tell me <code>ship demo 1</code> (or 2 / 3 / 4 / 5) and I'll port it into the
+    extension's <code>buildQuotaExhaustedNode</code>. <br>
+    Or say <code>mix N + M</code> if you want elements from two of them.
+  </p>
+</div>
+
+</div>
+</body>
+</html>
