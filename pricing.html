@@ -97,16 +97,20 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .tier-features li.bonus{color:#bbb}
 .tier-features li b{color:#bbb;font-weight:600}
 .tier-features li small{display:block;color:#4a4a52;font-size:10px;margin-top:2px;font-style:italic}
-/* Negative line — what the tier doesn't include. Red ✗, dim text.
-   Used in the Free card to surface every Pro/Lifetime feature the
-   buyer is missing out on. The point is conversion: invisible
-   denials don't sell upgrades. */
-.tier-features li.no{color:#4a4a52}
-.tier-features li.no::before{content:'✗';color:#553a3a;font-size:12px}
-.tier-features li.no b{color:#666}
-.tier-features li.no small{color:#3a3a3f}
-.tier-features li.no-divider{border:none;padding-top:14px;padding-bottom:0;margin-top:6px;border-top:1px solid #1a1a1e;color:#666;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
-.tier-features li.no-divider::before{content:none}
+/* Negative line — what Free doesn't include. Same row geometry as the
+   positive items so the list reads as one continuous block. Muted ✗
+   colour and italicised tail-text so the eye registers "missing" at a
+   glance without it screaming. */
+.tier-features li.no{color:#4a4a52;border-bottom-color:#101013}
+.tier-features li.no::before{content:'✗';color:#3a3a40;font-weight:600}
+.tier-features li.no b{color:#6a6a72}
+.tier-features li.no em{color:#3a3a40;font-style:italic;font-weight:400}
+/* Subtle caption that splits "things you get" from "things you don't"
+   without a heavy uppercase header. Just a thin top-border + 1-line
+   muted label, occupies the same row height as a feature item. */
+.tier-features li.split{border:none;padding:14px 0 4px 0;color:#4a4a52;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.tier-features li.split::before{content:none}
+.tier-features li.split + li{border-top:1px solid #1a1a1e;padding-top:9px}
 
 .tier-cta{display:block;text-align:center;padding:14px 24px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s,background .2s,color .2s;cursor:pointer;border:none;width:100%;font-family:'IBM Plex Mono',monospace}
 .tier-cta.primary{background:var(--c);color:var(--bg)}
@@ -283,17 +287,12 @@ footer span{color:var(--c)}
       <li>1000-point composite score (under the hood)</li>
       <li>Honeypot, LP, Mint &amp; Freeze checks</li>
       <li>Browser overlay on 7 trading platforms<small>DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN</small></li>
-      <li class="no-divider">Locked behind Pro</li>
-      <li class="no"><b>AI Summary</b><small>plain-English explanation of every verdict</small></li>
-      <li class="no"><b>Critical Flags panel</b><small>each risk signal with a description of the actual risk</small></li>
-      <li class="no"><b>Full Analysis page</b><small>Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection</small></li>
-      <li class="no"><b>Unlimited scans</b><small>Free is hard-capped at 25/day</small></li>
-      <li class="no">Scan history (30 days, server-side)</li>
-      <li class="no">Detailed scoring breakdown<small>full layer-by-layer math</small></li>
-      <li class="no">Priority cache (fresher data, lower TTL)</li>
-      <li class="no">Export CSV / JSON</li>
-      <li class="no">No affiliate prompts (clean UI)</li>
-      <li class="no">Priority support</li>
+      <li class="split">Not included</li>
+      <li class="no"><b>AI Summary</b> <em>— verdict explained in plain English</em></li>
+      <li class="no"><b>Critical Flags</b> <em>— every risk signal, described</em></li>
+      <li class="no"><b>Full Analysis page</b> <em>— Holders, Timeline, Insiders, wash-trading</em></li>
+      <li class="no"><b>Unlimited scans</b> <em>— Free caps at 25/day</em></li>
+      <li class="no">Scan history, exports, priority cache, priority support</li>
     </ul>
     <a href="./install.html" class="tier-cta secondary">Install free &rarr;</a>
     <div class="tier-status"><span class="live">&middot; Live now</span></div>
