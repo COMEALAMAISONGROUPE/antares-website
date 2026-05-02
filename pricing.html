@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Antares pricing. Free forever for casual scanning. Pro $14.99/mo for power users. Lifetime $99 for the first 1000 supporters. Honest tiers, no bait-and-switch.">
+<meta name="description" content="Antares pricing. Free forever for casual scanning. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC, zero middleman.">
 <meta name="author" content="Antares">
 <link rel="canonical" href="https://antares-website.vercel.app/pricing">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antares-website.vercel.app/pricing">
 <meta property="og:title" content="Pricing — Antares">
-<meta property="og:description" content="Free forever for casual scanning. Pro $14.99/mo for power users. Lifetime $99 for the first 1000 supporters.">
+<meta property="og:description" content="Free forever for casual scanning. Pro $24.99 for 30 days unlimited. Lifetime $149.99 for the first 1000 supporters. Direct USDC payment.">
 <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@antaresantiscam">
 <meta name="twitter:title" content="Pricing — Antares">
-<meta name="twitter:description" content="Free forever for casual scanning. Pro $14.99/mo. Lifetime $99 (first 1000).">
+<meta name="twitter:description" content="Free forever. Pro $24.99 / 30 days. Lifetime $149.99 (first 1000). Pay in USDC, zero middleman.">
 <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -164,8 +164,44 @@ footer span{color:var(--c)}
   .waitlist-form{flex-direction:column}
   .waitlist-form input,.waitlist-form button{width:100%}
 }
+
+/* ── Solana Pay checkout modal ───────────────────────────────────────────── */
+.pay-overlay{position:fixed;inset:0;background:rgba(5,5,7,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;animation:pay-fade-in .2s ease}
+.pay-overlay.open{display:flex}
+@keyframes pay-fade-in{from{opacity:0}to{opacity:1}}
+.pay-modal{background:var(--card);border:1px solid var(--border);border-radius:4px;max-width:440px;width:100%;padding:32px;position:relative;box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(0,229,176,.08) inset}
+.pay-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#555;font-size:18px;cursor:pointer;line-height:1;padding:4px 8px;transition:color .2s}
+.pay-close:hover{color:#ccc}
+.pay-title{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:8px;text-align:center}
+.pay-subtitle{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;text-align:center;margin-bottom:20px}
+.pay-qr{background:#ffffff;border-radius:4px;padding:16px;margin:0 auto 20px;width:200px;height:200px;display:flex;align-items:center;justify-content:center}
+.pay-qr svg{width:168px;height:168px;display:block}
+.pay-amount{font:400 36px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-align:center;margin-bottom:4px}
+.pay-token{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:18px}
+.pay-recipient{background:#0a0a0c;border:1px solid var(--border);border-radius:2px;padding:10px 12px;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aaa;display:flex;align-items:center;gap:8px;word-break:break-all}
+.pay-recipient .pay-addr{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pay-recipient button{background:none;border:1px solid #2a2a30;color:#888;padding:4px 8px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'IBM Plex Mono',monospace;transition:all .2s;flex-shrink:0}
+.pay-recipient button:hover{color:var(--c);border-color:var(--c)}
+.pay-deeplink{display:block;width:100%;padding:14px;background:var(--c);color:var(--bg);text-align:center;text-decoration:none;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;margin-bottom:14px;transition:transform .2s,box-shadow .2s}
+.pay-deeplink:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+.pay-status{padding:12px;border-radius:2px;text-align:center;font:600 10px/1.4 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--border);background:#0a0a0c}
+.pay-status.waiting{color:#888;border-color:#2a2a30}
+.pay-status.confirmed{color:var(--c);border-color:rgba(0,229,176,.4);background:rgba(0,229,176,.05)}
+.pay-status.expired{color:#ff7777;border-color:rgba(255,95,95,.4);background:rgba(255,95,95,.06)}
+.pay-status .pay-spinner{display:inline-block;width:8px;height:8px;border-radius:50%;background:#888;margin-right:8px;animation:pay-pulse 1.2s ease-in-out infinite}
+@keyframes pay-pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.pay-status.confirmed .pay-spinner{background:var(--c);animation:none}
+.pay-tx{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#666;text-align:center;margin-top:10px;word-break:break-all;letter-spacing:.04em}
+.pay-tx a{color:var(--c);text-decoration:none}
+.pay-tx a:hover{text-decoration:underline}
+
+@media(max-width:520px){
+  .pay-modal{padding:24px 20px}
+  .pay-qr{width:180px;height:180px}
+  .pay-qr svg{width:148px;height:148px}
+}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Free forever for casual scanning. Pro $14.99/mo for power users. Lifetime $99 for the first 1000 supporters.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Free forever for casual scanning. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Direct USDC payment, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
 </head>
 <body>
 <div class="stripe" role="presentation" aria-hidden="true"></div>
@@ -209,12 +245,12 @@ footer span{color:var(--c)}
     <div class="tier-status"><span class="live">&middot; Live now</span></div>
   </div>
 
-  <!-- PRO MONTHLY (FEATURED) -->
+  <!-- PRO 30-DAY PASS (FEATURED) -->
   <div class="tier featured">
-    <div class="tier-name">Pro Monthly</div>
-    <div class="tier-price"><span class="currency">$</span>14.99</div>
-    <div class="tier-period">per month &middot; cancel anytime</div>
-    <div class="tier-tagline">Built for traders who scan 100+ tokens a day. Unlimited scans + features power users actually need.</div>
+    <div class="tier-name">Pro · 30-day pass</div>
+    <div class="tier-price"><span class="currency">$</span>24.99</div>
+    <div class="tier-period">USDC on Solana &middot; one-time, no auto-renew</div>
+    <div class="tier-tagline">Built for traders who scan 100+ tokens a day. Unlimited scans + features power users actually need. Pay direct in USDC, zero middleman.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Free, plus:</b></li>
       <li><b>Unlimited scans</b><small>fair-use 30 req/min anti-abuse</small></li>
@@ -227,15 +263,15 @@ footer span{color:var(--c)}
       <li>Beta access to new features</li>
       <li>Priority support</li>
     </ul>
-    <a href="#waitlist" class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly">Join waitlist &rarr;</a>
-    <div class="tier-status"><span class="soon">&middot; Launching June 2026</span></div>
+    <button class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly" type="button">Pay with USDC &rarr;</button>
+    <div class="tier-status"><span class="live">&middot; Pay direct on Solana</span></div>
   </div>
 
   <!-- LIFETIME -->
   <div class="tier lifetime">
     <div class="tier-name">Lifetime</div>
-    <div class="tier-price"><span class="strike">$199</span><span class="currency">$</span>99</div>
-    <div class="tier-period">one-time payment &middot; forever</div>
+    <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
+    <div class="tier-period">one-time USDC payment &middot; forever</div>
     <div class="tier-tagline">Pay once. Get every Pro feature, including everything we ship in v2, v3, v4. Reserved for the first 1000 supporters.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Pro Monthly, forever</b></li>
@@ -247,7 +283,7 @@ footer span{color:var(--c)}
       <li>Direct line to the founder</li>
       <li>Name in Sentinel Hall of Fame</li>
     </ul>
-    <a href="#waitlist" class="tier-cta purple" id="cta-lifetime" data-tier="lifetime">Reserve a spot &rarr;</a>
+    <button class="tier-cta purple" id="cta-lifetime" data-tier="lifetime" type="button">Pay with USDC &rarr;</button>
     <div class="lifetime-counter"><b>1000</b> spots opening at launch</div>
   </div>
 
@@ -255,7 +291,7 @@ footer span{color:var(--c)}
 
 <div class="section-label"><span>What ships when</span></div>
 
-<p class="roadmap-intro">Pro v1 launches with the features listed above &mdash; nothing we haven&rsquo;t already built. Everything below is the public roadmap. Lifetime supporters get all of it included; Monthly subscribers get it as it ships.</p>
+<p class="roadmap-intro">Pro v1 launches with the features listed above &mdash; nothing we haven&rsquo;t already built. Everything below is the public roadmap. Lifetime supporters get all of it included; 30-day pass holders get whatever&rsquo;s shipped during their active window.</p>
 
 <div class="roadmap">
 
@@ -334,11 +370,11 @@ footer span{color:var(--c)}
 </div>
 
 <div class="qa"><h3>What does Lifetime actually mean?</h3>
-<p>Pay $99 once, get every Pro feature for as long as Antares exists, including everything in Pro v2, v3, v4 (alerts, charts, push, smart-money, portfolio tracker). Lifetime is capped at 1000 supporters &mdash; once full, monthly is the only option. Lifetime members also get a private Discord channel, founder badge, and roadmap vote.</p>
+<p>Pay $149.99 USDC once, get every Pro feature for as long as Antares exists, including everything in Pro v2, v3, v4 (alerts, charts, push, smart-money, portfolio tracker). Lifetime is capped at 1000 supporters &mdash; once full, the 30-day pass is the only option. Lifetime members also get a private Discord channel, founder badge, and roadmap vote.</p>
 </div>
 
 <div class="qa"><h3>Can I get a refund?</h3>
-<p>Pro Monthly: yes, within 7 days, no questions asked. Lifetime: yes, within 30 days. After that, Lifetime is non-refundable because the spot is removed from the 1000-cap inventory. We use Lemonsqueezy as merchant of record &mdash; refunds processed by them, EU VAT handled automatically.</p>
+<p>30-day Pro pass: yes, within 7 days if you haven&rsquo;t actively used the Pro features. Lifetime: yes, within 30 days. After that, Lifetime is non-refundable because the spot is removed from the 1000-cap inventory. Refunds are processed manually by sending USDC back to the wallet that paid &mdash; we use the on-chain transaction signature as the link, never an email or stored PII. Email <a href="mailto:lennypierrepro@gmail.com">lennypierrepro@gmail.com</a> with the tx signature to request a refund.</p>
 </div>
 
 <div class="qa"><h3>Will there be student / underdog pricing?</h3>
@@ -354,6 +390,30 @@ footer span{color:var(--c)}
 </main></div>
 <footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 
+<!-- ── Solana Pay checkout modal ────────────────────────────────────────── -->
+<div class="pay-overlay" id="pay-overlay" role="dialog" aria-labelledby="pay-title" aria-modal="true">
+  <div class="pay-modal">
+    <button class="pay-close" id="pay-close" aria-label="Close">&times;</button>
+    <h3 class="pay-title" id="pay-title">Pay with USDC</h3>
+    <div class="pay-subtitle" id="pay-subtitle">Direct on Solana &middot; zero middleman</div>
+    <div class="pay-amount" id="pay-amount">—</div>
+    <div class="pay-token">USDC on Solana</div>
+    <div class="pay-qr" id="pay-qr"></div>
+    <div class="pay-recipient">
+      <span class="pay-addr" id="pay-recipient">—</span>
+      <button id="pay-copy" type="button">Copy</button>
+    </div>
+    <a class="pay-deeplink" id="pay-deeplink" href="#" target="_blank" rel="noopener noreferrer">Open in wallet &rarr;</a>
+    <div class="pay-status waiting" id="pay-status"><span class="pay-spinner"></span>Waiting for payment&hellip;</div>
+    <div class="pay-tx" id="pay-tx"></div>
+  </div>
+</div>
+
+<!-- QR generator: tiny lib (~10KB), MIT license, served via jsdelivr.
+     Pinned to a specific version so the bundle we serve never silently
+     changes underneath users on a future CDN release. -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" crossorigin="anonymous"></script>
+
 <script>
 // ── Waitlist form handler — graceful degradation ─────────────────────────────
 document.getElementById('waitlist-form').addEventListener('submit', function(e) {
@@ -363,8 +423,6 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
     this.email.style.borderColor = '#ff5f5f';
     return;
   }
-  // TODO: wire to /api/waitlist endpoint once backend ready
-  // For now, store locally + show confirmation
   try {
     var stored = JSON.parse(localStorage.getItem('antares_waitlist') || '[]');
     if (stored.indexOf(email) === -1) stored.push(email);
@@ -373,105 +431,215 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   this.innerHTML = '<div style="color:#00e5b0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-align:center;padding:14px;width:100%">&check; You&rsquo;re on the list. We&rsquo;ll email you at launch.</div>';
 });
 
-// ── Live checkout — only when install_id rides in via the URL ────────────────
+// ── Solana Pay checkout flow ─────────────────────────────────────────────────
 //
-// The extension overlay's quota-badge "→ PRO" link appends ?install=<id>
-// to the pricing URL when the user clicks it. When that param is present
-// AND well-formed we swap the Pro/Lifetime "Join waitlist" CTAs for real
-// Lemonsqueezy checkout buttons that hit /api/checkout to mint a signed
-// URL with install_id baked into custom_data.
+// User clicks "Pay with USDC" → POST /api/payment-intent → server returns a
+// fresh Solana Pay URL with a unique reference key → modal displays QR +
+// click-to-pay deep link + recipient + amount → user signs USDC transfer in
+// their wallet → our cron picks up the on-chain confirmation within ~1 min →
+// /api/payment-status flips to "confirmed" → modal shows success state.
 //
-// If the extension isn't installed (no ?install= param) we leave the
-// waitlist flow untouched — visitors who discover the page organically
-// still get a path to engage.
+// Three failure paths, all surfaced visibly:
+//   - 503 checkout_not_configured (env vars unset)  → "Coming soon", waitlist
+//                                                       form below remains usable
+//   - intent expired (30-min TTL)                   → "Expired", offer retry
+//   - network failure                               → "Network error", retry
 (function() {
   var INSTALL_ID_RE = /^[a-zA-Z0-9_-]{8,128}$/;
-  var CHECKOUT_API = 'https://antares-extension.vercel.app/api/checkout';
+  var API_BASE = 'https://antares-extension.vercel.app';
+  var INTENT_API = API_BASE + '/api/payment-intent';
+  var STATUS_API = API_BASE + '/api/payment-status';
 
   var params = new URLSearchParams(window.location.search);
   var installId = (params.get('install') || '').trim();
-  if (!installId || !INSTALL_ID_RE.test(installId)) return;
+  var hasInstall = installId && INSTALL_ID_RE.test(installId);
 
-  var BTNS = [
-    { id: 'cta-pro-monthly', tier: 'monthly', label: 'Subscribe Pro &rarr;' },
-    { id: 'cta-lifetime', tier: 'lifetime', label: 'Get Lifetime &rarr;' }
-  ];
+  // DOM refs
+  var overlay = document.getElementById('pay-overlay');
+  var modal = overlay.querySelector('.pay-modal');
+  var titleEl = document.getElementById('pay-title');
+  var subtitleEl = document.getElementById('pay-subtitle');
+  var amountEl = document.getElementById('pay-amount');
+  var qrEl = document.getElementById('pay-qr');
+  var recipientEl = document.getElementById('pay-recipient');
+  var copyBtn = document.getElementById('pay-copy');
+  var deeplinkEl = document.getElementById('pay-deeplink');
+  var statusEl = document.getElementById('pay-status');
+  var txEl = document.getElementById('pay-tx');
+  var closeBtn = document.getElementById('pay-close');
 
-  function setBtn(btn, html) {
-    btn.innerHTML = html;
+  var pollTimer = null;
+  var currentReference = null;
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    currentReference = null;
+    txEl.textContent = '';
   }
 
-  function wireCheckout(spec) {
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  function renderQR(payUrl) {
+    qrEl.innerHTML = '';
+    if (typeof qrcode !== 'function') {
+      qrEl.textContent = 'QR unavailable';
+      return;
+    }
+    var qr = qrcode(0, 'M');
+    qr.addData(payUrl);
+    qr.make();
+    // Render as inline SVG (sharp, scales cleanly, no raster artifacts)
+    qrEl.innerHTML = qr.createSvgTag({ scalable: true, margin: 0 });
+  }
+
+  function setStatus(state, html) {
+    statusEl.className = 'pay-status ' + state;
+    statusEl.innerHTML = (state === 'waiting' ? '<span class="pay-spinner"></span>' : '') + html;
+  }
+
+  function showSuccessBanner() {
+    if (document.getElementById('pay-success-banner')) return;
+    var banner = document.createElement('div');
+    banner.id = 'pay-success-banner';
+    banner.style.cssText = 'background:rgba(0,229,176,0.06);border:1px solid rgba(0,229,176,0.4);border-radius:2px;padding:14px 18px;margin:0 auto 24px;max-width:560px;text-align:center;font:600 11px/1.4 "IBM Plex Mono",monospace;color:#00e5b0;letter-spacing:0.22em;text-transform:uppercase';
+    banner.textContent = '✓ Payment confirmed — Pro is live in your extension';
+    var hero = document.querySelector('.page-hero');
+    if (hero && hero.parentNode) hero.parentNode.insertBefore(banner, hero.nextSibling);
+  }
+
+  function pollStatus(reference) {
+    fetch(STATUS_API + '?reference=' + encodeURIComponent(reference))
+      .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
+      .then(function(r) {
+        // Stop polling if the user closed the modal or moved on
+        if (currentReference !== reference) return;
+        if (r.status === 200 && r.body) {
+          if (r.body.status === 'confirmed') {
+            setStatus('confirmed', '✓ Payment confirmed');
+            if (r.body.txSignature) {
+              txEl.innerHTML = 'Tx: <a href="https://solscan.io/tx/' +
+                encodeURIComponent(r.body.txSignature) +
+                '" target="_blank" rel="noopener">' +
+                r.body.txSignature.slice(0, 8) + '…' + r.body.txSignature.slice(-8) +
+                '</a>';
+            }
+            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+            // Hold the success state for a beat so the user sees it land,
+            // then close + show the confirmation banner on the page.
+            setTimeout(function() {
+              if (currentReference === reference) {
+                closeModal();
+                showSuccessBanner();
+              }
+            }, 2500);
+            return;
+          }
+          if (r.body.status === 'expired') {
+            setStatus('expired', '✕ Expired — close and try again');
+            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+            return;
+          }
+        }
+        // 404 (not_found yet) or pending → keep polling
+      })
+      .catch(function() { /* swallow, next tick will retry */ });
+  }
+
+  function openModal(spec) {
+    if (!hasInstall) {
+      // Visitor without the extension — install it first, the overlay's
+      // quota-badge link is what brings them back here with ?install=<id>.
+      window.location.href = './install.html';
+      return;
+    }
+
+    // Reset modal state
+    qrEl.innerHTML = '<div style="color:#666;font-size:10px;letter-spacing:.18em">Loading…</div>';
+    amountEl.textContent = '—';
+    recipientEl.textContent = '—';
+    deeplinkEl.setAttribute('href', '#');
+    setStatus('waiting', 'Creating intent&hellip;');
+    txEl.textContent = '';
+    overlay.classList.add('open');
+
+    fetch(INTENT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tier: spec.tier, install_id: installId })
+    })
+      .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
+      .then(function(r) {
+        if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
+          setStatus('expired', 'Coming soon — checkout not configured yet');
+          return;
+        }
+        if (r.status !== 200 || !r.body || !r.body.payUrl) {
+          setStatus('expired', 'Couldn&rsquo;t create the payment intent. Retry?');
+          return;
+        }
+
+        // Hydrate the modal with the intent we just minted
+        var intent = r.body;
+        currentReference = intent.reference;
+        titleEl.textContent = spec.tier === 'lifetime' ? 'Antares Lifetime' : 'Antares Pro · 30 days';
+        amountEl.textContent = '$' + Number(intent.amount).toFixed(2);
+        recipientEl.textContent = intent.recipient;
+        deeplinkEl.setAttribute('href', intent.payUrl);
+        renderQR(intent.payUrl);
+        setStatus('waiting', 'Waiting for payment&hellip;');
+
+        // Start polling
+        if (pollTimer) clearInterval(pollTimer);
+        pollTimer = setInterval(function() { pollStatus(intent.reference); }, 2500);
+        // First poll immediately so a fast wallet sees the success state
+        // without waiting the full 2.5s tick.
+        pollStatus(intent.reference);
+      })
+      .catch(function() {
+        setStatus('expired', 'Network error. Check your connection and retry.');
+      });
+  }
+
+  // Wire the tier CTAs
+  var BTNS = [
+    { id: 'cta-pro-monthly', tier: 'monthly' },
+    { id: 'cta-lifetime', tier: 'lifetime' }
+  ];
+  BTNS.forEach(function(spec) {
     var btn = document.getElementById(spec.id);
     if (!btn) return;
-    var originalLabel = spec.label;
-    setBtn(btn, originalLabel);
-    btn.setAttribute('href', '#');
     btn.addEventListener('click', function(e) {
       e.preventDefault();
-      if (btn.dataset.busy === '1') return;
-      btn.dataset.busy = '1';
-      setBtn(btn, '...');
-
-      fetch(CHECKOUT_API + '?tier=' + spec.tier + '&install_id=' + encodeURIComponent(installId), {
-        method: 'GET'
-      }).then(function(res) {
-        return res.json().then(function(body) {
-          return { status: res.status, body: body };
-        });
-      }).then(function(r) {
-        if (r.status === 200 && r.body && r.body.url) {
-          window.location.href = r.body.url;
-          return;
-        }
-        if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
-          setBtn(btn, 'Coming soon');
-          btn.style.opacity = '0.6';
-          setTimeout(function() {
-            setBtn(btn, originalLabel);
-            btn.style.opacity = '';
-            btn.dataset.busy = '0';
-          }, 3000);
-          return;
-        }
-        setBtn(btn, '&times; Retry');
-        setTimeout(function() {
-          setBtn(btn, originalLabel);
-          btn.dataset.busy = '0';
-        }, 2500);
-      }).catch(function() {
-        setBtn(btn, '&times; Network');
-        setTimeout(function() {
-          setBtn(btn, originalLabel);
-          btn.dataset.busy = '0';
-        }, 2500);
-      });
+      openModal(spec);
     });
-  }
+  });
 
-  BTNS.forEach(wireCheckout);
+  // Copy-to-clipboard for the recipient address
+  copyBtn.addEventListener('click', function() {
+    var addr = recipientEl.textContent;
+    if (!addr || addr === '—') return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(addr).then(function() {
+        var orig = copyBtn.textContent;
+        copyBtn.textContent = '✓';
+        setTimeout(function() { copyBtn.textContent = orig; }, 1500);
+      });
+    }
+  });
 
-  // Surface a small banner so the user knows their install was detected and
-  // the upgrade flow is live. Inserted right after the page hero.
-  var banner = document.createElement('div');
-  banner.setAttribute('role', 'status');
-  banner.style.cssText = [
-    'background:rgba(0,229,176,0.04)',
-    'border:1px solid rgba(0,229,176,0.2)',
-    'border-radius:2px',
-    'padding:10px 16px',
-    'margin:0 auto 32px',
-    'max-width:520px',
-    'text-align:center',
-    'font:600 10px/1 "IBM Plex Mono",monospace',
-    'color:#00e5b0',
-    'letter-spacing:0.22em',
-    'text-transform:uppercase'
-  ].join(';');
-  banner.textContent = '✓ Install detected · upgrade ready';
-  var hero = document.querySelector('.page-hero');
-  if (hero && hero.parentNode) {
-    hero.parentNode.insertBefore(banner, hero.nextSibling);
+  // "Install detected" banner when the user came via the extension
+  if (hasInstall) {
+    var banner = document.createElement('div');
+    banner.setAttribute('role', 'status');
+    banner.style.cssText = 'background:rgba(0,229,176,0.04);border:1px solid rgba(0,229,176,0.2);border-radius:2px;padding:10px 16px;margin:0 auto 32px;max-width:520px;text-align:center;font:600 10px/1 "IBM Plex Mono",monospace;color:#00e5b0;letter-spacing:0.22em;text-transform:uppercase';
+    banner.textContent = '✓ Install detected · upgrade ready';
+    var hero = document.querySelector('.page-hero');
+    if (hero && hero.parentNode) hero.parentNode.insertBefore(banner, hero.nextSibling);
   }
 })();
 </script>
