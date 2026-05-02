@@ -252,7 +252,6 @@ footer .foot-links a:hover{color:#5a5a62}
       <div class="box safe">
         <div class="topbar"></div>
         <div class="hd"><span class="brand">ANTARES</span><div class="hd-right"><span class="drag-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 1L5.5 3h3L7 1Z" fill="currentColor"/><line x1="7" y1="2.5" x2="7" y2="6.5" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M7 13L5.5 11h3L7 13Z" fill="currentColor"/><line x1="7" y1="11.5" x2="7" y2="7.5" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M1 7L3 5.5V8.5L1 7Z" fill="currentColor"/><line x1="2.5" y1="7" x2="6.5" y2="7" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M13 7L11 5.5V8.5L13 7Z" fill="currentColor"/><line x1="11.5" y1="7" x2="7.5" y2="7" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/></svg></span><span class="x"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="2" y1="2" x2="11" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="11" y1="2" x2="2" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></div></div>
-        <div class="tk"><b>WIF</b> dogwifhat</div>
         <div class="vb"><h1>SAFE</h1></div>
         <div class="sr"><span class="n"><b>847</b> / 1000</span><div class="dots"><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt off"></div></div></div>
         <div class="sbar"><div class="sbar-fill"></div></div>
@@ -468,14 +467,17 @@ footer .foot-links a:hover{color:#5a5a62}
   var HEADER = '<div class="topbar"></div><div class="hd"><span class="brand">ANTARES</span><div class="hd-right"><span class="drag-icon">'+SVG_MOVE+'</span><span class="x">'+SVG_CLOSE+'</span></div></div>';
   var FOOTER = '<div class="fo"><span class="cf-btn">⚠ Critical Flags</span><a href="#">Full Analysis →</a><span class="ai-btn ai-btn--active">⬡ AI Summary</span></div>';
 
-  function card(risk, sym, name, verdict, score, dotsOn, sum, sis) {
+  // Sum line uses the same format as the live overlay's flagCount
+  // logic in components.ts: "No issues found" / "N flags detected" /
+  // "N flags — M critical". No token names — the home demo is
+  // illustrative, not a fake scan of a specific token.
+  function card(risk, verdict, score, dotsOn, sum, sis) {
     var dots = '';
     for (var i=0;i<5;i++) dots += '<div class="dt '+(i<dotsOn?'on':'off')+'"></div>';
     var ssHtml = sis.map(function(s){
       return '<div class="si"><span>'+s.k+'</span><b class="'+s.cls+'">'+s.v+'</b></div>';
     }).join('');
     return '<div class="box '+risk+'">'+HEADER+
-      '<div class="tk"><b>'+sym+'</b> '+name+'</div>'+
       '<div class="vb"><h1>'+verdict+'</h1></div>'+
       '<div class="sr"><span class="n"><b>'+score+'</b> / 1000</span><div class="dots">'+dots+'</div></div>'+
       '<div class="sbar"><div class="sbar-fill"></div></div>'+
@@ -486,16 +488,16 @@ footer .foot-links a:hover{color:#5a5a62}
   }
 
   var cards = [
-    card('safe',    'PENGU',    'Pudgy Penguins', 'SAFE',     952, 5, 'No critical issues', [
+    card('safe',    'SAFE',     952, 5, 'No issues found', [
       {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Burned',cls:'y',v:'✓'},{k:'Liq',cls:'y',v:'$9.0M'}
     ]),
-    card('caution', 'FARTCOIN', 'Fartcoin',       'CAUTION',  768, 4, 'Single wallet holds 11% — concentration risk', [
+    card('caution', 'CAUTION',  768, 4, '1 flags detected', [
       {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Burned',cls:'y',v:'✓'},{k:'Top 1',cls:'w',v:'11%'}
     ]),
-    card('danger',  'PIPPIN',   'Pippin',         'DANGER',   485, 2, 'Top 10 holds 67% — stacked concentration', [
+    card('danger',  'DANGER',   485, 2, '3 flags — 1 critical', [
       {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'Top 1',cls:'n',v:'27%'},{k:'Top 10',cls:'n',v:'67%'}
     ]),
-    card('rug',     'HAWK',     'Hawk Tuah',      'RUG PULL', 120, 1, '44% wallet — coordinated dump confirmed', [
+    card('rug',     'RUG PULL', 120, 1, '5 flags — 3 critical', [
       {k:'Sell',cls:'n',v:'✗'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Lock',cls:'n',v:'✗'},{k:'Top 1',cls:'n',v:'44%'}
     ])
   ];
