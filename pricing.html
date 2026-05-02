@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Antares pricing. Free forever for casual scanning. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC, zero middleman.">
+<meta name="description" content="Antares pricing. Free for 25 daily scans. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL, zero middleman.">
 <meta name="author" content="Antares">
 <link rel="canonical" href="https://antares-website.vercel.app/pricing">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antares-website.vercel.app/pricing">
 <meta property="og:title" content="Pricing — Antares">
-<meta property="og:description" content="Free forever for casual scanning. Pro $24.99 for 30 days unlimited. Lifetime $149.99 for the first 1000 supporters. Direct USDC payment.">
+<meta property="og:description" content="Free for 25 daily scans. Pro $24.99 for 30 days unlimited. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL.">
 <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@antaresantiscam">
 <meta name="twitter:title" content="Pricing — Antares">
-<meta name="twitter:description" content="Free forever. Pro $24.99 / 30 days. Lifetime $149.99 (first 1000). Pay in USDC, zero middleman.">
+<meta name="twitter:description" content="Free 25/day. Pro $24.99 / 30 days. Lifetime $149.99 (first 1000). Pay in USDC or SOL, zero middleman.">
 <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -178,6 +178,12 @@ footer span{color:var(--c)}
 .pay-qr svg{width:168px;height:168px;display:block}
 .pay-amount{font:400 36px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-align:center;margin-bottom:4px}
 .pay-token{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:18px}
+.pay-toggle{display:flex;gap:0;justify-content:center;margin:0 auto 18px;border:1px solid var(--border);border-radius:2px;overflow:hidden;width:fit-content;background:#0a0a0c}
+.pay-toggle button{flex:0 0 auto;padding:9px 18px;background:transparent;border:none;color:#666;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:color .2s,background .2s;min-width:96px}
+.pay-toggle button.active{color:var(--bg);background:var(--c)}
+.pay-toggle button:not(.active):hover{color:#ccc}
+.pay-toggle button:disabled{opacity:.45;cursor:not-allowed}
+.pay-status.warn{color:#f5d000;border-color:rgba(245,208,0,.4);background:rgba(245,208,0,.05)}
 .pay-recipient{background:#0a0a0c;border:1px solid var(--border);border-radius:2px;padding:10px 12px;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aaa;display:flex;align-items:center;gap:8px;word-break:break-all}
 .pay-recipient .pay-addr{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pay-recipient button{background:none;border:1px solid #2a2a30;color:#888;padding:4px 8px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'IBM Plex Mono',monospace;transition:all .2s;flex-shrink:0}
@@ -201,7 +207,7 @@ footer span{color:var(--c)}
   .pay-qr svg{width:148px;height:148px}
 }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Free forever for casual scanning. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Direct USDC payment, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Free for 25 daily scans. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
 </head>
 <body>
 <div class="stripe" role="presentation" aria-hidden="true"></div>
@@ -219,7 +225,7 @@ footer span{color:var(--c)}
   <p class="sub">Casual users keep everything that matters &mdash; for free, forever. Power users who scan hundreds of tokens a day pay so the API stays online for everyone else. No retroactive limits, no feature removals. What you see today is what you keep tomorrow.</p>
 </section>
 
-<div class="section-label"><span>Choose your tier</span></div>
+<div class="section-label" id="choose-tier"><span>Choose your tier</span></div>
 
 <div class="tiers">
 
@@ -228,9 +234,9 @@ footer span{color:var(--c)}
     <div class="tier-name">Free</div>
     <div class="tier-price"><span class="currency">$</span>0</div>
     <div class="tier-period">Forever &middot; no card required</div>
-    <div class="tier-tagline">Everything Antares does today, capped at 50 scans per day. Enough for 95% of users.</div>
+    <div class="tier-tagline">Everything Antares does today, capped at 25 scans per day. Enough for casual research, not for full trading sessions.</div>
     <ul class="tier-features">
-      <li><b>50 scans per day</b><small>resets at 00:00 UTC</small></li>
+      <li><b>25 scans per day</b><small>resets at 00:00 UTC</small></li>
       <li>Full 7-layer verdict (1000-pt scoring)</li>
       <li>Critical Actors detection</li>
       <li>Holder Activity (live, 60min window)</li>
@@ -249,8 +255,8 @@ footer span{color:var(--c)}
   <div class="tier featured">
     <div class="tier-name">Pro · 30-day pass</div>
     <div class="tier-price"><span class="currency">$</span>24.99</div>
-    <div class="tier-period">USDC on Solana &middot; one-time, no auto-renew</div>
-    <div class="tier-tagline">Built for traders who scan 100+ tokens a day. Unlimited scans + features power users actually need. Pay direct in USDC, zero middleman.</div>
+    <div class="tier-period">USDC or SOL on Solana &middot; one-time, no auto-renew</div>
+    <div class="tier-tagline">Built for traders who scan 25+ tokens a day. Unlimited scans + features power users actually need. Pay direct in USDC or SOL, zero middleman.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Free, plus:</b></li>
       <li><b>Unlimited scans</b><small>fair-use 30 req/min anti-abuse</small></li>
@@ -262,15 +268,15 @@ footer span{color:var(--c)}
       <li>Beta access to new features</li>
       <li>Priority support</li>
     </ul>
-    <button class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly" type="button">Pay with USDC &rarr;</button>
-    <div class="tier-status"><span class="live">&middot; Pay direct on Solana</span></div>
+    <button class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly" type="button">Get Pro now &rarr;</button>
+    <div class="tier-status"><span class="live">&middot; USDC or SOL &middot; on-chain</span></div>
   </div>
 
   <!-- LIFETIME -->
   <div class="tier lifetime">
     <div class="tier-name">Lifetime</div>
     <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
-    <div class="tier-period">one-time USDC payment &middot; forever</div>
+    <div class="tier-period">one-time USDC or SOL payment &middot; forever</div>
     <div class="tier-tagline">Pay once. Get every Pro feature, including everything we ship in v2, v3, v4. Reserved for the first 1000 supporters.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Pro Monthly, forever</b></li>
@@ -282,7 +288,7 @@ footer span{color:var(--c)}
       <li>Direct line to the founder</li>
       <li>Name in Sentinel Hall of Fame</li>
     </ul>
-    <button class="tier-cta purple" id="cta-lifetime" data-tier="lifetime" type="button">Pay with USDC &rarr;</button>
+    <button class="tier-cta purple" id="cta-lifetime" data-tier="lifetime" type="button">Claim a Lifetime spot &rarr;</button>
     <div class="lifetime-counter"><b>1000</b> spots opening at launch</div>
   </div>
 
@@ -357,11 +363,11 @@ footer span{color:var(--c)}
 <div class="section-label"><span>Pricing FAQ</span></div>
 
 <div class="qa"><h3>Will the Free tier ever be downgraded?</h3>
-<p>No. Whatever Free does today &mdash; full 7-layer verdict, AI Summary, Holder Activity, all of it &mdash; stays in Free forever. The only constraint we&rsquo;re adding is the <b>50 scans/day cap</b>, announced upfront, applied from CWS launch day. We&rsquo;re not in the business of shipping a generous free tier and clawing it back six months later.</p>
+<p>No. Whatever Free does today &mdash; full 7-layer verdict, AI Summary, Holder Activity, all of it &mdash; stays in Free forever. The only constraint we&rsquo;re adding is the <b>25 scans/day cap</b>, announced upfront, applied from CWS launch day. We&rsquo;re not in the business of shipping a generous free tier and clawing it back six months later.</p>
 </div>
 
-<div class="qa"><h3>Why 50 scans per day specifically?</h3>
-<p>Casual users (the 95% majority) average 5-10 scans per day. 50 covers a heavy research session without hitting the cap. Power users who scan 100+ a day &mdash; usually traders trading real size &mdash; will run out and convert. That&rsquo;s the segmentation: free for users, Pro for users whose tooling is part of their P&amp;L.</p>
+<div class="qa"><h3>Why 25 scans per day specifically?</h3>
+<p>If you&rsquo;re actually trading, you&rsquo;ll burn through 25 scans before lunch. The cap exists to mark the line between casual research and active trading: enough scans to evaluate the rug-detection on a few coins you&rsquo;re curious about, not enough to run a full session of new launches. If your edge depends on this tooling, $24.99 / 30 days for unlimited is the only sensible move.</p>
 </div>
 
 <div class="qa"><h3>Why announce Pro now if it doesn&rsquo;t exist yet?</h3>
@@ -369,7 +375,7 @@ footer span{color:var(--c)}
 </div>
 
 <div class="qa"><h3>What does Lifetime actually mean?</h3>
-<p>Pay $149.99 USDC once, get every Pro feature for as long as Antares exists, including everything in Pro v2, v3, v4 (alerts, charts, push, smart-money, portfolio tracker). Lifetime is capped at 1000 supporters &mdash; once full, the 30-day pass is the only option. Lifetime members also get a private Discord channel, founder badge, and roadmap vote.</p>
+<p>Pay $149.99 once (USDC or SOL, your call), get every Pro feature for as long as Antares exists, including everything in Pro v2, v3, v4 (alerts, charts, push, smart-money, portfolio tracker). Lifetime is capped at 1000 supporters &mdash; once full, the 30-day pass is the only option. Lifetime members also get a private Discord channel, founder badge, and roadmap vote.</p>
 </div>
 
 <div class="qa"><h3>Can I get a refund?</h3>
@@ -381,9 +387,9 @@ footer span{color:var(--c)}
 </div>
 
 <div class="cta-final">
-  <h2>Install <span>free</span>. Decide later.</h2>
-  <p>The Free tier is fully usable. Try it for a week, see if you hit 50 scans/day, then decide if Pro makes sense for your trading. No card needed to start.</p>
-  <a class="cta" href="./install.html">↗ Install Antares</a>
+  <h2>One bad bag costs more than <span>Pro</span>.</h2>
+  <p>If you&rsquo;re trading new launches without rug detection, you&rsquo;re not trading &mdash; you&rsquo;re donating. $24.99 for 30 days of unlimited scans, or $149.99 once for the rest of the project&rsquo;s life. Pay direct in USDC or SOL, on-chain, no middleman, no card, no KYC. The next rug you avoid pays for the year.</p>
+  <a class="cta" href="#choose-tier">↗ Get Pro now</a>
 </div>
 
 </main></div>
@@ -393,10 +399,14 @@ footer span{color:var(--c)}
 <div class="pay-overlay" id="pay-overlay" role="dialog" aria-labelledby="pay-title" aria-modal="true">
   <div class="pay-modal">
     <button class="pay-close" id="pay-close" aria-label="Close">&times;</button>
-    <h3 class="pay-title" id="pay-title">Pay with USDC</h3>
+    <h3 class="pay-title" id="pay-title">Pay on Solana</h3>
     <div class="pay-subtitle" id="pay-subtitle">Direct on Solana &middot; zero middleman</div>
+    <div class="pay-toggle" role="tablist" aria-label="Choose payment token">
+      <button type="button" id="pay-toggle-usdc" class="active" data-token="usdc" role="tab" aria-selected="true">USDC</button>
+      <button type="button" id="pay-toggle-sol" data-token="sol" role="tab" aria-selected="false">SOL</button>
+    </div>
     <div class="pay-amount" id="pay-amount">—</div>
-    <div class="pay-token">USDC on Solana</div>
+    <div class="pay-token" id="pay-token-label">USDC on Solana</div>
     <div class="pay-qr" id="pay-qr"></div>
     <div class="pay-recipient">
       <span class="pay-addr" id="pay-recipient">—</span>
@@ -432,15 +442,18 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
 
 // ── Solana Pay checkout flow ─────────────────────────────────────────────────
 //
-// User clicks "Pay with USDC" → POST /api/payment-intent → server returns a
+// User picks a tier → modal opens defaulted to USDC → optional toggle to SOL
+// (price computed at intent-creation time using Jupiter v4) → POST
+// /api/payment-intent with { tier, token, install_id } → server returns a
 // fresh Solana Pay URL with a unique reference key → modal displays QR +
-// click-to-pay deep link + recipient + amount → user signs USDC transfer in
+// click-to-pay deep link + recipient + amount → user signs the transfer in
 // their wallet → our cron picks up the on-chain confirmation within ~1 min →
 // /api/payment-status flips to "confirmed" → modal shows success state.
 //
-// Three failure paths, all surfaced visibly:
+// Failure paths, all surfaced visibly:
 //   - 503 checkout_not_configured (env vars unset)  → "Coming soon", waitlist
 //                                                       form below remains usable
+//   - 502 sol_rate_unavailable (Jupiter down)       → flip back to USDC + warn
 //   - intent expired (30-min TTL)                   → "Expired", offer retry
 //   - network failure                               → "Network error", retry
 (function() {
@@ -459,6 +472,7 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   var titleEl = document.getElementById('pay-title');
   var subtitleEl = document.getElementById('pay-subtitle');
   var amountEl = document.getElementById('pay-amount');
+  var tokenLabelEl = document.getElementById('pay-token-label');
   var qrEl = document.getElementById('pay-qr');
   var recipientEl = document.getElementById('pay-recipient');
   var copyBtn = document.getElementById('pay-copy');
@@ -466,9 +480,16 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   var statusEl = document.getElementById('pay-status');
   var txEl = document.getElementById('pay-tx');
   var closeBtn = document.getElementById('pay-close');
+  var toggleUsdc = document.getElementById('pay-toggle-usdc');
+  var toggleSol = document.getElementById('pay-toggle-sol');
 
   var pollTimer = null;
   var currentReference = null;
+  // Persists across re-opens so the user's last choice is remembered for
+  // the rest of the session — but defaults to USDC every fresh load to
+  // avoid surprising users who don't know SOL pricing fluctuates.
+  var currentToken = 'usdc';
+  var currentTier = null;
 
   function closeModal() {
     overlay.classList.remove('open');
@@ -549,32 +570,66 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
       .catch(function() { /* swallow, next tick will retry */ });
   }
 
-  function openModal(spec) {
-    if (!hasInstall) {
-      // Visitor without the extension — install it first, the overlay's
-      // quota-badge link is what brings them back here with ?install=<id>.
-      window.location.href = './install.html';
-      return;
+  // SOL prices vary per intent so we always show 4 decimals + the SOL
+  // unit. USDC stays fixed and dollar-formatted. Both render the locked-in
+  // USD amount as a small caption so the user sees what they're committing
+  // to in fiat terms.
+  function renderAmount(intent) {
+    if (intent.token === 'sol') {
+      amountEl.textContent = Number(intent.amount).toFixed(4) + ' SOL';
+      tokenLabelEl.innerHTML = '&asymp; $' + Number(intent.amountUsd).toFixed(2) + ' &middot; SOL on Solana';
+    } else {
+      amountEl.textContent = '$' + Number(intent.amount).toFixed(2);
+      tokenLabelEl.textContent = 'USDC on Solana';
     }
+  }
 
-    // Reset modal state
-    qrEl.innerHTML = '<div style="color:#666;font-size:10px;letter-spacing:.18em">Loading…</div>';
+  function setToggleUI(token, busy) {
+    var sel = token === 'sol' ? toggleSol : toggleUsdc;
+    var other = token === 'sol' ? toggleUsdc : toggleSol;
+    sel.classList.add('active');
+    sel.setAttribute('aria-selected', 'true');
+    other.classList.remove('active');
+    other.setAttribute('aria-selected', 'false');
+    toggleUsdc.disabled = !!busy;
+    toggleSol.disabled = !!busy;
+  }
+
+  function createIntent(tier, token) {
+    currentTier = tier;
+    currentToken = token;
+    setToggleUI(token, true);
+
+    // Reset visible state — keep the toggle active so the user knows what
+    // they picked even while the request is in flight.
+    qrEl.innerHTML = '<div style="color:#666;font-size:10px;letter-spacing:.18em">Loading&hellip;</div>';
     amountEl.textContent = '—';
+    tokenLabelEl.textContent = token === 'sol' ? 'SOL on Solana' : 'USDC on Solana';
     recipientEl.textContent = '—';
     deeplinkEl.setAttribute('href', '#');
     setStatus('waiting', 'Creating intent&hellip;');
     txEl.textContent = '';
-    overlay.classList.add('open');
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    currentReference = null;
 
     fetch(INTENT_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tier: spec.tier, install_id: installId })
+      body: JSON.stringify({ tier: tier, token: token, install_id: installId })
     })
       .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
       .then(function(r) {
+        setToggleUI(currentToken, false);
         if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
           setStatus('expired', 'Coming soon — checkout not configured yet');
+          return;
+        }
+        // Jupiter price-feed failure: surface the issue, snap back to USDC
+        // automatically so the user can complete checkout instead of being
+        // stuck on a dead toggle.
+        if (r.status === 502 && r.body && r.body.error === 'sol_rate_unavailable') {
+          setStatus('warn', 'SOL price feed down &mdash; switched to USDC');
+          setTimeout(function() { createIntent(tier, 'usdc'); }, 800);
           return;
         }
         if (r.status !== 200 || !r.body || !r.body.payUrl) {
@@ -585,8 +640,8 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
         // Hydrate the modal with the intent we just minted
         var intent = r.body;
         currentReference = intent.reference;
-        titleEl.textContent = spec.tier === 'lifetime' ? 'Antares Lifetime' : 'Antares Pro · 30 days';
-        amountEl.textContent = '$' + Number(intent.amount).toFixed(2);
+        titleEl.textContent = tier === 'lifetime' ? 'Antares Lifetime' : 'Antares Pro · 30 days';
+        renderAmount(intent);
         recipientEl.textContent = intent.recipient;
         deeplinkEl.setAttribute('href', intent.payUrl);
         renderQR(intent.payUrl);
@@ -600,8 +655,22 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
         pollStatus(intent.reference);
       })
       .catch(function() {
+        setToggleUI(currentToken, false);
         setStatus('expired', 'Network error. Check your connection and retry.');
       });
+  }
+
+  function openModal(spec) {
+    if (!hasInstall) {
+      // Visitor without the extension — install it first, the overlay's
+      // quota-badge link is what brings them back here with ?install=<id>.
+      window.location.href = './install.html';
+      return;
+    }
+    overlay.classList.add('open');
+    // Default token on each open is whatever the user last picked in this
+    // session, but USDC on first open (currentToken initialises to 'usdc').
+    createIntent(spec.tier, currentToken);
   }
 
   // Wire the tier CTAs
@@ -617,6 +686,19 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
       openModal(spec);
     });
   });
+
+  // Toggle handlers — switching token re-mints the intent (the reference
+  // key + amount are token-specific, so reusing a stale intent would let
+  // the user pay USDC for a SOL-quoted intent and never settle).
+  function onToggle(token) {
+    return function(e) {
+      e.preventDefault();
+      if (token === currentToken || !currentTier) return;
+      createIntent(currentTier, token);
+    };
+  }
+  toggleUsdc.addEventListener('click', onToggle('usdc'));
+  toggleSol.addEventListener('click', onToggle('sol'));
 
   // Copy-to-clipboard for the recipient address
   copyBtn.addEventListener('click', function() {
