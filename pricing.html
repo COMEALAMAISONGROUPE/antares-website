@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Antares pricing. Free forever for casual scanning. Pro $14.99/mo for power users. Lifetime $99 for the first 1000 supporters. Honest tiers, no bait-and-switch.">
+<meta name="author" content="Antares">
+<link rel="canonical" href="https://antares-website.vercel.app/pricing">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://antares-website.vercel.app/pricing">
+<meta property="og:title" content="Pricing — Antares">
+<meta property="og:description" content="Free forever for casual scanning. Pro $14.99/mo for power users. Lifetime $99 for the first 1000 supporters.">
+<meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Antares">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@antaresantiscam">
+<meta name="twitter:title" content="Pricing — Antares">
+<meta name="twitter:description" content="Free forever for casual scanning. Pro $14.99/mo. Lifetime $99 (first 1000).">
+<meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Pricing — Antares</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f;--yellow:#f5d000;--purple:#a78bfa}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;position:sticky;top:3px;z-index:100}
+nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
+
+.page-hero{padding:80px 0 24px;text-align:center}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:24px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+h1{font:400 clamp(48px,8vw,84px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
+.sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:680px;margin:0 auto 12px;border-left:2px solid var(--c);padding-left:16px;text-align:left}
+
+.section-label{display:flex;align-items:center;gap:16px;margin:64px 0 28px}
+.section-label span{font-size:10px;color:#2a2a2f;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-label::before{content:'';flex:0 0 0;height:1px;background:var(--border)}
+
+/* ── PRICING GRID ── */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:32px 0 16px}
+.tier{background:var(--card);border:1px solid var(--border);padding:36px 28px 32px;position:relative;display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
+.tier:hover{transform:translateY(-4px);border-color:#252529}
+.tier.featured{border:1px solid var(--c);box-shadow:0 0 0 1px var(--c),0 24px 48px rgba(0,229,176,.08)}
+.tier.featured::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--c);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
+.tier.lifetime{border:1px solid #2a2a30}
+.tier.lifetime::before{content:'BEST VALUE';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--purple);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
+
+.tier-name{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
+.tier.featured .tier-name{color:var(--c)}
+.tier.lifetime .tier-name{color:var(--purple)}
+
+.tier-price{font:400 64px/.9 'Bebas Neue',sans-serif;letter-spacing:.02em;color:#eaeaea;margin-bottom:4px;display:flex;align-items:baseline;gap:8px}
+.tier-price .currency{font-size:32px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0}
+.tier-price .strike{font-size:22px;color:#3a3a40;text-decoration:line-through;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0;margin-right:6px}
+.tier-period{font-size:11px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;min-height:14px}
+.tier-tagline{font-size:11.5px;color:#7a7a82;line-height:1.6;font-style:italic;border-left:2px solid #252529;padding-left:12px;margin-bottom:24px;min-height:54px}
+.tier.featured .tier-tagline{border-left-color:var(--c)}
+.tier.lifetime .tier-tagline{border-left-color:var(--purple)}
+
+.tier-features{list-style:none;margin:0 0 24px;padding:0;flex:1}
+.tier-features li{font-size:11.5px;color:#888;line-height:1.55;padding:7px 0 7px 22px;position:relative;border-bottom:1px solid #131316}
+.tier-features li:last-child{border-bottom:none}
+.tier-features li::before{content:'✓';position:absolute;left:0;top:7px;color:var(--c);font-weight:700;font-size:12px}
+.tier-features li.coming::before{content:'◷';color:var(--yellow)}
+.tier-features li.bonus{color:#bbb}
+.tier-features li b{color:#bbb;font-weight:600}
+.tier-features li small{display:block;color:#4a4a52;font-size:10px;margin-top:2px;font-style:italic}
+
+.tier-cta{display:block;text-align:center;padding:14px 24px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s,background .2s,color .2s;cursor:pointer;border:none;width:100%;font-family:'IBM Plex Mono',monospace}
+.tier-cta.primary{background:var(--c);color:var(--bg)}
+.tier-cta.primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+.tier-cta.secondary{background:transparent;color:#bbb;border:1px solid #2a2a30}
+.tier-cta.secondary:hover{border-color:var(--c);color:var(--c)}
+.tier-cta.purple{background:var(--purple);color:var(--bg)}
+.tier-cta.purple:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(167,139,250,.25)}
+
+.tier-status{font-size:10px;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;text-align:center}
+.tier-status .live{color:var(--c)}
+.tier-status .soon{color:var(--yellow)}
+
+.lifetime-counter{font-size:11px;color:var(--purple);letter-spacing:.16em;text-transform:uppercase;text-align:center;margin-top:12px;padding:8px;background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.18);border-radius:2px}
+.lifetime-counter b{color:#d4c5ff}
+
+/* ── ROADMAP ── */
+.roadmap-intro{font-size:13px;color:#7a7a82;line-height:1.85;max-width:680px;margin-bottom:24px}
+.roadmap{background:var(--card);border:1px solid var(--border);padding:0;border-radius:2px}
+.roadmap-row{display:grid;grid-template-columns:140px 1fr 120px;gap:24px;padding:22px 28px;border-bottom:1px solid #131316;align-items:start}
+.roadmap-row:last-child{border-bottom:none}
+.roadmap-row:hover{background:#0e0e10}
+.rm-version{font:700 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.16em;text-transform:uppercase}
+.rm-version.v2{color:var(--c)}
+.rm-version.v3{color:var(--yellow)}
+.rm-version.v4{color:var(--purple)}
+.rm-content h4{font-size:12px;color:#bbb;letter-spacing:.04em;margin-bottom:8px;font-weight:700}
+.rm-content ul{list-style:none;padding:0;font-size:11px;color:#7a7a82;line-height:1.85}
+.rm-content ul li{padding-left:14px;position:relative}
+.rm-content ul li::before{content:'·';position:absolute;left:4px;color:#3a3a40;font-weight:700}
+.rm-eta{font-size:10px;color:#5a5a62;letter-spacing:.14em;text-transform:uppercase;text-align:right;font-weight:600}
+
+/* ── WAITLIST ── */
+.waitlist{margin:48px 0;padding:48px 36px;background:var(--card);border:1px solid var(--border);border-radius:2px;text-align:center;position:relative;overflow:hidden}
+.waitlist::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none}
+.waitlist-eyebrow{font:600 10px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:14px;position:relative}
+.waitlist h2{font:400 40px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:12px;position:relative}
+.waitlist h2 span{color:var(--c)}
+.waitlist p{font-size:12px;color:#7a7a82;line-height:1.75;margin-bottom:28px;position:relative;max-width:520px;margin-left:auto;margin-right:auto}
+.waitlist-form{display:flex;gap:8px;max-width:480px;margin:0 auto;position:relative;flex-wrap:wrap}
+.waitlist-form input{flex:1;min-width:200px;padding:14px 16px;background:#0a0a0c;border:1px solid var(--border);color:#eaeaea;font:600 12px/1 'IBM Plex Mono',monospace;letter-spacing:.04em;transition:border-color .25s;border-radius:2px}
+.waitlist-form input:focus{outline:none;border-color:var(--c);box-shadow:0 0 0 1px var(--c)}
+.waitlist-form input::placeholder{color:#3a3a40}
+.waitlist-form button{padding:14px 28px;background:var(--c);color:var(--bg);font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;border:none;cursor:pointer;border-radius:2px;transition:transform .2s,box-shadow .2s}
+.waitlist-form button:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+.waitlist-perks{display:flex;justify-content:center;gap:24px;margin-top:24px;flex-wrap:wrap;font-size:10px;color:#5a5a62;letter-spacing:.14em;text-transform:uppercase;position:relative}
+.waitlist-perks span::before{content:'✓ ';color:var(--c)}
+
+/* ── PRICING FAQ ── */
+.qa{margin-bottom:18px;background:var(--card);border:1px solid var(--border);padding:22px 26px;border-radius:2px}
+.qa h3{font-size:12.5px;color:var(--c);letter-spacing:.06em;margin-bottom:10px;font-weight:700}
+.qa p{font-size:11.5px;color:#7a7a82;line-height:1.85;margin-bottom:8px}
+.qa p:last-child{margin-bottom:0}
+.qa b{color:#aaa;font-weight:600}
+.qa a{color:var(--c);text-decoration:none}
+.qa a:hover{text-decoration:underline}
+
+/* ── CTA FINAL ── */
+.cta-final{margin:64px 0 32px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
+.cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
+.cta-final h2{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:12px;color:#eaeaea;position:relative}
+.cta-final h2 span{color:var(--c)}
+.cta-final p{font-size:12.5px;color:#5a5a62;margin-bottom:24px;position:relative;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.75}
+.cta-final .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:18px 36px;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;position:relative;transition:transform .2s,box-shadow .2s}
+.cta-final .cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px}
+footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
+footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a:hover{color:var(--c)}
+footer span{color:var(--c)}
+
+@media(max-width:980px){
+  .tiers{grid-template-columns:1fr;gap:14px}
+  .tier-tagline{min-height:auto}
+  .roadmap-row{grid-template-columns:1fr;gap:8px}
+  .rm-eta{text-align:left}
+  .waitlist-form{flex-direction:column}
+  .waitlist-form input,.waitlist-form button{width:100%}
+}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Free forever for casual scanning. Pro $14.99/mo for power users. Lifetime $99 for the first 1000 supporters.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+</head>
+<body>
+<div class="stripe" role="presentation" aria-hidden="true"></div>
+<div class="shell">
+
+<header><nav aria-label="Main navigation">
+  <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
+  <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html" class="active">Pricing</a><a href="./faq.html">FAQ</a></div>
+  <a href="./install.html" class="nav-cta">Install &rarr;</a>
+</nav></header><main>
+
+<section class="page-hero">
+  <div class="eyebrow">Honest pricing, no bait-and-switch</div>
+  <h1>FREE FOREVER.<br><span class="accent">PRO WHEN YOU NEED IT.</span></h1>
+  <p class="sub">Casual users keep everything that matters &mdash; for free, forever. Power users who scan hundreds of tokens a day pay so the API stays online for everyone else. No retroactive limits, no feature removals. What you see today is what you keep tomorrow.</p>
+</section>
+
+<div class="section-label"><span>Choose your tier</span></div>
+
+<div class="tiers">
+
+  <!-- FREE -->
+  <div class="tier">
+    <div class="tier-name">Free</div>
+    <div class="tier-price"><span class="currency">$</span>0</div>
+    <div class="tier-period">Forever &middot; no card required</div>
+    <div class="tier-tagline">Everything Antares does today, capped at 50 scans per day. Enough for 95% of users.</div>
+    <ul class="tier-features">
+      <li><b>50 scans per day</b><small>resets at 00:00 UTC</small></li>
+      <li>Full 7-layer verdict (1000-pt scoring)</li>
+      <li>Critical Actors detection</li>
+      <li>Holder Activity (live, 60min window)</li>
+      <li>Verdict Timeline</li>
+      <li>AI Summary explanation</li>
+      <li>Honeypot, LP, Mint &amp; Freeze checks</li>
+      <li>Insider wallet clustering</li>
+      <li>Wash-trading &amp; chart-pattern detection</li>
+      <li>Browser overlay on 7 trading platforms<small>DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN</small></li>
+    </ul>
+    <a href="./install.html" class="tier-cta primary">Install free &rarr;</a>
+    <div class="tier-status"><span class="live">&middot; Live now</span></div>
+  </div>
+
+  <!-- PRO MONTHLY (FEATURED) -->
+  <div class="tier featured">
+    <div class="tier-name">Pro Monthly</div>
+    <div class="tier-price"><span class="currency">$</span>14.99</div>
+    <div class="tier-period">per month &middot; cancel anytime</div>
+    <div class="tier-tagline">Built for traders who scan 100+ tokens a day. Unlimited scans + features power users actually need.</div>
+    <ul class="tier-features">
+      <li class="bonus"><b>Everything in Free, plus:</b></li>
+      <li><b>Unlimited scans</b><small>fair-use 30 req/min anti-abuse</small></li>
+      <li>Scan history (30 days, server-side)</li>
+      <li>Watchlist (up to 50 tokens)</li>
+      <li>Detailed scoring breakdown<small>full layer-by-layer math</small></li>
+      <li>Priority cache (fresher data, lower TTL)</li>
+      <li>Export CSV / JSON</li>
+      <li>No affiliate prompts (clean UI)</li>
+      <li>Beta access to new features</li>
+      <li>Priority support</li>
+    </ul>
+    <a href="#waitlist" class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly">Join waitlist &rarr;</a>
+    <div class="tier-status"><span class="soon">&middot; Launching June 2026</span></div>
+  </div>
+
+  <!-- LIFETIME -->
+  <div class="tier lifetime">
+    <div class="tier-name">Lifetime</div>
+    <div class="tier-price"><span class="strike">$199</span><span class="currency">$</span>99</div>
+    <div class="tier-period">one-time payment &middot; forever</div>
+    <div class="tier-tagline">Pay once. Get every Pro feature, including everything we ship in v2, v3, v4. Reserved for the first 1000 supporters.</div>
+    <ul class="tier-features">
+      <li class="bonus"><b>Everything in Pro Monthly, forever</b></li>
+      <li>All future Pro v2, v3, v4 features included</li>
+      <li><b>Sentinel Founder</b> badge in overlay</li>
+      <li>Private Discord channel</li>
+      <li>Vote on roadmap priorities</li>
+      <li>Early access to every beta</li>
+      <li>Direct line to the founder</li>
+      <li>Name in Sentinel Hall of Fame</li>
+    </ul>
+    <a href="#waitlist" class="tier-cta purple" id="cta-lifetime" data-tier="lifetime">Reserve a spot &rarr;</a>
+    <div class="lifetime-counter"><b>1000</b> spots opening at launch</div>
+  </div>
+
+</div>
+
+<div class="section-label"><span>What ships when</span></div>
+
+<p class="roadmap-intro">Pro v1 launches with the features listed above &mdash; nothing we haven&rsquo;t already built. Everything below is the public roadmap. Lifetime supporters get all of it included; Monthly subscribers get it as it ships.</p>
+
+<div class="roadmap">
+
+  <div class="roadmap-row">
+    <div class="rm-version v2">Pro v2</div>
+    <div class="rm-content">
+      <h4>Real-time alerts &amp; Telegram</h4>
+      <ul>
+        <li>Email magic-link login (no password, no signup form)</li>
+        <li>Email alerts: rug detected on watchlisted tokens, large holder dumps, score drops below threshold</li>
+        <li>Telegram bot integration (one-line connect)</li>
+        <li>Configurable alert rules per token</li>
+      </ul>
+    </div>
+    <div class="rm-eta">~July 2026</div>
+  </div>
+
+  <div class="roadmap-row">
+    <div class="rm-version v3">Pro v3</div>
+    <div class="rm-content">
+      <h4>Charts, push, smart money</h4>
+      <ul>
+        <li>Token price graph (7-day rolling, in-overlay)</li>
+        <li>Native Chrome push notifications</li>
+        <li>Smart-money flow basics (which tracked wallets touched this token)</li>
+        <li>Cross-platform sync (scan history follows you across devices)</li>
+      </ul>
+    </div>
+    <div class="rm-eta">~Aug-Sep 2026</div>
+  </div>
+
+  <div class="roadmap-row">
+    <div class="rm-version v4">Pro v4</div>
+    <div class="rm-content">
+      <h4>Portfolio &amp; multichain</h4>
+      <ul>
+        <li>Wallet portfolio tracker (paste a Solana address, get continuous risk monitoring on holdings)</li>
+        <li>P&amp;L per token with realised vs paper</li>
+        <li>Multichain expansion (Base, BSC) &mdash; depends on demand</li>
+        <li>API access for power users (separate $199/mo B2B tier)</li>
+      </ul>
+    </div>
+    <div class="rm-eta">~Oct-Nov 2026</div>
+  </div>
+
+</div>
+
+<!-- WAITLIST -->
+<section class="waitlist" id="waitlist">
+  <div class="waitlist-eyebrow">Get early access</div>
+  <h2>Join the <span>Pro waitlist</span>.</h2>
+  <p>Reserve your spot before public launch. Waitlist members get a one-time launch discount, first access to Lifetime spots (1000 total), and the founder badge if they upgrade in the first 7 days.</p>
+  <form class="waitlist-form" action="https://api.antares-website.vercel.app/api/waitlist" method="POST" id="waitlist-form">
+    <input type="email" name="email" placeholder="you@degen.sol" required autocomplete="email" aria-label="Email address">
+    <button type="submit">Reserve &rarr;</button>
+  </form>
+  <div class="waitlist-perks">
+    <span>One-time launch discount</span>
+    <span>First-pick on 1000 Lifetime spots</span>
+    <span>No spam, no list selling</span>
+  </div>
+</section>
+
+<div class="section-label"><span>Pricing FAQ</span></div>
+
+<div class="qa"><h3>Will the Free tier ever be downgraded?</h3>
+<p>No. Whatever Free does today &mdash; full 7-layer verdict, AI Summary, Holder Activity, all of it &mdash; stays in Free forever. The only constraint we&rsquo;re adding is the <b>50 scans/day cap</b>, announced upfront, applied from CWS launch day. We&rsquo;re not in the business of shipping a generous free tier and clawing it back six months later.</p>
+</div>
+
+<div class="qa"><h3>Why 50 scans per day specifically?</h3>
+<p>Casual users (the 95% majority) average 5-10 scans per day. 50 covers a heavy research session without hitting the cap. Power users who scan 100+ a day &mdash; usually traders trading real size &mdash; will run out and convert. That&rsquo;s the segmentation: free for users, Pro for users whose tooling is part of their P&amp;L.</p>
+</div>
+
+<div class="qa"><h3>Why announce Pro now if it doesn&rsquo;t exist yet?</h3>
+<p>Two reasons. First, transparency &mdash; you should know on day one what the business model is, not discover it in a surprise update. Second, the waitlist gives early supporters a price advantage that wouldn&rsquo;t be possible after public launch. Pro v1 launches in June 2026 with only the features listed above &mdash; we won&rsquo;t bill anyone for vapor.</p>
+</div>
+
+<div class="qa"><h3>What does Lifetime actually mean?</h3>
+<p>Pay $99 once, get every Pro feature for as long as Antares exists, including everything in Pro v2, v3, v4 (alerts, charts, push, smart-money, portfolio tracker). Lifetime is capped at 1000 supporters &mdash; once full, monthly is the only option. Lifetime members also get a private Discord channel, founder badge, and roadmap vote.</p>
+</div>
+
+<div class="qa"><h3>Can I get a refund?</h3>
+<p>Pro Monthly: yes, within 7 days, no questions asked. Lifetime: yes, within 30 days. After that, Lifetime is non-refundable because the spot is removed from the 1000-cap inventory. We use Lemonsqueezy as merchant of record &mdash; refunds processed by them, EU VAT handled automatically.</p>
+</div>
+
+<div class="qa"><h3>Will there be student / underdog pricing?</h3>
+<p>Yes. Verifiable students and developers contributing to open source get 50% off Pro Monthly. Reach out via the waitlist with your situation and we&rsquo;ll set it up.</p>
+</div>
+
+<div class="cta-final">
+  <h2>Install <span>free</span>. Decide later.</h2>
+  <p>The Free tier is fully usable. Try it for a week, see if you hit 50 scans/day, then decide if Pro makes sense for your trading. No card needed to start.</p>
+  <a class="cta" href="./install.html">↗ Install Antares</a>
+</div>
+
+</main></div>
+<footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+
+<script>
+// ── Waitlist form handler — graceful degradation ─────────────────────────────
+document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var email = this.email.value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    this.email.style.borderColor = '#ff5f5f';
+    return;
+  }
+  // TODO: wire to /api/waitlist endpoint once backend ready
+  // For now, store locally + show confirmation
+  try {
+    var stored = JSON.parse(localStorage.getItem('antares_waitlist') || '[]');
+    if (stored.indexOf(email) === -1) stored.push(email);
+    localStorage.setItem('antares_waitlist', JSON.stringify(stored));
+  } catch(_) {}
+  this.innerHTML = '<div style="color:#00e5b0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-align:center;padding:14px;width:100%">&check; You&rsquo;re on the list. We&rsquo;ll email you at launch.</div>';
+});
+
+// ── Live checkout — only when install_id rides in via the URL ────────────────
+//
+// The extension overlay's quota-badge "→ PRO" link appends ?install=<id>
+// to the pricing URL when the user clicks it. When that param is present
+// AND well-formed we swap the Pro/Lifetime "Join waitlist" CTAs for real
+// Lemonsqueezy checkout buttons that hit /api/checkout to mint a signed
+// URL with install_id baked into custom_data.
+//
+// If the extension isn't installed (no ?install= param) we leave the
+// waitlist flow untouched — visitors who discover the page organically
+// still get a path to engage.
+(function() {
+  var INSTALL_ID_RE = /^[a-zA-Z0-9_-]{8,128}$/;
+  var CHECKOUT_API = 'https://antares-extension.vercel.app/api/checkout';
+
+  var params = new URLSearchParams(window.location.search);
+  var installId = (params.get('install') || '').trim();
+  if (!installId || !INSTALL_ID_RE.test(installId)) return;
+
+  var BTNS = [
+    { id: 'cta-pro-monthly', tier: 'monthly', label: 'Subscribe Pro &rarr;' },
+    { id: 'cta-lifetime', tier: 'lifetime', label: 'Get Lifetime &rarr;' }
+  ];
+
+  function setBtn(btn, html) {
+    btn.innerHTML = html;
+  }
+
+  function wireCheckout(spec) {
+    var btn = document.getElementById(spec.id);
+    if (!btn) return;
+    var originalLabel = spec.label;
+    setBtn(btn, originalLabel);
+    btn.setAttribute('href', '#');
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (btn.dataset.busy === '1') return;
+      btn.dataset.busy = '1';
+      setBtn(btn, '...');
+
+      fetch(CHECKOUT_API + '?tier=' + spec.tier + '&install_id=' + encodeURIComponent(installId), {
+        method: 'GET'
+      }).then(function(res) {
+        return res.json().then(function(body) {
+          return { status: res.status, body: body };
+        });
+      }).then(function(r) {
+        if (r.status === 200 && r.body && r.body.url) {
+          window.location.href = r.body.url;
+          return;
+        }
+        if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
+          setBtn(btn, 'Coming soon');
+          btn.style.opacity = '0.6';
+          setTimeout(function() {
+            setBtn(btn, originalLabel);
+            btn.style.opacity = '';
+            btn.dataset.busy = '0';
+          }, 3000);
+          return;
+        }
+        setBtn(btn, '&times; Retry');
+        setTimeout(function() {
+          setBtn(btn, originalLabel);
+          btn.dataset.busy = '0';
+        }, 2500);
+      }).catch(function() {
+        setBtn(btn, '&times; Network');
+        setTimeout(function() {
+          setBtn(btn, originalLabel);
+          btn.dataset.busy = '0';
+        }, 2500);
+      });
+    });
+  }
+
+  BTNS.forEach(wireCheckout);
+
+  // Surface a small banner so the user knows their install was detected and
+  // the upgrade flow is live. Inserted right after the page hero.
+  var banner = document.createElement('div');
+  banner.setAttribute('role', 'status');
+  banner.style.cssText = [
+    'background:rgba(0,229,176,0.04)',
+    'border:1px solid rgba(0,229,176,0.2)',
+    'border-radius:2px',
+    'padding:10px 16px',
+    'margin:0 auto 32px',
+    'max-width:520px',
+    'text-align:center',
+    'font:600 10px/1 "IBM Plex Mono",monospace',
+    'color:#00e5b0',
+    'letter-spacing:0.22em',
+    'text-transform:uppercase'
+  ].join(';');
+  banner.textContent = '✓ Install detected · upgrade ready';
+  var hero = document.querySelector('.page-hero');
+  if (hero && hero.parentNode) {
+    hero.parentNode.insertBefore(banner, hero.nextSibling);
+  }
+})();
+</script>
+
+</body>
+</html>
