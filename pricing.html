@@ -191,6 +191,23 @@ footer span{color:var(--c)}
 .pay-qr svg{width:168px;height:168px;display:block}
 .pay-amount{font:400 36px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-align:center;margin-bottom:4px}
 .pay-token{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:18px}
+/* Email input — shown above the QR so the user enters it before paying.
+   The license key is delivered tied to this email (and the buyer can
+   re-fetch it later at /account.html), so we ask up-front rather than
+   risk a confirmed payment with no recoverable identity. */
+.pay-email-row{display:flex;flex-direction:column;gap:6px;margin:0 0 14px}
+.pay-email-row label{font:600 10px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase}
+.pay-email-row input{padding:10px 12px;background:#0a0a0c;color:#eaeaea;border:1px solid var(--border);border-radius:2px;font:400 13px/1 'IBM Plex Mono',monospace}
+.pay-email-row input:focus{border-color:var(--c);outline:none}
+.pay-email-row input.invalid{border-color:#ff5f5f}
+.pay-email-hint{font:400 10px/1.4 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em}
+.pay-license{margin:14px 0;padding:14px;background:rgba(0,229,176,.06);border:1px solid rgba(0,229,176,.4);border-radius:2px;text-align:center}
+.pay-license-label{font:600 9px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
+.pay-license-key{font:700 14px/1.3 'IBM Plex Mono',monospace;color:#eaeaea;letter-spacing:.12em;word-break:break-all;user-select:all;-webkit-user-select:all}
+.pay-license-copy{margin-top:10px;background:none;border:1px solid rgba(0,229,176,.4);color:var(--c);padding:6px 14px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px}
+.pay-license-copy:hover{background:rgba(0,229,176,.12);border-color:var(--c)}
+.pay-license-instr{margin-top:12px;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#888}
+.pay-license-instr a{color:var(--c)}
 .pay-toggle{display:flex;gap:0;justify-content:center;margin:0 auto 18px;border:1px solid var(--border);border-radius:2px;overflow:hidden;width:fit-content;background:#0a0a0c}
 .pay-toggle button{flex:0 0 auto;padding:9px 18px;background:transparent;border:none;color:#666;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:color .2s,background .2s;min-width:96px}
 .pay-toggle button.active{color:var(--bg);background:var(--c)}
@@ -417,6 +434,11 @@ footer span{color:var(--c)}
     <button class="pay-close" id="pay-close" aria-label="Close">&times;</button>
     <h3 class="pay-title" id="pay-title">Pay on Solana</h3>
     <div class="pay-subtitle" id="pay-subtitle">Direct on Solana &middot; zero middleman</div>
+    <div class="pay-email-row" id="pay-email-row">
+      <label for="pay-email">Your email (for the license + receipt)</label>
+      <input type="email" id="pay-email" name="email" autocomplete="email" placeholder="you@degen.sol" spellcheck="false">
+      <div class="pay-email-hint" id="pay-email-hint">We email your license key here. Use it to unlock Pro on any install.</div>
+    </div>
     <div class="pay-toggle" role="tablist" aria-label="Choose payment token">
       <button type="button" id="pay-toggle-usdc" class="active" data-token="usdc" role="tab" aria-selected="true">USDC</button>
       <button type="button" id="pay-toggle-sol" data-token="sol" role="tab" aria-selected="false">SOL</button>
@@ -424,6 +446,12 @@ footer span{color:var(--c)}
     <div class="pay-amount" id="pay-amount">—</div>
     <div class="pay-token" id="pay-token-label">USDC on Solana</div>
     <div class="pay-qr" id="pay-qr"></div>
+    <div class="pay-license" id="pay-license" style="display:none">
+      <div class="pay-license-label">Your license key</div>
+      <div class="pay-license-key" id="pay-license-key">—</div>
+      <button type="button" class="pay-license-copy" id="pay-license-copy">Copy</button>
+      <div class="pay-license-instr">Save this key. Open the extension's options page and paste it under <b>Redeem a Pro license</b>. You can also fetch it later at <a href="./account.html">antares-website.vercel.app/account</a>.</div>
+    </div>
     <div class="pay-recipient">
       <span class="pay-addr" id="pay-recipient">—</span>
       <button id="pay-copy" type="button">Copy</button>
@@ -498,6 +526,13 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   var closeBtn = document.getElementById('pay-close');
   var toggleUsdc = document.getElementById('pay-toggle-usdc');
   var toggleSol = document.getElementById('pay-toggle-sol');
+  var emailInput = document.getElementById('pay-email');
+  var emailHintEl = document.getElementById('pay-email-hint');
+  var licenseRow = document.getElementById('pay-license');
+  var licenseKeyEl = document.getElementById('pay-license-key');
+  var licenseCopyBtn = document.getElementById('pay-license-copy');
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   var pollTimer = null;
   var currentReference = null;
@@ -506,12 +541,27 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   // avoid surprising users who don't know SOL pricing fluctuates.
   var currentToken = 'usdc';
   var currentTier = null;
+  // Whether the email field has been validated (for state transitions
+  // between "before pay" and "after pay confirmed").
+  var currentEmail = '';
+
+  // Persist whatever the buyer typed locally so refreshes don't lose it.
+  try {
+    var saved = localStorage.getItem('antares_buyer_email') || '';
+    if (saved) emailInput.value = saved;
+  } catch(_) {}
+  emailInput.addEventListener('input', function() {
+    try { localStorage.setItem('antares_buyer_email', emailInput.value); } catch(_) {}
+    emailInput.classList.remove('invalid');
+  });
 
   function closeModal() {
     overlay.classList.remove('open');
     if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
     currentReference = null;
     txEl.textContent = '';
+    licenseRow.style.display = 'none';
+    licenseKeyEl.textContent = '—';
   }
 
   closeBtn.addEventListener('click', closeModal);
@@ -548,6 +598,12 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
     if (hero && hero.parentNode) hero.parentNode.insertBefore(banner, hero.nextSibling);
   }
 
+  function showLicense(key) {
+    if (!key) return;
+    licenseKeyEl.textContent = key;
+    licenseRow.style.display = 'block';
+  }
+
   function pollStatus(reference) {
     fetch(STATUS_API + '?reference=' + encodeURIComponent(reference))
       .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
@@ -564,15 +620,27 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
                 r.body.txSignature.slice(0, 8) + '…' + r.body.txSignature.slice(-8) +
                 '</a>';
             }
+            // Surface the license key inline so the buyer can save it
+            // before the modal auto-closes. We keep the modal open longer
+            // when a license is present (the key is the artifact they
+            // came for).
+            if (r.body.licenseKey) {
+              showLicense(r.body.licenseKey);
+            }
             if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-            // Hold the success state for a beat so the user sees it land,
-            // then close + show the confirmation banner on the page.
-            setTimeout(function() {
-              if (currentReference === reference) {
-                closeModal();
-                showSuccessBanner();
-              }
-            }, 2500);
+            // No license → close after the usual short pause. With a
+            // license → leave it open so the user has time to copy it.
+            // They can dismiss with Esc / close button when done.
+            if (!r.body.licenseKey) {
+              setTimeout(function() {
+                if (currentReference === reference) {
+                  closeModal();
+                  showSuccessBanner();
+                }
+              }, 2500);
+            } else {
+              showSuccessBanner();
+            }
             return;
           }
           if (r.body.status === 'expired') {
@@ -611,7 +679,24 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
     toggleSol.disabled = !!busy;
   }
 
+  function readEmail() {
+    var v = (emailInput.value || '').trim().toLowerCase();
+    return EMAIL_RE.test(v) ? v : '';
+  }
+
   function createIntent(tier, token) {
+    var email = readEmail();
+    if (!email) {
+      // Surface the validation error inline; don't open the loading
+      // state for a bad email — that just confuses users into thinking
+      // the network is broken.
+      emailInput.classList.add('invalid');
+      emailInput.focus();
+      setStatus('expired', 'Enter a valid email above first');
+      setToggleUI(currentToken, false);
+      return;
+    }
+    currentEmail = email;
     currentTier = tier;
     currentToken = token;
     setToggleUI(token, true);
@@ -625,13 +710,20 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
     deeplinkEl.setAttribute('href', '#');
     setStatus('waiting', 'Creating intent&hellip;');
     txEl.textContent = '';
+    licenseRow.style.display = 'none';
     if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
     currentReference = null;
+
+    var body = { tier: tier, token: token, email: email };
+    // Pass install_id when the user came from the extension's quota
+    // link; otherwise the server will identify the buyer by email
+    // and synthesise a placeholder install_id internally.
+    if (hasInstall) body.install_id = installId;
 
     fetch(INTENT_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tier: tier, token: token, install_id: installId })
+      body: JSON.stringify(body)
     })
       .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
       .then(function(r) {
@@ -677,16 +769,39 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
   }
 
   function openModal(spec) {
-    if (!hasInstall) {
-      // Visitor without the extension — install it first, the overlay's
-      // quota-badge link is what brings them back here with ?install=<id>.
-      window.location.href = './install.html';
-      return;
-    }
+    // Anyone can open the modal — site-direct visitors who haven't
+    // installed yet pay with email only and receive a license key
+    // they redeem later. The install-id flow continues to work when
+    // present (?install=<id> in the URL).
     overlay.classList.add('open');
+    // Update the email-row hint based on whether we have an install
+    // already paired (extension users) vs. site-direct buyers (need
+    // the license key to bridge to a future install).
+    if (hasInstall) {
+      emailHintEl.textContent = 'For your receipt + license key (you can use the same key on a new install later).';
+    } else {
+      emailHintEl.textContent = 'After payment we issue a license key. You’ll paste it in the extension after installing to unlock Pro.';
+    }
     // Default token on each open is whatever the user last picked in this
     // session, but USDC on first open (currentToken initialises to 'usdc').
-    createIntent(spec.tier, currentToken);
+    // We don't auto-fire createIntent here — let the user fill in their
+    // email first. The toggle/CTA buttons trigger createIntent.
+    setStatus('waiting', 'Enter your email then pick a token to mint the intent');
+    qrEl.innerHTML = '<div style="color:#666;font-size:10px;letter-spacing:.18em;text-align:center">QR appears after intent is created</div>';
+    amountEl.textContent = '—';
+    recipientEl.textContent = '—';
+    txEl.textContent = '';
+    licenseRow.style.display = 'none';
+    currentTier = spec.tier;
+
+    // If we already have a valid email saved (from a previous session
+    // or a focused field), kick the intent immediately — preserves the
+    // one-click flow for returning users.
+    if (readEmail()) {
+      createIntent(spec.tier, currentToken);
+    } else {
+      emailInput.focus();
+    }
   }
 
   // Wire the tier CTAs
@@ -705,16 +820,51 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
 
   // Toggle handlers — switching token re-mints the intent (the reference
   // key + amount are token-specific, so reusing a stale intent would let
-  // the user pay USDC for a SOL-quoted intent and never settle).
+  // the user pay USDC for a SOL-quoted intent and never settle). Same
+  // path is also used to mint the *first* intent once the user has
+  // picked a tier and entered a valid email.
   function onToggle(token) {
     return function(e) {
       e.preventDefault();
-      if (token === currentToken || !currentTier) return;
+      if (!currentTier) return;
+      // Same-token re-click after intent is already minted = no-op.
+      if (token === currentToken && currentReference) return;
       createIntent(currentTier, token);
     };
   }
   toggleUsdc.addEventListener('click', onToggle('usdc'));
   toggleSol.addEventListener('click', onToggle('sol'));
+
+  // Email handlers — once the user finishes entering a valid email
+  // (blur or Enter), auto-mint the intent if a tier is selected and we
+  // don't already have one. Saves a click for returning visitors with
+  // remembered emails too.
+  function maybeMintFromEmail() {
+    if (!currentTier) return;
+    if (currentReference) return;
+    if (!readEmail()) return;
+    createIntent(currentTier, currentToken);
+  }
+  emailInput.addEventListener('blur', maybeMintFromEmail);
+  emailInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      maybeMintFromEmail();
+    }
+  });
+
+  // License copy button (visible after payment confirms)
+  licenseCopyBtn.addEventListener('click', function() {
+    var key = licenseKeyEl.textContent;
+    if (!key || key === '—') return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(key).then(function() {
+        var orig = licenseCopyBtn.textContent;
+        licenseCopyBtn.textContent = '✓ Copied';
+        setTimeout(function() { licenseCopyBtn.textContent = orig; }, 1800);
+      });
+    }
+  });
 
   // Copy-to-clipboard for the recipient address
   copyBtn.addEventListener('click', function() {
