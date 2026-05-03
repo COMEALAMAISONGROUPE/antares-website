@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Antares — Pricing page conversion-design demos">
+<meta name="robots" content="noindex,nofollow">
+<title>Pricing — Conversion demos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f;--yellow:#f5d000;--purple:#a78bfa}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;min-height:100vh}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
+
+/* Demo nav */
+.demo-nav{position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:14px 0}
+.demo-nav-inner{max-width:1160px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.demo-nav .label{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
+.demo-nav a{font-size:11px;color:#888;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;border:1px solid var(--border);border-radius:2px;transition:.2s;white-space:nowrap}
+.demo-nav a:hover{color:var(--c);border-color:var(--c)}
+.demo-nav .meta{margin-left:auto;font-size:10px;color:#5a5a62;letter-spacing:.04em}
+
+.demo-section{padding:80px 0 100px;border-bottom:1px solid var(--border);position:relative}
+.demo-section:last-of-type{border-bottom:none}
+.demo-section h2{font:400 20px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;font-weight:600}
+.demo-section h2 b{color:var(--c);font-weight:700}
+.demo-section .demo-pitch{font-size:12px;color:#7a7a82;line-height:1.7;margin-bottom:50px;max-width:720px}
+.demo-section .demo-pitch b{color:#bbb;font-weight:600}
+
+/* === SHARED: section-label, hero typography === */
+.section-label{text-align:center;margin:0 0 50px}
+.section-label span{font-size:11px;color:#888;letter-spacing:.28em;text-transform:uppercase;font-weight:600}
+.hero-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;text-align:center}
+.page-h1{font:400 clamp(56px,9vw,108px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;text-align:center;margin-bottom:18px}
+.page-h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.2)}
+.page-sub{font-size:14px;color:#7a7a82;line-height:1.7;text-align:center;max-width:680px;margin:0 auto 60px}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DEMO A — BIG PRO + ROI ANCHOR
+   ═══════════════════════════════════════════════════════════════════════════ */
+.a-tiers{display:grid;grid-template-columns:.75fr 1.4fr .85fr;gap:18px;margin:32px 0 16px;align-items:stretch}
+.a-tier{background:var(--card);border:1px solid var(--border);padding:32px 26px 28px;display:flex;flex-direction:column;border-radius:4px;position:relative}
+.a-tier.free{opacity:.6;background:#0c0c0e}
+.a-tier.free:hover{opacity:.85}
+.a-tier.featured{border:2px solid var(--c);box-shadow:0 0 40px rgba(0,229,176,.15),0 0 0 1px var(--c) inset;background:linear-gradient(180deg,#0d1413 0%,#0a0d0c 100%);transform:scale(1.04);z-index:2}
+.a-tier.featured::before{content:'⚡ BEST FOR TRADERS';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--c);color:var(--bg);font:700 10px/1 'IBM Plex Mono',monospace;padding:8px 16px;letter-spacing:.22em;white-space:nowrap;border-radius:2px}
+.a-tier.lifetime{border:1px solid #2a2a30}
+.a-tier.lifetime::before{content:'PERPETUAL';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--purple);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap;border-radius:2px}
+.a-name{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
+.a-tier.featured .a-name{color:var(--c)}
+.a-tier.lifetime .a-name{color:var(--purple)}
+.a-price{font:400 56px/.9 'Bebas Neue',sans-serif;color:#eaeaea;display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.a-tier.featured .a-price{font-size:80px}
+.a-price .currency{font-size:24px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600}
+.a-tier.featured .a-price .currency{font-size:34px;color:var(--c)}
+.a-price .strike{font-size:18px;color:#3a3a40;text-decoration:line-through;font-family:'IBM Plex Mono',monospace;font-weight:600;margin-right:4px}
+.a-period{font-size:11px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;min-height:14px}
+.a-tagline{font-size:11.5px;color:#7a7a82;line-height:1.6;font-style:italic;border-left:2px solid #252529;padding-left:12px;margin-bottom:18px;min-height:54px}
+.a-tier.featured .a-tagline{border-left-color:var(--c);color:#bbb}
+.a-tier.lifetime .a-tagline{border-left-color:var(--purple)}
+
+/* ROI box — only on the featured tier */
+.a-roi{background:rgba(0,229,176,.06);border:1px solid rgba(0,229,176,.3);border-radius:3px;padding:14px;margin-bottom:18px}
+.a-roi-eye{font:700 9px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;margin-bottom:6px}
+.a-roi-line{font:400 13px/1.5 'IBM Plex Mono',monospace;color:#eaeaea}
+.a-roi-line b{color:var(--c);font-weight:700}
+
+.a-features{list-style:none;margin:0 0 22px;padding:0;flex:1}
+.a-features li{font-size:11.5px;color:#888;line-height:1.5;padding:7px 0 7px 22px;position:relative;border-bottom:1px solid #131316}
+.a-features li:last-child{border-bottom:none}
+.a-features li::before{content:'✓';position:absolute;left:0;top:7px;color:var(--c);font-weight:700;font-size:12px}
+.a-features li.bonus{color:#bbb}
+.a-features li b{color:#bbb;font-weight:600}
+.a-tier.featured .a-features li{color:#aaa;font-size:12px;padding:9px 0 9px 22px}
+.a-tier.featured .a-features li b{color:#eee}
+.a-features li small{display:block;color:#4a4a52;font-size:10px;margin-top:2px;font-style:italic}
+
+.a-cta{display:block;text-align:center;padding:14px 24px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;cursor:pointer;border:none;width:100%;transition:.2s}
+.a-cta.primary{background:var(--c);color:var(--bg);box-shadow:0 4px 16px rgba(0,229,176,.2)}
+.a-tier.featured .a-cta.primary{padding:18px;font-size:13px;box-shadow:0 8px 28px rgba(0,229,176,.35)}
+.a-cta.primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,229,176,.45)}
+.a-cta.secondary{background:transparent;color:#888;border:1px solid #2a2a30}
+.a-cta.secondary:hover{border-color:var(--c);color:var(--c)}
+.a-cta.purple{background:var(--purple);color:var(--bg)}
+.a-cta.purple:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(167,139,250,.35)}
+.a-status{font-size:10px;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;text-align:center}
+.a-status .live{color:var(--c)}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DEMO B — COMPARISON TABLE
+   ═══════════════════════════════════════════════════════════════════════════ */
+.b-table-wrap{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.b-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace}
+.b-table thead th{background:#0a0a0c;text-align:left;padding:24px 20px;border-bottom:1px solid var(--border);position:relative;vertical-align:top}
+.b-table thead th:first-child{width:36%}
+.b-table thead th.b-pro{background:linear-gradient(180deg,#0e1413 0%,#0a0e0d 100%);box-shadow:0 0 0 2px var(--c) inset;position:relative;z-index:2}
+.b-table thead th.b-pro::before{content:'⚡ MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--c);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;border-radius:2px;white-space:nowrap}
+.b-tier-name{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px}
+.b-pro .b-tier-name{color:var(--c)}
+.b-lifetime .b-tier-name{color:var(--purple)}
+.b-price{font:400 38px/.9 'Bebas Neue',sans-serif;color:#eaeaea;margin-bottom:4px}
+.b-pro .b-price{color:var(--c);font-size:48px}
+.b-price .currency{font-size:18px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600}
+.b-pro .b-price .currency{color:var(--c)}
+.b-price .strike{font-size:14px;color:#3a3a40;text-decoration:line-through;margin-right:4px;font-family:'IBM Plex Mono',monospace;font-weight:600}
+.b-period{font-size:10px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase}
+.b-table tbody td{padding:14px 20px;border-bottom:1px solid #131316;font-size:12px;color:#888;line-height:1.5;vertical-align:middle}
+.b-table tbody tr:last-child td{border-bottom:none}
+.b-table tbody td.b-feat{color:#bbb;font-weight:500}
+.b-table tbody td.b-feat small{display:block;color:#5a5a62;font-size:10px;margin-top:2px;font-style:italic;font-weight:400}
+.b-table tbody td.b-pro{background:rgba(0,229,176,.03);text-align:center;color:var(--c);font-weight:700;font-size:14px;box-shadow:2px 0 0 var(--c) inset,-2px 0 0 var(--c) inset}
+.b-table tbody td.b-tier{text-align:center;font-size:14px;font-weight:700}
+.b-table tbody td .yes{color:var(--c)}
+.b-table tbody td .no{color:#3a3a40;font-size:18px}
+.b-table tbody td .num{color:#eee}
+.b-table tbody tr.b-section td{background:#08080a;color:#5a5a62;font-size:9px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;padding:14px 20px}
+.b-table tfoot td{padding:24px 20px;text-align:center;border-top:2px solid var(--border)}
+.b-table tfoot td.b-pro{background:rgba(0,229,176,.04);box-shadow:2px 0 0 var(--c) inset,-2px 0 0 var(--c) inset}
+.b-cta{display:block;width:100%;padding:13px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;cursor:pointer;border:none;transition:.2s}
+.b-cta.primary{background:var(--c);color:var(--bg)}
+.b-cta.primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,229,176,.35)}
+.b-cta.secondary{background:transparent;color:#888;border:1px solid #2a2a30}
+.b-cta.secondary:hover{border-color:var(--c);color:var(--c)}
+.b-cta.purple{background:var(--purple);color:var(--bg)}
+.b-cta.purple:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(167,139,250,.35)}
+.b-scarcity{margin-top:24px;text-align:center;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--purple)}
+.b-scarcity b{color:#d4c5ff;font-weight:700}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DEMO C — SCENARIO-FIRST
+   ═══════════════════════════════════════════════════════════════════════════ */
+.c-scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:60px}
+.c-scenario{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:.3s}
+.c-scenario:hover{border-color:var(--c);transform:translateY(-2px)}
+.c-time{font:700 9px/1 'IBM Plex Mono',monospace;color:var(--yellow);letter-spacing:.22em;text-transform:uppercase}
+.c-headline{font:400 22px/1.15 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea}
+.c-body{font-size:11.5px;color:#888;line-height:1.6}
+.c-body b{color:#bbb;font-weight:600}
+.c-divider{display:flex;align-items:center;margin:16px 0 8px}
+.c-free-says,.c-pro-says{flex:1;font-size:10.5px;line-height:1.55;letter-spacing:.02em;padding:10px 0}
+.c-free-says{color:#5a5a62;border-right:1px solid #1a1a1e;padding-right:10px}
+.c-free-says b{color:#888;font-weight:600;display:block;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px}
+.c-pro-says{padding-left:10px}
+.c-pro-says b{color:var(--c);font-weight:700;display:block;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px}
+
+.c-tiers{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:stretch}
+.c-pro-card{background:linear-gradient(180deg,#0d1413 0%,#0a0e0d 100%);border:2px solid var(--c);border-radius:4px;padding:36px 32px;display:flex;flex-direction:column;box-shadow:0 0 60px rgba(0,229,176,.1)}
+.c-pro-card .c-tier-name{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px}
+.c-pro-card .c-price{font:400 72px/.9 'Bebas Neue',sans-serif;color:var(--c);margin-bottom:4px}
+.c-pro-card .c-price .currency{font-size:32px;color:var(--c);font-family:'IBM Plex Mono',monospace;font-weight:600}
+.c-pro-card .c-period{font-size:11px;color:#888;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+.c-pro-card .c-pitch{font-size:13px;color:#bbb;line-height:1.65;margin-bottom:22px;flex:1}
+.c-pro-card .c-pitch b{color:#eee;font-weight:600}
+.c-pro-cta{display:block;padding:18px;background:var(--c);color:var(--bg);font:700 13px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:2px;box-shadow:0 8px 28px rgba(0,229,176,.35);transition:.2s}
+.c-pro-cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,229,176,.5)}
+.c-pro-foot{margin-top:14px;font:600 10px/1.4 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.18em;text-transform:uppercase;text-align:center}
+
+.c-side{display:flex;flex-direction:column;gap:18px}
+.c-life{background:var(--card);border:1px solid rgba(167,139,250,.4);border-radius:4px;padding:26px 24px}
+.c-life .c-tier-name{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--purple);letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px}
+.c-life .c-price{font:400 42px/.9 'Bebas Neue',sans-serif;color:#eaeaea;margin-bottom:4px}
+.c-life .c-price .strike{font-size:18px;color:#3a3a40;text-decoration:line-through;margin-right:4px;font-family:'IBM Plex Mono',monospace;font-weight:600}
+.c-life .c-price .currency{font-size:20px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600}
+.c-life .c-period{font-size:10px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.c-life .c-pitch{font-size:11.5px;color:#888;line-height:1.55;margin-bottom:14px}
+.c-life .c-pitch b{color:#d4c5ff;font-weight:600}
+.c-life-cta{display:block;padding:12px;background:var(--purple);color:var(--bg);font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;text-align:center;border-radius:2px;transition:.2s}
+.c-life-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(167,139,250,.35)}
+.c-life-counter{margin-top:10px;font:600 10px/1.5 'IBM Plex Mono',monospace;color:var(--purple);letter-spacing:.16em;text-transform:uppercase;text-align:center}
+.c-life-counter b{color:#d4c5ff}
+
+.c-free-link{background:#0a0a0c;border:1px solid #1a1a1e;border-radius:4px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.c-free-info{font-size:11px;color:#5a5a62;line-height:1.5}
+.c-free-info b{color:#888;font-weight:600;font-size:13px}
+.c-free-link a{font:600 10px/1 'IBM Plex Mono',monospace;color:#888;text-decoration:none;letter-spacing:.16em;text-transform:uppercase;padding:9px 14px;border:1px solid #2a2a30;border-radius:2px;transition:.2s;white-space:nowrap}
+.c-free-link a:hover{color:var(--c);border-color:var(--c)}
+
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px}
+
+@media(max-width:980px){
+  .a-tiers{grid-template-columns:1fr;gap:14px}
+  .a-tier.featured{transform:scale(1)}
+  .b-table thead th{padding:14px 10px}
+  .b-table tbody td{padding:10px 8px;font-size:11px}
+  .c-scenarios{grid-template-columns:1fr}
+  .c-tiers{grid-template-columns:1fr}
+}
+
+/* Pick footer (sticky) */
+.pick-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,12,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--border);padding:14px 32px;z-index:200;text-align:center;font-size:12px;color:#888;letter-spacing:.04em}
+.pick-bar code{padding:3px 8px;background:#1a1a1e;border-radius:2px;color:var(--c);font-family:'IBM Plex Mono',monospace;font-size:11px}
+.pick-bar b{color:#bbb}
+</style>
+</head>
+<body>
+
+<div class="stripe" role="presentation" aria-hidden="true"></div>
+
+<nav class="demo-nav">
+  <div class="demo-nav-inner">
+    <span class="label">Pricing demos</span>
+    <a href="#demo-a">A · Big Pro + ROI</a>
+    <a href="#demo-b">B · Comparison table</a>
+    <a href="#demo-c">C · Scenario-first</a>
+    <span class="meta">Pick one · tell me <code style="color:var(--c)">ship demo X</code></span>
+  </div>
+</nav>
+
+<!-- ═════════════════════════════════════════════════════════════════════════
+     DEMO A — BIG PRO + ROI
+     ═════════════════════════════════════════════════════════════════════════ -->
+<section class="demo-section" id="demo-a">
+<div class="shell">
+  <h2>Demo <b>A</b> — Big Pro card + ROI anchor</h2>
+  <p class="demo-pitch">
+    Same 3-card structure as today, but the visual hierarchy <b>aggressively</b>
+    pushes Pro: 1.4× wider, scaled-up 4%, larger price (80px), green glow. Free
+    drops to 60% opacity. New <b>ROI box</b> on the Pro card anchors price
+    against rug-loss reality (<i>"avoid one $500 bag = 20 months of Pro"</i>).
+    Lifetime stays as the perpetual-upsell. CTA on Pro is bigger, has a stronger
+    glow on hover. Lowest-effort change — keeps the page structure familiar.
+  </p>
+
+  <div class="hero-eye">Built for Solana traders</div>
+  <h1 class="page-h1">Stop trading <span class="accent">blind</span>.</h1>
+  <p class="page-sub">7 detection layers, 1000-point score, real-time on every Solana DEX. Pro unlocks the deep-dive layers that explain WHY a token gets its verdict.</p>
+
+  <div class="a-tiers">
+
+    <div class="a-tier free">
+      <div class="a-name">Free</div>
+      <div class="a-price"><span class="currency">$</span>0</div>
+      <div class="a-period">50 / day · no card</div>
+      <div class="a-tagline">The verdict, that's it. Taste-test the engine.</div>
+      <ul class="a-features">
+        <li>50 scans / day</li>
+        <li>SAFE / CAUTION / DANGER / RUG verdict</li>
+        <li>1000-point composite score</li>
+        <li>Honeypot, LP, Mint &amp; Freeze checks</li>
+      </ul>
+      <a href="./install.html" class="a-cta secondary">Install free →</a>
+    </div>
+
+    <div class="a-tier featured">
+      <div class="a-name">Pro · 30-day pass</div>
+      <div class="a-price"><span class="currency">$</span>24.99</div>
+      <div class="a-period">USDC or SOL · one-time, no auto-renew</div>
+      <div class="a-tagline">For active traders. Unlimited scans, AI Summary, Critical Flags panel, Full Analysis page — everything that explains the verdict.</div>
+      <div class="a-roi">
+        <div class="a-roi-eye">⚡ Reality check</div>
+        <div class="a-roi-line">Avoid <b>one</b> $500 rug → <b>20 months</b> of Pro paid for.</div>
+      </div>
+      <ul class="a-features">
+        <li><b>Unlimited scans</b> + 30 req/min anti-abuse</li>
+        <li><b>AI Summary</b> · plain-English verdict explanation</li>
+        <li><b>Critical Flags panel</b> · every risk signal, in-overlay</li>
+        <li><b>Full Analysis page</b> · Holders, Timeline, Insiders, wash-trading</li>
+        <li>Scan history (30 days, server-side)</li>
+        <li>Detailed scoring breakdown · priority cache · exports</li>
+        <li>No affiliate prompts · priority support</li>
+      </ul>
+      <button class="a-cta primary" type="button">Get Pro now →</button>
+      <div class="a-status"><span class="live">· USDC or SOL · on-chain</span></div>
+    </div>
+
+    <div class="a-tier lifetime">
+      <div class="a-name">Lifetime</div>
+      <div class="a-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
+      <div class="a-period">one-time · forever</div>
+      <div class="a-tagline">Pay once. Every Pro feature, including v2/v3/v4. Reserved for the first 1000 supporters.</div>
+      <ul class="a-features">
+        <li class="bonus"><b>Everything in Pro, forever</b></li>
+        <li>All future v2 / v3 / v4 features included</li>
+        <li><b>Sentinel Founder</b> badge in overlay</li>
+        <li>Private Discord channel</li>
+        <li>Vote on roadmap priorities</li>
+      </ul>
+      <button class="a-cta purple" type="button">Claim Lifetime →</button>
+      <div class="a-status">· <b>1000</b> spots opening at launch</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════════════════
+     DEMO B — COMPARISON TABLE
+     ═════════════════════════════════════════════════════════════════════════ -->
+<section class="demo-section" id="demo-b">
+<div class="shell">
+  <h2>Demo <b>B</b> — Side-by-side comparison table</h2>
+  <p class="demo-pitch">
+    Replaces 3 cards with a single <b>feature × tier</b> grid (Stripe / Linear
+    style). Pro column highlighted with a green outline that runs through every
+    row — every ✓ in the Pro col reads "you get this", every ✗ in Free reads
+    "you don't". Higher information density, stronger feature contrast. Lifetime
+    scarcity counter sits below the table. Best when the user wants to compare
+    every line carefully — power-user move.
+  </p>
+
+  <div class="hero-eye">Compare every layer</div>
+  <h1 class="page-h1">Pick your <span class="accent">tier</span>.</h1>
+  <p class="page-sub">Same engine for all 3 tiers. Pro/Lifetime unlock the deep-dive layers + unlimited scans + scan history.</p>
+
+  <div class="b-table-wrap">
+    <table class="b-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="b-tier">
+            <div class="b-tier-name">Free</div>
+            <div class="b-price"><span class="currency">$</span>0</div>
+            <div class="b-period">forever · no card</div>
+          </th>
+          <th class="b-pro">
+            <div class="b-tier-name">Pro · 30 days</div>
+            <div class="b-price"><span class="currency">$</span>24.99</div>
+            <div class="b-period">USDC or SOL · one-time</div>
+          </th>
+          <th class="b-lifetime">
+            <div class="b-tier-name">Lifetime</div>
+            <div class="b-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
+            <div class="b-period">one-time · forever</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="b-section"><td colspan="4">Core verdict</td></tr>
+        <tr><td class="b-feat">Daily scans <small>resets at 00:00 UTC</small></td><td class="b-tier"><span class="num">50</span></td><td class="b-pro">Unlimited</td><td class="b-tier"><span class="yes">Unlimited</span></td></tr>
+        <tr><td class="b-feat">SAFE / CAUTION / DANGER / RUG verdict</td><td class="b-tier"><span class="yes">✓</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">1000-point composite score</td><td class="b-tier"><span class="yes">✓</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">Honeypot, LP, Mint &amp; Freeze checks</td><td class="b-tier"><span class="yes">✓</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+
+        <tr class="b-section"><td colspan="4">Why this verdict (deep-dive)</td></tr>
+        <tr><td class="b-feat">AI Summary <small>plain-English explanation</small></td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">Critical Flags panel <small>every risk signal described</small></td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">Full Analysis page <small>Holders, Timeline, Insiders, wash-trading</small></td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">Detailed scoring breakdown</td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+
+        <tr class="b-section"><td colspan="4">Power-user tools</td></tr>
+        <tr><td class="b-feat">Scan history (30 days, server-side)</td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">Priority cache <small>fresher data, lower TTL</small></td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">Export CSV / JSON</td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">No affiliate prompts</td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro">✓</td><td class="b-tier"><span class="yes">✓</span></td></tr>
+
+        <tr class="b-section"><td colspan="4">Lifetime perks</td></tr>
+        <tr><td class="b-feat">All future Pro v2 / v3 / v4 features</td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro"><span style="color:#5a5a62">Pass-by-pass</span></td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">Sentinel Founder badge</td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro"><span class="no">✗</span></td><td class="b-tier"><span class="yes">✓</span></td></tr>
+        <tr><td class="b-feat">Private Discord + roadmap vote</td><td class="b-tier"><span class="no">✗</span></td><td class="b-pro"><span class="no">✗</span></td><td class="b-tier"><span class="yes">✓</span></td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td><a href="./install.html" class="b-cta secondary">Install free →</a></td>
+          <td class="b-pro"><button class="b-cta primary" type="button">Get Pro now →</button></td>
+          <td><button class="b-cta purple" type="button">Claim Lifetime →</button></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="b-scarcity">⏳ Lifetime · <b>1000</b> spots opening at launch · first-come, first-served</div>
+</div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════════════════
+     DEMO C — SCENARIO-FIRST
+     ═════════════════════════════════════════════════════════════════════════ -->
+<section class="demo-section" id="demo-c">
+<div class="shell">
+  <h2>Demo <b>C</b> — Scenario-first sales pitch</h2>
+  <p class="demo-pitch">
+    Story-driven. Three <b>scenario tiles at the top</b> show concrete moments
+    where Free vs Pro diverge ("3am token launch" → Free shows DANGER, Pro shows
+    WHY). Then pricing collapses to <b>2 tiers visually dominant</b>: Pro (huge,
+    glowing) and Lifetime (medium). Free is demoted to a <b>tiny footnote bar</b>
+    at the bottom — present, but stops competing. Highest conversion potential
+    if the scenarios resonate with the user's actual workflow.
+  </p>
+
+  <div class="hero-eye">When seconds matter</div>
+  <h1 class="page-h1">Free shows <span class="accent">what</span>. Pro shows <span class="accent">why</span>.</h1>
+  <p class="page-sub">Three real moments where the difference between Free and Pro decides whether you buy or get rugged.</p>
+
+  <div class="c-scenarios">
+
+    <div class="c-scenario">
+      <div class="c-time">3:14 AM · new launch</div>
+      <h3 class="c-headline">Token just minted, 12 holders, $4K liq.</h3>
+      <p class="c-body">You scan it. Both tiers show the verdict. The difference is whether you understand it before the chart moves.</p>
+      <div class="c-divider">
+        <div class="c-free-says"><b>Free sees</b>DANGER, score 245.</div>
+        <div class="c-pro-says"><b>Pro sees</b>"Single wallet holds 47%. Mint authority active. Top 10 = 89% of supply." → instant rug pattern.</div>
+      </div>
+    </div>
+
+    <div class="c-scenario">
+      <div class="c-time">$420K mcap · viral coin</div>
+      <h3 class="c-headline">Twitter is pumping it. You're hesitating.</h3>
+      <p class="c-body">Verdict says CAUTION but you want to know if it's a real token or a coordinated dump in 6h.</p>
+      <div class="c-divider">
+        <div class="c-free-says"><b>Free sees</b>CAUTION, 612.</div>
+        <div class="c-pro-says"><b>Pro sees</b>Holder Activity timeline: 38 wallets bought in the last 12min from the same funder. → coordinated bundle.</div>
+      </div>
+    </div>
+
+    <div class="c-scenario">
+      <div class="c-time">SAFE token · daily session</div>
+      <h3 class="c-headline">You scanned 47 tokens this morning.</h3>
+      <p class="c-body">Free caps at 50. Pro is unlimited. The 51st token is the one that runs 4x today — but you can't scan it.</p>
+      <div class="c-divider">
+        <div class="c-free-says"><b>Free</b>Hits the cap. Wait 10h.</div>
+        <div class="c-pro-says"><b>Pro</b>Scan #51. Scan #500. No cap.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label"><span>Pricing</span></div>
+
+  <div class="c-tiers">
+
+    <div class="c-pro-card">
+      <div class="c-tier-name">Pro · 30-day pass</div>
+      <div class="c-price"><span class="currency">$</span>24.99</div>
+      <div class="c-period">USDC or SOL · one-time, no auto-renew</div>
+      <p class="c-pitch">
+        <b>Unlimited scans.</b> <b>AI Summary</b> on every verdict. <b>Critical Flags</b>
+        panel showing every risk signal. <b>Full Analysis page</b> with Holders,
+        Timeline, Insiders, wash-trading. Scan history, exports, priority cache.
+      </p>
+      <a href="#" class="c-pro-cta">Get Pro now →</a>
+      <div class="c-pro-foot">⚡ One avoided rug pays for the year</div>
+    </div>
+
+    <div class="c-side">
+      <div class="c-life">
+        <div class="c-tier-name">Lifetime</div>
+        <div class="c-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
+        <div class="c-period">one-time · forever</div>
+        <p class="c-pitch">Every Pro feature + everything we ship in <b>v2, v3, v4</b>. Sentinel Founder badge, private Discord, roadmap vote.</p>
+        <a href="#" class="c-life-cta">Claim Lifetime →</a>
+        <div class="c-life-counter">⏳ <b>1000</b> spots opening at launch</div>
+      </div>
+
+      <div class="c-free-link">
+        <div class="c-free-info">
+          <b>Or use Free</b>
+          50 scans/day · verdict + score only
+        </div>
+        <a href="./install.html">Install Free →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<footer>Antares · pricing demos · noindex</footer>
+
+<div class="pick-bar">
+  Pick: <code>ship demo A</code> · <code>ship demo B</code> · <code>ship demo C</code> · or <b>mix A + C</b> if you want elements from two
+</div>
+
+</body>
+</html>
