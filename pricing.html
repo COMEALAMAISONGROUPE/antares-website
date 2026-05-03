@@ -176,8 +176,11 @@ footer span{color:var(--c)}
 .pay-close:hover{color:#ccc}
 .pay-title{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:8px;text-align:center}
 .pay-subtitle{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;text-align:center;margin-bottom:20px}
-.pay-qr{background:#ffffff;border-radius:4px;padding:16px;margin:0 auto 20px;width:200px;height:200px;display:flex;align-items:center;justify-content:center}
-.pay-qr svg{width:168px;height:168px;display:block}
+/* QR shrunk 200 → 140 per Demo A. Wallet button is the desktop primary
+   CTA now; the QR is a fallback for mobile-wallet users only, so it
+   doesn't need to dominate the modal. */
+.pay-qr{background:#ffffff;border-radius:4px;padding:12px;margin:0 auto 14px;width:140px;height:140px;display:flex;align-items:center;justify-content:center}
+.pay-qr svg{width:116px;height:116px;display:block}
 .pay-amount{font:400 36px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-align:center;margin-bottom:4px}
 .pay-token{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:18px}
 /* Email input — shown above the QR so the user enters it before paying.
@@ -207,9 +210,6 @@ footer span{color:var(--c)}
 .pay-recipient .pay-addr{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pay-recipient button{background:none;border:1px solid #2a2a30;color:#888;padding:4px 8px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'IBM Plex Mono',monospace;transition:all .2s;flex-shrink:0}
 .pay-recipient button:hover{color:var(--c);border-color:var(--c)}
-.pay-deeplink{display:block;width:100%;padding:14px;background:var(--c);color:var(--bg);text-align:center;text-decoration:none;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;margin-bottom:14px;transition:transform .2s,box-shadow .2s}
-.pay-deeplink:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
-
 /* ── Wallet-connect button (primary on desktop with wallet extension) ─────
    Detected wallet → big branded button. The button just sets
    window.location.href to the Solana Pay URL — every Solana wallet
@@ -225,15 +225,6 @@ footer span{color:var(--c)}
 .pay-or::before{left:0}.pay-or::after{right:0}
 .pay-or.show{display:block}
 
-/* ── Verification box — explicit "we check this on-chain" trust signal ───
-   Sits between the recipient address and the wallet button. Shows the
-   exact amount + recipient + a one-line guarantee so the user knows
-   what's being checked before they sign anything. */
-.pay-verify{margin-bottom:14px;padding:11px 12px;background:rgba(0,229,176,.03);border:1px solid rgba(0,229,176,.18);border-radius:2px;font:400 10px/1.6 'IBM Plex Mono',monospace;color:#9a9aa2;letter-spacing:.04em}
-.pay-verify b{color:var(--c);font-weight:600}
-.pay-verify-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2px 0}
-.pay-verify-row span:first-child{color:#5a5a62;text-transform:uppercase;letter-spacing:.18em;font-size:9px}
-.pay-verify-row span:last-child{color:#cccccc;font-weight:600;font-size:10px}
 .pay-status{padding:12px;border-radius:2px;text-align:center;font:600 10px/1.4 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--border);background:#0a0a0c}
 .pay-status.waiting{color:#888;border-color:#2a2a30}
 .pay-status.confirmed{color:var(--c);border-color:rgba(0,229,176,.4);background:rgba(0,229,176,.05)}
@@ -400,31 +391,20 @@ footer span{color:var(--c)}
       <button type="button" class="pay-license-copy" id="pay-license-copy">Copy</button>
       <div class="pay-license-instr">Save this key. Open the extension's options page and paste it under <b>Redeem a Pro license</b>. You can also fetch it later at <a href="./account.html">antares-website.vercel.app/account</a>.</div>
     </div>
-    <!-- Verification box — explicit guarantee of what we check on-chain.
-         This is what makes the "no third party" model trustable: the
-         user sees exactly which wallet receives the payment and the
-         exact amount expected, BEFORE they sign anything. If recipient
-         OR amount don't match on-chain, no licence is issued. -->
-    <div class="pay-verify" id="pay-verify">
-      <div class="pay-verify-row"><span>Pay to</span><span id="pay-verify-recipient">&mdash;</span></div>
-      <div class="pay-verify-row"><span>Amount</span><span id="pay-verify-amount">&mdash;</span></div>
-      <div class="pay-verify-row"><span>On-chain check</span><span style="color:var(--c)">&check; recipient + amount + token</span></div>
-    </div>
     <div class="pay-recipient">
       <span class="pay-addr" id="pay-recipient">&mdash;</span>
       <button id="pay-copy" type="button">Copy</button>
     </div>
     <!-- Primary CTA on desktop with wallet extension installed. JS
          detects window.solana / window.solflare / window.backpack and
-         flips the label + .detected class. Clicking sets
-         window.location to the Solana Pay URL — wallets intercept the
-         `solana:` URL and open their signing dialog. -->
+         flips the label + .detected class. Clicking calls
+         provider.signAndSendTransaction() with a real Solana
+         transaction built via @solana/web3.js loaded as IIFE bundle. -->
     <button class="pay-wallet-btn" id="pay-wallet-btn" type="button">
       <span class="pay-wallet-dot"></span>
       <span class="pay-wallet-text">Pay with wallet</span>
     </button>
     <div class="pay-or" id="pay-or">or scan QR with mobile wallet</div>
-    <a class="pay-deeplink" id="pay-deeplink" href="#" target="_blank" rel="noopener noreferrer">Open in wallet &rarr;</a>
     <div class="pay-status waiting" id="pay-status"><span class="pay-spinner"></span>Waiting for payment&hellip;</div>
     <div class="pay-tx" id="pay-tx"></div>
   </div>
@@ -435,36 +415,21 @@ footer span{color:var(--c)}
      changes underneath users on a future CDN release. -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" crossorigin="anonymous"></script>
 
-<!-- Solana web3 SDK + SPL token helpers — loaded as ESM modules so we can
-     build a proper transaction in-page and sign with Phantom/Solflare/
-     Backpack via their injected `signAndSendTransaction` API. The
-     previous "set window.location.href = solana:..." trick relied on
-     the OS protocol-handler for `solana:` URLs — desktop browsers don't
-     route those reliably to extension wallets, which is why "Pay with
-     Phantom" appeared dead. This direct-API approach is the documented
-     way to integrate with Solana wallets on desktop.
+<!-- Solana web3 SDK — single-file IIFE bundle from jsdelivr.
+     Exposes `window.solanaWeb3` with all the primitives we need
+     (PublicKey, Transaction, SystemProgram, Connection, etc). One
+     self-contained classic script — no module-import dependency
+     cascading, no /node/* polyfill resolution, no ?bundle redirector.
 
-     Pinned versions; ?bundle returns a single self-contained module so
-     we don't pull a dependency tree on each request. ~200KB total. -->
-<script type="module">
-  import {
-    Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL,
-  } from 'https://esm.sh/@solana/web3.js@1.95.4?bundle';
-  import {
-    getAssociatedTokenAddress, createTransferCheckedInstruction,
-  } from 'https://esm.sh/@solana/spl-token@0.4.6?bundle';
-  // Stash on window so the inline (non-module) script below can use it.
-  // We can't access ES module imports from a classic script otherwise.
-  window.__antaresSolana = {
-    Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL,
-    getAssociatedTokenAddress, createTransferCheckedInstruction,
-    ready: true,
-  };
-  // Fire a custom event so the inline script knows the libs landed —
-  // useful when the user clicks "Pay" before the modules finish
-  // downloading on a slow connection.
-  window.dispatchEvent(new CustomEvent('antares:solana-ready'));
-</script>
+     Previous attempt used `esm.sh/@solana/web3.js@1.95.4?bundle` which
+     returns a 233-byte stub that imports more files (`/node/buffer`,
+     `/node/process`, etc.) — works in some browsers but failed in
+     production for the user, leaving "Solana SDK failed to load" on
+     screen. This IIFE bundle is rock-solid: one file, no cascading.
+
+     Pinned to 1.95.4. We don't need @solana/spl-token — the SPL
+     transfer instruction is hand-built below in payWithWallet(). -->
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.4/lib/index.iife.min.js" crossorigin="anonymous"></script>
 
 <script>
 // ── Solana Pay checkout flow ─────────────────────────────────────────────────
@@ -520,7 +485,6 @@ footer span{color:var(--c)}
   var qrEl = document.getElementById('pay-qr');
   var recipientEl = document.getElementById('pay-recipient');
   var copyBtn = document.getElementById('pay-copy');
-  var deeplinkEl = document.getElementById('pay-deeplink');
   var statusEl = document.getElementById('pay-status');
   var txEl = document.getElementById('pay-tx');
   var closeBtn = document.getElementById('pay-close');
@@ -690,19 +654,6 @@ footer span{color:var(--c)}
     }
   }
 
-  // ── Verification box ─────────────────────────────────────────────────────
-  // Mirror the recipient + amount into the explicit verify panel above
-  // the wallet button. Truncates the recipient to first6…last6 like wallet
-  // UIs do, so the user can eyeball-match it after the wallet opens.
-  function renderVerifyBox(intent) {
-    var recipShort = intent.recipient.slice(0, 6) + '…' + intent.recipient.slice(-6);
-    document.getElementById('pay-verify-recipient').textContent = recipShort;
-    var amountStr = intent.token === 'sol'
-      ? Number(intent.amount).toFixed(4) + ' SOL ($' + Number(intent.amountUsd).toFixed(2) + ')'
-      : '$' + Number(intent.amount).toFixed(2) + ' USDC';
-    document.getElementById('pay-verify-amount').textContent = amountStr;
-  }
-
   // ── Wallet detection + connect-and-pay button ────────────────────────────
   // Browser-extension wallets all expose a global injection hook on
   // window. We sniff the three majors (Phantom, Solflare, Backpack) so we
@@ -724,23 +675,75 @@ footer span{color:var(--c)}
     return null;
   }
 
-  // Wait helper — the @solana/web3.js + spl-token modules load via
-  // ESM imports above. On a slow connection the user might click the
-  // pay button before they're ready. We poll for ~3s, then bail.
+  // The web3.js IIFE bundle exposes `window.solanaWeb3` with all the
+  // primitives we use. It's a classic <script> tag (loaded above) so
+  // it's typically ready before the inline script below runs — but we
+  // still poll briefly in case of slow CDN. 4s timeout returns a
+  // friendly error so the QR fallback gets used.
   function waitForSolanaSDK() {
     return new Promise(function(resolve, reject) {
-      if (window.__antaresSolana?.ready) return resolve(window.__antaresSolana);
+      if (window.solanaWeb3 && window.solanaWeb3.PublicKey) return resolve(window.solanaWeb3);
       var elapsed = 0;
       var interval = setInterval(function() {
-        if (window.__antaresSolana?.ready) {
+        if (window.solanaWeb3 && window.solanaWeb3.PublicKey) {
           clearInterval(interval);
-          resolve(window.__antaresSolana);
+          resolve(window.solanaWeb3);
         } else if (elapsed > 4000) {
           clearInterval(interval);
           reject(new Error('Solana SDK failed to load — try the QR code instead.'));
         }
         elapsed += 100;
       }, 100);
+    });
+  }
+
+  // ── Hand-built SPL token primitives ──────────────────────────────────────
+  // We don't load @solana/spl-token (no good single-file IIFE bundle exists
+  // for it on a CDN, and we'd need its full transitive tree). Instead, we
+  // build the two SPL primitives we need directly:
+  //
+  //   1. getAssociatedTokenAddress(mint, owner) — derive the ATA via
+  //      PDA from the SPL convention seeds [owner, TOKEN_PROGRAM, mint]
+  //      with the Associated Token Program ID.
+  //
+  //   2. createSPLTransferIx(...) — build the TransferChecked instruction
+  //      (variant 12) with a hand-serialised data buffer:
+  //        byte 0     : 0x0c (variant tag for TransferChecked)
+  //        bytes 1-8  : amount as u64 little-endian
+  //        byte 9     : decimals (u8)
+  //
+  // These two are stable parts of the SPL Token program ABI — they have
+  // not changed since 2020 and are unlikely to. The function is ~30 LOC
+  // vs ~30KB of npm dependencies. Audit-friendly, dep-free.
+  var TOKEN_PROGRAM_ID_STR = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+  var ASSOCIATED_TOKEN_PROGRAM_ID_STR = 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL';
+
+  function getAssociatedTokenAddress(sdk, mint, owner) {
+    var tokenProg = new sdk.PublicKey(TOKEN_PROGRAM_ID_STR);
+    var ataProg = new sdk.PublicKey(ASSOCIATED_TOKEN_PROGRAM_ID_STR);
+    var seeds = [owner.toBuffer(), tokenProg.toBuffer(), mint.toBuffer()];
+    var result = sdk.PublicKey.findProgramAddressSync(seeds, ataProg);
+    return result[0];
+  }
+
+  function createSPLTransferIx(sdk, senderAta, mint, recipientAta, owner, rawAmount, decimals) {
+    var tokenProg = new sdk.PublicKey(TOKEN_PROGRAM_ID_STR);
+    var data = new Uint8Array(10);
+    data[0] = 12; // TransferChecked variant tag
+    var n = BigInt(rawAmount);
+    for (var i = 0; i < 8; i++) {
+      data[1 + i] = Number((n >> BigInt(i * 8)) & 0xffn);
+    }
+    data[9] = decimals;
+    return new sdk.TransactionInstruction({
+      keys: [
+        { pubkey: senderAta, isSigner: false, isWritable: true },
+        { pubkey: mint, isSigner: false, isWritable: false },
+        { pubkey: recipientAta, isSigner: false, isWritable: true },
+        { pubkey: owner, isSigner: true, isWritable: false },
+      ],
+      programId: tokenProg,
+      data: data,
     });
   }
 
@@ -768,40 +771,79 @@ footer span{color:var(--c)}
   //   2. User rejects the signing prompt in wallet   → "Cancelled" status
   //   3. RPC blockhash fetch fails (mainnet down)    → "Try again" status
   async function payWithWallet(intent) {
-    var sdk = await waitForSolanaSDK();
+    // Verbose logging is on by design — we want users to be able to
+    // open DevTools and tell us exactly where the flow breaks. Each
+    // step prefixes with [antares-pay] so it's easy to grep.
+    console.log('[antares-pay] click — starting wallet flow', { intent: intent });
+
+    var sdk;
+    try { sdk = await waitForSolanaSDK(); }
+    catch (e) { console.error('[antares-pay] SDK load failed', e); throw e; }
+    console.log('[antares-pay] SDK loaded — solanaWeb3 has', Object.keys(sdk).slice(0, 10).join(', '), '…');
+
     var provider = getWalletProvider();
-    if (!provider) throw new Error('No wallet detected. Use the QR code with a mobile wallet.');
+    console.log('[antares-pay] provider detection', {
+      hasSolana: !!window.solana,
+      isPhantom: !!window.solana?.isPhantom,
+      hasSolflare: !!window.solflare,
+      hasBackpack: !!window.backpack,
+      provider: provider ? Object.keys(provider).slice(0, 10).join(', ') : null,
+    });
+    if (!provider) throw new Error('No wallet detected. Install Phantom (https://phantom.app) or use the QR code with a mobile wallet.');
 
     // Connect — pops the wallet's permission prompt the first time;
     // silent (returns publicKey immediately) on subsequent clicks.
     if (!provider.publicKey) {
-      try { await provider.connect(); }
-      catch (e) { throw new Error('Wallet connection cancelled.'); }
+      console.log('[antares-pay] calling provider.connect()…');
+      try {
+        var conn1 = await provider.connect();
+        console.log('[antares-pay] connect resolved', conn1);
+      } catch (e) {
+        console.error('[antares-pay] connect rejected', e);
+        throw new Error('Wallet connection cancelled. Click "Pay with Phantom" again to retry.');
+      }
     }
     var sender = provider.publicKey;
-    if (!sender) throw new Error('Could not get wallet public key.');
+    if (!sender) {
+      console.error('[antares-pay] provider.publicKey still null after connect()');
+      throw new Error('Could not get your wallet address. Refresh the page and try again.');
+    }
+    console.log('[antares-pay] connected as', sender.toString());
 
     var recipient = new sdk.PublicKey(intent.recipient);
     var reference = new sdk.PublicKey(intent.reference);
 
-    // Public mainnet-beta RPC for the blockhash. This is one cheap GET
-    // — Solana's hosted RPC handles it fine. For broadcasting the tx
-    // we hand off to the wallet, which uses its own RPC, so we don't
-    // hit our own quota or need a Helius key here.
-    var conn = new sdk.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
-    var bh = await conn.getLatestBlockhash('confirmed');
+    // Browser-CORS-friendly Solana RPC for the blockhash. We can't use
+    // `api.mainnet-beta.solana.com` from a browser — it returns
+    // 403 "Access forbidden" on cross-origin POSTs (Solana's official
+    // public RPC has been rate-limited / abuse-protected since 2024
+    // and effectively excludes browser clients). publicnode.com runs
+    // a free public Solana RPC with `Access-Control-Allow-Origin: *`,
+    // no auth required, and is the de-facto standard for client-side
+    // dApps that don't ship their own Helius key.
+    //
+    // We only call getLatestBlockhash here — the actual tx broadcast
+    // is handled by the wallet's own RPC, so even if publicnode is slow
+    // we only pay one cheap GET per pay attempt.
+    var conn = new sdk.Connection('https://solana-rpc.publicnode.com', 'confirmed');
+    console.log('[antares-pay] fetching recent blockhash from publicnode RPC…');
+    var bh;
+    try { bh = await conn.getLatestBlockhash('confirmed'); }
+    catch (e) {
+      console.error('[antares-pay] getLatestBlockhash failed', e);
+      throw new Error('Solana RPC is unreachable. Try again in a moment, or use the QR code.');
+    }
+    console.log('[antares-pay] blockhash', bh.blockhash);
     var tx = new sdk.Transaction({ feePayer: sender, recentBlockhash: bh.blockhash });
 
     if (intent.splTokenMint) {
       // ── USDC (SPL token) transfer path ─────────────────────────────────
       var mint = new sdk.PublicKey(intent.splTokenMint);
-      var senderAta = await sdk.getAssociatedTokenAddress(mint, sender);
-      var recipientAta = await sdk.getAssociatedTokenAddress(mint, recipient);
+      var senderAta = getAssociatedTokenAddress(sdk, mint, sender);
+      var recipientAta = getAssociatedTokenAddress(sdk, mint, recipient);
       // USDC has 6 decimals — multiply UI amount by 10^6 to get raw units.
       var rawAmount = Math.round(Number(intent.amount) * 1e6);
-      var ix = sdk.createTransferCheckedInstruction(
-        senderAta, mint, recipientAta, sender, rawAmount, 6,
-      );
+      var ix = createSPLTransferIx(sdk, senderAta, mint, recipientAta, sender, rawAmount, 6);
       // Solana Pay convention: include the unique reference as a
       // read-only non-signer account on at least one instruction so
       // the merchant's reference-scan finds the tx.
@@ -819,7 +861,14 @@ footer span{color:var(--c)}
 
     // Sign + broadcast. Wallet shows its built-in signing UI here.
     // Returns the on-chain tx signature once Phantom's RPC accepts it.
-    var result = await provider.signAndSendTransaction(tx);
+    console.log('[antares-pay] tx built — calling signAndSendTransaction', { instructions: tx.instructions.length });
+    var result;
+    try { result = await provider.signAndSendTransaction(tx); }
+    catch (e) {
+      console.error('[antares-pay] signAndSendTransaction failed', e);
+      throw e;
+    }
+    console.log('[antares-pay] signed + broadcast', result);
     var signature = (result && (result.signature || result)) || '';
     return signature;
   }
@@ -911,7 +960,6 @@ footer span{color:var(--c)}
     amountEl.textContent = '—';
     tokenLabelEl.textContent = token === 'sol' ? 'SOL on Solana' : 'USDC on Solana';
     recipientEl.textContent = '—';
-    deeplinkEl.setAttribute('href', '#');
     setStatus('waiting', 'Creating intent&hellip;');
     txEl.textContent = '';
     licenseRow.style.display = 'none';
@@ -961,9 +1009,7 @@ footer span{color:var(--c)}
         titleEl.textContent = tier === 'lifetime' ? 'Antares Lifetime' : 'Antares Pro · 30 days';
         renderAmount(intent);
         recipientEl.textContent = intent.recipient;
-        deeplinkEl.setAttribute('href', intent.payUrl);
         renderQR(intent.payUrl);
-        renderVerifyBox(intent);
         setupWalletButton(intent.payUrl);
         setStatus('waiting', 'Waiting for payment&hellip;');
 
