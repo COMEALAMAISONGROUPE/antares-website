@@ -86,32 +86,48 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .tier-price .currency{font-size:32px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0}
 .tier-price .strike{font-size:22px;color:#3a3a40;text-decoration:line-through;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0;margin-right:6px}
 .tier-period{font-size:11px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;min-height:14px}
-.tier-tagline{font-size:11.5px;color:#7a7a82;line-height:1.6;font-style:italic;border-left:2px solid #252529;padding-left:12px;margin-bottom:24px;min-height:54px}
+/* Tagline min-height set to fit a 3-line copy block at 11.5px / 1.6 line-
+   height. All three taglines are written to wrap to ~3 lines so this
+   value matches across cards and the rows below start at the same Y. */
+.tier-tagline{font-size:11.5px;color:#7a7a82;line-height:1.6;font-style:italic;border-left:2px solid #252529;padding-left:12px;margin-bottom:24px;min-height:72px}
 .tier.featured .tier-tagline{border-left-color:var(--c)}
 .tier.lifetime .tier-tagline{border-left-color:var(--purple)}
 
 .tier-features{list-style:none;margin:0 0 24px;padding:0;flex:1}
-.tier-features li{font-size:11.5px;color:#888;line-height:1.55;padding:7px 0 7px 22px;position:relative;border-bottom:1px solid #131316}
+/* Every feature row is locked to a uniform 36px so the three cards
+   line up row-by-row across columns. No subtexts, no descriptions —
+   just a single-line title per row. Padding centred via flex so the
+   ::before checkmark and the title baseline stay aligned even on
+   wrap-edge titles. */
+.tier-features li{font-size:11.5px;color:#888;line-height:1.45;padding:0 0 0 22px;position:relative;border-bottom:1px solid #131316;min-height:36px;display:flex;align-items:center}
 .tier-features li:last-child{border-bottom:none}
-.tier-features li::before{content:'✓';position:absolute;left:0;top:7px;color:var(--c);font-weight:700;font-size:12px}
+.tier-features li::before{content:'✓';position:absolute;left:0;top:50%;transform:translateY(-50%);color:var(--c);font-weight:700;font-size:12px;line-height:1}
 .tier-features li.coming::before{content:'◷';color:var(--yellow)}
 .tier-features li.bonus{color:#bbb}
 .tier-features li b{color:#bbb;font-weight:600}
-.tier-features li small{display:block;color:#4a4a52;font-size:10px;margin-top:2px;font-style:italic}
 /* Negative line — what Free doesn't include. Same row geometry as the
    positive items so the list reads as one continuous block. Muted ✗
    colour and italicised tail-text so the eye registers "missing" at a
-   glance without it screaming. */
+   glance without it screaming. The ✗ items flow directly after the ✓
+   items with no divider — uniform 7px top + 7px bottom + 1px border on
+   every row, no special padding for any single position. */
 .tier-features li.no{color:#4a4a52;border-bottom-color:#101013}
 .tier-features li.no::before{content:'✗';color:#3a3a40;font-weight:600}
 .tier-features li.no b{color:#6a6a72}
 .tier-features li.no em{color:#3a3a40;font-style:italic;font-weight:400}
-/* Subtle caption that splits "things you get" from "things you don't"
-   without a heavy uppercase header. Just a thin top-border + 1-line
-   muted label, occupies the same row height as a feature item. */
-.tier-features li.split{border:none;padding:14px 0 4px 0;color:#4a4a52;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
-.tier-features li.split::before{content:none}
-.tier-features li.split + li{border-top:1px solid #1a1a1e;padding-top:9px}
+
+/* ── Tier closing quote — italic founder-voice 2-3 line summary that
+   sits between the feature list and the CTA button. Has two jobs:
+   (1) gives every card a footer of similar visual weight so the card
+   heights balance regardless of feature-list length (Pro = 16 lines,
+   Free = 13, Lifetime = 8 — without this, Lifetime had a big empty
+   gap above its button); (2) lets us speak in founder-voice about
+   the philosophy of each tier without bloating the feature list. */
+.tier-quote{margin:14px 0 22px;padding:14px 0 0;border-top:1px solid #16161a;font-size:11px;line-height:1.7;color:#7a7a82;font-style:italic}
+.tier-quote::before{content:'❝';display:block;font-size:24px;line-height:.8;color:var(--c);font-style:normal;margin-bottom:6px}
+.tier.lifetime .tier-quote::before{color:var(--purple)}
+.tier.free .tier-quote{color:#5a5a62}
+.tier.free .tier-quote::before{color:#3a7060}
 
 .tier-cta{display:block;text-align:center;padding:14px 24px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s,background .2s,color .2s;cursor:pointer;border:none;width:100%;font-family:'IBM Plex Mono',monospace}
 .tier-cta.primary{background:var(--c);color:var(--bg)}
@@ -230,68 +246,88 @@ footer span{color:var(--c)}
 
   <!-- FREE — minimal, on purpose. The verdict is the hook; everything
        that explains *why* (AI Summary, Critical Flags, Full Analysis
-       page) lives behind Pro. -->
+       page) lives behind Pro.
+
+       Row count: 1 bonus header + 5 ✓ items + 5 ✗ items = 11 total,
+       matching Pro and Lifetime so rows align across columns. -->
   <div class="tier free">
     <div class="tier-name">Free</div>
     <div class="tier-price"><span class="currency">$</span>0</div>
     <div class="tier-period">50 scans / day &middot; no card</div>
-    <div class="tier-tagline">The verdict and nothing else. Good enough to taste-test the engine — not enough to trade with.</div>
+    <div class="tier-tagline">The verdict and nothing else. Good enough to taste-test the engine &mdash; not enough to trade real capital with.</div>
     <ul class="tier-features">
-      <li><b>50 scans per day</b><small>resets at 00:00 UTC</small></li>
+      <li class="bonus"><b>Always free, no card</b></li>
+      <li>50 scans per day</li>
       <li>SAFE / CAUTION / DANGER / RUG verdict</li>
-      <li>1000-point composite score (under the hood)</li>
+      <li>1000-point composite score</li>
       <li>Honeypot, LP, Mint &amp; Freeze checks</li>
-      <li>Browser overlay on 7 trading platforms<small>DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN</small></li>
-      <li class="split">Not included</li>
-      <li class="no"><b>AI Summary</b> <em>— verdict explained in plain English</em></li>
-      <li class="no"><b>Critical Flags</b> <em>— every risk signal, described</em></li>
-      <li class="no"><b>Full Analysis page</b> <em>— Holders, Timeline, Insiders, wash-trading</em></li>
-      <li class="no"><b>Unlimited scans</b> <em>— Free caps at 50/day</em></li>
-      <li class="no">Scan history, exports, priority cache, priority support</li>
+      <li>Overlay on 7 trading platforms</li>
+      <li class="no"><b>AI Summary</b></li>
+      <li class="no"><b>Critical Flags panel</b></li>
+      <li class="no"><b>Full Analysis page</b></li>
+      <li class="no"><b>Unlimited scans</b></li>
+      <li class="no"><b>Scan history &amp; exports</b></li>
     </ul>
+    <div class="tier-quote">Free is the gateway. The verdict, the score, the overlay &mdash; the core of what makes Antares useful. We&rsquo;ve never reduced what&rsquo;s on it. We never will.</div>
     <a href="./install.html" class="tier-cta secondary">Install free &rarr;</a>
     <div class="tier-status"><span class="live">&middot; Live now</span></div>
   </div>
 
-  <!-- PRO 30-DAY PASS (FEATURED) -->
+  <!-- PRO 30-DAY PASS (FEATURED) — same 11-row count as Free + Lifetime. -->
   <div class="tier featured">
-    <div class="tier-name">Pro · 30-day pass</div>
+    <div class="tier-name">Pro &middot; 30-day pass</div>
     <div class="tier-price"><span class="currency">$</span>24.99</div>
     <div class="tier-period">USDC or SOL on Solana &middot; one-time, no auto-renew</div>
-    <div class="tier-tagline">Built for traders who scan 50+ tokens a day. Unlimited scans + features power users actually need. Pay direct in USDC or SOL, zero middleman.</div>
+    <div class="tier-tagline">For traders who scan 50+ tokens a day. Unlimited scans plus the features power users actually need.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Free, plus:</b></li>
-      <li><b>AI Summary</b><small>plain-English explanation of the verdict, in-overlay</small></li>
-      <li><b>Critical Flags panel</b><small>every risk signal with descriptions, in-overlay</small></li>
-      <li><b>Full Analysis page</b><small>Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection</small></li>
-      <li><b>Unlimited scans</b><small>fair-use 30 req/min anti-abuse</small></li>
-      <li>Scan history (30 days, server-side)</li>
-      <li>Detailed scoring breakdown<small>full layer-by-layer math</small></li>
-      <li>Priority cache (fresher data, lower TTL)</li>
+      <li><b>AI Summary</b> in overlay</li>
+      <li><b>Critical Flags panel</b></li>
+      <li><b>Full Analysis page</b></li>
+      <li><b>Unlimited scans</b> (30 req/min)</li>
+      <li>Scan history, 30 days, server-side</li>
+      <li>Detailed scoring breakdown</li>
+      <li>Priority cache (lower TTL)</li>
       <li>Export CSV / JSON</li>
-      <li>No affiliate prompts (clean UI)</li>
+      <li>No affiliate prompts</li>
       <li>Priority support</li>
     </ul>
+    <div class="tier-quote">Pro is for the day-trader who scans two hundred tokens a day and needs the engine running silent in the background. Pay once, use it for thirty days, never see a card form.</div>
     <button class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly" type="button">Get Pro now &rarr;</button>
     <div class="tier-status"><span class="live">&middot; USDC or SOL &middot; on-chain</span></div>
   </div>
 
-  <!-- LIFETIME -->
+  <!-- LIFETIME — only verifiable, honest claims. We dropped:
+       - "Reserved for first 1000 supporters" (no cap mechanism)
+       - "Sentinel Founder badge in overlay" (not implemented)
+       - "Private Discord channel" (doesn't exist yet)
+       - "Vote on roadmap priorities" (no voting mechanism)
+       - "Early access to every beta" (no beta program)
+       - "Direct line to the founder" (overstatement)
+       - "Name in Sentinel Hall of Fame" (no Hall of Fame page)
+       - "everything we ship in v2, v3, v4" (over-promise)
+       What's left is the actual, defensible value-prop: every Pro
+       feature for life, paid once on-chain, locked at today's price,
+       breaks even after ~6 monthly Pro renewals. -->
   <div class="tier lifetime">
     <div class="tier-name">Lifetime</div>
     <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
     <div class="tier-period">one-time USDC or SOL payment &middot; forever</div>
-    <div class="tier-tagline">Pay once. Get every Pro feature, including everything we ship in v2, v3, v4. Reserved for the first 1000 supporters.</div>
+    <div class="tier-tagline">Pay once at $149.99. Every Pro feature for life. Cheaper than Pro after six monthly renewals.</div>
     <ul class="tier-features">
-      <li class="bonus"><b>Everything in Pro Monthly, forever</b></li>
-      <li>All future Pro v2, v3, v4 features included</li>
-      <li><b>Sentinel Founder</b> badge in overlay</li>
-      <li>Private Discord channel</li>
-      <li>Vote on roadmap priorities</li>
-      <li>Early access to every beta</li>
-      <li>Direct line to the founder</li>
-      <li>Name in Sentinel Hall of Fame</li>
+      <li class="bonus"><b>Everything in Pro, forever</b></li>
+      <li><b>AI Summary</b> in overlay</li>
+      <li><b>Critical Flags panel</b></li>
+      <li><b>Full Analysis page</b></li>
+      <li><b>Unlimited scans</b></li>
+      <li>Scan history, server-side</li>
+      <li>Detailed scoring breakdown</li>
+      <li>Priority cache (lower TTL)</li>
+      <li>Export CSV / JSON</li>
+      <li>No affiliate prompts</li>
+      <li>One-time payment, no renewal</li>
     </ul>
+    <div class="tier-quote">Lifetime is the simplest math: pay once now, never pay again. Every Pro feature you have today, plus every Pro feature we ship after &mdash; yours for the life of the product.</div>
     <button class="tier-cta purple" id="cta-lifetime" data-tier="lifetime" type="button">Claim a Lifetime spot &rarr;</button>
     <div class="tier-status"><span class="purple">&middot; One-time &middot; Forever</span></div>
   </div>
