@@ -39,6 +39,36 @@ h1 span{color:var(--c)}
 
 .section-label{font-size:10px;color:#5a5a62;letter-spacing:.22em;text-transform:uppercase;margin:24px 0 14px;text-align:center}
 
+/* ── Tier banner — big, at-a-glance "you are PRO/LIFETIME/FREE" indicator
+   that lands directly under the page heading. The whole point of the
+   account page is to answer the user's first question on arrival —
+   "what tier am I?" — so we lead with that, not buried in the licence
+   list below. Tier color, expiry/forever badge, and a one-line
+   "what does this mean?" tooltip beneath. */
+.tier-banner{display:flex;align-items:center;gap:18px;padding:24px 28px;border-radius:4px;margin:28px 0 12px;border:1px solid;background:var(--card);position:relative;overflow:hidden}
+.tier-banner::before{content:'';position:absolute;inset:0;opacity:.04;pointer-events:none;background:radial-gradient(circle at 0% 50%,currentColor,transparent 60%)}
+.tier-banner.free{border-color:#2a2a30;color:#888}
+.tier-banner.pro{border-color:rgba(0,229,176,.5);color:var(--c);box-shadow:0 0 0 1px rgba(0,229,176,.1),0 12px 32px rgba(0,229,176,.06)}
+.tier-banner.lifetime{border-color:rgba(167,139,250,.5);color:var(--purple);box-shadow:0 0 0 1px rgba(167,139,250,.1),0 12px 32px rgba(167,139,250,.06)}
+.tier-banner-label{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:#5a5a62;margin-bottom:6px}
+.tier-banner-name{font:400 44px/.95 'Bebas Neue',sans-serif;letter-spacing:.06em;color:currentColor;margin-bottom:6px}
+.tier-banner-detail{font-size:11.5px;color:#9a9aa2;letter-spacing:.04em;line-height:1.6}
+.tier-banner-detail b{color:#cccccc;font-weight:600}
+.tier-banner-meta{margin-left:auto;text-align:right;font-size:10px;color:#5a5a62;letter-spacing:.04em;line-height:1.7;flex-shrink:0}
+.tier-banner-meta b{color:#9a9aa2;font-weight:600;font-size:11px}
+
+/* ── Activate-in-extension callout — the missing UX bridge between
+   "I have a license key" and "my extension knows I'm Pro". Without
+   this, users sit on the page wondering why their browser overlay
+   still says Free. Step-by-step + a Copy button on the relevant
+   key keeps the friction low. */
+.activate-callout{margin:18px 0 12px;padding:18px 22px;border:1px dashed #2a2a30;border-radius:4px;background:rgba(0,229,176,.02);font-size:12px;color:#9a9aa2;line-height:1.7}
+.activate-callout h3{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:var(--c);margin-bottom:10px}
+.activate-callout ol{margin:0 0 0 18px;padding:0}
+.activate-callout li{margin:6px 0;color:#9a9aa2}
+.activate-callout b{color:#cccccc;font-weight:600}
+.activate-callout code{background:#1a1a1e;color:#bbb;padding:1px 6px;border-radius:2px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.04em}
+
 .empty{padding:32px;text-align:center;background:var(--card);border:1px solid var(--border);border-radius:4px}
 .empty p{color:#7a7a82;font-size:13px;line-height:1.7;margin-bottom:18px}
 .empty a{display:inline-block;padding:11px 22px;background:var(--c);color:var(--bg);font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-radius:2px}
@@ -88,14 +118,32 @@ footer .foot-links a:hover{color:var(--c)}
 
 <div id="account-view" style="display:none">
   <div class="head-row">
-    <h1>Your <span>licenses</span>.</h1>
+    <h1>Your <span>account</span>.</h1>
     <div class="account-meta">
-      Logged in as <b id="account-email">—</b><br>
+      Logged in as <b id="account-email">&mdash;</b><br>
       <button class="logout-btn" id="logout-btn" type="button">Log out</button>
     </div>
   </div>
 
-  <div class="section-label" id="results-label" style="display:none"><span>Active licenses</span></div>
+  <!-- Tier banner — populated by renderTier() below. The status / expiry
+       badge on the right answers "is this still active and until when".
+       Free is the default state until at least one license is found. -->
+  <div class="tier-banner free" id="tier-banner">
+    <div>
+      <div class="tier-banner-label">Current tier</div>
+      <div class="tier-banner-name" id="tier-name">Free</div>
+      <div class="tier-banner-detail" id="tier-detail">50 scans / day &middot; no card on file</div>
+    </div>
+    <div class="tier-banner-meta" id="tier-meta">
+      <b>Live now</b><br>across the extension
+    </div>
+  </div>
+
+  <!-- Activate-in-extension callout — only rendered when there's at
+       least one unredeemed license. Wired up by renderActivateCallout(). -->
+  <div id="activate-wrap"></div>
+
+  <div class="section-label" id="results-label" style="display:none"><span>Your licenses</span></div>
   <section class="licenses" id="licenses"></section>
   <div class="error-banner" id="error" style="display:none"></div>
 </div>
@@ -135,9 +183,84 @@ footer .foot-links a:hover{color:var(--c)}
     }
   }
 
+  // ── Tier resolution ──────────────────────────────────────────────────
+  // The extension reads tier from a different key (install_id), but the
+  // *license-of-record* — what the user actually paid for — lives on
+  // their email. Lifetime trumps Pro trumps Free. Pro is "active" only
+  // if it has at least one unexpired license. Once we know the verdict
+  // we light up the banner.
+  function resolveTier(list) {
+    var now = Date.now();
+    var hasLifetime = false;
+    var activeProExpiry = 0;
+    list.forEach(function(l) {
+      if (l.tier === 'lifetime') hasLifetime = true;
+      else if (l.tier === 'monthly' || l.tier === 'pro') {
+        var exp = Number(l.expiresAt) || 0;
+        if (exp > now && exp > activeProExpiry) activeProExpiry = exp;
+      }
+    });
+    if (hasLifetime) return { tier: 'lifetime', activeProExpiry: 0 };
+    if (activeProExpiry > 0) return { tier: 'pro', activeProExpiry: activeProExpiry };
+    return { tier: 'free', activeProExpiry: 0 };
+  }
+
+  function renderTier(verdict) {
+    var bannerEl = document.getElementById('tier-banner');
+    var nameEl = document.getElementById('tier-name');
+    var detailEl = document.getElementById('tier-detail');
+    var metaEl = document.getElementById('tier-meta');
+
+    bannerEl.classList.remove('free', 'pro', 'lifetime');
+    bannerEl.classList.add(verdict.tier);
+
+    if (verdict.tier === 'lifetime') {
+      nameEl.textContent = 'Lifetime';
+      detailEl.innerHTML = '<b>Every Pro feature, forever.</b> Includes every release we ship from here on out. Paid once, valid for the life of the product.';
+      metaEl.innerHTML = '<b>Active</b><br>forever';
+    } else if (verdict.tier === 'pro') {
+      nameEl.textContent = 'Pro';
+      detailEl.innerHTML = '<b>Unlimited scans &middot; full overlay.</b> AI Summary, Critical Flags, Full Analysis page, scan history, priority cache and exports across all 7 supported platforms.';
+      metaEl.innerHTML = '<b>Renews</b><br>' + fmtDate(verdict.activeProExpiry);
+    } else {
+      nameEl.textContent = 'Free';
+      detailEl.innerHTML = '<b>50 scans per day &middot; no card on file.</b> The verdict, the score, the overlay across 7 platforms. Pay once on Solana to unlock the full engine.';
+      metaEl.innerHTML = '<b>Live now</b><br>across the extension';
+    }
+  }
+
+  // ── Activate-in-extension callout ─────────────────────────────────────
+  // Fires only when there's at least one unredeemed license. The user
+  // bought it but hasn't yet pasted the key into their browser
+  // extension, so the overlay is still showing Free. This bridges the
+  // gap with explicit step-by-step instructions.
+  function renderActivateCallout(list) {
+    var wrap = document.getElementById('activate-wrap');
+    var unredeemed = list.filter(function(l) { return !l.redeemed; });
+    if (!unredeemed.length) { wrap.innerHTML = ''; return; }
+    var keyPreview = unredeemed[0].key;
+    wrap.innerHTML =
+      '<div class="activate-callout">' +
+        '<h3>&rarr; Activate in your browser extension</h3>' +
+        'You have <b>' + unredeemed.length + ' unredeemed license' + (unredeemed.length > 1 ? 's' : '') + '</b>. To get the Pro features in your overlay:' +
+        '<ol>' +
+          '<li>Click your <b>Antares extension icon</b> in the browser toolbar &rarr; <b>Options</b>.</li>' +
+          '<li>Find the <code>Redeem a Pro license</code> field.</li>' +
+          '<li>Paste your license key (e.g. <code>' + escapeHtml(keyPreview) + '</code>) and click <b>Redeem</b>.</li>' +
+          '<li>The overlay flips to your tier instantly &mdash; refresh any open token page to see it.</li>' +
+        '</ol>' +
+      '</div>';
+  }
+
   function renderLicenses(list) {
+    // Resolve + paint the tier banner first — that's the answer the
+    // user came here for, even before they look at the licence rows.
+    var verdict = resolveTier(list);
+    renderTier(verdict);
+    renderActivateCallout(list);
+
     if (!list.length) {
-      listEl.innerHTML = '<div class="empty"><p>You don\'t have any licenses yet. Pick a tier and pay direct on Solana — your license arrives instantly.</p><a href="./pricing.html">View pricing</a></div>';
+      listEl.innerHTML = '<div class="empty"><p>You don\'t have any licenses yet. Pick a tier and pay direct on Solana &mdash; your license arrives within a minute of on-chain confirmation.</p><a href="./pricing.html">View pricing</a></div>';
       return;
     }
     resultsLabel.style.display = 'block';
