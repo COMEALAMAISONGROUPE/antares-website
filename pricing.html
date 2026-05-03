@@ -459,6 +459,59 @@ footer span{color:var(--c)}
   var installId = (params.get('install') || '').trim();
   var hasInstall = installId && INSTALL_ID_RE.test(installId);
 
+  // ── Probe the extension for install_id ──────────────────────────────────
+  // If the user lands here without ?install=… on the URL (i.e. they didn't
+  // come from the extension's quota-limit redirect), they might still
+  // have the extension installed. The content-script bridge in the
+  // extension (contents/antares-website-bridge.ts) injects a meta tag
+  // and answers postMessage queries with the install_id. We probe once
+  // on page load — if successful, paying customers' install_id flows
+  // into the payment intent and the cron auto-flips their tier on
+  // confirmation, no manual key paste needed.
+  function probeExtensionInstallId() {
+    return new Promise(function(resolve) {
+      // Synchronous fast-path: meta tag dropped by the bridge at
+      // document_start. If absent, no extension → bail without waiting.
+      var marker = document.querySelector('meta[name="antares-extension-installed"]');
+      if (!marker) return resolve(null);
+
+      var nonce = String(Date.now()) + ':' + Math.random().toString(36).slice(2);
+      var resolved = false;
+      function onMsg(e) {
+        if (e.source !== window) return;
+        var d = e.data;
+        if (!d || typeof d !== 'object') return;
+        if (d.type !== 'antares:install-id-response') return;
+        if (d.nonce !== nonce) return;
+        resolved = true;
+        window.removeEventListener('message', onMsg);
+        resolve(d.install_id || null);
+      }
+      window.addEventListener('message', onMsg);
+      window.postMessage({ type: 'antares:get-install-id', nonce: nonce }, window.location.origin);
+      // 800ms timeout — bridge should respond in <50ms; this only fires
+      // if something's wrong (e.g. extension disabled but meta tag from a
+      // previous session lingering in DOM somehow).
+      setTimeout(function() {
+        if (!resolved) {
+          window.removeEventListener('message', onMsg);
+          resolve(null);
+        }
+      }, 800);
+    });
+  }
+
+  // Kick off the probe immediately. Modal-open code awaits this promise
+  // so we never submit a payment intent without the install_id when the
+  // extension is actually installed.
+  var installProbe = probeExtensionInstallId().then(function(id) {
+    if (!hasInstall && id && INSTALL_ID_RE.test(id)) {
+      installId = id;
+      hasInstall = true;
+    }
+    return id;
+  });
+
   // Logged-in state — populated async on page load. When set, we
   // suppress the email input in the modal and use the session email
   // for /api/payment-intent (the server reads it from the cookie too,
@@ -967,12 +1020,24 @@ footer span{color:var(--c)}
     currentReference = null;
     currentIntent = null;
 
-    var body = { tier: tier, token: token, email: email };
-    // Pass install_id when the user came from the extension's quota
-    // link; otherwise the server will identify the buyer by email
-    // and synthesise a placeholder install_id internally.
-    if (hasInstall) body.install_id = installId;
+    // Wait for the extension-bridge probe to complete (or time out) so
+    // we never submit a payment intent without the real install_id when
+    // the extension is in fact installed. The probe resolves in <50ms
+    // when the bridge is alive and ~800ms otherwise. Awaiting it here
+    // keeps the user-perceived latency minimal while guaranteeing
+    // install_id auto-link for paying customers.
+    installProbe.then(function() {
+      var body = { tier: tier, token: token, email: email };
+      // hasInstall may have been promoted to true by the probe above —
+      // populate install_id from whichever source had it.
+      if (hasInstall) body.install_id = installId;
 
+      _doPaymentIntentRequest(body, tier, token);
+    });
+    return;
+  }
+
+  function _doPaymentIntentRequest(body, tier, token) {
     fetch(INTENT_API, {
       method: 'POST',
       // credentials: 'include' so the session cookie (if any) flows
