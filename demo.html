@@ -170,6 +170,34 @@ footer .foot-links a:hover{color:var(--c)}
   var ANALYSIS_PAGE='https://antares-extension.vercel.app/token.html';
   var POS_KEY='antares_demo_pos';
 
+  // Persistent window reference for the Full Analysis tab. We hold a
+  // direct handle to the WindowProxy returned by window.open(), then
+  // on every subsequent Full Analysis click we either:
+  //   - navigate that handle to the new ?ca=  (if still open)
+  //   - or open a fresh window               (if user closed it)
+  //
+  // Setting `location.href` on a cross-origin WindowProxy is
+  // explicitly permitted by the HTML spec — only READING properties
+  // of cross-origin location throws. So we can drive the analysis
+  // tab from the demo (different origin) without SecurityError.
+  //
+  // Why not just `target="antares-analysis"` on the anchor? Because
+  // Chrome's browsing-context-group isolation can break named-target
+  // reuse when the link has rel=noopener AND navigates to a different
+  // origin — we end up with N tabs instead of one. The JS handle is
+  // origin-independent and works regardless of rel/noopener.
+  var analysisWindow=null;
+  function openAnalysis(ca){
+    var url=ANALYSIS_PAGE+'?ca='+encodeURIComponent(ca);
+    if(analysisWindow && !analysisWindow.closed){
+      try{analysisWindow.location.href=url;}
+      catch(_){analysisWindow=window.open(url,'antares-analysis');return;}
+      try{analysisWindow.focus();}catch(_){}
+    } else {
+      analysisWindow=window.open(url,'antares-analysis');
+    }
+  }
+
   var RISK_CLASS={SAFE:'safe',CAUTION:'caution',DANGER:'danger',RUG:'rug'};
   var LABELS={SAFE:'SAFE',CAUTION:'CAUTION',DANGER:'DANGER',RUG:'RUG PULL'};
   var VERDICT_COLORS={SAFE:'#00e5b0',CAUTION:'#f5d000',DANGER:'#ff5f5f',RUG:'#ff2244'};
@@ -522,19 +550,22 @@ footer .foot-links a:hover{color:var(--c)}
     // makes Chrome treat the call as a popup request and silently
     // block it under certain heuristics; (2) inside the demo's shadow
     // DOM the click handler had no fallback if JS bailed for any
-    // reason. Setting href + target on the anchor lets the browser do
-    // the navigation natively — no popup blocker, no JS dependency,
-    // works even with strict ad-blockers that hook window.open.
-    // Named target `antares-analysis` (not `_blank`). Every click on
-    // any token's "Full Analysis" reuses the same tab — switching
-    // tokens A→B→C navigates that one tab to the new ?ca= rather
-    // than opening three tabs. Better UX, especially for the demo
-    // where users sample several tokens in a row.
+    // The anchor itself just carries data-ca for the click handler in
+    // attachInteractions() to read. We DELIBERATELY don't set
+    // target="antares-analysis" + rel="noopener" any more — Chrome's
+    // browsing-context-group isolation breaks named-target reuse when
+    // rel=noopener is on the link, AND when target navigates to a
+    // different origin (which we do: demo on antares-website,
+    // analysis on antares-extension). Result was 4+ tabs piling up.
+    //
+    // The click handler below holds a persistent window reference and
+    // either navigates that window to the new ?ca= (if still open) or
+    // opens a fresh one. Truly one tab regardless of how many tokens
+    // the user samples. href is kept on the anchor as a no-JS
+    // fallback / right-click target.
     foNode.appendChild(el('a',{
       'href':ANALYSIS_PAGE+'?ca='+encodeURIComponent(mint),
       'id':'ant-full-analysis',
-      'target':'antares-analysis',
-      'rel':'noopener noreferrer',
       'data-ca':encodeURIComponent(mint)
     },'Full Analysis →'));
     foNode.appendChild(el('button',{'class':'ai-btn ai-btn--active','id':'ant-ai-summary-btn','type':'button'},'⬡ AI Summary'));
@@ -671,14 +702,23 @@ footer .foot-links a:hover{color:var(--c)}
     if(ai){var freshAi=ai.cloneNode(true);ai.parentNode.replaceChild(freshAi,ai);freshAi.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggleAiSummary(aiSummary);});}
     var cf=shadow.getElementById('ant-critical-flags-btn');
     if(cf){var freshCf=cf.cloneNode(true);cf.parentNode.replaceChild(freshCf,cf);freshCf.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggleCriticalFlags(d.flags||[]);});}
-    // Full Analysis: the <a> tag has href + target=_blank baked in at
-    // creation time (see buildResultNode), so the browser handles the
-    // navigation natively. We only attach a click handler to stop
-    // the click bubbling up to the box's drag/scan layer — same
-    // reason as AI / Critical Flags above. NO preventDefault — that
-    // would cancel the native link nav.
+    // Full Analysis click: route through openAnalysis() which holds a
+    // persistent window reference and navigates it on every subsequent
+    // click. Result: ONE tab regardless of how many tokens the user
+    // samples. preventDefault on the click cancels the native link
+    // navigation (the href is kept on the anchor only as a no-JS
+    // fallback / right-click "Open in new tab" target). stopPropagation
+    // keeps the click from bubbling to the box's drag layer.
     var fa=shadow.getElementById('ant-full-analysis');
-    if(fa){var freshFa=fa.cloneNode(true);fa.parentNode.replaceChild(freshFa,fa);freshFa.addEventListener('click',function(e){e.stopPropagation();});}
+    if(fa){
+      var freshFa=fa.cloneNode(true);
+      fa.parentNode.replaceChild(freshFa,fa);
+      freshFa.addEventListener('click',function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        openAnalysis(ca);
+      });
+    }
   }
 
   // ─── DexScreener pair picker ────────────────────────────────────────────
