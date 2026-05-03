@@ -47,6 +47,8 @@ nav .links a:hover{color:var(--c);transform:translateY(-1px)}
 nav .links a.active{color:var(--c)}
 nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
 nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
+nav .nav-account{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:11px 14px;border:1px solid transparent;transition:color .25s,border-color .25s;white-space:nowrap}
+nav .nav-account:hover{color:var(--c);border-color:rgba(0,229,176,.18)}
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}.delay-4{transition-delay:.4s}.delay-5{transition-delay:.5s}.delay-6{transition-delay:.6s}
@@ -112,6 +114,7 @@ footer span{color:var(--c)}
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./demo.html">Demo</a><a href="./features.html" class="active">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html">Pricing</a><a href="./faq.html">Q&amp;A</a></div>
+  <a href="./auth.html" id="nav-account" class="nav-account">Log in</a>
   <a href="./install.html" class="nav-cta">Install &rarr;</a>
 </nav></header><main>
 
@@ -196,5 +199,6 @@ footer span{color:var(--c)}
   reveals.forEach(function(el){observer.observe(el)});
 })()
 </script>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}}).catch(function(){})})();</script>
 </body>
 </html>
