@@ -46,6 +46,9 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 .eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
 @keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
 h1{font:400 clamp(48px,8vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+.section-label{display:flex;align-items:center;gap:14px;margin:36px 0 18px}
+.section-label::before,.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-label span{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;white-space:nowrap}
 .qa{margin-bottom:24px;background:var(--card);border:1px solid var(--border);padding:24px 28px;border-radius:2px}
 .qa h3{font-size:13px;color:var(--c);letter-spacing:.06em;margin-bottom:10px;font-weight:700}
 .qa p{font-size:12px;color:#7a7a82;line-height:1.85;margin-bottom:10px}
@@ -71,17 +74,45 @@ footer .foot-links a:hover{color:var(--c)}
   <h1>FAQ</h1>
 </section>
 
-<div class="qa"><h3>1. What do SAFE / CAUTION / DANGER / RUG actually mean?</h3>
+<div class="section-label"><span>Pricing</span></div>
+
+<div class="qa"><h3>What does Free actually include?</h3>
+<p>The verdict, the score, and 50 daily scans &mdash; nothing more. SAFE / CAUTION / DANGER / RUG label, 1000-point score under the hood, and the basic checks you see in the overlay (Sell, Mint, Freeze, LP, Liquidity). The deep-dive layers &mdash; AI Summary, Critical Flags panel, Full Analysis page (Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection) &mdash; are Pro features. Free is the taste-test. Pro is the trading tool.</p>
+</div>
+
+<div class="qa"><h3>Why is Free so minimal?</h3>
+<p>Because we&rsquo;re not running a charity. Free covers the cost of letting people sample the engine on a few tokens before they trust it with a payment. If you&rsquo;re trading new launches every day, the verdict alone isn&rsquo;t enough &mdash; you&rsquo;ll want to see <i>why</i> a token got flagged, the AI summary that translates the math, and the full holder/insider analysis. Those features cost real compute and external API quota to deliver, so they&rsquo;re paid. $24.99 / 30 days for unlimited everything is genuinely cheap if your tooling is part of your P&amp;L.</p>
+</div>
+
+<div class="qa"><h3>Why 50 scans per day specifically?</h3>
+<p>50 scans covers a full research session for most users. The cap exists to mark the line between casual research and active trading at scale: enough to vet a session of new launches without ever paying us, but if your edge depends on this tooling all day every day, $24.99 / 30 days for unlimited is the obvious move.</p>
+</div>
+
+<div class="qa"><h3>What does Lifetime actually mean?</h3>
+<p>Pay $149.99 once (USDC or SOL, your call), get every Pro feature for as long as Antares exists, including everything in Pro v2, v3, v4 (alerts, charts, push, smart-money, portfolio tracker). Lifetime is capped at 1000 supporters &mdash; once full, the 30-day pass is the only option. Lifetime members also get a private Discord channel, founder badge, and roadmap vote.</p>
+</div>
+
+<div class="qa"><h3>Can I get a refund?</h3>
+<p>30-day Pro pass: yes, within 7 days if you haven&rsquo;t actively used the Pro features. Lifetime: yes, within 30 days. After that, Lifetime is non-refundable because the spot is removed from the 1000-cap inventory. Refunds are processed manually by sending USDC back to the wallet that paid &mdash; we use the on-chain transaction signature as the link, never an email or stored PII. Email <a href="mailto:lennypierrepro@gmail.com">lennypierrepro@gmail.com</a> with the tx signature to request a refund.</p>
+</div>
+
+<div class="qa"><h3>Will there be student / underdog pricing?</h3>
+<p>Yes. Verifiable students and developers contributing to open source get 50% off Pro Monthly. Reach out by email (<a href="mailto:lennypierrepro@gmail.com">lennypierrepro@gmail.com</a>) with your situation and we&rsquo;ll set it up.</p>
+</div>
+
+<div class="section-label"><span>Engine &amp; verdicts</span></div>
+
+<div class="qa"><h3>What do SAFE / CAUTION / DANGER / RUG actually mean?</h3>
 <p>The verdict is a band on the 1000-point score, with hard overrides:</p>
 <p><b>SAFE</b> (score &ge;900, &ge;5 sources active): no critical signals across all 7 layers.<br><b>CAUTION</b> (600-899): at least one risk signal but nothing critical &mdash; e.g. concentrated top-10 holders, mild wash-trading ratio, very young token.<br><b>DANGER</b> (350-599): multiple risk signals or one critical signal partially mitigated by maturity.<br><b>RUG</b> (&lt;350 or Safe Gate triggered): hard kill &mdash; LP open, honeypot, mint/freeze active, or deceptive name.</p>
 </div>
 
-<div class="qa"><h3>2. Can a SAFE token still rug?</h3>
+<div class="qa"><h3>Can a SAFE token still rug?</h3>
 <p>Yes. Antares is a probabilistic risk screen, not a guarantee. We can detect what 6 independent sources surface at scan time &mdash; novel exploits, coordinated dumps via fresh wallets, or social-engineering attacks may not register.</p>
 <p>The Outcome Histogram is <b>indicative</b>, derived from a heuristic profile match against historical clusters &mdash; it is not a validated forecast. See the <a href="./terms.html">Terms</a> for the full disclaimer.</p>
 </div>
 
-<div class="qa"><h3>3. Why is this token flagged DANGER when it looks fine?</h3>
+<div class="qa"><h3>Why is this token flagged DANGER when it looks fine?</h3>
 <p>False positives are real and unavoidable. Common causes:</p>
 <p>&bull; <b>LP not burned but token is mature &amp; liquid</b> &mdash; we still penalise unburned LP because the dev <em>can</em> rug at any time, even if the project looks legitimate (e.g. Fartcoin, DeFade). The <code>established-bonus</code> rule unlocks SAFE for tokens 30+ days old with 50k+ holders + GoPlus clean.</p>
 <p>&bull; <b>Volume/liquidity ratio above 5&times;</b> &mdash; flagged as wash-trading risk even on legitimate flash-pool venues where that ratio is structural.</p>
@@ -89,30 +120,30 @@ footer .foot-links a:hover{color:var(--c)}
 <p>If you think a verdict is wrong, <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">open an issue</a> with the token CA.</p>
 </div>
 
-<div class="qa"><h3>4. What data does Antares collect about me?</h3>
+<div class="qa"><h3>What data does Antares collect about me?</h3>
 <p>None personal. The API receives the contract address you scan plus standard HTTPS metadata (IP, user-agent) used for rate-limiting only. We don&rsquo;t store profiles, we don&rsquo;t correlate scans across users, we don&rsquo;t sell anything.</p>
 <p>Full disclosure with retention windows per system: <a href="./privacy.html">/privacy</a>.</p>
 </div>
 
-<div class="qa"><h3>5. Why does the extension require <code>activeTab</code> and <code>tabs</code> permissions?</h3>
+<div class="qa"><h3>Why does the extension require <code>activeTab</code> and <code>tabs</code> permissions?</h3>
 <p>To detect Solana contract addresses on the supported trading platforms (DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN). The Extension reads the URL and visible page DOM on those sites only. It does <b>not</b> read form fields, credentials, cookies, or browsing history.</p>
 </div>
 
-<div class="qa"><h3>6. How fast is a scan?</h3>
+<div class="qa"><h3>How fast is a scan?</h3>
 <p>Typical: 3&ndash;5 seconds end-to-end (6 concurrent upstream calls + AI summary + insider graph + scoring). Cached scans return in under 100ms.</p>
 <p>Slower than RugCheck (&lt;1s, single source) by design &mdash; we trade speed for depth (7 layers + clustering + holder activity).</p>
 </div>
 
-<div class="qa"><h3>7. Multichain support? Ethereum / BSC / Base?</h3>
+<div class="qa"><h3>Multichain support? Ethereum / BSC / Base?</h3>
 <p>Solana only for v1. Multichain is on the roadmap but not committed for the first public release. Phase 0 (DexScreener + GoPlus EVM) is the entry point; full feature parity (Critical Actors / Holder Activity / Outcome Stats on EVM) is multi-week work.</p>
 </div>
 
-<div class="qa"><h3>8. Is the AI summary reliable?</h3>
+<div class="qa"><h3>Is the AI summary reliable?</h3>
 <p>It&rsquo;s a Google Gemini 2.5-flash output grounded in the actual scan data (verdict, top flags, holder concentration, vol/liq, age). It can occasionally hallucinate or misinterpret &mdash; treat it as plain-English context, not authoritative analysis. The raw flag list and verdict are the ground truth.</p>
 <p>If Gemini is unreachable, a local fallback dictionary covers the 12 most common flag explanations so the AI Verdict card never goes empty.</p>
 </div>
 
-<div class="qa"><h3>9. How do I report a false positive / false negative / bug?</h3>
+<div class="qa"><h3>How do I report a false positive / false negative / bug?</h3>
 <p>Open an issue at <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">github.com/COMEALAMAISONGROUPE/antares-extension/issues</a> with: the token CA, what verdict you got, what you expected, and the timestamp of the scan (visible in the extension&rsquo;s metric tab as <code>requestId</code>).</p>
 <p>Security issues should use Private Vulnerability Reporting per <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/SECURITY.md">SECURITY.md</a> &mdash; do not include exploit details in a public issue.</p>
 </div>
