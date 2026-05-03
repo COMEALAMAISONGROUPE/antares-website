@@ -435,36 +435,21 @@ footer span{color:var(--c)}
      changes underneath users on a future CDN release. -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" crossorigin="anonymous"></script>
 
-<!-- Solana web3 SDK + SPL token helpers — loaded as ESM modules so we can
-     build a proper transaction in-page and sign with Phantom/Solflare/
-     Backpack via their injected `signAndSendTransaction` API. The
-     previous "set window.location.href = solana:..." trick relied on
-     the OS protocol-handler for `solana:` URLs — desktop browsers don't
-     route those reliably to extension wallets, which is why "Pay with
-     Phantom" appeared dead. This direct-API approach is the documented
-     way to integrate with Solana wallets on desktop.
+<!-- Solana web3 SDK — single-file IIFE bundle from jsdelivr.
+     Exposes `window.solanaWeb3` with all the primitives we need
+     (PublicKey, Transaction, SystemProgram, Connection, etc). One
+     self-contained classic script — no module-import dependency
+     cascading, no /node/* polyfill resolution, no ?bundle redirector.
 
-     Pinned versions; ?bundle returns a single self-contained module so
-     we don't pull a dependency tree on each request. ~200KB total. -->
-<script type="module">
-  import {
-    Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL,
-  } from 'https://esm.sh/@solana/web3.js@1.95.4?bundle';
-  import {
-    getAssociatedTokenAddress, createTransferCheckedInstruction,
-  } from 'https://esm.sh/@solana/spl-token@0.4.6?bundle';
-  // Stash on window so the inline (non-module) script below can use it.
-  // We can't access ES module imports from a classic script otherwise.
-  window.__antaresSolana = {
-    Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL,
-    getAssociatedTokenAddress, createTransferCheckedInstruction,
-    ready: true,
-  };
-  // Fire a custom event so the inline script knows the libs landed —
-  // useful when the user clicks "Pay" before the modules finish
-  // downloading on a slow connection.
-  window.dispatchEvent(new CustomEvent('antares:solana-ready'));
-</script>
+     Previous attempt used `esm.sh/@solana/web3.js@1.95.4?bundle` which
+     returns a 233-byte stub that imports more files (`/node/buffer`,
+     `/node/process`, etc.) — works in some browsers but failed in
+     production for the user, leaving "Solana SDK failed to load" on
+     screen. This IIFE bundle is rock-solid: one file, no cascading.
+
+     Pinned to 1.95.4. We don't need @solana/spl-token — the SPL
+     transfer instruction is hand-built below in payWithWallet(). -->
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.4/lib/index.iife.min.js" crossorigin="anonymous"></script>
 
 <script>
 // ── Solana Pay checkout flow ─────────────────────────────────────────────────
@@ -724,23 +709,80 @@ footer span{color:var(--c)}
     return null;
   }
 
-  // Wait helper — the @solana/web3.js + spl-token modules load via
-  // ESM imports above. On a slow connection the user might click the
-  // pay button before they're ready. We poll for ~3s, then bail.
+  // The web3.js IIFE bundle exposes `window.solanaWeb3` with all the
+  // primitives we use. It's a classic <script> tag (loaded above) so
+  // it's typically ready before the inline script below runs — but we
+  // still poll briefly in case of slow CDN. 4s timeout returns a
+  // friendly error so the QR fallback gets used.
   function waitForSolanaSDK() {
     return new Promise(function(resolve, reject) {
-      if (window.__antaresSolana?.ready) return resolve(window.__antaresSolana);
+      if (window.solanaWeb3 && window.solanaWeb3.PublicKey) return resolve(window.solanaWeb3);
       var elapsed = 0;
       var interval = setInterval(function() {
-        if (window.__antaresSolana?.ready) {
+        if (window.solanaWeb3 && window.solanaWeb3.PublicKey) {
           clearInterval(interval);
-          resolve(window.__antaresSolana);
+          resolve(window.solanaWeb3);
         } else if (elapsed > 4000) {
           clearInterval(interval);
           reject(new Error('Solana SDK failed to load — try the QR code instead.'));
         }
         elapsed += 100;
       }, 100);
+    });
+  }
+
+  // ── Hand-built SPL token primitives ──────────────────────────────────────
+  // We don't load @solana/spl-token (no good single-file IIFE bundle exists
+  // for it on a CDN, and we'd need its full transitive tree). Instead, we
+  // build the two SPL primitives we need directly:
+  //
+  //   1. getAssociatedTokenAddress(mint, owner) — derive the ATA via
+  //      PDA from the SPL convention seeds [owner, TOKEN_PROGRAM, mint]
+  //      with the Associated Token Program ID.
+  //
+  //   2. createSPLTransferIx(...) — build the TransferChecked instruction
+  //      (variant 12) with a hand-serialised data buffer:
+  //        byte 0     : 0x0c (variant tag for TransferChecked)
+  //        bytes 1-8  : amount as u64 little-endian
+  //        byte 9     : decimals (u8)
+  //
+  // These two are stable parts of the SPL Token program ABI — they have
+  // not changed since 2020 and are unlikely to. The function is ~30 LOC
+  // vs ~30KB of npm dependencies. Audit-friendly, dep-free.
+  var TOKEN_PROGRAM_ID_STR = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+  var ASSOCIATED_TOKEN_PROGRAM_ID_STR = 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL';
+
+  function getAssociatedTokenAddress(sdk, mint, owner) {
+    var tokenProg = new sdk.PublicKey(TOKEN_PROGRAM_ID_STR);
+    var ataProg = new sdk.PublicKey(ASSOCIATED_TOKEN_PROGRAM_ID_STR);
+    // findProgramAddressSync was added in @solana/web3.js 1.50+;
+    // older versions exposed only the async findProgramAddress.
+    var find = sdk.PublicKey.findProgramAddressSync || sdk.PublicKey.findProgramAddress;
+    var seeds = [owner.toBuffer(), tokenProg.toBuffer(), mint.toBuffer()];
+    var result = find.call(sdk.PublicKey, seeds, ataProg);
+    // Sync version returns [pda, bump]; async returns Promise<[pda, bump]>.
+    // We'll always invoke the sync path in modern web3.js (1.95.x).
+    return result[0];
+  }
+
+  function createSPLTransferIx(sdk, senderAta, mint, recipientAta, owner, rawAmount, decimals) {
+    var tokenProg = new sdk.PublicKey(TOKEN_PROGRAM_ID_STR);
+    var data = new Uint8Array(10);
+    data[0] = 12; // TransferChecked variant tag
+    var n = BigInt(rawAmount);
+    for (var i = 0; i < 8; i++) {
+      data[1 + i] = Number((n >> BigInt(i * 8)) & 0xffn);
+    }
+    data[9] = decimals;
+    return new sdk.TransactionInstruction({
+      keys: [
+        { pubkey: senderAta, isSigner: false, isWritable: true },
+        { pubkey: mint, isSigner: false, isWritable: false },
+        { pubkey: recipientAta, isSigner: false, isWritable: true },
+        { pubkey: owner, isSigner: true, isWritable: false },
+      ],
+      programId: tokenProg,
+      data: data,
     });
   }
 
@@ -795,13 +837,11 @@ footer span{color:var(--c)}
     if (intent.splTokenMint) {
       // ── USDC (SPL token) transfer path ─────────────────────────────────
       var mint = new sdk.PublicKey(intent.splTokenMint);
-      var senderAta = await sdk.getAssociatedTokenAddress(mint, sender);
-      var recipientAta = await sdk.getAssociatedTokenAddress(mint, recipient);
+      var senderAta = getAssociatedTokenAddress(sdk, mint, sender);
+      var recipientAta = getAssociatedTokenAddress(sdk, mint, recipient);
       // USDC has 6 decimals — multiply UI amount by 10^6 to get raw units.
       var rawAmount = Math.round(Number(intent.amount) * 1e6);
-      var ix = sdk.createTransferCheckedInstruction(
-        senderAta, mint, recipientAta, sender, rawAmount, 6,
-      );
+      var ix = createSPLTransferIx(sdk, senderAta, mint, recipientAta, sender, rawAmount, 6);
       // Solana Pay convention: include the unique reference as a
       // read-only non-signer account on at least one instruction so
       // the merchant's reference-scan finds the tx.

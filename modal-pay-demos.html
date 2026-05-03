@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Modal Pay Demos — Antares</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--purple:#a78bfa;--yellow:#f5d000;--red:#ff5f5f}
+body{background:var(--bg);color:#c8c8cc;font-family:'IBM Plex Mono',monospace;padding:20px;min-height:100vh}
+.shell{max-width:1400px;margin:0 auto}
+
+/* Demo header */
+.demo-intro{text-align:center;padding:32px 0 24px;border-bottom:1px solid var(--border);margin-bottom:32px}
+.demo-intro h1{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:10px}
+.demo-intro h1 span{color:var(--c)}
+.demo-intro p{font-size:13px;color:#9a9aa2;line-height:1.7;max-width:640px;margin:0 auto;border-left:2px solid var(--c);padding-left:16px;text-align:left}
+
+/* Three-column comparison grid */
+.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+.compare-col{display:flex;flex-direction:column;gap:14px}
+.col-header{padding:16px 20px;border:1px solid var(--border);border-radius:4px;background:linear-gradient(135deg,rgba(0,229,176,.06),rgba(167,139,250,.04))}
+.col-letter{font:400 56px/.8 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-shadow:0 0 24px rgba(0,229,176,.3);margin-bottom:4px}
+.col-name{font:400 22px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#eaeaea;margin-bottom:4px}
+.col-tag{font-size:10px;color:#7a7a82;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+.col-notes{font-size:11px;color:#9a9aa2;line-height:1.55}
+.col-notes b{color:#cccccc}
+
+/* The simulated modal — kept in a static card so user can compare side by side */
+.modal-sim{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:24px;position:relative;overflow:hidden;max-width:420px;margin:0 auto}
+.modal-sim::before{content:'PREVIEW — INACTIVE';position:absolute;top:8px;right:8px;font:600 8px/1 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.18em;padding:3px 6px;background:rgba(0,0,0,.6);border:1px solid #2a2a30;border-radius:2px}
+.modal-sim .pay-title{font:400 24px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;text-align:center;margin-bottom:6px}
+.modal-sim .pay-subtitle{font:600 9px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:18px}
+
+/* Email row */
+.pay-email-row{margin-bottom:14px}
+.pay-email-row label{display:block;font:600 9px/1 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
+.pay-email-row input{width:100%;background:#0a0a0c;border:1px solid var(--border);color:#cccccc;padding:9px 11px;font:400 12px/1 'IBM Plex Mono',monospace;border-radius:2px;letter-spacing:.04em}
+
+/* Token toggle */
+.pay-toggle{display:flex;gap:0;margin-bottom:14px;border:1px solid var(--border);border-radius:2px;overflow:hidden}
+.pay-toggle button{flex:1;padding:7px;background:transparent;border:none;color:#7a7a82;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.pay-toggle button.active{background:var(--c);color:#0a0a0c}
+
+/* Amount + token */
+.pay-amount{font:400 36px/.95 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-align:center;margin-bottom:2px}
+.pay-token{font:600 9px/1 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.22em;text-transform:uppercase;text-align:center;margin-bottom:14px}
+
+/* QR code */
+.pay-qr{background:#fff;border-radius:3px;padding:10px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
+.pay-qr.large{width:180px;height:180px}
+.pay-qr.medium{width:140px;height:140px}
+.pay-qr.small{width:110px;height:110px}
+.pay-qr-fake{width:100%;height:100%;background-image:linear-gradient(45deg,#000 25%,transparent 25%),linear-gradient(-45deg,#000 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#000 75%),linear-gradient(-45deg,transparent 75%,#000 75%);background-size:8px 8px;background-position:0 0,0 4px,4px -4px,-4px 0}
+
+/* Recipient */
+.pay-recipient{background:#0a0a0c;border:1px solid var(--border);border-radius:2px;padding:7px 10px;margin-bottom:10px;font:400 10px/1 'IBM Plex Mono',monospace;color:#888;display:flex;align-items:center;gap:6px}
+.pay-recipient .pay-addr{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9.5px}
+.pay-recipient button{background:none;border:1px solid #2a2a30;color:#888;padding:3px 7px;font-size:8px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'IBM Plex Mono',monospace}
+
+/* Verify box (only on Demo A) */
+.pay-verify{margin-bottom:10px;padding:8px 10px;background:rgba(0,229,176,.03);border:1px solid rgba(0,229,176,.18);border-radius:2px;font:400 9px/1.5 'IBM Plex Mono',monospace;color:#9a9aa2;letter-spacing:.04em}
+.pay-verify-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0}
+.pay-verify-row span:first-child{color:#5a5a62;text-transform:uppercase;letter-spacing:.18em;font-size:8.5px}
+.pay-verify-row span:last-child{color:#cccccc;font-weight:600;font-size:9.5px}
+
+/* Buttons */
+.pay-wallet-btn{display:flex;width:100%;padding:10px;background:var(--c);color:#0a0a0c;border:none;border-radius:2px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;cursor:pointer}
+.pay-wallet-btn .pay-wallet-dot{width:6px;height:6px;border-radius:50%;background:#0a0a0c;flex-shrink:0}
+.pay-or{text-align:center;font:600 8px/1 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.32em;text-transform:uppercase;margin:8px 0;position:relative}
+.pay-or::before,.pay-or::after{content:'';position:absolute;top:50%;width:calc(50% - 18px);height:1px;background:#1a1a1e}
+.pay-or::before{left:0}.pay-or::after{right:0}
+.pay-deeplink{display:block;width:100%;padding:9px;background:transparent;color:#888;text-align:center;text-decoration:none;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;border:1px solid #2a2a30;border-radius:2px;margin-bottom:10px;cursor:pointer}
+
+/* Status */
+.pay-status{padding:8px;border-radius:2px;text-align:center;font:600 9px/1.4 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;border:1px solid #2a2a30;background:#0a0a0c;color:#888}
+.pay-spinner{display:inline-block;width:6px;height:6px;border-radius:50%;background:#888;margin-right:6px}
+
+/* Demo C uses two columns inside the modal — primary action left, QR right */
+.demo-c-grid{display:grid;grid-template-columns:1fr 130px;gap:14px;align-items:start;margin-bottom:10px}
+.demo-c-grid > div:first-child{display:flex;flex-direction:column;gap:8px}
+.demo-c-grid .pay-amount{font-size:30px;text-align:left;margin-bottom:0}
+.demo-c-grid .pay-token{text-align:left;margin-bottom:0}
+.demo-c-grid .pay-qr{margin:0}
+
+/* Footer */
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);text-align:center;color:#5a5a62;font-size:10px;letter-spacing:.15em;text-transform:uppercase}
+
+@media(max-width:980px){
+  .compare{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<section class="demo-intro">
+  <h1>PICK A <span>MODAL</span> LAYOUT.</h1>
+  <p>
+    Three compact rewrites of the payment modal, ordered most-features &rarr;
+    most-minimal. All three ship the same fixes already on the branch:
+    <b>web3.js IIFE bundle from jsdelivr</b> (replaces the failing esm.sh
+    ESM imports), <b>hand-built SPL transfer instruction</b> (drops the
+    @solana/spl-token dep), <b>working "Pay with Phantom" button</b>.
+    Only the visual layout and which extras you keep differ.
+  </p>
+</section>
+
+<div class="compare">
+
+<!-- ════════════════════════════════════════════════════════════════════
+     DEMO A — Slim
+     Drops the verify box + the redundant "Open in wallet" button.
+     Smaller QR. Everything else stays.
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="compare-col">
+  <div class="col-header">
+    <div class="col-letter">A</div>
+    <div class="col-name">Slim</div>
+    <div class="col-tag">Drops verify box + Open-in-wallet</div>
+    <div class="col-notes">
+      Smallest behavioural change from current. <b>Verify box removed</b>
+      (recipient row already shows the address), <b>Open-in-wallet
+      removed</b> (Pay-with-Phantom replaces it functionally),
+      <b>QR shrunk</b> 200&rarr;140px. Email + token toggle + amount +
+      QR + recipient + Phantom button + status. Compact, but readable.
+    </div>
+  </div>
+  <div class="modal-sim">
+    <div class="pay-title">Antares Pro &middot; 30 days</div>
+    <div class="pay-subtitle">Direct on Solana &middot; zero middleman</div>
+    <div class="pay-email-row">
+      <label>Email (for license + receipt)</label>
+      <input type="email" value="you@degen.sol" readonly>
+    </div>
+    <div class="pay-toggle">
+      <button class="active">USDC</button>
+      <button>SOL</button>
+    </div>
+    <div class="pay-amount">$24.99</div>
+    <div class="pay-token">USDC on Solana</div>
+    <div class="pay-qr medium"><div class="pay-qr-fake"></div></div>
+    <div class="pay-recipient">
+      <span class="pay-addr">41gURUf55…NMce6e</span>
+      <button>Copy</button>
+    </div>
+    <button class="pay-wallet-btn">
+      <span class="pay-wallet-dot" style="background:#AB9FF2"></span>
+      <span>Pay with Phantom</span>
+    </button>
+    <div class="pay-status"><span class="pay-spinner"></span>Waiting for payment&hellip;</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     DEMO B — Compact
+     Wallet button at the top, QR collapsed below "Or scan QR" disclosure.
+     Default state shows just the essentials. QR rendered on demand.
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="compare-col">
+  <div class="col-header">
+    <div class="col-letter">B</div>
+    <div class="col-name">Compact</div>
+    <div class="col-tag">Wallet-first &middot; QR is a disclosure</div>
+    <div class="col-notes">
+      <b>Pay-with-Phantom button is the hero</b>. The QR is hidden behind
+      a small "or scan QR with mobile wallet" link — only revealed for
+      users without a desktop wallet. Modal is roughly half the height
+      of A. Best for the audience that's overwhelmingly on Phantom +
+      Chrome already.
+    </div>
+  </div>
+  <div class="modal-sim">
+    <div class="pay-title">Antares Pro &middot; 30 days</div>
+    <div class="pay-subtitle">Direct on Solana &middot; zero middleman</div>
+    <div class="pay-email-row">
+      <label>Email (for license + receipt)</label>
+      <input type="email" value="you@degen.sol" readonly>
+    </div>
+    <div class="pay-toggle">
+      <button class="active">USDC</button>
+      <button>SOL</button>
+    </div>
+    <div class="pay-amount">$24.99</div>
+    <div class="pay-token">USDC on Solana</div>
+    <button class="pay-wallet-btn">
+      <span class="pay-wallet-dot" style="background:#AB9FF2"></span>
+      <span>Pay with Phantom</span>
+    </button>
+    <div style="text-align:center;margin:8px 0 6px"><a href="#" style="font:600 9px/1 'IBM Plex Mono',monospace;color:#7a7a82;letter-spacing:.18em;text-transform:uppercase;text-decoration:none">&rarr; Or scan QR with mobile wallet</a></div>
+    <div class="pay-recipient">
+      <span class="pay-addr">41gURUf55…NMce6e</span>
+      <button>Copy</button>
+    </div>
+    <div class="pay-status"><span class="pay-spinner"></span>Waiting for payment&hellip;</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     DEMO C — Two-Pane
+     Side-by-side layout: amount + Phantom button on the left, QR on the
+     right. Same height as A but uses horizontal real-estate instead of
+     stacking, so the modal is ~25% shorter overall.
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="compare-col">
+  <div class="col-header">
+    <div class="col-letter">C</div>
+    <div class="col-name">Two-Pane</div>
+    <div class="col-tag">Side-by-side amount + QR</div>
+    <div class="col-notes">
+      Two-column body inside the modal: <b>amount + Phantom button on the
+      left, QR on the right</b>. Same data as A but ~25% shorter overall.
+      Most "designed" of the three &mdash; reads like a real product UI
+      not a checklist.
+    </div>
+  </div>
+  <div class="modal-sim">
+    <div class="pay-title">Antares Pro &middot; 30 days</div>
+    <div class="pay-subtitle">Direct on Solana &middot; zero middleman</div>
+    <div class="pay-email-row">
+      <label>Email (for license + receipt)</label>
+      <input type="email" value="you@degen.sol" readonly>
+    </div>
+    <div class="pay-toggle">
+      <button class="active">USDC</button>
+      <button>SOL</button>
+    </div>
+    <div class="demo-c-grid">
+      <div>
+        <div class="pay-amount">$24.99</div>
+        <div class="pay-token">USDC on Solana</div>
+        <button class="pay-wallet-btn" style="margin-top:6px">
+          <span class="pay-wallet-dot" style="background:#AB9FF2"></span>
+          <span>Pay with Phantom</span>
+        </button>
+      </div>
+      <div class="pay-qr small"><div class="pay-qr-fake"></div></div>
+    </div>
+    <div class="pay-recipient">
+      <span class="pay-addr">41gURUf55…NMce6e</span>
+      <button>Copy</button>
+    </div>
+    <div class="pay-status"><span class="pay-spinner"></span>Waiting for payment&hellip;</div>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  Antares &middot; Modal layout demos &middot; pick A / B / C &middot; web3.js IIFE + hand-built SPL ship with all of them
+</footer>
+
+</div>
+</body>
+</html>
