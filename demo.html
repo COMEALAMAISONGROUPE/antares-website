@@ -515,7 +515,23 @@ footer .foot-links a:hover{color:var(--c)}
 
     var foNode=el('div',{'class':'fo'});
     foNode.appendChild(el('button',{'class':'cf-btn','id':'ant-critical-flags-btn','type':'button'},'⚠ Critical Flags'));
-    foNode.appendChild(el('a',{'href':'#','id':'ant-full-analysis','data-ca':encodeURIComponent(mint)},'Full Analysis →'));
+    // Native <a target="_blank"> with the real href baked in at creation
+    // time. Previous implementation used href="#" + a JS click handler
+    // calling window.open() — that approach had two problems: (1)
+    // window.open()'s third-arg features string (`noopener,noreferrer`)
+    // makes Chrome treat the call as a popup request and silently
+    // block it under certain heuristics; (2) inside the demo's shadow
+    // DOM the click handler had no fallback if JS bailed for any
+    // reason. Setting href + target on the anchor lets the browser do
+    // the navigation natively — no popup blocker, no JS dependency,
+    // works even with strict ad-blockers that hook window.open.
+    foNode.appendChild(el('a',{
+      'href':ANALYSIS_PAGE+'?ca='+encodeURIComponent(mint),
+      'id':'ant-full-analysis',
+      'target':'_blank',
+      'rel':'noopener noreferrer',
+      'data-ca':encodeURIComponent(mint)
+    },'Full Analysis →'));
     foNode.appendChild(el('button',{'class':'ai-btn ai-btn--active','id':'ant-ai-summary-btn','type':'button'},'⬡ AI Summary'));
 
     var tkNode=tokenSymbol?el('div',{'class':'tk'},el('b',null,tokenSymbol),tokenName?(' '+tokenName):''):null;
@@ -650,8 +666,14 @@ footer .foot-links a:hover{color:var(--c)}
     if(ai){var freshAi=ai.cloneNode(true);ai.parentNode.replaceChild(freshAi,ai);freshAi.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggleAiSummary(aiSummary);});}
     var cf=shadow.getElementById('ant-critical-flags-btn');
     if(cf){var freshCf=cf.cloneNode(true);cf.parentNode.replaceChild(freshCf,cf);freshCf.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggleCriticalFlags(d.flags||[]);});}
+    // Full Analysis: the <a> tag has href + target=_blank baked in at
+    // creation time (see buildResultNode), so the browser handles the
+    // navigation natively. We only attach a click handler to stop
+    // the click bubbling up to the box's drag/scan layer — same
+    // reason as AI / Critical Flags above. NO preventDefault — that
+    // would cancel the native link nav.
     var fa=shadow.getElementById('ant-full-analysis');
-    if(fa){var freshFa=fa.cloneNode(true);fa.parentNode.replaceChild(freshFa,fa);freshFa.addEventListener('click',function(e){e.preventDefault();window.open(ANALYSIS_PAGE+'?ca='+encodeURIComponent(ca),'_blank','noopener,noreferrer');});}
+    if(fa){var freshFa=fa.cloneNode(true);fa.parentNode.replaceChild(freshFa,fa);freshFa.addEventListener('click',function(e){e.stopPropagation();});}
   }
 
   // ─── DexScreener pair picker ────────────────────────────────────────────
