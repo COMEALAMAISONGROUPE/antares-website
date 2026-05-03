@@ -258,5 +258,80 @@ keyed by email, untouched by SESSION_SECRET rotation.
 
 ---
 
+## 8. The exact-amount guarantee — "exactly 24.99 or no licence"
+
+The on-chain verifier in `api/_lib/solana-pay.ts::verifyTokenTransfer`
+implements three hard gates per transaction it scans:
+
+```ts
+// 1. Recipient must match — the buyer paid OUR wallet, not someone else's
+const postEntry = post.find(b =>
+  b.owner === expected.recipient && b.mint === expected.mint
+);
+if (!postEntry) return false;        // wrong wallet → reject
+
+// 2. Token mint must match — USDC stays USDC, SOL stays SOL
+//    (the second `expected.mint === b.mint` clause)
+
+// 3. Amount must satisfy the floor with 1% tolerance for wallet rounding
+const delta = postAmount - preAmount;
+return delta >= expected.minAmount * 0.99;
+```
+
+**What this means concretely for a $24.99 Pro intent**:
+
+| User pays | Verifier verdict | Why |
+|---|---|---|
+| $24.99 | ✅ accepted | exact match |
+| $25.00 | ✅ accepted | overpayment counts as paid |
+| $24.74 | ❌ rejected | below $24.7401 floor (1% tolerance) |
+| $20.00 | ❌ rejected | underpayment |
+| $24.99 to wrong wallet | ❌ rejected | recipient mismatch |
+| $24.99 in SOL on a USDC intent | ❌ rejected | mint mismatch |
+| $24.99 with a tx that errored | ❌ rejected | `tx.meta.err` non-null |
+
+**Why 1% tolerance and not exact-match**: wallet UIs often display
+"24.99" but transmit `24.989999` due to decimal precision in the
+underlying SPL token (USDC has 6 decimals on Solana). A strict equality
+check would reject those payments and infuriate users. 1% (~$0.25 of
+slack on a $24.99 intent) covers wallet rounding without admitting any
+realistic underpayment.
+
+**Brute force isn't possible**: every payment intent generates a fresh
+32-byte random `reference` address. Without that exact reference in
+the transaction's account list, our scanner doesn't even consider the
+tx — it filters by reference first, validates amount second.
+
+---
+
+## 9. The "connect wallet" UX in pricing.html
+
+The modal detects three browser-extension wallets:
+
+```js
+window.solana.isPhantom   → "Pay with Phantom"
+window.solflare.isSolflare → "Pay with Solflare"
+window.backpack.isBackpack → "Pay with Backpack"
+```
+
+Click handler is a single line:
+
+```js
+window.location.href = intent.payUrl;
+// e.g. solana:41gURUf55…?amount=24.99&spl-token=EPjFW…&reference=…
+```
+
+Every Solana wallet extension intercepts `solana:` URL navigation and
+opens its signing dialog with recipient + amount + reference + memo
+all pre-filled. The user just clicks **Approve**. No `@solana/wallet-
+adapter` import, no `@solana/web3.js` — zero added JS payload.
+
+For users without a browser extension wallet, the modal falls back to:
+- **QR code** (mobile wallets scan it)
+- **"Open in wallet →" deep link** (system handler picks any installed
+  Solana wallet)
+
+---
+
 *Last updated: 2026-05-03. Current state: SESSION_SECRET pending. Once
 set, the full pipeline is production-ready.*
