@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Antares pricing. Free for 50 daily scans. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL, zero middleman.">
+<meta name="description" content="Antares anti-scam scanner for Solana — seven independent layers, one verdict, surfaced live in your overlay. Free 50 scans/day. Pro and Lifetime tiers paid direct in USDC or SOL, zero middleman.">
 <meta name="author" content="Antares">
 <link rel="canonical" href="https://antares-website.vercel.app/pricing">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antares-website.vercel.app/pricing">
-<meta property="og:title" content="Pricing — Antares">
-<meta property="og:description" content="Free for 50 daily scans. Pro $24.99 for 30 days unlimited. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL.">
+<meta property="og:title" content="Stop guessing at tokens — Antares pricing">
+<meta property="og:description" content="Seven independent scoring layers, one verdict, live in your overlay. Free 50/day, Pro for unlimited, Lifetime for the founders. USDC or SOL on-chain, zero middleman.">
 <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Antares">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@antaresantiscam">
-<meta name="twitter:title" content="Pricing — Antares">
-<meta name="twitter:description" content="Free 50/day. Pro $24.99 / 30 days. Lifetime $149.99 (first 1000). Pay in USDC or SOL, zero middleman.">
+<meta name="twitter:title" content="Stop guessing at tokens — Antares pricing">
+<meta name="twitter:description" content="Seven layers, one verdict, live in your overlay. Free 50/day. Pro and Lifetime paid direct in USDC or SOL, zero middleman.">
 <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +48,8 @@ nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgb
 @keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
 h1{font:400 clamp(48px,8vw,84px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
 h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
-.sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:680px;margin:0 auto 12px;border-left:2px solid var(--c);padding-left:16px;text-align:left}
+.sub{font-size:13px;color:#7a7a82;line-height:1.85;max-width:680px;margin:0 auto 12px;border-left:2px solid var(--c);padding-left:18px;text-align:left}
+.sub b{color:#cccccc;font-weight:600}
 
 .section-label{display:flex;align-items:center;gap:16px;margin:64px 0 28px}
 .section-label span{font-size:10px;color:#2a2a2f;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
@@ -120,16 +121,18 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .tier-cta.purple{background:var(--purple);color:var(--bg)}
 .tier-cta.purple:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(167,139,250,.25)}
 
-.tier-status{font-size:10px;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;text-align:center}
+.tier-status{font-size:10px;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;text-align:center;min-height:14px}
 .tier-status .live{color:var(--c)}
 .tier-status .soon{color:var(--yellow)}
+.tier-status .purple{color:var(--purple)}
 
 /* ── CTA FINAL ── */
 .cta-final{margin:64px 0 32px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
-.cta-final h2{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:12px;color:#eaeaea;position:relative}
+.cta-final h2{font:400 56px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:16px;color:#eaeaea;position:relative}
 .cta-final h2 span{color:var(--c)}
-.cta-final p{font-size:12.5px;color:#5a5a62;margin-bottom:24px;position:relative;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.75}
+.cta-final p{font-size:13px;color:#9a9aa2;margin-bottom:28px;position:relative;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.85}
+.cta-final p b{color:#cccccc;font-weight:600}
 .cta-final .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:18px 36px;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;position:relative;transition:transform .2s,box-shadow .2s}
 .cta-final .cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
 
@@ -203,7 +206,7 @@ footer span{color:var(--c)}
   .pay-qr svg{width:148px;height:148px}
 }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Free for 50 daily scans. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Antares anti-scam scanner for Solana — seven independent scoring layers, one verdict, surfaced live in your overlay. Free 50 scans/day. Pro and Lifetime tiers paid direct in USDC or SOL, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
 </head>
 <body>
 <div class="stripe" role="presentation" aria-hidden="true"></div>
@@ -216,9 +219,9 @@ footer span{color:var(--c)}
 </nav></header><main>
 
 <section class="page-hero">
-  <div class="eyebrow">Honest pricing, no bait-and-switch</div>
-  <h1>FREE FOREVER.<br><span class="accent">PRO WHEN YOU NEED IT.</span></h1>
-  <p class="sub">Casual users keep everything that matters &mdash; for free, forever. Power users who scan hundreds of tokens a day pay so the API stays online for everyone else. No retroactive limits, no feature removals. What you see today is what you keep tomorrow.</p>
+  <div class="eyebrow">Two seconds &middot; seven layers &middot; one verdict</div>
+  <h1>STOP GUESSING<br><span class="accent">AT TOKENS.</span></h1>
+  <p class="sub">Antares scans every Solana token the moment you load it &mdash; DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN. Liquidity, holders, bundlers, snipers, insider clustering, mint authority, sell-tax, honeypot, chart manipulation. <b>Seven independent layers</b>, one score out of a thousand, surfaced live in your overlay before your wallet ever signs.</p>
 </section>
 
 <div class="section-label" id="choose-tier"><span>Choose your tier</span></div>
@@ -290,14 +293,15 @@ footer span{color:var(--c)}
       <li>Name in Sentinel Hall of Fame</li>
     </ul>
     <button class="tier-cta purple" id="cta-lifetime" data-tier="lifetime" type="button">Claim a Lifetime spot &rarr;</button>
+    <div class="tier-status"><span class="purple">&middot; One-time &middot; Forever</span></div>
   </div>
 
 </div>
 
 <div class="cta-final">
-  <h2>One bad bag costs more than <span>Pro</span>.</h2>
-  <p>If you&rsquo;re trading new launches without rug detection, you&rsquo;re not trading &mdash; you&rsquo;re donating. $24.99 for 30 days of unlimited scans, or $149.99 once for the rest of the project&rsquo;s life. Pay direct in USDC or SOL, on-chain, no middleman, no card, no KYC. The next rug you avoid pays for the year.</p>
-  <a class="cta" href="#choose-tier">↗ Get Pro now</a>
+  <h2>Trade with <span>the lights on</span>.</h2>
+  <p>Six independent data sources. One open-source scoring engine. Zero accounts, zero tracking, zero card details to leak. Antares lives in your browser, signs nothing, sees nothing, sells nothing &mdash; the only thing it asks is that you stop trading blind.</p>
+  <a class="cta" href="./install.html">↗ Install in 60 seconds</a>
 </div>
 
 </main></div>
