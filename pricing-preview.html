@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Antares pricing. Free for 50 daily scans. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL, zero middleman.">
+<meta name="author" content="Antares">
+<link rel="canonical" href="https://antares-website.vercel.app/pricing">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://antares-website.vercel.app/pricing">
+<meta property="og:title" content="Pricing — Antares">
+<meta property="og:description" content="Free for 50 daily scans. Pro $24.99 for 30 days unlimited. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL.">
+<meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Antares">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@antaresantiscam">
+<meta name="twitter:title" content="Pricing — Antares">
+<meta name="twitter:description" content="Free 50/day. Pro $24.99 / 30 days. Lifetime $149.99 (first 1000). Pay in USDC or SOL, zero middleman.">
+<meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Pricing (preview) — Antares</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  .preview-banner{position:fixed;top:3px;left:0;right:0;z-index:50;background:rgba(245,208,0,.1);border-bottom:1px solid rgba(245,208,0,.4);padding:8px 16px;text-align:center;font:600 11px/1 'IBM Plex Mono',monospace;color:#f5d000;letter-spacing:.16em;text-transform:uppercase;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .preview-banner code{padding:2px 6px;background:#1a1a1e;border-radius:2px;color:#fff;font-family:inherit;letter-spacing:0;text-transform:none}
+  body{padding-top:30px}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f;--yellow:#f5d000;--purple:#a78bfa}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;position:sticky;top:3px;z-index:100}
+nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
+
+.page-hero{padding:80px 0 24px;text-align:center}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:24px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+h1{font:400 clamp(48px,8vw,84px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
+.sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:680px;margin:0 auto 12px;border-left:2px solid var(--c);padding-left:16px;text-align:left}
+
+.section-label{display:flex;align-items:center;gap:16px;margin:64px 0 28px}
+.section-label span{font-size:10px;color:#2a2a2f;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-label::before{content:'';flex:0 0 0;height:1px;background:var(--border)}
+
+/* ── COMPARISON TABLE (preview replacement for the 3-card layout) ──
+   Rendered as a sticky-header feature × tier matrix. Pro column gets
+   the visual weight (green outline running through every row, gradient
+   bg, larger price), Free is intentionally subdued, Lifetime sits to
+   the right with its scarcity counter. The whole table is one card so
+   the user reads it as a single decision surface, not 3 competing
+   options. */
+.cmp-wrap{margin:32px 0 24px;background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.cmp-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace}
+.cmp-table thead th{text-align:left;padding:30px 24px 24px;background:#0a0a0c;border-bottom:1px solid var(--border);position:relative;vertical-align:top;width:21.5%}
+.cmp-table thead th.cmp-feat-col{width:35.5%}
+.cmp-table thead th.cmp-pro{background:linear-gradient(180deg,#0e1413 0%,#0a0d0c 100%);box-shadow:0 0 0 2px var(--c) inset;z-index:2}
+.cmp-table thead th.cmp-pro::before{content:'⚡ MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--c);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:8px 16px;letter-spacing:.22em;border-radius:2px;white-space:nowrap;box-shadow:0 4px 16px rgba(0,229,176,.4)}
+.cmp-tier-name{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.22em;text-transform:uppercase;margin-bottom:12px}
+.cmp-pro .cmp-tier-name{color:var(--c)}
+.cmp-life .cmp-tier-name{color:var(--purple)}
+.cmp-price{font:400 38px/.9 'Bebas Neue',sans-serif;color:#eaeaea;margin-bottom:6px;display:flex;align-items:baseline;gap:6px}
+.cmp-pro .cmp-price{font-size:54px;color:var(--c);text-shadow:0 0 20px rgba(0,229,176,.2)}
+.cmp-price .currency{font-size:18px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0}
+.cmp-pro .cmp-price .currency{color:var(--c);font-size:22px}
+.cmp-price .strike{font-size:14px;color:#3a3a40;text-decoration:line-through;font-family:'IBM Plex Mono',monospace;font-weight:600;margin-right:4px;letter-spacing:0}
+.cmp-period{font-size:10px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase;line-height:1.5}
+.cmp-pro .cmp-period{color:var(--c);opacity:.7}
+.cmp-savings{display:inline-block;margin-top:6px;padding:3px 8px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.4);border-radius:2px;font:700 9px/1 'IBM Plex Mono',monospace;color:#d4c5ff;letter-spacing:.16em;text-transform:uppercase}
+
+/* Body rows */
+.cmp-table tbody tr{transition:background .2s}
+.cmp-table tbody tr:hover{background:rgba(255,255,255,.015)}
+.cmp-table tbody tr.cmp-section-row td{background:#08080a;color:#5a5a62;font:700 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;padding:14px 24px;border-bottom:1px solid #16161a;border-top:1px solid #16161a}
+.cmp-table tbody tr.cmp-section-row td b{color:#bbb;font-size:10px;letter-spacing:.18em}
+.cmp-table tbody td{padding:14px 24px;border-bottom:1px solid #131316;font-size:12px;line-height:1.5;vertical-align:middle}
+.cmp-table tbody td.cmp-feat{color:#bbb;font-weight:500}
+.cmp-table tbody td.cmp-feat small{display:block;color:#5a5a62;font-size:10px;margin-top:3px;font-style:italic;font-weight:400;letter-spacing:.02em}
+.cmp-table tbody td.cmp-tier-cell{text-align:center;font-size:13px;font-weight:700;color:#666}
+.cmp-table tbody td.cmp-pro{background:rgba(0,229,176,.025);text-align:center;color:var(--c);font-weight:700;font-size:14px;box-shadow:2px 0 0 var(--c) inset,-2px 0 0 var(--c) inset}
+.cmp-table tbody tr:hover td.cmp-pro{background:rgba(0,229,176,.05)}
+.cmp-yes{color:var(--c);font-size:16px}
+.cmp-no{color:#2a2a30;font-size:18px;font-weight:400}
+.cmp-num{color:#eaeaea;font-weight:700}
+.cmp-num small{display:block;font-size:9px;color:#5a5a62;font-weight:400;letter-spacing:.04em;margin-top:2px;text-transform:uppercase;font-style:normal}
+
+/* Footer with CTAs */
+.cmp-table tfoot td{padding:24px 24px 28px;text-align:center;border-top:2px solid var(--border);background:#0a0a0c;vertical-align:top}
+.cmp-table tfoot td.cmp-pro{background:linear-gradient(180deg,#0e1413 0%,#0a0d0c 100%);box-shadow:2px 0 0 var(--c) inset,-2px 0 0 var(--c) inset,0 -2px 0 var(--c) inset}
+.cmp-cta{display:block;width:100%;padding:14px 12px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;cursor:pointer;border:none;transition:transform .2s,box-shadow .2s,border-color .2s,color .2s,background .2s}
+.cmp-cta.primary{background:var(--c);color:var(--bg);box-shadow:0 4px 16px rgba(0,229,176,.25)}
+.cmp-cta.primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,229,176,.45)}
+.cmp-cta.secondary{background:transparent;color:#888;border:1px solid #2a2a30}
+.cmp-cta.secondary:hover{border-color:var(--c);color:var(--c)}
+.cmp-cta.purple{background:var(--purple);color:var(--bg)}
+.cmp-cta.purple:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(167,139,250,.4)}
+.cmp-trust{margin-top:12px;font:600 9px/1.4 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;min-height:24px}
+.cmp-pro .cmp-trust{color:var(--c)}
+.cmp-life .cmp-trust{color:var(--purple)}
+
+/* Scarcity strip below the table */
+.cmp-scarcity{display:flex;align-items:center;justify-content:center;gap:14px;margin:20px 0 8px;padding:14px 22px;background:rgba(167,139,250,.04);border:1px solid rgba(167,139,250,.25);border-radius:2px;font:600 11px/1 'IBM Plex Mono',monospace;color:var(--purple);letter-spacing:.16em;text-transform:uppercase}
+.cmp-scarcity .cmp-scarcity-num{font:700 22px 'Bebas Neue',sans-serif;color:#d4c5ff;letter-spacing:.04em}
+.cmp-scarcity .cmp-scarcity-bar{flex:1;max-width:280px;height:4px;background:#1a1a1e;border-radius:2px;overflow:hidden;position:relative}
+.cmp-scarcity .cmp-scarcity-fill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,var(--purple),#d4c5ff);transition:width 1s ease}
+
+/* Mobile: collapse table to stacked tier cards */
+@media(max-width:900px){
+  .cmp-table thead th{padding:14px 12px;width:auto}
+  .cmp-table thead th.cmp-feat-col{display:none}
+  .cmp-table tbody td{padding:10px 12px;font-size:11px}
+  .cmp-table tbody td.cmp-feat{font-size:10.5px}
+  .cmp-pro .cmp-price{font-size:36px}
+  .cmp-price{font-size:28px}
+}
+
+/* ── PRICING GRID (kept for ref but not used in this preview) ── */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:32px 0 16px}
+.tier{background:var(--card);border:1px solid var(--border);padding:36px 28px 32px;position:relative;display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
+.tier:hover{transform:translateY(-4px);border-color:#252529}
+.tier.featured{border:1px solid var(--c);box-shadow:0 0 0 1px var(--c),0 24px 48px rgba(0,229,176,.08)}
+.tier.featured::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--c);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
+/* Free tier deliberately dimmed — the verdict is genuinely free, but
+   the deep-dive layers (AI Summary, Critical Flags, Full Analysis) are
+   Pro features. The card stays visible so users know what they're
+   getting, but its visual weight is subordinate to Pro/Lifetime so the
+   eye lands on the upgrade options first. */
+.tier.free{background:#0c0c0e;border-color:#16161a;opacity:.86}
+.tier.free:hover{opacity:1;border-color:#1f1f23}
+.tier.free .tier-name{color:#5a5a62}
+.tier.free .tier-price{color:#8a8a92}
+.tier.free .tier-price .currency{color:#4a4a52}
+.tier.free .tier-tagline{color:#5a5a62;border-left-color:#1a1a1e}
+.tier.free .tier-features li{color:#666;border-bottom-color:#0e0e10}
+.tier.free .tier-features li::before{color:#3a7060}
+.tier.lifetime{border:1px solid #2a2a30}
+.tier.lifetime::before{content:'BEST VALUE';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--purple);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
+
+.tier-name{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
+.tier.featured .tier-name{color:var(--c)}
+.tier.lifetime .tier-name{color:var(--purple)}
+
+.tier-price{font:400 64px/.9 'Bebas Neue',sans-serif;letter-spacing:.02em;color:#eaeaea;margin-bottom:4px;display:flex;align-items:baseline;gap:8px}
+.tier-price .currency{font-size:32px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0}
+.tier-price .strike{font-size:22px;color:#3a3a40;text-decoration:line-through;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0;margin-right:6px}
+.tier-period{font-size:11px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;min-height:14px}
+.tier-tagline{font-size:11.5px;color:#7a7a82;line-height:1.6;font-style:italic;border-left:2px solid #252529;padding-left:12px;margin-bottom:24px;min-height:54px}
+.tier.featured .tier-tagline{border-left-color:var(--c)}
+.tier.lifetime .tier-tagline{border-left-color:var(--purple)}
+
+.tier-features{list-style:none;margin:0 0 24px;padding:0;flex:1}
+.tier-features li{font-size:11.5px;color:#888;line-height:1.55;padding:7px 0 7px 22px;position:relative;border-bottom:1px solid #131316}
+.tier-features li:last-child{border-bottom:none}
+.tier-features li::before{content:'✓';position:absolute;left:0;top:7px;color:var(--c);font-weight:700;font-size:12px}
+.tier-features li.coming::before{content:'◷';color:var(--yellow)}
+.tier-features li.bonus{color:#bbb}
+.tier-features li b{color:#bbb;font-weight:600}
+.tier-features li small{display:block;color:#4a4a52;font-size:10px;margin-top:2px;font-style:italic}
+/* Negative line — what Free doesn't include. Same row geometry as the
+   positive items so the list reads as one continuous block. Muted ✗
+   colour and italicised tail-text so the eye registers "missing" at a
+   glance without it screaming. */
+.tier-features li.no{color:#4a4a52;border-bottom-color:#101013}
+.tier-features li.no::before{content:'✗';color:#3a3a40;font-weight:600}
+.tier-features li.no b{color:#6a6a72}
+.tier-features li.no em{color:#3a3a40;font-style:italic;font-weight:400}
+/* Subtle caption that splits "things you get" from "things you don't"
+   without a heavy uppercase header. Just a thin top-border + 1-line
+   muted label, occupies the same row height as a feature item. */
+.tier-features li.split{border:none;padding:14px 0 4px 0;color:#4a4a52;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.tier-features li.split::before{content:none}
+.tier-features li.split + li{border-top:1px solid #1a1a1e;padding-top:9px}
+
+.tier-cta{display:block;text-align:center;padding:14px 24px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s,background .2s,color .2s;cursor:pointer;border:none;width:100%;font-family:'IBM Plex Mono',monospace}
+.tier-cta.primary{background:var(--c);color:var(--bg)}
+.tier-cta.primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+.tier-cta.secondary{background:transparent;color:#bbb;border:1px solid #2a2a30}
+.tier-cta.secondary:hover{border-color:var(--c);color:var(--c)}
+.tier-cta.purple{background:var(--purple);color:var(--bg)}
+.tier-cta.purple:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(167,139,250,.25)}
+
+.tier-status{font-size:10px;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;text-align:center}
+.tier-status .live{color:var(--c)}
+.tier-status .soon{color:var(--yellow)}
+
+.lifetime-counter{font-size:11px;color:var(--purple);letter-spacing:.16em;text-transform:uppercase;text-align:center;margin-top:12px;padding:8px;background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.18);border-radius:2px}
+.lifetime-counter b{color:#d4c5ff}
+
+/* ── ROADMAP ── */
+.roadmap-intro{font-size:13px;color:#7a7a82;line-height:1.85;max-width:680px;margin-bottom:24px}
+.roadmap{background:var(--card);border:1px solid var(--border);padding:0;border-radius:2px}
+.roadmap-row{display:grid;grid-template-columns:140px 1fr 120px;gap:24px;padding:22px 28px;border-bottom:1px solid #131316;align-items:start}
+.roadmap-row:last-child{border-bottom:none}
+.roadmap-row:hover{background:#0e0e10}
+.rm-version{font:700 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.16em;text-transform:uppercase}
+.rm-version.v2{color:var(--c)}
+.rm-version.v3{color:var(--yellow)}
+.rm-version.v4{color:var(--purple)}
+.rm-content h4{font-size:12px;color:#bbb;letter-spacing:.04em;margin-bottom:8px;font-weight:700}
+.rm-content ul{list-style:none;padding:0;font-size:11px;color:#7a7a82;line-height:1.85}
+.rm-content ul li{padding-left:14px;position:relative}
+.rm-content ul li::before{content:'·';position:absolute;left:4px;color:#3a3a40;font-weight:700}
+.rm-eta{font-size:10px;color:#5a5a62;letter-spacing:.14em;text-transform:uppercase;text-align:right;font-weight:600}
+
+/* ── WAITLIST ── */
+.waitlist{margin:48px 0;padding:48px 36px;background:var(--card);border:1px solid var(--border);border-radius:2px;text-align:center;position:relative;overflow:hidden}
+.waitlist::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none}
+.waitlist-eyebrow{font:600 10px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:14px;position:relative}
+.waitlist h2{font:400 40px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:12px;position:relative}
+.waitlist h2 span{color:var(--c)}
+.waitlist p{font-size:12px;color:#7a7a82;line-height:1.75;margin-bottom:28px;position:relative;max-width:520px;margin-left:auto;margin-right:auto}
+.waitlist-form{display:flex;gap:8px;max-width:480px;margin:0 auto;position:relative;flex-wrap:wrap}
+.waitlist-form input{flex:1;min-width:200px;padding:14px 16px;background:#0a0a0c;border:1px solid var(--border);color:#eaeaea;font:600 12px/1 'IBM Plex Mono',monospace;letter-spacing:.04em;transition:border-color .25s;border-radius:2px}
+.waitlist-form input:focus{outline:none;border-color:var(--c);box-shadow:0 0 0 1px var(--c)}
+.waitlist-form input::placeholder{color:#3a3a40}
+.waitlist-form button{padding:14px 28px;background:var(--c);color:var(--bg);font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;border:none;cursor:pointer;border-radius:2px;transition:transform .2s,box-shadow .2s}
+.waitlist-form button:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+.waitlist-perks{display:flex;justify-content:center;gap:24px;margin-top:24px;flex-wrap:wrap;font-size:10px;color:#5a5a62;letter-spacing:.14em;text-transform:uppercase;position:relative}
+.waitlist-perks span::before{content:'✓ ';color:var(--c)}
+
+/* ── PRICING FAQ ── */
+.qa{margin-bottom:18px;background:var(--card);border:1px solid var(--border);padding:22px 26px;border-radius:2px}
+.qa h3{font-size:12.5px;color:var(--c);letter-spacing:.06em;margin-bottom:10px;font-weight:700}
+.qa p{font-size:11.5px;color:#7a7a82;line-height:1.85;margin-bottom:8px}
+.qa p:last-child{margin-bottom:0}
+.qa b{color:#aaa;font-weight:600}
+.qa a{color:var(--c);text-decoration:none}
+.qa a:hover{text-decoration:underline}
+
+/* ── CTA FINAL ── */
+.cta-final{margin:64px 0 32px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
+.cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
+.cta-final h2{font:400 48px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:12px;color:#eaeaea;position:relative}
+.cta-final h2 span{color:var(--c)}
+.cta-final p{font-size:12.5px;color:#5a5a62;margin-bottom:24px;position:relative;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.75}
+.cta-final .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:18px 36px;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;position:relative;transition:transform .2s,box-shadow .2s}
+.cta-final .cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px}
+footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
+footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a:hover{color:var(--c)}
+footer span{color:var(--c)}
+
+@media(max-width:980px){
+  .tiers{grid-template-columns:1fr;gap:14px}
+  .tier-tagline{min-height:auto}
+  .roadmap-row{grid-template-columns:1fr;gap:8px}
+  .rm-eta{text-align:left}
+  .waitlist-form{flex-direction:column}
+  .waitlist-form input,.waitlist-form button{width:100%}
+}
+
+/* ── Solana Pay checkout modal ───────────────────────────────────────────── */
+.pay-overlay{position:fixed;inset:0;background:rgba(5,5,7,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;animation:pay-fade-in .2s ease}
+.pay-overlay.open{display:flex}
+@keyframes pay-fade-in{from{opacity:0}to{opacity:1}}
+.pay-modal{background:var(--card);border:1px solid var(--border);border-radius:4px;max-width:440px;width:100%;padding:32px;position:relative;box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(0,229,176,.08) inset}
+.pay-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#555;font-size:18px;cursor:pointer;line-height:1;padding:4px 8px;transition:color .2s}
+.pay-close:hover{color:#ccc}
+.pay-title{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:8px;text-align:center}
+.pay-subtitle{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;text-align:center;margin-bottom:20px}
+.pay-qr{background:#ffffff;border-radius:4px;padding:16px;margin:0 auto 20px;width:200px;height:200px;display:flex;align-items:center;justify-content:center}
+.pay-qr svg{width:168px;height:168px;display:block}
+.pay-amount{font:400 36px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-align:center;margin-bottom:4px}
+.pay-token{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:18px}
+/* Email input — shown above the QR so the user enters it before paying.
+   The license key is delivered tied to this email (and the buyer can
+   re-fetch it later at /account.html), so we ask up-front rather than
+   risk a confirmed payment with no recoverable identity. */
+.pay-email-row{display:flex;flex-direction:column;gap:6px;margin:0 0 14px}
+.pay-email-row label{font:600 10px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase}
+.pay-email-row input{padding:10px 12px;background:#0a0a0c;color:#eaeaea;border:1px solid var(--border);border-radius:2px;font:400 13px/1 'IBM Plex Mono',monospace}
+.pay-email-row input:focus{border-color:var(--c);outline:none}
+.pay-email-row input.invalid{border-color:#ff5f5f}
+.pay-email-hint{font:400 10px/1.4 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em}
+.pay-license{margin:14px 0;padding:14px;background:rgba(0,229,176,.06);border:1px solid rgba(0,229,176,.4);border-radius:2px;text-align:center}
+.pay-license-label{font:600 9px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
+.pay-license-key{font:700 14px/1.3 'IBM Plex Mono',monospace;color:#eaeaea;letter-spacing:.12em;word-break:break-all;user-select:all;-webkit-user-select:all}
+.pay-license-copy{margin-top:10px;background:none;border:1px solid rgba(0,229,176,.4);color:var(--c);padding:6px 14px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px}
+.pay-license-copy:hover{background:rgba(0,229,176,.12);border-color:var(--c)}
+.pay-license-instr{margin-top:12px;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#888}
+.pay-license-instr a{color:var(--c)}
+.pay-toggle{display:flex;gap:0;justify-content:center;margin:0 auto 18px;border:1px solid var(--border);border-radius:2px;overflow:hidden;width:fit-content;background:#0a0a0c}
+.pay-toggle button{flex:0 0 auto;padding:9px 18px;background:transparent;border:none;color:#666;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:color .2s,background .2s;min-width:96px}
+.pay-toggle button.active{color:var(--bg);background:var(--c)}
+.pay-toggle button:not(.active):hover{color:#ccc}
+.pay-toggle button:disabled{opacity:.45;cursor:not-allowed}
+.pay-status.warn{color:#f5d000;border-color:rgba(245,208,0,.4);background:rgba(245,208,0,.05)}
+.pay-recipient{background:#0a0a0c;border:1px solid var(--border);border-radius:2px;padding:10px 12px;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aaa;display:flex;align-items:center;gap:8px;word-break:break-all}
+.pay-recipient .pay-addr{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pay-recipient button{background:none;border:1px solid #2a2a30;color:#888;padding:4px 8px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'IBM Plex Mono',monospace;transition:all .2s;flex-shrink:0}
+.pay-recipient button:hover{color:var(--c);border-color:var(--c)}
+.pay-deeplink{display:block;width:100%;padding:14px;background:var(--c);color:var(--bg);text-align:center;text-decoration:none;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;margin-bottom:14px;transition:transform .2s,box-shadow .2s}
+.pay-deeplink:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+.pay-status{padding:12px;border-radius:2px;text-align:center;font:600 10px/1.4 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--border);background:#0a0a0c}
+.pay-status.waiting{color:#888;border-color:#2a2a30}
+.pay-status.confirmed{color:var(--c);border-color:rgba(0,229,176,.4);background:rgba(0,229,176,.05)}
+.pay-status.expired{color:#ff7777;border-color:rgba(255,95,95,.4);background:rgba(255,95,95,.06)}
+.pay-status .pay-spinner{display:inline-block;width:8px;height:8px;border-radius:50%;background:#888;margin-right:8px;animation:pay-pulse 1.2s ease-in-out infinite}
+@keyframes pay-pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.pay-status.confirmed .pay-spinner{background:var(--c);animation:none}
+.pay-tx{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#666;text-align:center;margin-top:10px;word-break:break-all;letter-spacing:.04em}
+.pay-tx a{color:var(--c);text-decoration:none}
+.pay-tx a:hover{text-decoration:underline}
+
+@media(max-width:520px){
+  .pay-modal{padding:24px 20px}
+  .pay-qr{width:180px;height:180px}
+  .pay-qr svg{width:148px;height:148px}
+}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Free for 50 daily scans. Pro $24.99 for 30 days of unlimited power. Lifetime $149.99 for the first 1000 supporters. Pay direct in USDC or SOL, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+</head>
+<body>
+<div class="stripe" role="presentation" aria-hidden="true"></div>
+<div class="preview-banner">⚠ Preview · pricing-table-v2 · tell me <code>ship it</code> or list changes</div>
+<div class="shell">
+
+<header><nav aria-label="Main navigation">
+  <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
+  <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html" class="active">Pricing</a><a href="./faq.html">FAQ</a></div>
+  <a href="./install.html" class="nav-cta">Install &rarr;</a>
+</nav></header><main>
+
+<section class="page-hero">
+  <div class="eyebrow">Honest pricing, no bait-and-switch</div>
+  <h1>FREE FOREVER.<br><span class="accent">PRO WHEN YOU NEED IT.</span></h1>
+  <p class="sub">Casual users keep everything that matters &mdash; for free, forever. Power users who scan hundreds of tokens a day pay so the API stays online for everyone else. No retroactive limits, no feature removals. What you see today is what you keep tomorrow.</p>
+</section>
+
+<div class="section-label" id="choose-tier"><span>Choose your tier</span></div>
+
+<!-- Single comparison-table surface replacing the 3 separate cards.
+     One read, one decision. Pro column gets the green outline running
+     through every row + larger price; Lifetime sits to the right with
+     a "Save $99" callout; Free is the leftmost column, intentionally
+     subdued so the eye lands on Pro/Lifetime first. -->
+<div class="cmp-wrap">
+  <table class="cmp-table" aria-label="Compare tiers">
+    <thead>
+      <tr>
+        <th class="cmp-feat-col"></th>
+        <th class="cmp-free">
+          <div class="cmp-tier-name">Free</div>
+          <div class="cmp-price"><span class="currency">$</span>0</div>
+          <div class="cmp-period">forever · no card</div>
+        </th>
+        <th class="cmp-pro">
+          <div class="cmp-tier-name">Pro · 30-day pass</div>
+          <div class="cmp-price"><span class="currency">$</span>24.99</div>
+          <div class="cmp-period">USDC or SOL · one-time, no auto-renew</div>
+        </th>
+        <th class="cmp-life">
+          <div class="cmp-tier-name">Lifetime</div>
+          <div class="cmp-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
+          <div class="cmp-period">one-time · forever</div>
+          <div class="cmp-savings">Save $99 vs 12 monthly</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="cmp-section-row"><td colspan="4">⚡ <b>Core verdict</b> — the engine, free for everyone</td></tr>
+      <tr>
+        <td class="cmp-feat">Daily scans <small>resets at 00:00 UTC</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-num">50<small>per day</small></span></td>
+        <td class="cmp-pro">Unlimited</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">Unlimited</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">SAFE / CAUTION / DANGER / RUG verdict</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">1000-point composite score</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Honeypot, LP, Mint &amp; Freeze checks</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Browser overlay <small>DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+
+      <tr class="cmp-section-row"><td colspan="4">🔍 <b>Why this verdict</b> — the deep-dive layers</td></tr>
+      <tr>
+        <td class="cmp-feat">AI Summary <small>plain-English explanation, in-overlay</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Critical Flags panel <small>every risk signal described, in-overlay</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Full Analysis page <small>Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Detailed scoring breakdown <small>full layer-by-layer math</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+
+      <tr class="cmp-section-row"><td colspan="4">⚙ <b>Power-user tools</b></td></tr>
+      <tr>
+        <td class="cmp-feat">Scan history <small>30 days, server-side</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Priority cache <small>fresher data, lower TTL</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Export CSV / JSON</td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">No affiliate prompts <small>clean overlay UI</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Priority support</td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro">✓</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+
+      <tr class="cmp-section-row"><td colspan="4">🏆 <b>Lifetime perks</b> — first 1000 supporters only</td></tr>
+      <tr>
+        <td class="cmp-feat">All future Pro v2 / v3 / v4 features <small>alerts, charts, push, smart-money, portfolio</small></td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro" style="color:#5a5a62;font-size:11px;font-weight:500">Pass-by-pass</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat"><b>Sentinel Founder</b> badge in overlay</td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro" style="color:#5a5a62;font-size:18px;font-weight:400">✗</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Private Discord + roadmap vote</td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro" style="color:#5a5a62;font-size:18px;font-weight:400">✗</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td class="cmp-feat">Direct line to the founder</td>
+        <td class="cmp-tier-cell"><span class="cmp-no">✗</span></td>
+        <td class="cmp-pro" style="color:#5a5a62;font-size:18px;font-weight:400">✗</td>
+        <td class="cmp-tier-cell"><span class="cmp-yes">✓</span></td>
+      </tr>
+
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td class="cmp-free">
+          <a href="./install.html" class="cmp-cta secondary">Install Free &rarr;</a>
+          <div class="cmp-trust">· Live now</div>
+        </td>
+        <td class="cmp-pro">
+          <button class="cmp-cta primary" id="cta-pro-monthly" data-tier="monthly" type="button">Get Pro now &rarr;</button>
+          <div class="cmp-trust">⚡ USDC or SOL · on-chain</div>
+        </td>
+        <td class="cmp-life">
+          <button class="cmp-cta purple" id="cta-lifetime" data-tier="lifetime" type="button">Claim Lifetime &rarr;</button>
+          <div class="cmp-trust">⏳ 1000 spots only</div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<!-- Live scarcity strip — visualises how many Lifetime spots remain.
+     Static for now (placeholder fill at 0%); wire to a real counter
+     post-launch via the same /api/lifetime-stats endpoint we'll use
+     for any "X / 1000 claimed" UI elsewhere. -->
+<div class="cmp-scarcity">
+  ⏳ <span class="cmp-scarcity-num">0</span> / <span class="cmp-scarcity-num">1000</span>
+  <span class="cmp-scarcity-bar"><span class="cmp-scarcity-fill" style="width:0%"></span></span>
+  Lifetime spots claimed
+</div>
+
+<div class="section-label"><span>What ships when</span></div>
+
+<p class="roadmap-intro">Pro v1 launches with the features listed above &mdash; nothing we haven&rsquo;t already built. Everything below is the public roadmap. Lifetime supporters get all of it included; 30-day pass holders get whatever&rsquo;s shipped during their active window.</p>
+
+<div class="roadmap">
+
+  <div class="roadmap-row">
+    <div class="rm-version v2">Pro v2</div>
+    <div class="rm-content">
+      <h4>Real-time alerts &amp; Telegram</h4>
+      <ul>
+        <li>Email magic-link login (no password, no signup form)</li>
+        <li>Email alerts: rug detected on tokens you&rsquo;ve scanned, large holder dumps, score drops below threshold</li>
+        <li>Telegram bot integration (one-line connect)</li>
+        <li>Configurable alert rules per token</li>
+      </ul>
+    </div>
+    <div class="rm-eta">~July 2026</div>
+  </div>
+
+  <div class="roadmap-row">
+    <div class="rm-version v3">Pro v3</div>
+    <div class="rm-content">
+      <h4>Charts, push, smart money</h4>
+      <ul>
+        <li>Token price graph (7-day rolling, in-overlay)</li>
+        <li>Native Chrome push notifications</li>
+        <li>Smart-money flow basics (which tracked wallets touched this token)</li>
+        <li>Cross-platform sync (scan history follows you across devices)</li>
+      </ul>
+    </div>
+    <div class="rm-eta">~Aug-Sep 2026</div>
+  </div>
+
+  <div class="roadmap-row">
+    <div class="rm-version v4">Pro v4</div>
+    <div class="rm-content">
+      <h4>Portfolio &amp; multichain</h4>
+      <ul>
+        <li>Wallet portfolio tracker (paste a Solana address, get continuous risk monitoring on holdings)</li>
+        <li>P&amp;L per token with realised vs paper</li>
+        <li>Multichain expansion (Base, BSC) &mdash; depends on demand</li>
+        <li>API access for power users (separate $199/mo B2B tier)</li>
+      </ul>
+    </div>
+    <div class="rm-eta">~Oct-Nov 2026</div>
+  </div>
+
+</div>
+
+<!-- WAITLIST -->
+<section class="waitlist" id="waitlist">
+  <div class="waitlist-eyebrow">Get early access</div>
+  <h2>Join the <span>Pro waitlist</span>.</h2>
+  <p>Reserve your spot before public launch. Waitlist members get a one-time launch discount, first access to Lifetime spots (1000 total), and the founder badge if they upgrade in the first 7 days.</p>
+  <form class="waitlist-form" action="https://api.antares-website.vercel.app/api/waitlist" method="POST" id="waitlist-form">
+    <input type="email" name="email" placeholder="you@degen.sol" required autocomplete="email" aria-label="Email address">
+    <button type="submit">Reserve &rarr;</button>
+  </form>
+  <div class="waitlist-perks">
+    <span>One-time launch discount</span>
+    <span>First-pick on 1000 Lifetime spots</span>
+    <span>No spam, no list selling</span>
+  </div>
+</section>
+
+<div class="section-label"><span>Pricing FAQ</span></div>
+
+<div class="qa"><h3>What does Free actually include?</h3>
+<p>The verdict, the score, and the 50 daily scans &mdash; nothing more. SAFE / CAUTION / DANGER / RUG label, 1000-point score under the hood, and the basic checks you see in the overlay (Sell, Mint, Freeze, LP, Liquidity). The deep-dive layers &mdash; AI Summary, Critical Flags panel, Full Analysis page (Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection) &mdash; are Pro features. Free is the taste-test. Pro is the trading tool.</p>
+</div>
+
+<div class="qa"><h3>Why is Free so minimal?</h3>
+<p>Because we&rsquo;re not running a charity. Free covers the cost of letting people sample the engine on a few tokens before they trust it with a payment. If you&rsquo;re trading new launches every day, the verdict alone isn&rsquo;t enough &mdash; you&rsquo;ll want to see <i>why</i> a token got flagged, the AI summary that translates the math, and the full holder/insider analysis. Those features cost real compute and external API quota to deliver, so they&rsquo;re paid. $24.99 / 30 days for unlimited everything is genuinely cheap if your tooling is part of your P&amp;L.</p>
+</div>
+
+<div class="qa"><h3>Why 50 scans per day specifically?</h3>
+<p>50 scans covers a full research session for most users. The cap exists to mark the line between casual research and active trading at scale: enough to vet a session of new launches without ever paying us, but if your edge depends on this tooling all day every day, $24.99 / 30 days for unlimited is the obvious move.</p>
+</div>
+
+<div class="qa"><h3>Why announce Pro now if it doesn&rsquo;t exist yet?</h3>
+<p>Two reasons. First, transparency &mdash; you should know on day one what the business model is, not discover it in a surprise update. Second, the waitlist gives early supporters a price advantage that wouldn&rsquo;t be possible after public launch. Pro v1 launches in June 2026 with only the features listed above &mdash; we won&rsquo;t bill anyone for vapor.</p>
+</div>
+
+<div class="qa"><h3>What does Lifetime actually mean?</h3>
+<p>Pay $149.99 once (USDC or SOL, your call), get every Pro feature for as long as Antares exists, including everything in Pro v2, v3, v4 (alerts, charts, push, smart-money, portfolio tracker). Lifetime is capped at 1000 supporters &mdash; once full, the 30-day pass is the only option. Lifetime members also get a private Discord channel, founder badge, and roadmap vote.</p>
+</div>
+
+<div class="qa"><h3>Can I get a refund?</h3>
+<p>30-day Pro pass: yes, within 7 days if you haven&rsquo;t actively used the Pro features. Lifetime: yes, within 30 days. After that, Lifetime is non-refundable because the spot is removed from the 1000-cap inventory. Refunds are processed manually by sending USDC back to the wallet that paid &mdash; we use the on-chain transaction signature as the link, never an email or stored PII. Email <a href="mailto:lennypierrepro@gmail.com">lennypierrepro@gmail.com</a> with the tx signature to request a refund.</p>
+</div>
+
+<div class="qa"><h3>Will there be student / underdog pricing?</h3>
+<p>Yes. Verifiable students and developers contributing to open source get 50% off Pro Monthly. Reach out via the waitlist with your situation and we&rsquo;ll set it up.</p>
+</div>
+
+<div class="cta-final">
+  <h2>One bad bag costs more than <span>Pro</span>.</h2>
+  <p>If you&rsquo;re trading new launches without rug detection, you&rsquo;re not trading &mdash; you&rsquo;re donating. $24.99 for 30 days of unlimited scans, or $149.99 once for the rest of the project&rsquo;s life. Pay direct in USDC or SOL, on-chain, no middleman, no card, no KYC. The next rug you avoid pays for the year.</p>
+  <a class="cta" href="#choose-tier">↗ Get Pro now</a>
+</div>
+
+</main></div>
+<footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+
+<!-- ── Solana Pay checkout modal ────────────────────────────────────────── -->
+<div class="pay-overlay" id="pay-overlay" role="dialog" aria-labelledby="pay-title" aria-modal="true">
+  <div class="pay-modal">
+    <button class="pay-close" id="pay-close" aria-label="Close">&times;</button>
+    <h3 class="pay-title" id="pay-title">Pay on Solana</h3>
+    <div class="pay-subtitle" id="pay-subtitle">Direct on Solana &middot; zero middleman</div>
+    <div class="pay-email-row" id="pay-email-row">
+      <label for="pay-email">Your email (for the license + receipt)</label>
+      <input type="email" id="pay-email" name="email" autocomplete="email" placeholder="you@degen.sol" spellcheck="false">
+      <div class="pay-email-hint" id="pay-email-hint">We email your license key here. Use it to unlock Pro on any install.</div>
+      <div class="pay-email-authnote" id="pay-email-authnote" style="display:none;font:400 10px/1.5 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.04em;margin-top:4px"></div>
+      <div class="pay-email-loginlink" id="pay-email-loginlink" style="font:400 10px/1.5 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em;margin-top:4px">
+        Already have an account? <a href="./auth.html?return=%2Fpricing.html" style="color:var(--c);text-decoration:none">Log in</a> to skip this step.
+      </div>
+    </div>
+    <div class="pay-toggle" role="tablist" aria-label="Choose payment token">
+      <button type="button" id="pay-toggle-usdc" class="active" data-token="usdc" role="tab" aria-selected="true">USDC</button>
+      <button type="button" id="pay-toggle-sol" data-token="sol" role="tab" aria-selected="false">SOL</button>
+    </div>
+    <div class="pay-amount" id="pay-amount">—</div>
+    <div class="pay-token" id="pay-token-label">USDC on Solana</div>
+    <div class="pay-qr" id="pay-qr"></div>
+    <div class="pay-license" id="pay-license" style="display:none">
+      <div class="pay-license-label">Your license key</div>
+      <div class="pay-license-key" id="pay-license-key">—</div>
+      <button type="button" class="pay-license-copy" id="pay-license-copy">Copy</button>
+      <div class="pay-license-instr">Save this key. Open the extension's options page and paste it under <b>Redeem a Pro license</b>. You can also fetch it later at <a href="./account.html">antares-website.vercel.app/account</a>.</div>
+    </div>
+    <div class="pay-recipient">
+      <span class="pay-addr" id="pay-recipient">—</span>
+      <button id="pay-copy" type="button">Copy</button>
+    </div>
+    <a class="pay-deeplink" id="pay-deeplink" href="#" target="_blank" rel="noopener noreferrer">Open in wallet &rarr;</a>
+    <div class="pay-status waiting" id="pay-status"><span class="pay-spinner"></span>Waiting for payment&hellip;</div>
+    <div class="pay-tx" id="pay-tx"></div>
+  </div>
+</div>
+
+<!-- QR generator: tiny lib (~10KB), MIT license, served via jsdelivr.
+     Pinned to a specific version so the bundle we serve never silently
+     changes underneath users on a future CDN release. -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" crossorigin="anonymous"></script>
+
+<script>
+// ── Waitlist form handler — graceful degradation ─────────────────────────────
+document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var email = this.email.value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    this.email.style.borderColor = '#ff5f5f';
+    return;
+  }
+  try {
+    var stored = JSON.parse(localStorage.getItem('antares_waitlist') || '[]');
+    if (stored.indexOf(email) === -1) stored.push(email);
+    localStorage.setItem('antares_waitlist', JSON.stringify(stored));
+  } catch(_) {}
+  this.innerHTML = '<div style="color:#00e5b0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-align:center;padding:14px;width:100%">&check; You&rsquo;re on the list. We&rsquo;ll email you at launch.</div>';
+});
+
+// ── Solana Pay checkout flow ─────────────────────────────────────────────────
+//
+// User picks a tier → modal opens defaulted to USDC → optional toggle to SOL
+// (price computed at intent-creation time using Jupiter v4) → POST
+// /api/payment-intent with { tier, token, install_id } → server returns a
+// fresh Solana Pay URL with a unique reference key → modal displays QR +
+// click-to-pay deep link + recipient + amount → user signs the transfer in
+// their wallet → our cron picks up the on-chain confirmation within ~1 min →
+// /api/payment-status flips to "confirmed" → modal shows success state.
+//
+// Failure paths, all surfaced visibly:
+//   - 503 checkout_not_configured (env vars unset)  → "Coming soon", waitlist
+//                                                       form below remains usable
+//   - 502 sol_rate_unavailable (Jupiter down)       → flip back to USDC + warn
+//   - intent expired (30-min TTL)                   → "Expired", offer retry
+//   - network failure                               → "Network error", retry
+(function() {
+  var INSTALL_ID_RE = /^[a-zA-Z0-9_-]{8,128}$/;
+  var API_BASE = 'https://antares-extension.vercel.app';
+  var INTENT_API = API_BASE + '/api/payment-intent';
+  var STATUS_API = API_BASE + '/api/payment-status';
+  var ME_API = API_BASE + '/api/auth/me';
+
+  var params = new URLSearchParams(window.location.search);
+  var installId = (params.get('install') || '').trim();
+  var hasInstall = installId && INSTALL_ID_RE.test(installId);
+
+  // Logged-in state — populated async on page load. When set, we
+  // suppress the email input in the modal and use the session email
+  // for /api/payment-intent (the server reads it from the cookie too,
+  // but populating client-side keeps the UX honest about what we're
+  // about to send).
+  var loggedInEmail = null;
+  fetch(ME_API, { credentials: 'include' })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(body) {
+      if (body && body.ok && body.email) {
+        loggedInEmail = body.email;
+        applyLoggedInUI();
+      }
+    })
+    .catch(function() { /* not authed, stay anonymous */ });
+
+  // DOM refs
+  var overlay = document.getElementById('pay-overlay');
+  var modal = overlay.querySelector('.pay-modal');
+  var titleEl = document.getElementById('pay-title');
+  var subtitleEl = document.getElementById('pay-subtitle');
+  var amountEl = document.getElementById('pay-amount');
+  var tokenLabelEl = document.getElementById('pay-token-label');
+  var qrEl = document.getElementById('pay-qr');
+  var recipientEl = document.getElementById('pay-recipient');
+  var copyBtn = document.getElementById('pay-copy');
+  var deeplinkEl = document.getElementById('pay-deeplink');
+  var statusEl = document.getElementById('pay-status');
+  var txEl = document.getElementById('pay-tx');
+  var closeBtn = document.getElementById('pay-close');
+  var toggleUsdc = document.getElementById('pay-toggle-usdc');
+  var toggleSol = document.getElementById('pay-toggle-sol');
+  var emailInput = document.getElementById('pay-email');
+  var emailHintEl = document.getElementById('pay-email-hint');
+  var emailAuthnoteEl = document.getElementById('pay-email-authnote');
+  var emailLoginLinkEl = document.getElementById('pay-email-loginlink');
+  var licenseRow = document.getElementById('pay-license');
+  var licenseKeyEl = document.getElementById('pay-license-key');
+  var licenseCopyBtn = document.getElementById('pay-license-copy');
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  var pollTimer = null;
+  var currentReference = null;
+  // Persists across re-opens so the user's last choice is remembered for
+  // the rest of the session — but defaults to USDC every fresh load to
+  // avoid surprising users who don't know SOL pricing fluctuates.
+  var currentToken = 'usdc';
+  var currentTier = null;
+  // Whether the email field has been validated (for state transitions
+  // between "before pay" and "after pay confirmed").
+  var currentEmail = '';
+
+  // Persist whatever the buyer typed locally so refreshes don't lose it.
+  try {
+    var saved = localStorage.getItem('antares_buyer_email') || '';
+    if (saved) emailInput.value = saved;
+  } catch(_) {}
+  emailInput.addEventListener('input', function() {
+    try { localStorage.setItem('antares_buyer_email', emailInput.value); } catch(_) {}
+    emailInput.classList.remove('invalid');
+  });
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    currentReference = null;
+    txEl.textContent = '';
+    licenseRow.style.display = 'none';
+    licenseKeyEl.textContent = '—';
+  }
+
+  // When a session cookie is detected, hide the email input + login
+  // link and show a "logged in as <email>" line instead. Server-side
+  // /api/payment-intent will use the cookie email regardless of body
+  // contents, but matching the UI keeps user trust intact.
+  function applyLoggedInUI() {
+    if (!loggedInEmail) return;
+    emailInput.value = loggedInEmail;
+    emailInput.style.display = 'none';
+    document.querySelector('label[for="pay-email"]').style.display = 'none';
+    emailHintEl.style.display = 'none';
+    emailLoginLinkEl.style.display = 'none';
+    emailAuthnoteEl.style.display = 'block';
+    emailAuthnoteEl.textContent = '✓ Logged in as ' + loggedInEmail + '. License will be linked to this account.';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  function renderQR(payUrl) {
+    qrEl.innerHTML = '';
+    if (typeof qrcode !== 'function') {
+      qrEl.textContent = 'QR unavailable';
+      return;
+    }
+    var qr = qrcode(0, 'M');
+    qr.addData(payUrl);
+    qr.make();
+    // Render as inline SVG (sharp, scales cleanly, no raster artifacts)
+    qrEl.innerHTML = qr.createSvgTag({ scalable: true, margin: 0 });
+  }
+
+  function setStatus(state, html) {
+    statusEl.className = 'pay-status ' + state;
+    statusEl.innerHTML = (state === 'waiting' ? '<span class="pay-spinner"></span>' : '') + html;
+  }
+
+  function showSuccessBanner() {
+    if (document.getElementById('pay-success-banner')) return;
+    var banner = document.createElement('div');
+    banner.id = 'pay-success-banner';
+    banner.style.cssText = 'background:rgba(0,229,176,0.06);border:1px solid rgba(0,229,176,0.4);border-radius:2px;padding:14px 18px;margin:0 auto 24px;max-width:560px;text-align:center;font:600 11px/1.4 "IBM Plex Mono",monospace;color:#00e5b0;letter-spacing:0.22em;text-transform:uppercase';
+    banner.textContent = '✓ Payment confirmed — Pro is live in your extension';
+    var hero = document.querySelector('.page-hero');
+    if (hero && hero.parentNode) hero.parentNode.insertBefore(banner, hero.nextSibling);
+  }
+
+  function showLicense(key) {
+    if (!key) return;
+    licenseKeyEl.textContent = key;
+    licenseRow.style.display = 'block';
+  }
+
+  function pollStatus(reference) {
+    fetch(STATUS_API + '?reference=' + encodeURIComponent(reference))
+      .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
+      .then(function(r) {
+        // Stop polling if the user closed the modal or moved on
+        if (currentReference !== reference) return;
+        if (r.status === 200 && r.body) {
+          if (r.body.status === 'confirmed') {
+            setStatus('confirmed', '✓ Payment confirmed');
+            if (r.body.txSignature) {
+              txEl.innerHTML = 'Tx: <a href="https://solscan.io/tx/' +
+                encodeURIComponent(r.body.txSignature) +
+                '" target="_blank" rel="noopener">' +
+                r.body.txSignature.slice(0, 8) + '…' + r.body.txSignature.slice(-8) +
+                '</a>';
+            }
+            // Surface the license key inline so the buyer can save it
+            // before the modal auto-closes. We keep the modal open longer
+            // when a license is present (the key is the artifact they
+            // came for).
+            if (r.body.licenseKey) {
+              showLicense(r.body.licenseKey);
+            }
+            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+            // No license → close after the usual short pause. With a
+            // license → leave it open so the user has time to copy it.
+            // They can dismiss with Esc / close button when done.
+            if (!r.body.licenseKey) {
+              setTimeout(function() {
+                if (currentReference === reference) {
+                  closeModal();
+                  showSuccessBanner();
+                }
+              }, 2500);
+            } else {
+              showSuccessBanner();
+            }
+            return;
+          }
+          if (r.body.status === 'expired') {
+            setStatus('expired', '✕ Expired — close and try again');
+            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+            return;
+          }
+        }
+        // 404 (not_found yet) or pending → keep polling
+      })
+      .catch(function() { /* swallow, next tick will retry */ });
+  }
+
+  // SOL prices vary per intent so we always show 4 decimals + the SOL
+  // unit. USDC stays fixed and dollar-formatted. Both render the locked-in
+  // USD amount as a small caption so the user sees what they're committing
+  // to in fiat terms.
+  function renderAmount(intent) {
+    if (intent.token === 'sol') {
+      amountEl.textContent = Number(intent.amount).toFixed(4) + ' SOL';
+      tokenLabelEl.innerHTML = '&asymp; $' + Number(intent.amountUsd).toFixed(2) + ' &middot; SOL on Solana';
+    } else {
+      amountEl.textContent = '$' + Number(intent.amount).toFixed(2);
+      tokenLabelEl.textContent = 'USDC on Solana';
+    }
+  }
+
+  function setToggleUI(token, busy) {
+    var sel = token === 'sol' ? toggleSol : toggleUsdc;
+    var other = token === 'sol' ? toggleUsdc : toggleSol;
+    sel.classList.add('active');
+    sel.setAttribute('aria-selected', 'true');
+    other.classList.remove('active');
+    other.setAttribute('aria-selected', 'false');
+    toggleUsdc.disabled = !!busy;
+    toggleSol.disabled = !!busy;
+  }
+
+  function readEmail() {
+    var v = (emailInput.value || '').trim().toLowerCase();
+    return EMAIL_RE.test(v) ? v : '';
+  }
+
+  function createIntent(tier, token) {
+    var email = readEmail();
+    if (!email) {
+      // Surface the validation error inline; don't open the loading
+      // state for a bad email — that just confuses users into thinking
+      // the network is broken.
+      emailInput.classList.add('invalid');
+      emailInput.focus();
+      setStatus('expired', 'Enter a valid email above first');
+      setToggleUI(currentToken, false);
+      return;
+    }
+    currentEmail = email;
+    currentTier = tier;
+    currentToken = token;
+    setToggleUI(token, true);
+
+    // Reset visible state — keep the toggle active so the user knows what
+    // they picked even while the request is in flight.
+    qrEl.innerHTML = '<div style="color:#666;font-size:10px;letter-spacing:.18em">Loading&hellip;</div>';
+    amountEl.textContent = '—';
+    tokenLabelEl.textContent = token === 'sol' ? 'SOL on Solana' : 'USDC on Solana';
+    recipientEl.textContent = '—';
+    deeplinkEl.setAttribute('href', '#');
+    setStatus('waiting', 'Creating intent&hellip;');
+    txEl.textContent = '';
+    licenseRow.style.display = 'none';
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    currentReference = null;
+
+    var body = { tier: tier, token: token, email: email };
+    // Pass install_id when the user came from the extension's quota
+    // link; otherwise the server will identify the buyer by email
+    // and synthesise a placeholder install_id internally.
+    if (hasInstall) body.install_id = installId;
+
+    fetch(INTENT_API, {
+      method: 'POST',
+      // credentials: 'include' so the session cookie (if any) flows
+      // and the server can attach the license to the logged-in
+      // account regardless of what's in the body.
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+      .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
+      .then(function(r) {
+        setToggleUI(currentToken, false);
+        if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
+          setStatus('expired', 'Coming soon — checkout not configured yet');
+          return;
+        }
+        // Jupiter price-feed failure: surface the issue, snap back to USDC
+        // automatically so the user can complete checkout instead of being
+        // stuck on a dead toggle.
+        if (r.status === 502 && r.body && r.body.error === 'sol_rate_unavailable') {
+          setStatus('warn', 'SOL price feed down &mdash; switched to USDC');
+          setTimeout(function() { createIntent(tier, 'usdc'); }, 800);
+          return;
+        }
+        if (r.status !== 200 || !r.body || !r.body.payUrl) {
+          setStatus('expired', 'Couldn&rsquo;t create the payment intent. Retry?');
+          return;
+        }
+
+        // Hydrate the modal with the intent we just minted
+        var intent = r.body;
+        currentReference = intent.reference;
+        titleEl.textContent = tier === 'lifetime' ? 'Antares Lifetime' : 'Antares Pro · 30 days';
+        renderAmount(intent);
+        recipientEl.textContent = intent.recipient;
+        deeplinkEl.setAttribute('href', intent.payUrl);
+        renderQR(intent.payUrl);
+        setStatus('waiting', 'Waiting for payment&hellip;');
+
+        // Start polling
+        if (pollTimer) clearInterval(pollTimer);
+        pollTimer = setInterval(function() { pollStatus(intent.reference); }, 2500);
+        // First poll immediately so a fast wallet sees the success state
+        // without waiting the full 2.5s tick.
+        pollStatus(intent.reference);
+      })
+      .catch(function() {
+        setToggleUI(currentToken, false);
+        setStatus('expired', 'Network error. Check your connection and retry.');
+      });
+  }
+
+  function openModal(spec) {
+    // Anyone can open the modal — site-direct visitors who haven't
+    // installed yet pay with email only and receive a license key
+    // they redeem later. The install-id flow continues to work when
+    // present (?install=<id> in the URL).
+    overlay.classList.add('open');
+    // Update the email-row hint based on whether we have an install
+    // already paired (extension users) vs. site-direct buyers (need
+    // the license key to bridge to a future install).
+    if (hasInstall) {
+      emailHintEl.textContent = 'For your receipt + license key (you can use the same key on a new install later).';
+    } else {
+      emailHintEl.textContent = 'After payment we issue a license key. You’ll paste it in the extension after installing to unlock Pro.';
+    }
+    // Default token on each open is whatever the user last picked in this
+    // session, but USDC on first open (currentToken initialises to 'usdc').
+    // We don't auto-fire createIntent here — let the user fill in their
+    // email first. The toggle/CTA buttons trigger createIntent.
+    setStatus('waiting', 'Enter your email then pick a token to mint the intent');
+    qrEl.innerHTML = '<div style="color:#666;font-size:10px;letter-spacing:.18em;text-align:center">QR appears after intent is created</div>';
+    amountEl.textContent = '—';
+    recipientEl.textContent = '—';
+    txEl.textContent = '';
+    licenseRow.style.display = 'none';
+    currentTier = spec.tier;
+
+    // If we already have a valid email saved (from a previous session
+    // or a focused field), kick the intent immediately — preserves the
+    // one-click flow for returning users.
+    if (readEmail()) {
+      createIntent(spec.tier, currentToken);
+    } else {
+      emailInput.focus();
+    }
+  }
+
+  // Wire the tier CTAs
+  var BTNS = [
+    { id: 'cta-pro-monthly', tier: 'monthly' },
+    { id: 'cta-lifetime', tier: 'lifetime' }
+  ];
+  BTNS.forEach(function(spec) {
+    var btn = document.getElementById(spec.id);
+    if (!btn) return;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal(spec);
+    });
+  });
+
+  // Toggle handlers — switching token re-mints the intent (the reference
+  // key + amount are token-specific, so reusing a stale intent would let
+  // the user pay USDC for a SOL-quoted intent and never settle). Same
+  // path is also used to mint the *first* intent once the user has
+  // picked a tier and entered a valid email.
+  function onToggle(token) {
+    return function(e) {
+      e.preventDefault();
+      if (!currentTier) return;
+      // Same-token re-click after intent is already minted = no-op.
+      if (token === currentToken && currentReference) return;
+      createIntent(currentTier, token);
+    };
+  }
+  toggleUsdc.addEventListener('click', onToggle('usdc'));
+  toggleSol.addEventListener('click', onToggle('sol'));
+
+  // Email handlers — once the user finishes entering a valid email
+  // (blur or Enter), auto-mint the intent if a tier is selected and we
+  // don't already have one. Saves a click for returning visitors with
+  // remembered emails too.
+  function maybeMintFromEmail() {
+    if (!currentTier) return;
+    if (currentReference) return;
+    if (!readEmail()) return;
+    createIntent(currentTier, currentToken);
+  }
+  emailInput.addEventListener('blur', maybeMintFromEmail);
+  emailInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      maybeMintFromEmail();
+    }
+  });
+
+  // License copy button (visible after payment confirms)
+  licenseCopyBtn.addEventListener('click', function() {
+    var key = licenseKeyEl.textContent;
+    if (!key || key === '—') return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(key).then(function() {
+        var orig = licenseCopyBtn.textContent;
+        licenseCopyBtn.textContent = '✓ Copied';
+        setTimeout(function() { licenseCopyBtn.textContent = orig; }, 1800);
+      });
+    }
+  });
+
+  // Copy-to-clipboard for the recipient address
+  copyBtn.addEventListener('click', function() {
+    var addr = recipientEl.textContent;
+    if (!addr || addr === '—') return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(addr).then(function() {
+        var orig = copyBtn.textContent;
+        copyBtn.textContent = '✓';
+        setTimeout(function() { copyBtn.textContent = orig; }, 1500);
+      });
+    }
+  });
+
+  // "Install detected" banner when the user came via the extension
+  if (hasInstall) {
+    var banner = document.createElement('div');
+    banner.setAttribute('role', 'status');
+    banner.style.cssText = 'background:rgba(0,229,176,0.04);border:1px solid rgba(0,229,176,0.2);border-radius:2px;padding:10px 16px;margin:0 auto 32px;max-width:520px;text-align:center;font:600 10px/1 "IBM Plex Mono",monospace;color:#00e5b0;letter-spacing:0.22em;text-transform:uppercase';
+    banner.textContent = '✓ Install detected · upgrade ready';
+    var hero = document.querySelector('.page-hero');
+    if (hero && hero.parentNode) hero.parentNode.insertBefore(banner, hero.nextSibling);
+  }
+})();
+</script>
+
+</body>
+</html>
