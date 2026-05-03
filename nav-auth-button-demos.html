@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Nav Auth Button Demos — Antares</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--purple:#a78bfa}
+body{background:var(--bg);color:#c8c8cc;font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
+
+/* ── Demo wrapper ── */
+.demo-banner{background:linear-gradient(135deg,rgba(0,229,176,.08),rgba(167,139,250,.08));border-top:1px solid #1a1a1e;border-bottom:1px solid #1a1a1e;padding:36px 0 28px;margin-top:48px}
+.demo-banner:first-of-type{margin-top:24px}
+.demo-banner-inner{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.demo-num{font:400 64px/.8 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-shadow:0 0 24px rgba(0,229,176,.3);min-width:64px}
+.demo-meta{flex:1;min-width:280px}
+.demo-name{font:400 24px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#eaeaea;margin-bottom:4px}
+.demo-angle{font-size:11px;color:#7a7a82;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+.demo-notes{font-size:12px;color:#9a9aa2;line-height:1.65;max-width:680px}
+.demo-notes b{color:#cccccc}
+
+/* ── Sample nav (matches the live site) ── */
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;background:rgba(10,10,12,.88);border-bottom:1px solid var(--border);margin-top:18px}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+
+/* The fix that ALL demos share: group the auth + install buttons in a
+   single right-side cluster so flexbox doesn't strand them with a gap. */
+nav .nav-actions{display:flex;align-items:center;gap:10px}
+
+/* The Install button — identical across all demos (this is the
+   reference green-fill primary button). */
+nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
+
+/* ──────────────────────────────────────────────────────────────────
+   DEMO A — Outline green
+   Same shape as Install. Transparent fill, green border, green text.
+   Standard primary/secondary pattern.
+   ────────────────────────────────────────────────────────────────── */
+.btn-a{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);background:transparent;padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+.btn-a:hover{background:rgba(0,229,176,.08);box-shadow:0 0 20px rgba(0,229,176,.15)}
+
+/* ──────────────────────────────────────────────────────────────────
+   DEMO B — Outline neutral
+   Subtle dim border + grey text, lights up green on hover.
+   Quieter than A — clearly secondary.
+   ────────────────────────────────────────────────────────────────── */
+.btn-b{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;background:transparent;padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid #2a2a30;transition:.25s;white-space:nowrap}
+.btn-b:hover{color:var(--c);border-color:var(--c);background:rgba(0,229,176,.04)}
+
+/* ──────────────────────────────────────────────────────────────────
+   DEMO C — Solid dark
+   Filled charcoal background, neutral text. More visual weight than
+   B, less than A. Reads as a real action button without competing
+   with Install green.
+   ────────────────────────────────────────────────────────────────── */
+.btn-c{font:600 11px/1 'IBM Plex Mono',monospace;color:#cccccc;background:#16161a;padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid #2a2a30;transition:.25s;white-space:nowrap}
+.btn-c:hover{background:#1f1f24;border-color:#3a3a40;color:#fff}
+
+/* ──────────────────────────────────────────────────────────────────
+   DEMO D — Purple accent
+   Outline button using the Lifetime tier's purple, since auth/account
+   leads to the user's licenses (Pro AND Lifetime). Visually links the
+   "Account" concept with the Lifetime palette.
+   ────────────────────────────────────────────────────────────────── */
+.btn-d{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--purple);background:transparent;padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(167,139,250,.4);transition:.25s;white-space:nowrap}
+.btn-d:hover{background:rgba(167,139,250,.08);border-color:var(--purple);box-shadow:0 0 20px rgba(167,139,250,.15)}
+
+/* ── Intro ── */
+.intro-h1{font:400 clamp(36px,6vw,64px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:14px;color:#eaeaea;text-align:center}
+.intro-h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c)}
+.sub{font-size:12.5px;color:#9a9aa2;line-height:1.85;max-width:640px;margin:0 auto;border-left:2px solid var(--c);padding-left:18px;text-align:left}
+.sub b{color:#cccccc;font-weight:600}
+
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px}
+
+/* Compact comparison strip showing all 4 buttons side by side at the
+   bottom — useful for at-a-glance visual diff. */
+.compare-strip{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;padding:32px;background:var(--card);border:1px solid var(--border);margin:48px 0 0}
+.compare-strip > div{display:flex;flex-direction:column;align-items:center;gap:12px}
+.compare-strip > div span{font:600 10px/1 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.18em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+
+<div class="shell">
+
+<section style="padding:56px 0 24px;text-align:center">
+  <div class="eyebrow">Nav auth button demos</div>
+  <h1 class="intro-h1">PICK A <span class="accent">BUTTON</span>.</h1>
+  <p class="sub">
+    The current LOG IN floats in the gap between the .links cluster and
+    the green Install button because flexbox <code style="font-size:11px;background:#16161a;padding:1px 5px;color:#bbb">justify-content: space-between</code>
+    is distributing 4 elements with the orphan in the middle.
+    <b>Layout fix shipped on every demo:</b> auth + install grouped in a
+    single right-side <code style="font-size:11px;background:#16161a;padding:1px 5px;color:#bbb">.nav-actions</code> cluster
+    with a 10px gap.<br><br>
+    Pick which <b>visual style</b> the auth button should ship with.
+    All four use the exact same shape (padding, font, border thickness)
+    as Install — only the colour treatment differs.
+  </p>
+</section>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     DEMO A — Outline green
+     ════════════════════════════════════════════════════════════════════════ -->
+<div class="demo-banner"><div class="shell"><div class="demo-banner-inner">
+  <div class="demo-num">A</div>
+  <div class="demo-meta">
+    <div class="demo-name">Outline Green</div>
+    <div class="demo-angle">Standard primary/secondary &middot; same green palette as Install</div>
+    <div class="demo-notes">Classic design-system pattern: <b>filled primary + outline secondary in the same colour</b>. Two shades of green, hierarchy clear at a glance, both buttons feel like part of the same action set. Most common pick &mdash; works everywhere.</div>
+  </div>
+</div></div></div>
+<div class="shell">
+<nav>
+  <a href="#" class="brand">ANTARES</a>
+  <div class="links"><a href="#">Demo</a><a href="#">Features</a><a href="#">Engine</a><a href="#">Compare</a><a href="#">Pricing</a><a href="#">Q&amp;A</a></div>
+  <div class="nav-actions">
+    <a href="#" class="btn-a">Log in</a>
+    <a href="#" class="nav-cta">Install &rarr;</a>
+  </div>
+</nav>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     DEMO B — Outline neutral
+     ════════════════════════════════════════════════════════════════════════ -->
+<div class="demo-banner"><div class="shell"><div class="demo-banner-inner">
+  <div class="demo-num">B</div>
+  <div class="demo-meta">
+    <div class="demo-name">Outline Neutral</div>
+    <div class="demo-angle">Quietest variant &middot; grey border + grey text</div>
+    <div class="demo-notes">Less visual weight than A. The auth button reads as <b>tertiary action</b> next to the green install primary. Best when you want install to be the obvious next move and login to be there but not pulling attention.</div>
+  </div>
+</div></div></div>
+<div class="shell">
+<nav>
+  <a href="#" class="brand">ANTARES</a>
+  <div class="links"><a href="#">Demo</a><a href="#">Features</a><a href="#">Engine</a><a href="#">Compare</a><a href="#">Pricing</a><a href="#">Q&amp;A</a></div>
+  <div class="nav-actions">
+    <a href="#" class="btn-b">Log in</a>
+    <a href="#" class="nav-cta">Install &rarr;</a>
+  </div>
+</nav>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     DEMO C — Solid dark
+     ════════════════════════════════════════════════════════════════════════ -->
+<div class="demo-banner"><div class="shell"><div class="demo-banner-inner">
+  <div class="demo-num">C</div>
+  <div class="demo-meta">
+    <div class="demo-name">Solid Dark</div>
+    <div class="demo-angle">Filled charcoal &middot; neutral text &middot; matches install weight</div>
+    <div class="demo-notes">Both buttons are <b>solid filled</b> &mdash; install is green, log-in is charcoal. Same visual weight, just different colour. Reads as <i>"two equally clickable actions"</i> with green winning the hierarchy through colour saturation alone. Heavier than the outline variants.</div>
+  </div>
+</div></div></div>
+<div class="shell">
+<nav>
+  <a href="#" class="brand">ANTARES</a>
+  <div class="links"><a href="#">Demo</a><a href="#">Features</a><a href="#">Engine</a><a href="#">Compare</a><a href="#">Pricing</a><a href="#">Q&amp;A</a></div>
+  <div class="nav-actions">
+    <a href="#" class="btn-c">Log in</a>
+    <a href="#" class="nav-cta">Install &rarr;</a>
+  </div>
+</nav>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     DEMO D — Purple accent
+     ════════════════════════════════════════════════════════════════════════ -->
+<div class="demo-banner"><div class="shell"><div class="demo-banner-inner">
+  <div class="demo-num">D</div>
+  <div class="demo-meta">
+    <div class="demo-name">Purple Accent</div>
+    <div class="demo-angle">Outline purple &middot; ties to Lifetime tier palette</div>
+    <div class="demo-notes">Auth button uses the <b>Lifetime purple</b> rather than green. Visually connects the "Account" concept to the user's licenses (Pro and Lifetime live there). Most distinctive of the four &mdash; the nav now uses three colours: brand white, Install green, Account purple.</div>
+  </div>
+</div></div></div>
+<div class="shell">
+<nav>
+  <a href="#" class="brand">ANTARES</a>
+  <div class="links"><a href="#">Demo</a><a href="#">Features</a><a href="#">Engine</a><a href="#">Compare</a><a href="#">Pricing</a><a href="#">Q&amp;A</a></div>
+  <div class="nav-actions">
+    <a href="#" class="btn-d">Log in</a>
+    <a href="#" class="nav-cta">Install &rarr;</a>
+  </div>
+</nav>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SIDE-BY-SIDE comparison
+     ════════════════════════════════════════════════════════════════════════ -->
+<div class="shell">
+<div class="compare-strip">
+  <div><span>A · Outline Green</span><a href="#" class="btn-a">Log in</a></div>
+  <div><span>B · Outline Neutral</span><a href="#" class="btn-b">Log in</a></div>
+  <div><span>C · Solid Dark</span><a href="#" class="btn-c">Log in</a></div>
+  <div><span>D · Purple Accent</span><a href="#" class="btn-d">Log in</a></div>
+  <div><span>(reference)</span><a href="#" class="nav-cta">Install &rarr;</a></div>
+</div>
+</div>
+
+<div class="shell">
+<footer>Antares &middot; Nav auth button demos &middot; pick A / B / C / D</footer>
+</div>
+
+</body>
+</html>
