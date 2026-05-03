@@ -525,10 +525,15 @@ footer .foot-links a:hover{color:var(--c)}
     // reason. Setting href + target on the anchor lets the browser do
     // the navigation natively — no popup blocker, no JS dependency,
     // works even with strict ad-blockers that hook window.open.
+    // Named target `antares-analysis` (not `_blank`). Every click on
+    // any token's "Full Analysis" reuses the same tab — switching
+    // tokens A→B→C navigates that one tab to the new ?ca= rather
+    // than opening three tabs. Better UX, especially for the demo
+    // where users sample several tokens in a row.
     foNode.appendChild(el('a',{
       'href':ANALYSIS_PAGE+'?ca='+encodeURIComponent(mint),
       'id':'ant-full-analysis',
-      'target':'_blank',
+      'target':'antares-analysis',
       'rel':'noopener noreferrer',
       'data-ca':encodeURIComponent(mint)
     },'Full Analysis →'));
