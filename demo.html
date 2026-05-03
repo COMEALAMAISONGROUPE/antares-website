@@ -187,7 +187,17 @@ footer .foot-links a:hover{color:var(--c)}
   // origin — we end up with N tabs instead of one. The JS handle is
   // origin-independent and works regardless of rel/noopener.
   var analysisWindow=null;
+  // Hard debounce gate — if openAnalysis was called within the last
+  // 750ms we ignore it. Makes "click → 10 tabs open at once"
+  // structurally impossible regardless of how many click events
+  // somehow get dispatched (multiple listeners, event re-fire, browser
+  // quirks, ad-blockers replaying clicks, etc).
+  var lastOpenTs=0;
   function openAnalysis(ca){
+    var now=Date.now();
+    if(now-lastOpenTs<750)return;
+    lastOpenTs=now;
+
     var url=ANALYSIS_PAGE+'?ca='+encodeURIComponent(ca);
     if(analysisWindow && !analysisWindow.closed){
       try{analysisWindow.location.href=url;}
@@ -371,6 +381,30 @@ footer .foot-links a:hover{color:var(--c)}
   var boxEl=document.createElement('div');
   boxEl.className='box';
   shadow.appendChild(boxEl);
+
+  // ─── ONE delegated listener for the Full Analysis click ─────────────────
+  // Earlier versions attached a click listener to each `<a id="ant-full-
+  // analysis">` on every render via cloneNode + replaceChild. User
+  // reported clicks producing 10+ tabs at once — the symptom of multiple
+  // listeners firing on the same click (most likely from re-renders
+  // racing with the cloneNode swap).
+  //
+  // ONE listener on the shadow root, attached once at init, catches every
+  // Full Analysis click via .closest() lookup. Combined with the 750ms
+  // hard-debounce in openAnalysis(), this makes "click → many tabs"
+  // structurally impossible no matter what re-renders or duplicates
+  // happen below. The data-ca attribute on the anchor carries the
+  // current contract address into the handler.
+  shadow.addEventListener('click',function(e){
+    var t=e.target;
+    if(!t||!t.closest)return;
+    var fa=t.closest('#ant-full-analysis');
+    if(!fa)return;
+    e.preventDefault();
+    e.stopPropagation();
+    var ca=decodeURIComponent(fa.getAttribute('data-ca')||'');
+    if(ca)openAnalysis(ca);
+  });
 
   function showBox(){
     boxEl.style.display='block';
@@ -702,23 +736,13 @@ footer .foot-links a:hover{color:var(--c)}
     if(ai){var freshAi=ai.cloneNode(true);ai.parentNode.replaceChild(freshAi,ai);freshAi.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggleAiSummary(aiSummary);});}
     var cf=shadow.getElementById('ant-critical-flags-btn');
     if(cf){var freshCf=cf.cloneNode(true);cf.parentNode.replaceChild(freshCf,cf);freshCf.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();toggleCriticalFlags(d.flags||[]);});}
-    // Full Analysis click: route through openAnalysis() which holds a
-    // persistent window reference and navigates it on every subsequent
-    // click. Result: ONE tab regardless of how many tokens the user
-    // samples. preventDefault on the click cancels the native link
-    // navigation (the href is kept on the anchor only as a no-JS
-    // fallback / right-click "Open in new tab" target). stopPropagation
-    // keeps the click from bubbling to the box's drag layer.
-    var fa=shadow.getElementById('ant-full-analysis');
-    if(fa){
-      var freshFa=fa.cloneNode(true);
-      fa.parentNode.replaceChild(freshFa,fa);
-      freshFa.addEventListener('click',function(e){
-        e.stopPropagation();
-        e.preventDefault();
-        openAnalysis(ca);
-      });
-    }
+    // Full Analysis click is handled by the ONE delegated listener
+    // attached to the shadow root at init time (see HOST + SHADOW DOM
+    // SETUP above). We deliberately do NOT attach a per-render
+    // listener here — that pattern was the source of the "click → 10
+    // tabs" bug, where re-render races + cloneNode swaps left multiple
+    // listeners alive on stale element references. Single delegated
+    // listener + 750ms debounce is structurally bulletproof.
   }
 
   // ─── DexScreener pair picker ────────────────────────────────────────────
