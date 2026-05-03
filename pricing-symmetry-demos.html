@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Pricing Symmetry Demos — Antares</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f;--yellow:#f5d000;--purple:#a78bfa}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
+
+/* Demo banner */
+.demo-banner{background:linear-gradient(135deg,rgba(0,229,176,.08),rgba(167,139,250,.08));border-top:1px solid #1a1a1e;border-bottom:1px solid #1a1a1e;padding:48px 0 36px;margin-top:64px}
+.demo-banner:first-of-type{margin-top:24px}
+.demo-banner-inner{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.demo-num{font:400 84px/.8 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-shadow:0 0 32px rgba(0,229,176,.3);min-width:84px}
+.demo-meta{flex:1;min-width:280px}
+.demo-name{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#eaeaea;margin-bottom:6px}
+.demo-angle{font-size:11px;color:#7a7a82;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+.demo-notes{font-size:12px;color:#9a9aa2;line-height:1.7;max-width:680px}
+.demo-notes b{color:#cccccc}
+.demo-notes code{background:#16161a;color:#bbb;padding:1px 5px;border-radius:2px;font-size:11px}
+
+/* Intro */
+.intro-h1{font:400 clamp(48px,8vw,84px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea;text-align:center}
+.intro-h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:24px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+.sub{font-size:13px;color:#7a7a82;line-height:1.85;max-width:680px;margin:0 auto 12px;border-left:2px solid var(--c);padding-left:18px;text-align:left}
+.sub b{color:#cccccc;font-weight:600}
+
+/* Pricing grid (matches live pricing.html) */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:24px 0 16px}
+.tier{background:var(--card);border:1px solid var(--border);padding:36px 28px 32px;position:relative;display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
+.tier:hover{transform:translateY(-4px);border-color:#252529}
+.tier.featured{border:1px solid var(--c);box-shadow:0 0 0 1px var(--c),0 24px 48px rgba(0,229,176,.08)}
+.tier.featured::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--c);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
+.tier.free{background:#0c0c0e;border-color:#16161a;opacity:.86}
+.tier.free:hover{opacity:1;border-color:#1f1f23}
+.tier.free .tier-name{color:#5a5a62}
+.tier.free .tier-price{color:#8a8a92}
+.tier.free .tier-price .currency{color:#4a4a52}
+.tier.free .tier-tagline{color:#5a5a62;border-left-color:#1a1a1e}
+.tier.free .tier-features li{color:#666;border-bottom-color:#0e0e10}
+.tier.free .tier-features li::before{color:#3a7060}
+.tier.lifetime{border:1px solid #2a2a30}
+.tier.lifetime::before{content:'BEST VALUE';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--purple);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
+
+.tier-name{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
+.tier.featured .tier-name{color:var(--c)}
+.tier.lifetime .tier-name{color:var(--purple)}
+.tier-price{font:400 64px/.9 'Bebas Neue',sans-serif;letter-spacing:.02em;color:#eaeaea;margin-bottom:4px;display:flex;align-items:baseline;gap:8px}
+.tier-price .currency{font-size:32px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0}
+.tier-price .strike{font-size:22px;color:#3a3a40;text-decoration:line-through;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0;margin-right:6px}
+.tier-period{font-size:11px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;min-height:14px}
+.tier-tagline{font-size:11.5px;color:#7a7a82;line-height:1.6;font-style:italic;border-left:2px solid #252529;padding-left:12px;margin-bottom:24px;min-height:54px}
+.tier.featured .tier-tagline{border-left-color:var(--c)}
+.tier.lifetime .tier-tagline{border-left-color:var(--purple)}
+
+.tier-features{list-style:none;margin:0 0 24px;padding:0;flex:1}
+.tier-features li{font-size:11.5px;color:#888;line-height:1.55;padding:7px 0 7px 22px;position:relative;border-bottom:1px solid #131316}
+.tier-features li:last-child{border-bottom:none}
+.tier-features li::before{content:'✓';position:absolute;left:0;top:7px;color:var(--c);font-weight:700;font-size:12px}
+.tier-features li.bonus{color:#bbb}
+.tier-features li b{color:#bbb;font-weight:600}
+.tier-features li small{display:block;color:#4a4a52;font-size:10px;margin-top:2px;font-style:italic}
+.tier-features li.no{color:#4a4a52;border-bottom-color:#101013}
+.tier-features li.no::before{content:'✗';color:#3a3a40;font-weight:600}
+.tier-features li.no b{color:#6a6a72}
+.tier-features li.no em{color:#3a3a40;font-style:italic;font-weight:400}
+.tier-features li.split{border:none;padding:14px 0 4px 0;color:#4a4a52;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.tier-features li.split::before{content:none}
+.tier-features li.split + li{border-top:1px solid #1a1a1e;padding-top:9px}
+
+.tier-cta{display:block;text-align:center;padding:14px 24px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s,background .2s,color .2s;cursor:pointer;border:none;width:100%;font-family:'IBM Plex Mono',monospace}
+.tier-cta.primary{background:var(--c);color:var(--bg)}
+.tier-cta.primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+.tier-cta.secondary{background:transparent;color:#bbb;border:1px solid #2a2a30}
+.tier-cta.secondary:hover{border-color:var(--c);color:var(--c)}
+.tier-cta.purple{background:var(--purple);color:var(--bg)}
+.tier-cta.purple:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(167,139,250,.25)}
+
+.tier-status{font-size:10px;color:#5a5a62;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;text-align:center;min-height:14px}
+.tier-status .live{color:var(--c)}
+.tier-status .purple{color:var(--purple)}
+
+/* ─── Demo B specific ─── chip-tag row */
+.tier-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 22px;padding:14px 0 0;border-top:1px solid #16161a}
+.tier-chip{font:600 9px/1 'IBM Plex Mono',monospace;color:#7a7a82;letter-spacing:.18em;text-transform:uppercase;padding:6px 9px;background:#0e0e10;border:1px solid #1a1a1e;border-radius:2px;white-space:nowrap}
+.tier.featured .tier-chip{color:#a8d8c5;border-color:rgba(0,229,176,.18);background:rgba(0,229,176,.04)}
+.tier.lifetime .tier-chip{color:#c8b9f0;border-color:rgba(167,139,250,.18);background:rgba(167,139,250,.04)}
+
+/* ─── Demo C specific ─── tier closing quote */
+.tier-quote{margin:14px 0 22px;padding:14px 0 0;border-top:1px solid #16161a;font-size:11px;line-height:1.7;color:#7a7a82;font-style:italic}
+.tier-quote::before{content:'❝';display:block;font-size:24px;line-height:.8;color:var(--c);font-style:normal;margin-bottom:6px}
+.tier.lifetime .tier-quote::before{color:var(--purple)}
+.tier.free .tier-quote{color:#5a5a62}
+.tier.free .tier-quote::before{color:#3a7060}
+
+/* CTA-final + footer */
+.cta-final{margin:64px 0 32px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
+.cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
+.cta-final h2{font:400 56px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;margin-bottom:16px;color:#eaeaea;position:relative}
+.cta-final h2 span{color:var(--c)}
+.cta-final p{font-size:13px;color:#9a9aa2;margin-bottom:28px;position:relative;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.85}
+.cta-final p b{color:#cccccc;font-weight:600}
+.cta-final .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:18px 36px;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;position:relative;transition:transform .2s,box-shadow .2s}
+.cta-final .cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+
+.section-label{display:flex;align-items:center;gap:16px;margin:48px 0 24px}
+.section-label span{font-size:10px;color:#3a3a40;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-label::before{content:'';flex:0 0 0;height:1px;background:var(--border)}
+
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px}
+
+@media(max-width:980px){
+  .tiers{grid-template-columns:1fr;gap:14px}
+  .tier-tagline{min-height:auto}
+  .demo-num{font-size:64px;min-width:64px}
+}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+
+<div class="shell">
+
+<section style="padding:80px 0 24px;text-align:center">
+  <div class="eyebrow">Symmetry fix &middot; 3 approaches</div>
+  <h1 class="intro-h1">FIX THE <span class="accent">GAPS</span>.</h1>
+  <p class="sub">
+    The current cards are off-balance: <b>Pro has 11 items + 5 subtexts</b>
+    (~16 visual lines), <b>Free has 11 items + 2 subtexts</b> (~13 lines),
+    <b>Lifetime has 8 items + 0 subtexts</b> (~8 lines). Pro fills its space;
+    Free has a small gap above its button; Lifetime has a big one. Three
+    fixes below &mdash; same hero/CTA, only the tier-card content varies.
+  </p>
+</section>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     DEMO A — "Equal Density" — bulk up Free + Lifetime with subtexts
+     ════════════════════════════════════════════════════════════════════════ -->
+
+<div class="demo-banner"><div class="shell"><div class="demo-banner-inner">
+  <div class="demo-num">A</div>
+  <div class="demo-meta">
+    <div class="demo-name">Equal Density</div>
+    <div class="demo-angle">Add a one-line subtext to every feature</div>
+    <div class="demo-notes">Most natural fix. Brings Free + Lifetime up to Pro's density by adding a one-line italic <code>&lt;small&gt;</code> below each feature, the same way Pro already does on its key items. Each card lands at <b>~14&ndash;16 effective lines</b>. Information-dense, no decorative chrome.</div>
+  </div>
+</div></div></div>
+
+<div class="shell">
+<div class="tiers">
+
+  <!-- FREE — Demo A -->
+  <div class="tier free">
+    <div class="tier-name">Free</div>
+    <div class="tier-price"><span class="currency">$</span>0</div>
+    <div class="tier-period">50 scans / day &middot; no card</div>
+    <div class="tier-tagline">The verdict and nothing else. Good enough to taste-test the engine &mdash; not enough to trade with.</div>
+    <ul class="tier-features">
+      <li><b>50 scans per day</b><small>resets at 00:00 UTC</small></li>
+      <li>SAFE / CAUTION / DANGER / RUG verdict<small>color-coded in your overlay</small></li>
+      <li>1000-point composite score<small>under-the-hood, not in overlay</small></li>
+      <li>Honeypot, LP, Mint &amp; Freeze checks<small>the 4 hard-kill flags</small></li>
+      <li>Browser overlay on 7 platforms<small>DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN</small></li>
+      <li class="split">Not included</li>
+      <li class="no"><b>AI Summary</b> <em>&mdash; verdict in plain English</em></li>
+      <li class="no"><b>Critical Flags</b> <em>&mdash; every signal described</em></li>
+      <li class="no"><b>Full Analysis page</b> <em>&mdash; Holders, Timeline, Insiders</em></li>
+      <li class="no"><b>Unlimited scans</b> <em>&mdash; Free caps at 50/day</em></li>
+    </ul>
+    <a href="#" class="tier-cta secondary">Install free &rarr;</a>
+    <div class="tier-status"><span class="live">&middot; Live now</span></div>
+  </div>
+
+  <!-- PRO — Demo A (kept identical to live) -->
+  <div class="tier featured">
+    <div class="tier-name">Pro &middot; 30-day pass</div>
+    <div class="tier-price"><span class="currency">$</span>24.99</div>
+    <div class="tier-period">USDC or SOL on Solana &middot; one-time, no auto-renew</div>
+    <div class="tier-tagline">Built for traders who scan 50+ tokens a day. Unlimited scans + features power users actually need. Pay direct in USDC or SOL, zero middleman.</div>
+    <ul class="tier-features">
+      <li class="bonus"><b>Everything in Free, plus:</b></li>
+      <li><b>AI Summary</b><small>plain-English explanation of the verdict, in-overlay</small></li>
+      <li><b>Critical Flags panel</b><small>every risk signal with descriptions, in-overlay</small></li>
+      <li><b>Full Analysis page</b><small>Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection</small></li>
+      <li><b>Unlimited scans</b><small>fair-use 30 req/min anti-abuse</small></li>
+      <li>Scan history (30 days, server-side)</li>
+      <li>Detailed scoring breakdown<small>full layer-by-layer math</small></li>
+      <li>Priority cache (fresher data, lower TTL)</li>
+      <li>Export CSV / JSON</li>
+      <li>No affiliate prompts (clean UI)</li>
+      <li>Priority support</li>
+    </ul>
+    <a href="#" class="tier-cta primary">Get Pro now &rarr;</a>
+    <div class="tier-status"><span class="live">&middot; USDC or SOL &middot; on-chain</span></div>
+  </div>
+
+  <!-- LIFETIME — Demo A -->
+  <div class="tier lifetime">
+    <div class="tier-name">Lifetime</div>
+    <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
+    <div class="tier-period">one-time USDC or SOL payment &middot; forever</div>
+    <div class="tier-tagline">Pay once. Get every Pro feature, including everything we ship in v2, v3, v4. Reserved for the first 1000 supporters.</div>
+    <ul class="tier-features">
+      <li class="bonus"><b>Everything in Pro Monthly, forever</b></li>
+      <li>All future Pro v2, v3, v4 features included<small>even features that ship in 2027</small></li>
+      <li><b>Sentinel Founder</b> badge<small>visible on every scan you run, forever</small></li>
+      <li>Private Discord channel<small>direct chat with the team + other founders</small></li>
+      <li>Vote on roadmap priorities<small>founders pick what we ship next</small></li>
+      <li>Early access to every beta<small>features 2&ndash;4 weeks before public release</small></li>
+      <li>Direct line to the founder<small>email reply within 24h, always</small></li>
+      <li>Name in Sentinel Hall of Fame<small>permanent listing on antares-website.vercel.app</small></li>
+    </ul>
+    <a href="#" class="tier-cta purple">Claim a Lifetime spot &rarr;</a>
+    <div class="tier-status"><span class="purple">&middot; One-time &middot; Forever</span></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     DEMO B — "Chip Tags" — decorative chip-row footer per card
+     ════════════════════════════════════════════════════════════════════════ -->
+
+<div class="demo-banner"><div class="shell"><div class="demo-banner-inner">
+  <div class="demo-num">B</div>
+  <div class="demo-meta">
+    <div class="demo-name">Chip Tags</div>
+    <div class="demo-angle">Decorative pill-tag row above the button</div>
+    <div class="demo-notes">Bulk up the bottom of each card with a wrap of 4&ndash;5 small uppercase pill tags &mdash; tier-tinted (green for Pro, purple for Lifetime). Gives the cards <b>structured visual rhythm</b>: features &rarr; tags &rarr; button. Lighter on copy than Demo A but visually decorative.</div>
+  </div>
+</div></div></div>
+
+<div class="shell">
+<div class="tiers">
+
+  <!-- FREE — Demo B -->
+  <div class="tier free">
+    <div class="tier-name">Free</div>
+    <div class="tier-price"><span class="currency">$</span>0</div>
+    <div class="tier-period">50 scans / day &middot; no card</div>
+    <div class="tier-tagline">The verdict and nothing else. Good enough to taste-test the engine &mdash; not enough to trade with.</div>
+    <ul class="tier-features">
+      <li><b>50 scans per day</b><small>resets at 00:00 UTC</small></li>
+      <li>SAFE / CAUTION / DANGER / RUG verdict</li>
+      <li>1000-point composite score (under the hood)</li>
+      <li>Honeypot, LP, Mint &amp; Freeze checks</li>
+      <li>Browser overlay on 7 trading platforms<small>DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN</small></li>
+      <li class="split">Not included</li>
+      <li class="no"><b>AI Summary</b> <em>&mdash; verdict explained in plain English</em></li>
+      <li class="no"><b>Critical Flags</b> <em>&mdash; every risk signal, described</em></li>
+      <li class="no"><b>Full Analysis page</b> <em>&mdash; Holders, Timeline, Insiders, wash-trading</em></li>
+      <li class="no"><b>Unlimited scans</b> <em>&mdash; Free caps at 50/day</em></li>
+    </ul>
+    <div class="tier-chips">
+      <span class="tier-chip">No card</span>
+      <span class="tier-chip">No tracking</span>
+      <span class="tier-chip">Open source</span>
+      <span class="tier-chip">Live now</span>
+    </div>
+    <a href="#" class="tier-cta secondary">Install free &rarr;</a>
+    <div class="tier-status"><span class="live">&middot; Live now</span></div>
+  </div>
+
+  <!-- PRO — Demo B -->
+  <div class="tier featured">
+    <div class="tier-name">Pro &middot; 30-day pass</div>
+    <div class="tier-price"><span class="currency">$</span>24.99</div>
+    <div class="tier-period">USDC or SOL on Solana &middot; one-time, no auto-renew</div>
+    <div class="tier-tagline">Built for traders who scan 50+ tokens a day. Unlimited scans + features power users actually need. Pay direct in USDC or SOL, zero middleman.</div>
+    <ul class="tier-features">
+      <li class="bonus"><b>Everything in Free, plus:</b></li>
+      <li><b>AI Summary</b><small>plain-English verdict, in-overlay</small></li>
+      <li><b>Critical Flags panel</b><small>every signal with descriptions</small></li>
+      <li><b>Full Analysis page</b><small>Holders, Timeline, Insiders, wash-trading</small></li>
+      <li><b>Unlimited scans</b><small>fair-use 30 req/min</small></li>
+      <li>Scan history (30 days, server-side)</li>
+      <li>Detailed scoring breakdown</li>
+      <li>Priority cache &middot; export CSV / JSON</li>
+      <li>No affiliate prompts &middot; priority support</li>
+    </ul>
+    <div class="tier-chips">
+      <span class="tier-chip">USDC or SOL</span>
+      <span class="tier-chip">On-chain</span>
+      <span class="tier-chip">30 days</span>
+      <span class="tier-chip">No auto-renew</span>
+      <span class="tier-chip">No KYC</span>
+    </div>
+    <a href="#" class="tier-cta primary">Get Pro now &rarr;</a>
+    <div class="tier-status"><span class="live">&middot; USDC or SOL &middot; on-chain</span></div>
+  </div>
+
+  <!-- LIFETIME — Demo B -->
+  <div class="tier lifetime">
+    <div class="tier-name">Lifetime</div>
+    <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
+    <div class="tier-period">one-time USDC or SOL payment &middot; forever</div>
+    <div class="tier-tagline">Pay once. Get every Pro feature, including everything we ship in v2, v3, v4. Reserved for the first 1000 supporters.</div>
+    <ul class="tier-features">
+      <li class="bonus"><b>Everything in Pro Monthly, forever</b></li>
+      <li>All future Pro v2, v3, v4 features included</li>
+      <li><b>Sentinel Founder</b> badge in overlay</li>
+      <li>Private Discord channel</li>
+      <li>Vote on roadmap priorities</li>
+      <li>Early access to every beta</li>
+      <li>Direct line to the founder</li>
+      <li>Name in Sentinel Hall of Fame</li>
+    </ul>
+    <div class="tier-chips">
+      <span class="tier-chip">One-time</span>
+      <span class="tier-chip">Forever</span>
+      <span class="tier-chip">Founders' price</span>
+      <span class="tier-chip">1000 spots</span>
+      <span class="tier-chip">All future versions</span>
+    </div>
+    <a href="#" class="tier-cta purple">Claim a Lifetime spot &rarr;</a>
+    <div class="tier-status"><span class="purple">&middot; One-time &middot; Forever</span></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     DEMO C — "Closing Quote" — italic founder quote per card
+     ════════════════════════════════════════════════════════════════════════ -->
+
+<div class="demo-banner"><div class="shell"><div class="demo-banner-inner">
+  <div class="demo-num">C</div>
+  <div class="demo-meta">
+    <div class="demo-name">Closing Quote</div>
+    <div class="demo-angle">Italic founder quote above the button</div>
+    <div class="demo-notes">Below the feature list, each card gets a 2&ndash;3 line italic founder-voice quote summarising the tier's <b>philosophy</b>. Most editorial of the three demos &mdash; reads like a magazine pricing spread. Strongest when the audience is reading top-to-bottom.</div>
+  </div>
+</div></div></div>
+
+<div class="shell">
+<div class="tiers">
+
+  <!-- FREE — Demo C -->
+  <div class="tier free">
+    <div class="tier-name">Free</div>
+    <div class="tier-price"><span class="currency">$</span>0</div>
+    <div class="tier-period">50 scans / day &middot; no card</div>
+    <div class="tier-tagline">The verdict and nothing else. Good enough to taste-test the engine &mdash; not enough to trade with.</div>
+    <ul class="tier-features">
+      <li><b>50 scans per day</b><small>resets at 00:00 UTC</small></li>
+      <li>SAFE / CAUTION / DANGER / RUG verdict</li>
+      <li>1000-point composite score (under the hood)</li>
+      <li>Honeypot, LP, Mint &amp; Freeze checks</li>
+      <li>Browser overlay on 7 trading platforms<small>DexScreener, pump.fun, Axiom, Photon, Birdeye, GeckoTerminal, GMGN</small></li>
+      <li class="split">Not included</li>
+      <li class="no"><b>AI Summary</b> <em>&mdash; verdict explained in plain English</em></li>
+      <li class="no"><b>Critical Flags</b> <em>&mdash; every risk signal, described</em></li>
+      <li class="no"><b>Full Analysis page</b></li>
+      <li class="no"><b>Unlimited scans</b></li>
+    </ul>
+    <div class="tier-quote">
+      Free is the gateway. The verdict, the score, the overlay &mdash; the
+      core of what makes Antares useful. We've never reduced what's on it.
+      We never will.
+    </div>
+    <a href="#" class="tier-cta secondary">Install free &rarr;</a>
+    <div class="tier-status"><span class="live">&middot; Live now</span></div>
+  </div>
+
+  <!-- PRO — Demo C -->
+  <div class="tier featured">
+    <div class="tier-name">Pro &middot; 30-day pass</div>
+    <div class="tier-price"><span class="currency">$</span>24.99</div>
+    <div class="tier-period">USDC or SOL on Solana &middot; one-time, no auto-renew</div>
+    <div class="tier-tagline">Built for traders who scan 50+ tokens a day. Unlimited scans + features power users actually need. Pay direct, zero middleman.</div>
+    <ul class="tier-features">
+      <li class="bonus"><b>Everything in Free, plus:</b></li>
+      <li><b>AI Summary</b><small>plain-English verdict, in-overlay</small></li>
+      <li><b>Critical Flags panel</b><small>every signal with descriptions</small></li>
+      <li><b>Full Analysis page</b><small>Holders, Timeline, Insiders</small></li>
+      <li><b>Unlimited scans</b><small>fair-use 30 req/min</small></li>
+      <li>Scan history (30 days, server-side)</li>
+      <li>Detailed scoring breakdown</li>
+      <li>Priority cache &middot; CSV / JSON export</li>
+      <li>No affiliate prompts &middot; priority support</li>
+    </ul>
+    <div class="tier-quote">
+      Pro is for the day-trader who scans two hundred tokens a day and needs
+      the engine running silent in the background. Pay once, use it for
+      thirty days, never see a card form.
+    </div>
+    <a href="#" class="tier-cta primary">Get Pro now &rarr;</a>
+    <div class="tier-status"><span class="live">&middot; USDC or SOL &middot; on-chain</span></div>
+  </div>
+
+  <!-- LIFETIME — Demo C -->
+  <div class="tier lifetime">
+    <div class="tier-name">Lifetime</div>
+    <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
+    <div class="tier-period">one-time USDC or SOL payment &middot; forever</div>
+    <div class="tier-tagline">Pay once. Get every Pro feature, including everything we ship in v2, v3, v4. Reserved for the first 1000 supporters.</div>
+    <ul class="tier-features">
+      <li class="bonus"><b>Everything in Pro Monthly, forever</b></li>
+      <li>All future Pro v2, v3, v4 features included</li>
+      <li><b>Sentinel Founder</b> badge in overlay</li>
+      <li>Private Discord channel</li>
+      <li>Vote on roadmap priorities</li>
+      <li>Early access to every beta</li>
+      <li>Direct line to the founder</li>
+      <li>Name in Sentinel Hall of Fame</li>
+    </ul>
+    <div class="tier-quote">
+      Lifetime is the founders' price. Locked once at today's number, valid
+      for every release we ever ship. The thousand traders who pay it now
+      are the reason the next ten years of Antares get built.
+    </div>
+    <a href="#" class="tier-cta purple">Claim a Lifetime spot &rarr;</a>
+    <div class="tier-status"><span class="purple">&middot; One-time &middot; Forever</span></div>
+  </div>
+
+</div>
+</div>
+
+<div class="shell">
+<footer style="margin-top:80px">Antares &middot; Pricing symmetry demos &middot; pick A / B / C</footer>
+</div>
+
+</body>
+</html>
