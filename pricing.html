@@ -124,50 +124,6 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .tier-status .live{color:var(--c)}
 .tier-status .soon{color:var(--yellow)}
 
-.lifetime-counter{font-size:11px;color:var(--purple);letter-spacing:.16em;text-transform:uppercase;text-align:center;margin-top:12px;padding:8px;background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.18);border-radius:2px}
-.lifetime-counter b{color:#d4c5ff}
-
-/* ── ROADMAP ── */
-.roadmap-intro{font-size:13px;color:#7a7a82;line-height:1.85;max-width:680px;margin-bottom:24px}
-.roadmap{background:var(--card);border:1px solid var(--border);padding:0;border-radius:2px}
-.roadmap-row{display:grid;grid-template-columns:140px 1fr 120px;gap:24px;padding:22px 28px;border-bottom:1px solid #131316;align-items:start}
-.roadmap-row:last-child{border-bottom:none}
-.roadmap-row:hover{background:#0e0e10}
-.rm-version{font:700 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.16em;text-transform:uppercase}
-.rm-version.v2{color:var(--c)}
-.rm-version.v3{color:var(--yellow)}
-.rm-version.v4{color:var(--purple)}
-.rm-content h4{font-size:12px;color:#bbb;letter-spacing:.04em;margin-bottom:8px;font-weight:700}
-.rm-content ul{list-style:none;padding:0;font-size:11px;color:#7a7a82;line-height:1.85}
-.rm-content ul li{padding-left:14px;position:relative}
-.rm-content ul li::before{content:'·';position:absolute;left:4px;color:#3a3a40;font-weight:700}
-.rm-eta{font-size:10px;color:#5a5a62;letter-spacing:.14em;text-transform:uppercase;text-align:right;font-weight:600}
-
-/* ── WAITLIST ── */
-.waitlist{margin:48px 0;padding:48px 36px;background:var(--card);border:1px solid var(--border);border-radius:2px;text-align:center;position:relative;overflow:hidden}
-.waitlist::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none}
-.waitlist-eyebrow{font:600 10px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:14px;position:relative}
-.waitlist h2{font:400 40px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:12px;position:relative}
-.waitlist h2 span{color:var(--c)}
-.waitlist p{font-size:12px;color:#7a7a82;line-height:1.75;margin-bottom:28px;position:relative;max-width:520px;margin-left:auto;margin-right:auto}
-.waitlist-form{display:flex;gap:8px;max-width:480px;margin:0 auto;position:relative;flex-wrap:wrap}
-.waitlist-form input{flex:1;min-width:200px;padding:14px 16px;background:#0a0a0c;border:1px solid var(--border);color:#eaeaea;font:600 12px/1 'IBM Plex Mono',monospace;letter-spacing:.04em;transition:border-color .25s;border-radius:2px}
-.waitlist-form input:focus{outline:none;border-color:var(--c);box-shadow:0 0 0 1px var(--c)}
-.waitlist-form input::placeholder{color:#3a3a40}
-.waitlist-form button{padding:14px 28px;background:var(--c);color:var(--bg);font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;border:none;cursor:pointer;border-radius:2px;transition:transform .2s,box-shadow .2s}
-.waitlist-form button:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
-.waitlist-perks{display:flex;justify-content:center;gap:24px;margin-top:24px;flex-wrap:wrap;font-size:10px;color:#5a5a62;letter-spacing:.14em;text-transform:uppercase;position:relative}
-.waitlist-perks span::before{content:'✓ ';color:var(--c)}
-
-/* ── PRICING FAQ ── */
-.qa{margin-bottom:18px;background:var(--card);border:1px solid var(--border);padding:22px 26px;border-radius:2px}
-.qa h3{font-size:12.5px;color:var(--c);letter-spacing:.06em;margin-bottom:10px;font-weight:700}
-.qa p{font-size:11.5px;color:#7a7a82;line-height:1.85;margin-bottom:8px}
-.qa p:last-child{margin-bottom:0}
-.qa b{color:#aaa;font-weight:600}
-.qa a{color:var(--c);text-decoration:none}
-.qa a:hover{text-decoration:underline}
-
 /* ── CTA FINAL ── */
 .cta-final{margin:64px 0 32px;padding:64px 32px;border:1px solid var(--border);background:var(--card);text-align:center;position:relative;overflow:hidden}
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,229,176,.04) 0%,transparent 70%);pointer-events:none}
@@ -186,10 +142,6 @@ footer span{color:var(--c)}
 @media(max-width:980px){
   .tiers{grid-template-columns:1fr;gap:14px}
   .tier-tagline{min-height:auto}
-  .roadmap-row{grid-template-columns:1fr;gap:8px}
-  .rm-eta{text-align:left}
-  .waitlist-form{flex-direction:column}
-  .waitlist-form input,.waitlist-form button{width:100%}
 }
 
 /* ── Solana Pay checkout modal ───────────────────────────────────────────── */
@@ -259,7 +211,7 @@ footer span{color:var(--c)}
 
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
-  <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html" class="active">Pricing</a><a href="./faq.html">FAQ</a></div>
+  <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html" class="active">Pricing</a><a href="./faq.html">Q&amp;A</a></div>
   <a href="./install.html" class="nav-cta">Install &rarr;</a>
 </nav></header><main>
 
@@ -338,105 +290,8 @@ footer span{color:var(--c)}
       <li>Name in Sentinel Hall of Fame</li>
     </ul>
     <button class="tier-cta purple" id="cta-lifetime" data-tier="lifetime" type="button">Claim a Lifetime spot &rarr;</button>
-    <div class="lifetime-counter"><b>1000</b> spots opening at launch</div>
   </div>
 
-</div>
-
-<div class="section-label"><span>What ships when</span></div>
-
-<p class="roadmap-intro">Pro v1 launches with the features listed above &mdash; nothing we haven&rsquo;t already built. Everything below is the public roadmap. Lifetime supporters get all of it included; 30-day pass holders get whatever&rsquo;s shipped during their active window.</p>
-
-<div class="roadmap">
-
-  <div class="roadmap-row">
-    <div class="rm-version v2">Pro v2</div>
-    <div class="rm-content">
-      <h4>Real-time alerts &amp; Telegram</h4>
-      <ul>
-        <li>Email magic-link login (no password, no signup form)</li>
-        <li>Email alerts: rug detected on tokens you&rsquo;ve scanned, large holder dumps, score drops below threshold</li>
-        <li>Telegram bot integration (one-line connect)</li>
-        <li>Configurable alert rules per token</li>
-      </ul>
-    </div>
-    <div class="rm-eta">~July 2026</div>
-  </div>
-
-  <div class="roadmap-row">
-    <div class="rm-version v3">Pro v3</div>
-    <div class="rm-content">
-      <h4>Charts, push, smart money</h4>
-      <ul>
-        <li>Token price graph (7-day rolling, in-overlay)</li>
-        <li>Native Chrome push notifications</li>
-        <li>Smart-money flow basics (which tracked wallets touched this token)</li>
-        <li>Cross-platform sync (scan history follows you across devices)</li>
-      </ul>
-    </div>
-    <div class="rm-eta">~Aug-Sep 2026</div>
-  </div>
-
-  <div class="roadmap-row">
-    <div class="rm-version v4">Pro v4</div>
-    <div class="rm-content">
-      <h4>Portfolio &amp; multichain</h4>
-      <ul>
-        <li>Wallet portfolio tracker (paste a Solana address, get continuous risk monitoring on holdings)</li>
-        <li>P&amp;L per token with realised vs paper</li>
-        <li>Multichain expansion (Base, BSC) &mdash; depends on demand</li>
-        <li>API access for power users (separate $199/mo B2B tier)</li>
-      </ul>
-    </div>
-    <div class="rm-eta">~Oct-Nov 2026</div>
-  </div>
-
-</div>
-
-<!-- WAITLIST -->
-<section class="waitlist" id="waitlist">
-  <div class="waitlist-eyebrow">Get early access</div>
-  <h2>Join the <span>Pro waitlist</span>.</h2>
-  <p>Reserve your spot before public launch. Waitlist members get a one-time launch discount, first access to Lifetime spots (1000 total), and the founder badge if they upgrade in the first 7 days.</p>
-  <form class="waitlist-form" action="https://api.antares-website.vercel.app/api/waitlist" method="POST" id="waitlist-form">
-    <input type="email" name="email" placeholder="you@degen.sol" required autocomplete="email" aria-label="Email address">
-    <button type="submit">Reserve &rarr;</button>
-  </form>
-  <div class="waitlist-perks">
-    <span>One-time launch discount</span>
-    <span>First-pick on 1000 Lifetime spots</span>
-    <span>No spam, no list selling</span>
-  </div>
-</section>
-
-<div class="section-label"><span>Pricing FAQ</span></div>
-
-<div class="qa"><h3>What does Free actually include?</h3>
-<p>The verdict, the score, and the 50 daily scans &mdash; nothing more. SAFE / CAUTION / DANGER / RUG label, 1000-point score under the hood, and the basic checks you see in the overlay (Sell, Mint, Freeze, LP, Liquidity). The deep-dive layers &mdash; AI Summary, Critical Flags panel, Full Analysis page (Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection) &mdash; are Pro features. Free is the taste-test. Pro is the trading tool.</p>
-</div>
-
-<div class="qa"><h3>Why is Free so minimal?</h3>
-<p>Because we&rsquo;re not running a charity. Free covers the cost of letting people sample the engine on a few tokens before they trust it with a payment. If you&rsquo;re trading new launches every day, the verdict alone isn&rsquo;t enough &mdash; you&rsquo;ll want to see <i>why</i> a token got flagged, the AI summary that translates the math, and the full holder/insider analysis. Those features cost real compute and external API quota to deliver, so they&rsquo;re paid. $24.99 / 30 days for unlimited everything is genuinely cheap if your tooling is part of your P&amp;L.</p>
-</div>
-
-<div class="qa"><h3>Why 50 scans per day specifically?</h3>
-<p>50 scans covers a full research session for most users. The cap exists to mark the line between casual research and active trading at scale: enough to vet a session of new launches without ever paying us, but if your edge depends on this tooling all day every day, $24.99 / 30 days for unlimited is the obvious move.</p>
-</div>
-
-<div class="qa"><h3>Why announce Pro now if it doesn&rsquo;t exist yet?</h3>
-<p>Two reasons. First, transparency &mdash; you should know on day one what the business model is, not discover it in a surprise update. Second, the waitlist gives early supporters a price advantage that wouldn&rsquo;t be possible after public launch. Pro v1 launches in June 2026 with only the features listed above &mdash; we won&rsquo;t bill anyone for vapor.</p>
-</div>
-
-<div class="qa"><h3>What does Lifetime actually mean?</h3>
-<p>Pay $149.99 once (USDC or SOL, your call), get every Pro feature for as long as Antares exists, including everything in Pro v2, v3, v4 (alerts, charts, push, smart-money, portfolio tracker). Lifetime is capped at 1000 supporters &mdash; once full, the 30-day pass is the only option. Lifetime members also get a private Discord channel, founder badge, and roadmap vote.</p>
-</div>
-
-<div class="qa"><h3>Can I get a refund?</h3>
-<p>30-day Pro pass: yes, within 7 days if you haven&rsquo;t actively used the Pro features. Lifetime: yes, within 30 days. After that, Lifetime is non-refundable because the spot is removed from the 1000-cap inventory. Refunds are processed manually by sending USDC back to the wallet that paid &mdash; we use the on-chain transaction signature as the link, never an email or stored PII. Email <a href="mailto:lennypierrepro@gmail.com">lennypierrepro@gmail.com</a> with the tx signature to request a refund.</p>
-</div>
-
-<div class="qa"><h3>Will there be student / underdog pricing?</h3>
-<p>Yes. Verifiable students and developers contributing to open source get 50% off Pro Monthly. Reach out via the waitlist with your situation and we&rsquo;ll set it up.</p>
 </div>
 
 <div class="cta-final">
@@ -446,7 +301,7 @@ footer span{color:var(--c)}
 </div>
 
 </main></div>
-<footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">FAQ</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 
 <!-- ── Solana Pay checkout modal ────────────────────────────────────────── -->
 <div class="pay-overlay" id="pay-overlay" role="dialog" aria-labelledby="pay-title" aria-modal="true">
@@ -492,22 +347,6 @@ footer span{color:var(--c)}
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" crossorigin="anonymous"></script>
 
 <script>
-// ── Waitlist form handler — graceful degradation ─────────────────────────────
-document.getElementById('waitlist-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var email = this.email.value.trim();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    this.email.style.borderColor = '#ff5f5f';
-    return;
-  }
-  try {
-    var stored = JSON.parse(localStorage.getItem('antares_waitlist') || '[]');
-    if (stored.indexOf(email) === -1) stored.push(email);
-    localStorage.setItem('antares_waitlist', JSON.stringify(stored));
-  } catch(_) {}
-  this.innerHTML = '<div style="color:#00e5b0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-align:center;padding:14px;width:100%">&check; You&rsquo;re on the list. We&rsquo;ll email you at launch.</div>';
-});
-
 // ── Solana Pay checkout flow ─────────────────────────────────────────────────
 //
 // User picks a tier → modal opens defaulted to USDC → optional toggle to SOL
@@ -519,8 +358,8 @@ document.getElementById('waitlist-form').addEventListener('submit', function(e) 
 // /api/payment-status flips to "confirmed" → modal shows success state.
 //
 // Failure paths, all surfaced visibly:
-//   - 503 checkout_not_configured (env vars unset)  → "Coming soon", waitlist
-//                                                       form below remains usable
+//   - 503 checkout_not_configured (env vars unset)  → "Coming soon", surface
+//                                                       a clear message inline
 //   - 502 sol_rate_unavailable (Jupiter down)       → flip back to USDC + warn
 //   - intent expired (30-min TTL)                   → "Expired", offer retry
 //   - network failure                               → "Network error", retry
