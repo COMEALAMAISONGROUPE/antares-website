@@ -435,6 +435,37 @@ footer span{color:var(--c)}
      changes underneath users on a future CDN release. -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" crossorigin="anonymous"></script>
 
+<!-- Solana web3 SDK + SPL token helpers — loaded as ESM modules so we can
+     build a proper transaction in-page and sign with Phantom/Solflare/
+     Backpack via their injected `signAndSendTransaction` API. The
+     previous "set window.location.href = solana:..." trick relied on
+     the OS protocol-handler for `solana:` URLs — desktop browsers don't
+     route those reliably to extension wallets, which is why "Pay with
+     Phantom" appeared dead. This direct-API approach is the documented
+     way to integrate with Solana wallets on desktop.
+
+     Pinned versions; ?bundle returns a single self-contained module so
+     we don't pull a dependency tree on each request. ~200KB total. -->
+<script type="module">
+  import {
+    Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL,
+  } from 'https://esm.sh/@solana/web3.js@1.95.4?bundle';
+  import {
+    getAssociatedTokenAddress, createTransferCheckedInstruction,
+  } from 'https://esm.sh/@solana/spl-token@0.4.6?bundle';
+  // Stash on window so the inline (non-module) script below can use it.
+  // We can't access ES module imports from a classic script otherwise.
+  window.__antaresSolana = {
+    Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL,
+    getAssociatedTokenAddress, createTransferCheckedInstruction,
+    ready: true,
+  };
+  // Fire a custom event so the inline script knows the libs landed —
+  // useful when the user clicks "Pay" before the modules finish
+  // downloading on a slow connection.
+  window.dispatchEvent(new CustomEvent('antares:solana-ready'));
+</script>
+
 <script>
 // ── Solana Pay checkout flow ─────────────────────────────────────────────────
 //
@@ -507,6 +538,10 @@ footer span{color:var(--c)}
 
   var pollTimer = null;
   var currentReference = null;
+  // Full intent object — needed by payWithWallet() to build the
+  // transaction (recipient, amount, splTokenMint, reference). Stays
+  // in sync with currentReference: set together, cleared together.
+  var currentIntent = null;
   // Persists across re-opens so the user's last choice is remembered for
   // the rest of the session — but defaults to USDC every fresh load to
   // avoid surprising users who don't know SOL pricing fluctuates.
@@ -530,6 +565,7 @@ footer span{color:var(--c)}
     overlay.classList.remove('open');
     if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
     currentReference = null;
+    currentIntent = null;
     txEl.textContent = '';
     licenseRow.style.display = 'none';
     licenseKeyEl.textContent = '—';
@@ -688,6 +724,106 @@ footer span{color:var(--c)}
     return null;
   }
 
+  // Wait helper — the @solana/web3.js + spl-token modules load via
+  // ESM imports above. On a slow connection the user might click the
+  // pay button before they're ready. We poll for ~3s, then bail.
+  function waitForSolanaSDK() {
+    return new Promise(function(resolve, reject) {
+      if (window.__antaresSolana?.ready) return resolve(window.__antaresSolana);
+      var elapsed = 0;
+      var interval = setInterval(function() {
+        if (window.__antaresSolana?.ready) {
+          clearInterval(interval);
+          resolve(window.__antaresSolana);
+        } else if (elapsed > 4000) {
+          clearInterval(interval);
+          reject(new Error('Solana SDK failed to load — try the QR code instead.'));
+        }
+        elapsed += 100;
+      }, 100);
+    });
+  }
+
+  // Get the active wallet provider. Phantom, Solflare, Backpack all
+  // expose the same Solana wallet-provider API — `connect()`,
+  // `publicKey`, `signAndSendTransaction(tx)`. We pick the first one
+  // we find. Backpack puts its provider on `window.backpack.solana`,
+  // not `window.backpack` directly.
+  function getWalletProvider() {
+    if (window.solana && window.solana.isPhantom) return window.solana;
+    if (window.solflare && window.solflare.isSolflare) return window.solflare;
+    if (window.backpack && window.backpack.solana) return window.backpack.solana;
+    if (window.solana) return window.solana; // generic
+    return null;
+  }
+
+  // ── The actual pay-with-wallet flow ──────────────────────────────────────
+  // Builds a real Solana transaction matching the intent's recipient +
+  // amount + token, attaches the unique reference key as a non-signer
+  // account so the server-side scanner can find this tx by reference,
+  // then asks the wallet to sign-and-send via its injected provider.
+  //
+  // Three error paths the user can hit:
+  //   1. SDK not loaded yet (slow connection)        → polite retry msg
+  //   2. User rejects the signing prompt in wallet   → "Cancelled" status
+  //   3. RPC blockhash fetch fails (mainnet down)    → "Try again" status
+  async function payWithWallet(intent) {
+    var sdk = await waitForSolanaSDK();
+    var provider = getWalletProvider();
+    if (!provider) throw new Error('No wallet detected. Use the QR code with a mobile wallet.');
+
+    // Connect — pops the wallet's permission prompt the first time;
+    // silent (returns publicKey immediately) on subsequent clicks.
+    if (!provider.publicKey) {
+      try { await provider.connect(); }
+      catch (e) { throw new Error('Wallet connection cancelled.'); }
+    }
+    var sender = provider.publicKey;
+    if (!sender) throw new Error('Could not get wallet public key.');
+
+    var recipient = new sdk.PublicKey(intent.recipient);
+    var reference = new sdk.PublicKey(intent.reference);
+
+    // Public mainnet-beta RPC for the blockhash. This is one cheap GET
+    // — Solana's hosted RPC handles it fine. For broadcasting the tx
+    // we hand off to the wallet, which uses its own RPC, so we don't
+    // hit our own quota or need a Helius key here.
+    var conn = new sdk.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
+    var bh = await conn.getLatestBlockhash('confirmed');
+    var tx = new sdk.Transaction({ feePayer: sender, recentBlockhash: bh.blockhash });
+
+    if (intent.splTokenMint) {
+      // ── USDC (SPL token) transfer path ─────────────────────────────────
+      var mint = new sdk.PublicKey(intent.splTokenMint);
+      var senderAta = await sdk.getAssociatedTokenAddress(mint, sender);
+      var recipientAta = await sdk.getAssociatedTokenAddress(mint, recipient);
+      // USDC has 6 decimals — multiply UI amount by 10^6 to get raw units.
+      var rawAmount = Math.round(Number(intent.amount) * 1e6);
+      var ix = sdk.createTransferCheckedInstruction(
+        senderAta, mint, recipientAta, sender, rawAmount, 6,
+      );
+      // Solana Pay convention: include the unique reference as a
+      // read-only non-signer account on at least one instruction so
+      // the merchant's reference-scan finds the tx.
+      ix.keys.push({ pubkey: reference, isSigner: false, isWritable: false });
+      tx.add(ix);
+    } else {
+      // ── Native SOL transfer path ───────────────────────────────────────
+      var lamports = Math.round(Number(intent.amount) * sdk.LAMPORTS_PER_SOL);
+      var solIx = sdk.SystemProgram.transfer({
+        fromPubkey: sender, toPubkey: recipient, lamports: lamports,
+      });
+      solIx.keys.push({ pubkey: reference, isSigner: false, isWritable: false });
+      tx.add(solIx);
+    }
+
+    // Sign + broadcast. Wallet shows its built-in signing UI here.
+    // Returns the on-chain tx signature once Phantom's RPC accepts it.
+    var result = await provider.signAndSendTransaction(tx);
+    var signature = (result && (result.signature || result)) || '';
+    return signature;
+  }
+
   function setupWalletButton(payUrl) {
     var btn = document.getElementById('pay-wallet-btn');
     var dot = btn.querySelector('.pay-wallet-dot');
@@ -699,13 +835,36 @@ footer span{color:var(--c)}
       orEl.classList.add('show');
       dot.style.background = wallet.color;
       text.textContent = 'Pay with ' + wallet.name;
-      btn.onclick = function() {
-        // Setting window.location triggers the wallet extension's
-        // `solana:` URL handler, which opens its signing dialog with
-        // recipient + amount + reference + memo all pre-filled. The
-        // user just clicks Approve.
-        try { window.location.href = payUrl; }
-        catch (_) { window.open(payUrl, '_blank'); }
+      btn.onclick = async function() {
+        // We need access to the current intent object, not just the
+        // payUrl — the wallet flow builds its own tx. Read it back
+        // from the modal state via currentIntent (closure variable
+        // set in the outer payment flow).
+        if (!currentIntent) return;
+        btn.disabled = true;
+        var origText = text.textContent;
+        text.textContent = 'Open your wallet…';
+        try {
+          var sig = await payWithWallet(currentIntent);
+          text.textContent = 'Sent — confirming…';
+          // Don't block the existing /api/payment-status poll; it'll
+          // pick up the on-chain tx via the reference key in 5-15s.
+          // Print the signature in the existing tx area so the user
+          // can verify on Solscan if curious.
+          if (sig) {
+            txEl.innerHTML = '<a href="https://solscan.io/tx/' + sig + '" target="_blank" rel="noopener noreferrer" style="color:var(--c)">tx ' + sig.slice(0,6) + '…' + sig.slice(-6) + '</a>';
+          }
+        } catch (e) {
+          text.textContent = origText;
+          btn.disabled = false;
+          var msg = (e && e.message) || 'Wallet payment failed.';
+          // Phantom's user-rejection error has a specific code (4001).
+          if (e && (e.code === 4001 || /reject|cancel|denied/i.test(msg))) {
+            setStatus('waiting', 'Wallet payment cancelled. Try again or use the QR code.');
+          } else {
+            setStatus('warn', msg);
+          }
+        }
       };
     } else {
       btn.classList.remove('detected');
@@ -758,6 +917,7 @@ footer span{color:var(--c)}
     licenseRow.style.display = 'none';
     if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
     currentReference = null;
+    currentIntent = null;
 
     var body = { tier: tier, token: token, email: email };
     // Pass install_id when the user came from the extension's quota
@@ -797,6 +957,7 @@ footer span{color:var(--c)}
         // Hydrate the modal with the intent we just minted
         var intent = r.body;
         currentReference = intent.reference;
+        currentIntent = intent;
         titleEl.textContent = tier === 'lifetime' ? 'Antares Lifetime' : 'Antares Pro · 30 days';
         renderAmount(intent);
         recipientEl.textContent = intent.recipient;
