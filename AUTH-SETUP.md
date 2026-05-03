@@ -8,6 +8,26 @@ on-boarding a new admin who needs to keep the lights on.
 > `SESSION_SECRET` on the `antares-extension` Vercel project. Every
 > other moving piece is already wired and verified live.
 
+## Fastest path — one command
+
+Run the bundled bootstrap script from the **antares-extension** repo:
+
+```bash
+cd /path/to/antares-extension
+bash /path/to/antares-website/setup-auth.sh
+```
+
+It:
+1. Generates a 32-byte random `SESSION_SECRET`
+2. Sets it on the production Vercel deployment via `vercel env add`
+3. Triggers a redeploy
+4. Smoke-tests `/api/auth/signup` to confirm the fix landed
+
+Total time: ~90 seconds (mostly the Vercel build). One browser-based
+`vercel login` may be required the first time. The rest is automatic.
+
+If you'd rather do it by hand, follow §2 below.
+
 ---
 
 ## 1. The trust model — "we have no third party, how do we know they paid?"
