@@ -813,12 +813,20 @@ footer span{color:var(--c)}
     var recipient = new sdk.PublicKey(intent.recipient);
     var reference = new sdk.PublicKey(intent.reference);
 
-    // Public mainnet-beta RPC for the blockhash. This is one cheap GET
-    // — Solana's hosted RPC handles it fine. For broadcasting the tx
-    // we hand off to the wallet, which uses its own RPC, so we don't
-    // hit our own quota or need a Helius key here.
-    var conn = new sdk.Connection('https://api.mainnet-beta.solana.com', 'confirmed');
-    console.log('[antares-pay] fetching recent blockhash from mainnet-beta…');
+    // Browser-CORS-friendly Solana RPC for the blockhash. We can't use
+    // `api.mainnet-beta.solana.com` from a browser — it returns
+    // 403 "Access forbidden" on cross-origin POSTs (Solana's official
+    // public RPC has been rate-limited / abuse-protected since 2024
+    // and effectively excludes browser clients). publicnode.com runs
+    // a free public Solana RPC with `Access-Control-Allow-Origin: *`,
+    // no auth required, and is the de-facto standard for client-side
+    // dApps that don't ship their own Helius key.
+    //
+    // We only call getLatestBlockhash here — the actual tx broadcast
+    // is handled by the wallet's own RPC, so even if publicnode is slow
+    // we only pay one cheap GET per pay attempt.
+    var conn = new sdk.Connection('https://solana-rpc.publicnode.com', 'confirmed');
+    console.log('[antares-pay] fetching recent blockhash from publicnode RPC…');
     var bh;
     try { bh = await conn.getLatestBlockhash('confirmed'); }
     catch (e) {
