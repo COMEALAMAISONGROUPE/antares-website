@@ -53,10 +53,12 @@ nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e
 nav .links{display:flex;gap:24px}
 nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s,transform .2s}
 nav .links a:hover,nav .links a.active{color:var(--c);transform:translateY(-1px)}
-nav .nav-cta{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--bg);background:var(--c);padding:11px 20px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s;white-space:nowrap}
+nav .nav-actions{display:flex;align-items:center;gap:10px}
+nav .nav-cta,nav .nav-account{display:inline-flex;align-items:center;justify-content:center;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:11px 20px;border:1px solid;transition:.25s;white-space:nowrap;min-width:140px}
+nav .nav-cta{color:var(--bg);background:var(--c);border-color:var(--c)}
 nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
-nav .nav-account{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:11px 14px;border:1px solid transparent;transition:color .25s,border-color .25s;white-space:nowrap}
-nav .nav-account:hover{color:var(--c);border-color:rgba(0,229,176,.18)}
+nav .nav-account{color:#888;background:transparent;border-color:#2a2a30}
+nav .nav-account:hover{color:var(--c);border-color:var(--c);background:rgba(0,229,176,.04)}
 
 /* ── SCROLL REVEAL ── */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
@@ -238,8 +240,7 @@ footer .foot-links a:hover{color:#5a5a62}
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html">Pricing</a><a href="./faq.html">Q&amp;A</a></div>
-  <a href="./auth.html" id="nav-account" class="nav-account">Log in</a>
-  <a href="./install.html" class="nav-cta">Install &rarr;</a>
+  <div class="nav-actions"><a href="./auth.html" id="nav-account" class="nav-account">Log in</a><a href="./install.html" class="nav-cta">Install &rarr;</a></div>
       </nav></header><main id="main-content">
 
 <!-- ═══════ HERO ═══════ -->
