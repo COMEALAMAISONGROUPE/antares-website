@@ -413,6 +413,37 @@ footer .foot-links a:hover{color:var(--c)}
     });
   }
 
+  // Push the session JWT to the extension via the bridge so its scan
+  // calls can authenticate without depending on third-party cookies (which
+  // Chrome blocks for chrome-extension:// → API-origin requests in many
+  // configurations). The bridge writes the token to chrome.storage.local;
+  // background.ts reads it on every scan and sends X-Antares-Session.
+  //
+  // Returns a promise that resolves when the token is stored (or skips
+  // silently when no extension is installed). Best-effort — failure here
+  // doesn't block /account.html rendering.
+  function pushSessionTokenToExtension() {
+    var marker = document.querySelector('meta[name="antares-extension-installed"]');
+    if (!marker) return Promise.resolve(); // no extension on this page
+    return fetch(API + '/api/auth/sync-token', {
+      method: 'POST',
+      credentials: 'include'
+    })
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(body) {
+        if (!body || !body.ok || typeof body.token !== 'string') return;
+        // Bridge runs in this page's context — postMessage with the page
+        // origin as targetOrigin, then the bridge picks it up and writes
+        // chrome.storage.local. We don't await the bridge ack: writes are
+        // ~20ms, the extension's next scan call will read whatever's stored.
+        window.postMessage(
+          { type: 'antares:set-session-token', token: body.token },
+          window.location.origin
+        );
+      })
+      .catch(function() { /* network blip — extension keeps old token, fine */ });
+  }
+
   // 1. Check session
   fetch(API + '/api/auth/me', { credentials: 'include' })
     .then(function(r) {
@@ -432,6 +463,11 @@ footer .foot-links a:hover{color:var(--c)}
       emailEl.textContent = body.email;
       loadingEl.style.display = 'none';
       viewEl.style.display = 'block';
+
+      // Sync the session token to the extension (best-effort, runs in
+      // parallel with license fetch — license rendering doesn't depend
+      // on whether the bridge ack came back).
+      void pushSessionTokenToExtension();
 
       // 2. Fetch licenses (session cookie auths the call)
       return fetch(API + '/api/account-licenses', {
@@ -455,30 +491,34 @@ footer .foot-links a:hover{color:var(--c)}
 
   // 3. Logout
   //
-  // We probe for the extension's install_id and pass it via X-Antares-Install
-  // so the API can drop dev-allowlisted installs back to the Free tier as
-  // part of the logout flow. This is what makes "I'm signed out → I'm Free
-  // again" actually true server-side for the founder/QA installs — the
-  // dev-tier override (Options dropdown) only stays armed while the install
-  // is bound to a dev-allowlisted email; logout unbinds it. Real customers
-  // are untouched (their email isn't on the dev allowlist).
+  // Clear both the API session cookie AND the bridge-stored session
+  // token in the extension. Without the second step the extension would
+  // keep a stale token in chrome.storage.local and continue authenticating
+  // as the just-logged-out user on its next scan — exactly the
+  // "overlay isn't synced with the website" bug.
   logoutBtn.addEventListener('click', function() {
-    probeExtensionInstallId().then(function(installId) {
-      var headers = {};
-      if (installId) headers['X-Antares-Install'] = installId;
-      fetch(API + '/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: headers
+    // Tell the bridge to drop the stored token before we navigate away,
+    // since the bridge only listens while THIS page is alive. No need
+    // to wait for the ack — the chrome.storage write is synchronous-ish
+    // and finishes before the page tears down.
+    var marker = document.querySelector('meta[name="antares-extension-installed"]');
+    if (marker) {
+      window.postMessage(
+        { type: 'antares:clear-session-token' },
+        window.location.origin
+      );
+    }
+    fetch(API + '/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include'
+    })
+      .then(function() {
+        try { localStorage.removeItem('antares_buyer_email'); } catch(_) {}
+        window.location.href = './auth.html';
       })
-        .then(function() {
-          try { localStorage.removeItem('antares_buyer_email'); } catch(_) {}
-          window.location.href = './auth.html';
-        })
-        .catch(function() {
-          window.location.href = './auth.html';
-        });
-    });
+      .catch(function() {
+        window.location.href = './auth.html';
+      });
   });
 })();
 </script>
