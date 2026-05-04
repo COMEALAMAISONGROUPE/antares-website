@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Antares — your Pro / Lifetime licenses, with the email + password you signed up with.">
+<meta name="description" content="Antares — your Pro / Yearly licenses, with the email + password you signed up with.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="canonical" href="https://antares-website.vercel.app/account">
 <title>Account — Antares</title>
@@ -50,6 +50,7 @@ h1 span{color:var(--c)}
 .tier-banner.free{border-color:#2a2a30;color:#888}
 .tier-banner.pro{border-color:rgba(0,229,176,.5);color:var(--c);box-shadow:0 0 0 1px rgba(0,229,176,.1),0 12px 32px rgba(0,229,176,.06)}
 .tier-banner.lifetime{border-color:rgba(167,139,250,.5);color:var(--purple);box-shadow:0 0 0 1px rgba(167,139,250,.1),0 12px 32px rgba(167,139,250,.06)}
+.tier-banner.yearly{border-color:rgba(167,139,250,.5);color:var(--purple);box-shadow:0 0 0 1px rgba(167,139,250,.1),0 12px 32px rgba(167,139,250,.06)}
 .tier-banner-label{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:#5a5a62;margin-bottom:6px}
 .tier-banner-name{font:400 44px/.95 'Bebas Neue',sans-serif;letter-spacing:.06em;color:currentColor;margin-bottom:6px}
 .tier-banner-detail{font-size:11.5px;color:#9a9aa2;letter-spacing:.04em;line-height:1.6}
@@ -77,10 +78,12 @@ h1 span{color:var(--c)}
 .licenses{display:flex;flex-direction:column;gap:14px}
 .lic{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:20px;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto auto;gap:6px 16px;align-items:start}
 .lic.lifetime{border-color:rgba(167,139,250,.35);box-shadow:0 0 0 1px rgba(167,139,250,.1)}
+.lic.yearly{border-color:rgba(167,139,250,.35);box-shadow:0 0 0 1px rgba(167,139,250,.1)}
 .lic.pro{border-color:rgba(0,229,176,.35);box-shadow:0 0 0 1px rgba(0,229,176,.1)}
 .lic-tier{font:700 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;padding:4px 8px;border-radius:2px;width:fit-content;grid-column:1}
 .lic-tier.pro{color:var(--c);border:1px solid rgba(0,229,176,.4);background:rgba(0,229,176,.06)}
 .lic-tier.lifetime{color:var(--purple);border:1px solid rgba(167,139,250,.4);background:rgba(167,139,250,.06)}
+.lic-tier.yearly{color:var(--purple);border:1px solid rgba(167,139,250,.4);background:rgba(167,139,250,.06)}
 .lic-key{font:700 14px/1.3 'IBM Plex Mono',monospace;color:#eaeaea;letter-spacing:.12em;word-break:break-all;user-select:all;-webkit-user-select:all;grid-column:1}
 .lic-meta{font-size:10px;color:#5a5a62;letter-spacing:.04em;line-height:1.6;grid-column:1}
 .lic-meta b{color:#9a9aa2;font-weight:600}
@@ -186,23 +189,28 @@ footer .foot-links a:hover{color:var(--c)}
   // ── Tier resolution ──────────────────────────────────────────────────
   // The extension reads tier from a different key (install_id), but the
   // *license-of-record* — what the user actually paid for — lives on
-  // their email. Lifetime trumps Pro trumps Free. Pro is "active" only
-  // if it has at least one unexpired license. Once we know the verdict
-  // we light up the banner.
+  // their email. Priority: Lifetime (grandfathered) > Yearly > Pro > Free.
+  // Pro / Yearly are "active" only if they have at least one unexpired
+  // license. Once we know the verdict we light up the banner.
   function resolveTier(list) {
     var now = Date.now();
     var hasLifetime = false;
+    var activeYearlyExpiry = 0;
     var activeProExpiry = 0;
     list.forEach(function(l) {
       if (l.tier === 'lifetime') hasLifetime = true;
-      else if (l.tier === 'monthly' || l.tier === 'pro') {
+      else if (l.tier === 'yearly') {
+        var expY = Number(l.expiresAt) || 0;
+        if (expY > now && expY > activeYearlyExpiry) activeYearlyExpiry = expY;
+      } else if (l.tier === 'monthly' || l.tier === 'pro') {
         var exp = Number(l.expiresAt) || 0;
         if (exp > now && exp > activeProExpiry) activeProExpiry = exp;
       }
     });
-    if (hasLifetime) return { tier: 'lifetime', activeProExpiry: 0 };
-    if (activeProExpiry > 0) return { tier: 'pro', activeProExpiry: activeProExpiry };
-    return { tier: 'free', activeProExpiry: 0 };
+    if (hasLifetime) return { tier: 'lifetime', activeProExpiry: 0, activeYearlyExpiry: 0 };
+    if (activeYearlyExpiry > 0) return { tier: 'yearly', activeProExpiry: 0, activeYearlyExpiry: activeYearlyExpiry };
+    if (activeProExpiry > 0) return { tier: 'pro', activeProExpiry: activeProExpiry, activeYearlyExpiry: 0 };
+    return { tier: 'free', activeProExpiry: 0, activeYearlyExpiry: 0 };
   }
 
   function renderTier(verdict) {
@@ -211,20 +219,26 @@ footer .foot-links a:hover{color:var(--c)}
     var detailEl = document.getElementById('tier-detail');
     var metaEl = document.getElementById('tier-meta');
 
-    bannerEl.classList.remove('free', 'pro', 'lifetime');
+    bannerEl.classList.remove('free', 'pro', 'yearly', 'lifetime');
     bannerEl.classList.add(verdict.tier);
 
     if (verdict.tier === 'lifetime') {
+      // Grandfathered legacy customers — they paid before the 2026-05
+      // rename and keep their forever pass.
       nameEl.textContent = 'Lifetime';
       detailEl.innerHTML = '<b>Every Pro feature, forever.</b> Includes every release we ship from here on out. Paid once, valid for the life of the product.';
       metaEl.innerHTML = '<b>Active</b><br>forever';
+    } else if (verdict.tier === 'yearly') {
+      nameEl.textContent = 'Yearly';
+      detailEl.innerHTML = '<b>Every Pro feature, for 1 year.</b> AI Summary, Critical Flags, Full Analysis page, scan history, priority cache and exports across all 7 supported platforms.';
+      metaEl.innerHTML = '<b>Renews</b><br>' + fmtDate(verdict.activeYearlyExpiry);
     } else if (verdict.tier === 'pro') {
       nameEl.textContent = 'Pro';
       detailEl.innerHTML = '<b>Unlimited scans &middot; full overlay.</b> AI Summary, Critical Flags, Full Analysis page, scan history, priority cache and exports across all 7 supported platforms.';
       metaEl.innerHTML = '<b>Renews</b><br>' + fmtDate(verdict.activeProExpiry);
     } else {
       nameEl.textContent = 'Free';
-      detailEl.innerHTML = '<b>50 scans per day &middot; no card on file.</b> The verdict, the score, the overlay across 7 platforms. Pay once on Solana to unlock the full engine.';
+      detailEl.innerHTML = '<b>Unlimited scans &middot; no card on file.</b> The verdict, the score, the overlay across 7 platforms. Upgrade to unlock AI Summary, Critical Flags and Full Analysis.';
       metaEl.innerHTML = '<b>Live now</b><br>across the extension';
     }
   }
@@ -264,19 +278,26 @@ footer .foot-links a:hover{color:var(--c)}
     });
   }
 
-  // Pick the "best" license to auto-link. Lifetime trumps Pro; among
-  // multiples of the same tier we pick the most recent. Skip already-
-  // redeemed licenses — re-redeeming them would be a no-op at best, an
-  // "already_redeemed" error at worst when the buyer's earlier install
-  // owns it.
+  // Pick the "best" license to auto-link. Priority Lifetime > Yearly > Pro.
+  // Among multiples of the same tier we pick the most recent. Skip
+  // already-redeemed licenses — re-redeeming them would be a no-op at
+  // best, an "already_redeemed" error at worst when the buyer's earlier
+  // install owns it.
   function pickBestUnredeemed(list) {
     var unredeemed = list.filter(function(l) { return !l.redeemed; });
     if (!unredeemed.length) return null;
     var lifetime = unredeemed.filter(function(l) { return l.tier === 'lifetime'; });
-    var pool = lifetime.length ? lifetime : unredeemed;
+    var yearly = unredeemed.filter(function(l) { return l.tier === 'yearly'; });
+    var pool = lifetime.length ? lifetime : (yearly.length ? yearly : unredeemed);
     // Most recent first
     pool.sort(function(a, b) { return (b.createdAt || 0) - (a.createdAt || 0); });
     return pool[0];
+  }
+
+  function tierLabel(tier) {
+    if (tier === 'lifetime') return 'Lifetime';
+    if (tier === 'yearly') return 'Yearly';
+    return 'Pro';
   }
 
   // Server-side redeem call. Same endpoint extension uses — keeps the
@@ -326,7 +347,7 @@ footer .foot-links a:hover{color:var(--c)}
       calloutEl.innerHTML =
         '<h3>&check; Antares extension detected</h3>' +
         'We found your installed extension. Click below to auto-redeem your ' +
-        '<b>' + (best.tier === 'lifetime' ? 'Lifetime' : 'Pro') + '</b> license to it &mdash; no copying or pasting required.' +
+        '<b>' + tierLabel(best.tier) + '</b> license to it &mdash; no copying or pasting required.' +
         '<div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">' +
           '<button type="button" id="auto-link-btn" style="background:var(--c);color:var(--bg);border:none;padding:11px 22px;font:700 11px/1 \'IBM Plex Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;border-radius:2px;cursor:pointer">Link to my extension &rarr;</button>' +
           '<span id="auto-link-status" style="font-size:11px;color:#7a7a82;letter-spacing:.04em"></span>' +
@@ -376,15 +397,20 @@ footer .foot-links a:hover{color:var(--c)}
     }
     resultsLabel.style.display = 'block';
     listEl.innerHTML = list.map(function(l) {
-      var tierLabel = l.tier === 'lifetime' ? 'Lifetime' : 'Pro · 30 days';
+      var rowLabel = l.tier === 'lifetime'
+        ? 'Lifetime'
+        : l.tier === 'yearly'
+          ? 'Yearly · 1 year'
+          : 'Pro · 30 days';
       var stateBadge = l.redeemed
         ? '<span class="badge redeemed">Redeemed</span>'
         : '<span class="badge unredeemed">Unredeemed</span>';
-      var expiryLine = l.tier === 'lifetime' ? '<b>Expires:</b> never'
+      var expiryLine = l.tier === 'lifetime'
+        ? '<b>Expires:</b> never'
         : '<b>Expires:</b> ' + fmtDate(l.expiresAt);
       return [
         '<div class="lic ' + l.tier + '">',
-          '<div class="lic-tier ' + l.tier + '">' + tierLabel + '</div>',
+          '<div class="lic-tier ' + l.tier + '">' + rowLabel + '</div>',
           '<div class="lic-key" id="key-' + escapeHtml(l.key) + '">' + escapeHtml(l.key) + '</div>',
           '<div class="lic-meta"><b>Issued:</b> ' + fmtDate(l.createdAt) + ' &middot; ',
             '<b>Paid:</b> $' + Number(l.amountUsd || 0).toFixed(2) + ' &middot; ',
