@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Antares anti-scam scanner for Solana — seven independent layers, one verdict, surfaced live in your overlay. Free 50 scans/day. Pro and Lifetime tiers paid direct in USDC or SOL, zero middleman.">
+<meta name="description" content="Antares anti-scam scanner for Solana — seven independent layers, one verdict, surfaced live in your overlay. Free unlimited scans. Pro and Yearly tiers paid direct in USDC or SOL, zero middleman.">
 <meta name="author" content="Antares">
 <link rel="canonical" href="https://antares-website.vercel.app/pricing">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antares-website.vercel.app/pricing">
 <meta property="og:title" content="Stop guessing at tokens — Antares pricing">
-<meta property="og:description" content="Seven independent scoring layers, one verdict, live in your overlay. Free 50/day, Pro for unlimited, Lifetime for the founders. USDC or SOL on-chain, zero middleman.">
+<meta property="og:description" content="Seven independent scoring layers, one verdict, live in your overlay. Free with unlimited scans, Pro for paid features, Yearly to lock in the best price. USDC or SOL on-chain, zero middleman.">
 <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@antaresantiscam">
 <meta name="twitter:title" content="Stop guessing at tokens — Antares pricing">
-<meta name="twitter:description" content="Seven layers, one verdict, live in your overlay. Free 50/day. Pro and Lifetime paid direct in USDC or SOL, zero middleman.">
+<meta name="twitter:description" content="Seven layers, one verdict, live in your overlay. Free with unlimited scans. Pro and Yearly paid direct in USDC or SOL, zero middleman.">
 <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -242,7 +242,7 @@ footer span{color:var(--c)}
   .pay-qr svg{width:148px;height:148px}
 }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Antares anti-scam scanner for Solana — seven independent scoring layers, one verdict, surfaced live in your overlay. Free 50 scans/day. Pro and Lifetime tiers paid direct in USDC or SOL, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Antares anti-scam scanner for Solana — seven independent scoring layers, one verdict, surfaced live in your overlay. Free with unlimited scans. Pro and Yearly tiers paid direct in USDC or SOL, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
 </head>
 <body>
 <div class="stripe" role="presentation" aria-hidden="true"></div>
@@ -317,25 +317,20 @@ footer span{color:var(--c)}
     <div class="tier-status"><span class="live">&middot; USDC or SOL &middot; on-chain</span></div>
   </div>
 
-  <!-- LIFETIME — only verifiable, honest claims. We dropped:
-       - "Reserved for first 1000 supporters" (no cap mechanism)
-       - "Sentinel Founder badge in overlay" (not implemented)
-       - "Private Discord channel" (doesn't exist yet)
-       - "Vote on roadmap priorities" (no voting mechanism)
-       - "Early access to every beta" (no beta program)
-       - "Direct line to the founder" (overstatement)
-       - "Name in Sentinel Hall of Fame" (no Hall of Fame page)
-       - "everything we ship in v2, v3, v4" (over-promise)
-       What's left is the actual, defensible value-prop: every Pro
-       feature for life, paid once on-chain, locked at today's price,
-       breaks even after ~6 monthly Pro renewals. -->
+  <!-- YEARLY — replaces the old "Lifetime" SKU as of 2026-05. The
+       founder's call: a 1-year subscription is the right product, not
+       a forever pass. Same paid features as Pro Monthly, billed annually
+       at a discount that breaks even after ~6 monthly Pro renewals.
+       Existing Lifetime customers from before the rename keep their
+       grandfathered tier; new buyers get a yearly that auto-downgrades
+       to Free at expiry unless renewed. -->
   <div class="tier lifetime">
-    <div class="tier-name">Lifetime</div>
+    <div class="tier-name">Yearly</div>
     <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
-    <div class="tier-period">one-time USDC or SOL payment &middot; forever</div>
-    <div class="tier-tagline">Pay once at $149.99. Every Pro feature for life. Cheaper than Pro after six monthly renewals.</div>
+    <div class="tier-period">USDC or SOL payment &middot; 1 year</div>
+    <div class="tier-tagline">Pay once at $149.99. Every Pro feature for a full year. Breaks even after six monthly renewals.</div>
     <ul class="tier-features">
-      <li class="bonus"><b>Everything in Pro, forever</b></li>
+      <li class="bonus"><b>Everything in Pro, for 1 year</b></li>
       <li><b>AI Summary</b> in overlay</li>
       <li><b>Critical Flags panel</b></li>
       <li><b>Full Analysis page</b></li>
@@ -345,11 +340,11 @@ footer span{color:var(--c)}
       <li>Priority cache (lower TTL)</li>
       <li>Export CSV / JSON</li>
       <li>No affiliate prompts</li>
-      <li>One-time payment, no renewal</li>
+      <li>One payment, 365 days of Pro</li>
     </ul>
-    <div class="tier-quote">Lifetime is the simplest math: pay once now, never pay again. Every Pro feature you have today, plus every Pro feature we ship after &mdash; yours for the life of the product.</div>
-    <button class="tier-cta purple" id="cta-lifetime" data-tier="lifetime" type="button">Claim a Lifetime spot &rarr;</button>
-    <div class="tier-status"><span class="purple">&middot; One-time &middot; Forever</span></div>
+    <div class="tier-quote">Yearly is the simplest math: pay once now, get every Pro feature for a full year. Cheaper than monthly after six months &mdash; and you can renew at the locked-in price when the year is up.</div>
+    <button class="tier-cta purple" id="cta-yearly" data-tier="yearly" type="button">Claim a Yearly spot &rarr;</button>
+    <div class="tier-status"><span class="purple">&middot; 1 year &middot; on-chain</span></div>
   </div>
 
 </div>
@@ -1071,7 +1066,9 @@ footer span{color:var(--c)}
         var intent = r.body;
         currentReference = intent.reference;
         currentIntent = intent;
-        titleEl.textContent = tier === 'lifetime' ? 'Antares Lifetime' : 'Antares Pro · 30 days';
+        titleEl.textContent = tier === 'yearly'
+          ? 'Antares Yearly · 1 year'
+          : 'Antares Pro · 30 days';
         renderAmount(intent);
         recipientEl.textContent = intent.recipient;
         renderQR(intent.payUrl);
@@ -1130,7 +1127,7 @@ footer span{color:var(--c)}
   // Wire the tier CTAs
   var BTNS = [
     { id: 'cta-pro-monthly', tier: 'monthly' },
-    { id: 'cta-lifetime', tier: 'lifetime' }
+    { id: 'cta-yearly', tier: 'yearly' }
   ];
   BTNS.forEach(function(spec) {
     var btn = document.getElementById(spec.id);
