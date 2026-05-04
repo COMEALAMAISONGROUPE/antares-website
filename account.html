@@ -440,33 +440,48 @@ footer .foot-links a:hover{color:var(--c)}
   }
 
   // Push the session JWT to the extension via the bridge so its scan
-  // calls can authenticate without depending on third-party cookies (which
-  // Chrome blocks for chrome-extension:// → API-origin requests in many
-  // configurations). The bridge writes the token to chrome.storage.local;
-  // background.ts reads it on every scan and sends X-Antares-Session.
+  // calls can authenticate. ALSO probes the extension for its install_id
+  // and forwards it to /api/auth/sync-token via X-Antares-Install — the
+  // server uses this to auto-bind the install to the signed-in email so
+  // the very next scan resolves to the user's tier.
+  //
+  // Without that auto-bind step the API has a valid session but no
+  // install→email mapping, so resolveTierAndBypass returns Free even
+  // for paying customers. This is the missing link that closes the
+  // website-account ↔ extension-overlay loop.
   //
   // Returns a promise that resolves when the token is stored (or skips
-  // silently when no extension is installed). Best-effort — failure here
-  // doesn't block /account.html rendering.
+  // silently when no extension is installed). Best-effort — failure
+  // here doesn't block /account.html rendering.
   function pushSessionTokenToExtension() {
-    var marker = document.querySelector('meta[name="antares-extension-installed"]');
-    if (!marker) return Promise.resolve(); // no extension on this page
-    return fetch(API + '/api/auth/sync-token', {
-      method: 'POST',
-      credentials: 'include'
-    })
-      .then(function(r) { return r.ok ? r.json() : null; })
-      .then(function(body) {
-        if (!body || !body.ok || typeof body.token !== 'string') return;
-        // Bridge runs in this page's context — postMessage with the page
-        // origin as targetOrigin, then the bridge picks it up and writes
-        // chrome.storage.local. We don't await the bridge ack: writes are
-        // ~20ms, the extension's next scan call will read whatever's stored.
-        window.postMessage(
-          { type: 'antares:set-session-token', token: body.token },
-          window.location.origin
-        );
+    // We don't gate on the marker meta — Plasmo content scripts default
+    // to document_idle, so on slow loads the marker may not be there yet
+    // when this fires. Probing returns null in that case (or when no
+    // extension is installed at all), and the rest of the flow degrades
+    // gracefully: sync-token still mints a JWT (cookie-only path), the
+    // postMessage no-ops without a bridge listener.
+    return probeExtensionInstallId().then(function(installId) {
+      var headers = {};
+      if (installId) headers['X-Antares-Install'] = installId;
+      return fetch(API + '/api/auth/sync-token', {
+        method: 'POST',
+        credentials: 'include',
+        headers: headers
       })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(body) {
+          if (!body || !body.ok || typeof body.token !== 'string') return;
+          // Bridge runs in this page's context — postMessage with the
+          // page origin as targetOrigin, then the bridge picks it up and
+          // writes chrome.storage.local. We don't await the bridge ack:
+          // writes are ~20ms, the extension's next scan call will read
+          // whatever's stored.
+          window.postMessage(
+            { type: 'antares:set-session-token', token: body.token },
+            window.location.origin
+          );
+        });
+    })
       .catch(function() { /* network blip — extension keeps old token, fine */ });
   }
 
