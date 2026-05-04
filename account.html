@@ -234,22 +234,133 @@ footer .foot-links a:hover{color:var(--c)}
   // bought it but hasn't yet pasted the key into their browser
   // extension, so the overlay is still showing Free. This bridges the
   // gap with explicit step-by-step instructions.
+  // ── Probe the extension via the content-script bridge ───────────────────
+  // The extension drops <meta name="antares-extension-installed"> at
+  // document_start AND replies to postMessage queries with the install_id
+  // (see contents/antares-website-bridge.ts in the extension repo).
+  // We probe once on /account.html load — if the extension is present
+  // we offer a one-click "Link to my extension" that auto-redeems the
+  // best unredeemed license against the detected install_id. Pasting a
+  // key in extension Options becomes optional UX, not the only path.
+  function probeExtensionInstallId() {
+    return new Promise(function(resolve) {
+      var marker = document.querySelector('meta[name="antares-extension-installed"]');
+      if (!marker) return resolve(null);
+      var nonce = String(Date.now()) + ':' + Math.random().toString(36).slice(2);
+      var resolved = false;
+      function onMsg(e) {
+        if (e.source !== window) return;
+        var d = e.data;
+        if (!d || typeof d !== 'object' || d.type !== 'antares:install-id-response' || d.nonce !== nonce) return;
+        resolved = true;
+        window.removeEventListener('message', onMsg);
+        resolve(d.install_id || null);
+      }
+      window.addEventListener('message', onMsg);
+      window.postMessage({ type: 'antares:get-install-id', nonce: nonce }, window.location.origin);
+      setTimeout(function() {
+        if (!resolved) { window.removeEventListener('message', onMsg); resolve(null); }
+      }, 800);
+    });
+  }
+
+  // Pick the "best" license to auto-link. Lifetime trumps Pro; among
+  // multiples of the same tier we pick the most recent. Skip already-
+  // redeemed licenses — re-redeeming them would be a no-op at best, an
+  // "already_redeemed" error at worst when the buyer's earlier install
+  // owns it.
+  function pickBestUnredeemed(list) {
+    var unredeemed = list.filter(function(l) { return !l.redeemed; });
+    if (!unredeemed.length) return null;
+    var lifetime = unredeemed.filter(function(l) { return l.tier === 'lifetime'; });
+    var pool = lifetime.length ? lifetime : unredeemed;
+    // Most recent first
+    pool.sort(function(a, b) { return (b.createdAt || 0) - (a.createdAt || 0); });
+    return pool[0];
+  }
+
+  // Server-side redeem call. Same endpoint extension uses — keeps the
+  // accounting consistent regardless of whether the user pasted a key
+  // manually or clicked the auto-link button here.
+  function autoRedeemLicense(license, installId) {
+    return fetch(API + '/api/redeem', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ license_key: license.key, install_id: installId })
+    }).then(function(r) {
+      return r.json().then(function(b) { return { status: r.status, body: b }; });
+    });
+  }
+
   function renderActivateCallout(list) {
     var wrap = document.getElementById('activate-wrap');
     var unredeemed = list.filter(function(l) { return !l.redeemed; });
     if (!unredeemed.length) { wrap.innerHTML = ''; return; }
     var keyPreview = unredeemed[0].key;
-    wrap.innerHTML =
-      '<div class="activate-callout">' +
-        '<h3>&rarr; Activate in your browser extension</h3>' +
-        'You have <b>' + unredeemed.length + ' unredeemed license' + (unredeemed.length > 1 ? 's' : '') + '</b>. To get the Pro features in your overlay:' +
-        '<ol>' +
-          '<li>Click your <b>Antares extension icon</b> in the browser toolbar &rarr; <b>Options</b>.</li>' +
-          '<li>Find the <code>Redeem a Pro license</code> field.</li>' +
-          '<li>Paste your license key (e.g. <code>' + escapeHtml(keyPreview) + '</code>) and click <b>Redeem</b>.</li>' +
-          '<li>The overlay flips to your tier instantly &mdash; refresh any open token page to see it.</li>' +
-        '</ol>' +
-      '</div>';
+
+    // Default state — paste-key instructions (fallback when no extension
+    // detected, or as instructions even when the auto-link button is
+    // shown so users on a different install can still redeem manually).
+    var fallbackHtml =
+      '<h3>&rarr; Activate in your browser extension</h3>' +
+      'You have <b>' + unredeemed.length + ' unredeemed license' + (unredeemed.length > 1 ? 's' : '') + '</b>. ' +
+      'To unlock Pro features in your overlay:' +
+      '<ol>' +
+        '<li>Click your <b>Antares extension icon</b> in the browser toolbar &rarr; <b>Options</b>.</li>' +
+        '<li>Find the <code>Redeem a Pro license</code> field.</li>' +
+        '<li>Paste your license key (e.g. <code>' + escapeHtml(keyPreview) + '</code>) and click <b>Redeem</b>.</li>' +
+        '<li>The overlay flips to your tier instantly &mdash; refresh any open token page to see it.</li>' +
+      '</ol>';
+
+    wrap.innerHTML = '<div class="activate-callout" id="activate-callout">' + fallbackHtml + '</div>';
+
+    // Try to upgrade to a one-click auto-link if the extension is here.
+    probeExtensionInstallId().then(function(installId) {
+      if (!installId) return; // no extension detected — keep the paste-key fallback
+      var best = pickBestUnredeemed(list);
+      if (!best) return;
+
+      var calloutEl = document.getElementById('activate-callout');
+      if (!calloutEl) return;
+      calloutEl.innerHTML =
+        '<h3>&check; Antares extension detected</h3>' +
+        'We found your installed extension. Click below to auto-redeem your ' +
+        '<b>' + (best.tier === 'lifetime' ? 'Lifetime' : 'Pro') + '</b> license to it &mdash; no copying or pasting required.' +
+        '<div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">' +
+          '<button type="button" id="auto-link-btn" style="background:var(--c);color:var(--bg);border:none;padding:11px 22px;font:700 11px/1 \'IBM Plex Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;border-radius:2px;cursor:pointer">Link to my extension &rarr;</button>' +
+          '<span id="auto-link-status" style="font-size:11px;color:#7a7a82;letter-spacing:.04em"></span>' +
+        '</div>' +
+        '<details style="margin-top:14px"><summary style="cursor:pointer;font-size:11px;color:#5a5a62;letter-spacing:.18em;text-transform:uppercase">Or paste the key manually</summary><div style="margin-top:10px">' +
+        fallbackHtml.replace(/^<h3>[^<]+<\/h3>/, '') +
+        '</div></details>';
+
+      var btn = document.getElementById('auto-link-btn');
+      var status = document.getElementById('auto-link-status');
+      btn.addEventListener('click', function() {
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        status.textContent = 'Linking…';
+        autoRedeemLicense(best, installId).then(function(r) {
+          if (r.status === 200 && r.body && r.body.ok) {
+            status.innerHTML = '<span style="color:var(--c)">&check; Linked. Refresh any token page to see your tier.</span>';
+            btn.style.display = 'none';
+          } else if (r.body && r.body.reason === 'already_redeemed') {
+            status.innerHTML = '<span style="color:var(--c)">&check; Already linked to this extension.</span>';
+            btn.style.display = 'none';
+          } else {
+            var msg = (r.body && r.body.reason) || 'Redeem failed.';
+            status.innerHTML = '<span style="color:#ff7777">&times; ' + escapeHtml(msg) + '</span>';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+          }
+        }).catch(function() {
+          status.innerHTML = '<span style="color:#ff7777">&times; Network error. Try again.</span>';
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        });
+      });
+    });
   }
 
   function renderLicenses(list) {
