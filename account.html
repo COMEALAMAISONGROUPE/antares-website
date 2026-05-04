@@ -454,15 +454,31 @@ footer .foot-links a:hover{color:var(--c)}
     });
 
   // 3. Logout
+  //
+  // We probe for the extension's install_id and pass it via X-Antares-Install
+  // so the API can drop dev-allowlisted installs back to the Free tier as
+  // part of the logout flow. This is what makes "I'm signed out → I'm Free
+  // again" actually true server-side for the founder/QA installs — the
+  // dev-tier override (Options dropdown) only stays armed while the install
+  // is bound to a dev-allowlisted email; logout unbinds it. Real customers
+  // are untouched (their email isn't on the dev allowlist).
   logoutBtn.addEventListener('click', function() {
-    fetch(API + '/api/auth/logout', { method: 'POST', credentials: 'include' })
-      .then(function() {
-        try { localStorage.removeItem('antares_buyer_email'); } catch(_) {}
-        window.location.href = './auth.html';
+    probeExtensionInstallId().then(function(installId) {
+      var headers = {};
+      if (installId) headers['X-Antares-Install'] = installId;
+      fetch(API + '/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: headers
       })
-      .catch(function() {
-        window.location.href = './auth.html';
-      });
+        .then(function() {
+          try { localStorage.removeItem('antares_buyer_email'); } catch(_) {}
+          window.location.href = './auth.html';
+        })
+        .catch(function() {
+          window.location.href = './auth.html';
+        });
+    });
   });
 })();
 </script>
