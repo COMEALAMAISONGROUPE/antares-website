@@ -81,7 +81,7 @@ footer .foot-links a:hover{color:var(--c)}
 <div class="section-label"><span>Pricing</span></div>
 
 <div class="qa"><h3>What does Free actually include?</h3>
-<p>The verdict, the score, and 50 daily scans &mdash; nothing more. SAFE / CAUTION / DANGER / RUG label, 1000-point score under the hood, and the basic checks you see in the overlay (Sell, Mint, Freeze, LP, Liquidity). The deep-dive layers &mdash; AI Summary, Critical Flags panel, Full Analysis page (Holder Activity, Verdict Timeline, Critical Actors, insider clustering, wash-trading detection) &mdash; are Pro features. Free is the taste-test. Pro is the trading tool.</p>
+<p>The verdict, the score, and 50 daily scans &mdash; nothing more. SAFE / CAUTION / DANGER / RUG label, 1000-point score under the hood, and the basic checks you see in the overlay (Sell, Mint, Freeze, LP, Liquidity). The deep-dive layers &mdash; AI Summary, Critical Flags panel, Full Analysis page (Insider Watch, Buy/Sell Flow, Wash Volume, Sniper Map, Exit Liquidity, insider clustering) &mdash; are Pro features. Free is the taste-test. Pro is the trading tool.</p>
 </div>
 
 <div class="qa"><h3>Why is Free so minimal?</h3>
@@ -113,7 +113,7 @@ footer .foot-links a:hover{color:var(--c)}
 
 <div class="qa"><h3>Can a SAFE token still rug?</h3>
 <p>Yes. Antares is a probabilistic risk screen, not a guarantee. We can detect what 6 independent sources surface at scan time &mdash; novel exploits, coordinated dumps via fresh wallets, or social-engineering attacks may not register.</p>
-<p>The Outcome Histogram is <b>indicative</b>, derived from a heuristic profile match against historical clusters &mdash; it is not a validated forecast. See the <a href="./terms.html">Terms</a> for the full disclaimer.</p>
+<p>The Wash Volume score and Sniper Map retention bar are <b>indicative</b>, derived from heuristic signals (avg trade size relative to liquidity, top-10 holder concentration) &mdash; they are not validated forecasts. See the <a href="./terms.html">Terms</a> for the full disclaimer.</p>
 </div>
 
 <div class="qa"><h3>Why is this token flagged DANGER when it looks fine?</h3>
@@ -135,11 +135,11 @@ footer .foot-links a:hover{color:var(--c)}
 
 <div class="qa"><h3>How fast is a scan?</h3>
 <p>Typical: 3&ndash;5 seconds end-to-end (6 concurrent upstream calls + AI summary + insider graph + scoring). Cached scans return in under 100ms.</p>
-<p>Slower than RugCheck (&lt;1s, single source) by design &mdash; we trade speed for depth (7 layers + clustering + holder activity).</p>
+<p>Slower than RugCheck (&lt;1s, single source) by design &mdash; we trade speed for depth (7 layers + insider clustering + wallet-level activity).</p>
 </div>
 
 <div class="qa"><h3>Multichain support? Ethereum / BSC / Base?</h3>
-<p>Solana only for v1. Multichain is on the roadmap but not committed for the first public release. Phase 0 (DexScreener + GoPlus EVM) is the entry point; full feature parity (Critical Actors / Holder Activity / Outcome Stats on EVM) is multi-week work.</p>
+<p>Solana only for v1. Multichain is on the roadmap but not committed for the first public release. Phase 0 (DexScreener + GoPlus EVM) is the entry point; full feature parity (Critical Actors / Insider Watch / Buy/Sell Flow / Wash Volume / Sniper Map on EVM) is multi-week work.</p>
 </div>
 
 <div class="qa"><h3>Is the AI summary reliable?</h3>

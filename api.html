@@ -143,9 +143,9 @@ footer .foot-links a:hover{color:var(--c)}
   "mintAuthority":   false,
   "freezeAuthority": false,
   "criticalActors":  [ /* Dev / Insider / Cluster cards */ ],
-  "verdictHistory":  [ /* per-token verdict timeline */ ],
-  "holderActivity":  { "rows": [ ... ], "netFlowPct": -3.2, "netFlowDirection": "out" },
-  "outcomeStats":    { "timeToRugMedianDisp": "4h 12m", "timeToRugSampleSize": 487, /* ... */ },
+  "verdictHistory":  [ /* per-token verdict history (kept for analytics; no longer rendered after the Deep Analysis redesign in #430) */ ],
+  "holderActivity":  { "rows": [ ... ], "netFlowPct": -3.2, "netFlowDirection": "out" }, /* feeds the Insider Watch heatmap */
+  "outcomeStats":    { /* deprecated — Outcome Histogram tab was replaced by Wash Volume in #430 (computed from pair.txns + pair.volume instead) */ },
   "aiSummary":  "Coordinated wallets bought together at launch...",
   "scoring_version": "7.1.0",
   "fetchedAt": 1714209600000,

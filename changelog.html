@@ -82,6 +82,19 @@ footer .foot-links a:hover{color:var(--c)}
 </section>
 
 <div class="release">
+  <div class="release-head"><div class="release-v">v1.3.0</div><div class="release-date">5 May 2026</div></div>
+  <h3>Deep Analysis redesign — 4 new tabs replace the originals</h3>
+  <ul>
+    <li><b>Insider Watch</b> replaces <em>Timeline</em>. Top 12 wallets in a colour-coded heatmap; each tile shows the wallet&rsquo;s 6h delta + action (Accumulating / Holding / Reducing / Selling / Dumping). Dev wallet flagged with a purple ring. Wired to <code>holderActivity.rows</code> with criticalActors fallback and concentration-tile fallback when both are missing. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/430">#430</a></li>
+    <li><b>Buy/Sell Flow</b> replaces <em>Holder Activity</em>. Pressure-gauge hero with ACCUMULATION / DISTRIBUTION / BALANCED status driven by DexScreener <code>pair.txns</code> + <code>pair.volume</code> across 5min / 1h / 6h / 24h windows. Per-window mini cards. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/430">#430</a></li>
+    <li><b>Wash Volume</b> replaces <em>Outcome Histogram</em>. 0-100 wash score donut + 4 metrics (reported, real estimate, total trades, avg trade size, buy/sell symmetry). Pivoted off Solscan to DexScreener data so it works on every token with a pair. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/430">#430</a></li>
+    <li><b>Sniper Map</b> replaces <em>Score Breakdown</em>. Concentration retention bar showing top-10 holding share vs distributed float, plus sniper / bundle flag count. Uses Helius top-N with RugCheck fallback so the tab populates even when Helius is unavailable. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/431">#431</a></li>
+    <li>Removed dead <code>buildOutcomeHistogramTab</code> and stale &quot;Outcome Histogram is not available&quot; user-facing string. Marketing copy across index / features / faq / compare / engine / about / terms / token updated to reference the new tabs.</li>
+    <li>980/980 unit tests pass + new live-API integration test against 4 real tokens (BONK / PENGU / TRUMP / TROLL) verifies all four tabs render with real data.</li>
+  </ul>
+</div>
+
+<div class="release">
   <div class="release-head"><div class="release-v">v1.2.1</div><div class="release-date">27 April 2026</div></div>
   <h3>v5 backend wave — real data behind every section</h3>
   <ul>

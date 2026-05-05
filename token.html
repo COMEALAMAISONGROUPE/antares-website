@@ -179,7 +179,7 @@ nav a:hover{color:#d0d0d0}
 .src-dot{width:5px;height:5px;border-radius:50%;background:var(--c)}
 .src-time{font-size:9px;color:#2a2a2f;letter-spacing:.08em}
 
-/* ── HOLDER ACTIVITY ─────────────────────────────────────────────── */
+/* ── INSIDER WATCH (legacy class names — section was renamed from "Holder Activity") ─── */
 .ha-section{margin-bottom:44px}
 .ha-rows{display:flex;flex-direction:column;gap:2px;background:#1a1a1d;border:1px solid #1a1a1d}
 .ha-row{display:grid;grid-template-columns:90px 110px 1fr 70px;gap:14px;align-items:center;
@@ -219,7 +219,7 @@ nav a:hover{color:#d0d0d0}
   .ha-row .ha-desc{grid-column:1 / -1;grid-row:2}
 }
 
-/* ── OUTCOME HISTOGRAM ───────────────────────────────────────────── */
+/* ── SNIPER MAP (legacy class names — section was renamed from "Outcome Histogram") ─── */
 .oh-section{margin-bottom:44px}
 .oh-card{background:#141417;border:1px solid #1a1a1d;padding:24px}
 .oh-header{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:18px;
@@ -247,7 +247,7 @@ nav a:hover{color:#d0d0d0}
 .oh-disclaimer{font-size:10px;color:#3a3a3f;letter-spacing:.06em;margin-top:14px;line-height:1.6}
 .oh-empty{padding:24px;text-align:center;font-size:11px;color:#5a5a62;letter-spacing:.04em}
 
-/* ── VERDICT TIMELINE ────────────────────────────────────────────── */
+/* ── BUY/SELL FLOW (legacy class names — section was renamed from "Verdict Timeline") ─── */
 .vt-section{margin-bottom:44px}
 .vt-track{background:#141417;border:1px solid #1a1a1d;padding:20px 24px;position:relative}
 .vt-line{position:absolute;left:36px;right:36px;top:50%;height:1px;background:#1e1e22;z-index:0}
@@ -375,21 +375,21 @@ footer span{color:var(--c)}
 
 <div id="ha-block">
   <div class="sh" style="margin-bottom:18px">
-    <h2 class="glitch" data-text="Holder Activity">Holder Activity</h2>
+    <h2 class="glitch" data-text="Insider Watch">Insider Watch</h2>
   </div>
   <div class="ha-section" id="ha-section"></div>
 </div>
 
 <div id="vt-block">
   <div class="sh" style="margin-bottom:18px">
-    <h2 class="glitch" data-text="Verdict Timeline">Verdict Timeline</h2>
+    <h2 class="glitch" data-text="Buy/Sell Flow">Buy/Sell Flow</h2>
   </div>
   <div class="vt-section" id="vt-section"></div>
 </div>
 
 <div id="oh-block">
   <div class="sh" style="margin-bottom:18px">
-    <h2 class="glitch" data-text="Outcome Histogram">Outcome Histogram</h2>
+    <h2 class="glitch" data-text="Sniper Map">Sniper Map</h2>
   </div>
   <div class="oh-section" id="oh-section"></div>
 </div>
@@ -595,7 +595,7 @@ function render(d,ca){
       '<div class="src-time">'+(SOURCE_DETAILS[s]||"Used in this scan")+'</div></div>'
   }).join("")
 
-  // ── HOLDER ACTIVITY ──
+  // ── INSIDER WATCH render path (renamed from Holder Activity) ──
   // Renders the per-top-holder classification produced by
   // composeHolderActivity in the API. Each row mirrors the
   // HolderActivityRow shape (avatar, label, addr, desc, pctChange,
@@ -647,7 +647,7 @@ function render(d,ca){
     haSec.innerHTML='<div class="ha-empty">'+reason+' <b>This section populates</b> when top wallets actively move during the window.</div>'
   }
 
-  // ── VERDICT TIMELINE ──
+  // ── BUY/SELL FLOW render path (renamed from Verdict Timeline) ──
   // Renders the per-token verdict history persisted in Redis ZSET
   // `vh:{ca}`. Oldest first; the most recent is the current scan
   // marked with the .now class for emphasis.
@@ -691,7 +691,7 @@ function render(d,ca){
     vtSec.innerHTML='<div class="vt-empty">No verdict history yet — <b>this is the first scan recorded</b> for this token. Come back after a future scan to see how the verdict trajectory evolves.</div>'
   }
 
-  // ── OUTCOME HISTOGRAM ──
+  // ── SNIPER MAP render path (renamed from Outcome Histogram) ──
   // Renders the heuristic profile-match output: hero stats
   // (median time-to-rug, % rugged in 24h, % alive at 30d), the
   // 36-bucket distribution with the "YOU" marker on youBucketIndex,
