@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <title>Antares — Features</title>
-            <meta name="description" content="Antares features: 7-layer verdict, Critical Actors detection, real-time Holder Activity, Verdict Timeline, insider clustering. Free Chrome extension for Solana.">
+            <meta name="description" content="Antares features: 7-layer verdict, Insider Watch heatmap, Buy/Sell Flow per window, Wash Volume score, Sniper Map retention, Exit Liquidity slippage. Free Chrome extension for Solana.">
     <meta name="author" content="Antares">
     <link rel="canonical" href="https://antares-website.vercel.app/features">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://antares-website.vercel.app/features">
     <meta property="og:title" content="Antares — Features">
-    <meta property="og:description" content="7-layer verdict, Critical Actors detection, real-time Holder Activity, Verdict Timeline. Free Solana token scanner.">
+    <meta property="og:description" content="7-layer verdict, Insider Watch, Buy/Sell Flow, Wash Volume, Sniper Map, Exit Liquidity. Free Solana token scanner.">
     <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@antaresantiscam">
     <meta name="twitter:title" content="Antares — Features">
-    <meta name="twitter:description" content="7-layer verdict, Critical Actors, Holder Activity, Verdict Timeline. Free Solana token scanner.">
+    <meta name="twitter:description" content="7-layer verdict, Insider Watch, Buy/Sell Flow, Wash Volume, Sniper Map. Free Solana token scanner.">
     <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
     <!-- Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -134,19 +134,19 @@ footer span{color:var(--c)}
     <p>Dev wallet reputation (prior tokens launched, prior rugs), insider sniper position, coordinated cluster size and coordination score. Each card surfaces the structural risk vector behind the score, not just a number.</p>
   </div>
   <div class="feat-card reveal delay-2" data-num="02">
-    <h3>Holder Activity (live)</h3>
-    <div class="benefit">See dev/whales dumping in real time.</div>
-    <p>Last-60-minute movement classification per top holder: <em>Holding · Selling · Splitting · Reducing · Buying · Static</em>. Net-flow footer (e.g. <em>-3.2% pre-dump signature</em>). Catches what static screenshots miss.</p>
+    <h3>Insider Watch (live heatmap)</h3>
+    <div class="benefit">See top wallets dumping in real time.</div>
+    <p>Top 12 wallets in a colour-coded tile grid. Each tile shows the wallet&rsquo;s 6h delta and what they&rsquo;re doing (<em>Accumulating · Holding · Reducing · Selling · Dumping</em>). Dev wallet flagged with a purple ring. Catches what static screenshots miss.</p>
   </div>
   <div class="feat-card reveal delay-3" data-num="03">
-    <h3>Verdict Timeline</h3>
-    <div class="benefit">Watch the verdict trajectory, not a snapshot.</div>
-    <p>Per-token history of verdict changes across recent scans (CAUTION &rarr; DANGER &rarr; RUG with timestamps and the event that triggered the shift). Persisted server-side; you see the story of a token, not a frozen frame.</p>
+    <h3>Buy/Sell Flow (per window)</h3>
+    <div class="benefit">Money in vs money out, in real time.</div>
+    <p>Pressure gauge with <em>ACCUMULATION / DISTRIBUTION / BALANCED</em> banner driven by buy/sell transaction counts and volume across 5min / 1h / 6h / 24h windows. Lean indicator + per-window mini cards. Tells you the direction before you click buy.</p>
   </div>
   <div class="feat-card reveal delay-4" data-num="04">
-    <h3>5-dimension Score Radar</h3>
-    <div class="benefit">Score broken down, not abstract.</div>
-    <p>The 1000-point composite score is decomposed across five axes: <em>LP&nbsp;Security &middot; Holder&nbsp;Distribution &middot; Trading&nbsp;Authenticity &middot; Token&nbsp;Maturity &middot; Source&nbsp;Consensus</em>. SVG pentagon radar shows where a token actually fails &mdash; not a single gauge.</p>
+    <h3>Wash Volume Score</h3>
+    <div class="benefit">Is the volume real, or fake?</div>
+    <p>0-100 wash score derived from average trade size relative to liquidity + buy/sell symmetry. Tiny trades cycling against a thin LP score high; healthy organic trading scores low. Real volume estimate alongside the reported headline. No more falling for puffed numbers.</p>
   </div>
   <div class="feat-card reveal delay-5" data-num="05">
     <h3>7-Layer Consensus</h3>
@@ -162,8 +162,8 @@ footer span{color:var(--c)}
     <div class="content"><h4>One row per upstream</h4><p>RugCheck, Helius, Solscan, Chart Engine, DexScreener &mdash; each with its own derived verdict (<em>OK</em> / <em>Risk</em> / <em>Flagged</em> / <em>N/A</em>) and a one-line note. Open the accordion at the bottom of any analysis to see exactly which source said what. Forensic provenance, not a black-box score.</p></div>
   </div>
   <div class="detail-block reveal">
-    <div class="label">Outcome Histogram</div>
-    <div class="content"><h4>Where this token sits in the distribution</h4><p>Where comparable launches actually ended up &mdash; rugged at 1h, 6h, 24h, 7d, slowly bled, or survived. Your token is marked with a <em>YOU</em> bar so you can see its expected position in the distribution. Plus the three most-similar past launches with their realised losses. Indicative model &mdash; context, not forecast.</p></div>
+    <div class="label">Sniper Map</div>
+    <div class="content"><h4>Did the launch bots cash out yet?</h4><p>Retention bar showing how much of supply the top 10 holders still control vs how much has distributed. Combined with sniper / bundle flag detection: when launch buyers still hold a large share, the dump is yet to come. When they&rsquo;ve already sold, you&rsquo;re behind smart money. Real measured concentration &mdash; no estimates.</p></div>
   </div>
   <div class="detail-block reveal">
     <div class="label">Exit Liquidity Calculator</div>
