@@ -66,10 +66,11 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 .tier:hover{transform:translateY(-4px);border-color:#252529}
 .tier.featured{border:1px solid var(--c);box-shadow:0 0 0 1px var(--c),0 24px 48px rgba(0,229,176,.08)}
 .tier.featured::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--c);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
-/* Free tier deliberately dimmed — the verdict is genuinely free, but
-   the deep-dive layers (AI Summary, Critical Flags, Full Analysis) are
+/* Free tier deliberately dimmed — the verdict + score + overlay are
+   genuinely free with no quota, but the deep-dive layers (AI Summary,
+   Critical Flags, Full Analysis with the four Deep Analysis tabs) are
    Pro features. The card stays visible so users know what they're
-   getting, but its visual weight is subordinate to Pro/Lifetime so the
+   getting, but its visual weight is subordinate to Pro/Yearly so the
    eye lands on the upgrade options first. */
 .tier.free{background:#0c0c0e;border-color:#16161a;opacity:.86}
 .tier.free:hover{opacity:1;border-color:#1f1f23}
@@ -124,7 +125,7 @@ h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
    sits between the feature list and the CTA button. Has two jobs:
    (1) gives every card a footer of similar visual weight so the card
    heights balance regardless of feature-list length (Pro = 16 lines,
-   Free = 13, Lifetime = 8 — without this, Lifetime had a big empty
+   Free = 13, Yearly = 8 — without this, Yearly had a big empty
    gap above its button); (2) lets us speak in founder-voice about
    the philosophy of each tier without bloating the feature list. */
 .tier-quote{margin:14px 0 22px;padding:14px 0 0;border-top:1px solid #16161a;font-size:11px;line-height:1.7;color:#7a7a82;font-style:italic}
@@ -264,20 +265,21 @@ footer span{color:var(--c)}
 
 <div class="tiers">
 
-  <!-- FREE — minimal, on purpose. The verdict is the hook; everything
-       that explains *why* (AI Summary, Critical Flags, Full Analysis
-       page) lives behind Pro.
+  <!-- FREE — verdict + score + overlay on every Solana token, with no
+       scan quota. The "why" behind the verdict (AI Summary, Critical
+       Flags panel, Full Analysis page with the 4 Deep Analysis tabs)
+       lives behind Pro.
 
        Row count: 1 bonus header + 5 ✓ items + 5 ✗ items = 11 total,
-       matching Pro and Lifetime so rows align across columns. -->
+       matching Pro and Yearly so rows align across columns. -->
   <div class="tier free">
     <div class="tier-name">Free</div>
     <div class="tier-price"><span class="currency">$</span>0</div>
-    <div class="tier-period">50 scans / day &middot; no card</div>
-    <div class="tier-tagline">The verdict and nothing else. Good enough to taste-test the engine &mdash; not enough to trade real capital with.</div>
+    <div class="tier-period">Unlimited scans &middot; no card</div>
+    <div class="tier-tagline">The verdict, the score and the overlay &mdash; on every Solana token, with no quota. The <i>why</i> behind the verdict lives in Pro.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Always free, no card</b></li>
-      <li>50 scans per day</li>
+      <li><b>Unlimited scans</b>, no quota</li>
       <li>SAFE / CAUTION / DANGER / RUG verdict</li>
       <li>1000-point composite score</li>
       <li>Honeypot, LP, Mint &amp; Freeze checks</li>
@@ -285,7 +287,7 @@ footer span{color:var(--c)}
       <li class="no"><b>AI Summary</b></li>
       <li class="no"><b>Critical Flags panel</b></li>
       <li class="no"><b>Full Analysis page</b></li>
-      <li class="no"><b>Unlimited scans</b></li>
+      <li class="no"><b>4 Deep Analysis tabs</b></li>
       <li class="no"><b>Scan history &amp; exports</b></li>
     </ul>
     <div class="tier-quote">Free is the gateway. The verdict, the score, the overlay &mdash; the core of what makes Antares useful. We&rsquo;ve never reduced what&rsquo;s on it. We never will.</div>
@@ -293,18 +295,18 @@ footer span{color:var(--c)}
     <div class="tier-status"><span class="live">&middot; Live now</span></div>
   </div>
 
-  <!-- PRO 30-DAY PASS (FEATURED) — same 11-row count as Free + Lifetime. -->
+  <!-- PRO 30-DAY PASS (FEATURED) — same 11-row count as Free + Yearly. -->
   <div class="tier featured">
     <div class="tier-name">Pro &middot; 30-day pass</div>
     <div class="tier-price"><span class="currency">$</span>24.99</div>
     <div class="tier-period">USDC or SOL on Solana &middot; one-time, no auto-renew</div>
-    <div class="tier-tagline">For traders who scan 50+ tokens a day. Unlimited scans plus the features power users actually need.</div>
+    <div class="tier-tagline">For traders who need the <i>why</i> behind every verdict &mdash; AI summary, critical flags and the full Deep Analysis breakdown.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Free, plus:</b></li>
       <li><b>AI Summary</b> in overlay</li>
       <li><b>Critical Flags panel</b></li>
       <li><b>Full Analysis page</b></li>
-      <li><b>Unlimited scans</b> (30 req/min)</li>
+      <li><b>4 Deep Analysis tabs</b> &mdash; Insider Watch, Buy/Sell Flow, Wash Volume, Sniper Map</li>
       <li>Scan history, 30 days, server-side</li>
       <li>Detailed scoring breakdown</li>
       <li>Priority cache (lower TTL)</li>
@@ -312,7 +314,7 @@ footer span{color:var(--c)}
       <li>No affiliate prompts</li>
       <li>Priority support</li>
     </ul>
-    <div class="tier-quote">Pro is for the day-trader who scans two hundred tokens a day and needs the engine running silent in the background. Pay once, use it for thirty days, never see a card form.</div>
+    <div class="tier-quote">Pro is for the trader who needs the <i>why</i> behind the verdict &mdash; the AI summary, the critical flags, and the four Deep Analysis tabs that explain the math. Pay once, use it for thirty days, never see a card form.</div>
     <button class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly" type="button">Get Pro now &rarr;</button>
     <div class="tier-status"><span class="live">&middot; USDC or SOL &middot; on-chain</span></div>
   </div>
@@ -334,7 +336,7 @@ footer span{color:var(--c)}
       <li><b>AI Summary</b> in overlay</li>
       <li><b>Critical Flags panel</b></li>
       <li><b>Full Analysis page</b></li>
-      <li><b>Unlimited scans</b></li>
+      <li><b>4 Deep Analysis tabs</b> &mdash; Insider Watch, Buy/Sell Flow, Wash Volume, Sniper Map</li>
       <li>Scan history, server-side</li>
       <li>Detailed scoring breakdown</li>
       <li>Priority cache (lower TTL)</li>
@@ -356,7 +358,7 @@ footer span{color:var(--c)}
 </div>
 
 </main></div>
-<footer>Antares v1.2.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 
 <!-- ── Solana Pay checkout modal ────────────────────────────────────────── -->
 <div class="pay-overlay" id="pay-overlay" role="dialog" aria-labelledby="pay-title" aria-modal="true">
