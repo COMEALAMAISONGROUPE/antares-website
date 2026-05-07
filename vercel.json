@@ -14,7 +14,10 @@
     { "source": "/install", "destination": "/install.html" },
     { "source": "/about", "destination": "/about.html" },
     { "source": "/api", "destination": "/api.html" },
-    { "source": "/security", "destination": "/security.html" }
+    { "source": "/security", "destination": "/security.html" },
+    { "source": "/auth", "destination": "/auth.html" },
+    { "source": "/account", "destination": "/account.html" },
+    { "source": "/pricing", "destination": "/pricing.html" }
   ],
   "redirects": [
     {

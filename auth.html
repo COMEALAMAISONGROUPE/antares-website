@@ -120,10 +120,20 @@ footer .foot-links a:hover{color:var(--c)}
 
   var mode = 'login';
 
-  // If already logged in, jump to /account
-  fetch(API + '/api/auth/me', { credentials: 'include' })
-    .then(function(r) { if (r.ok) window.location.href = './account.html'; })
-    .catch(function() { /* not logged in, stay here */ });
+  // Auto-redirect to /account if a valid session cookie is already
+  // present. We delay this fetch by 50ms so it doesn't compete with the
+  // login submit fetch in the burst-rate-limit window when users land,
+  // start typing, and click Log in within 1-2s of arriving — the auto-
+  // check used to consume one of the 5 req / 10s burst budget on the
+  // /api/auth/* path, leaving the actual login attempt with one fewer
+  // slot. Tiny delay also lets the form fully paint before any
+  // potential redirect kicks in. Failures are silent on purpose: 401
+  // means "not logged in", any network blip means "stay on the form".
+  setTimeout(function() {
+    fetch(API + '/api/auth/me', { credentials: 'include' })
+      .then(function(r) { if (r.ok) window.location.href = './account.html'; })
+      .catch(function() { /* not logged in / network blip, stay here */ });
+  }, 50);
 
   // Pre-fill email if cached from a previous flow
   try {
@@ -164,7 +174,39 @@ footer .foot-links a:hover{color:var(--c)}
     }
   }
 
+  // Submit with one automatic retry on transient network failures.
+  // Captures three classes of error the user used to all see as a
+  // generic "Network error" message:
+  //   1. Genuine offline / DNS / TLS handshake fail → fetch rejects
+  //   2. CORS preflight cache mismatch on Vercel → fetch rejects
+  //   3. Server returned non-JSON body (e.g. Vercel 5xx HTML) → r.json()
+  //      rejects mid-chain
+  // Class 1 + 2 + 3 all hit .catch(). The retry happens once after a
+  // 600ms delay; if it fails again we surface a clear message with the
+  // status code (when known) so the user knows it's not a typo or
+  // bad-creds issue.
+  var inFlight = false;
+
+  function safeJsonParse(r) {
+    return r.text().then(function(t) {
+      try { return { status: r.status, body: JSON.parse(t) }; }
+      catch (_) { return { status: r.status, body: null, raw: t }; }
+    });
+  }
+
+  function postAuth(endpoint, payload) {
+    return fetch(API + endpoint, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(safeJsonParse);
+  }
+
   function submit() {
+    if (inFlight) return; // double-click guard — was a real cause of
+                          // hitting the 5/10s burst limit on rapid
+                          // double-clicks of the Log in button
     setError('');
     emailEl.classList.remove('invalid');
     passwordEl.classList.remove('invalid');
@@ -180,57 +222,94 @@ footer .foot-links a:hover{color:var(--c)}
       setError('Password must be at least 8 characters.');
       return;
     }
+    inFlight = true;
     submitBtn.disabled = true;
     var origText = submitBtn.textContent;
     submitBtn.innerHTML = '<span class="spinner"></span>' + (mode === 'login' ? 'Logging in…' : 'Creating account…');
     var endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/signup';
-    fetch(API + endpoint, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, password: password })
-    })
-      .then(function(r) { return r.json().then(function(b) { return { status: r.status, body: b }; }); })
-      .then(function(r) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = origText;
-        if (r.status === 200 && r.body && r.body.ok) {
-          try { localStorage.setItem('antares_buyer_email', email); } catch(_) {}
-          // Honour ?return= so we can deep-link back into the pricing
-          // modal, /account, etc. after auth completes.
-          var params = new URLSearchParams(window.location.search);
-          var ret = params.get('return') || './account.html';
-          window.location.href = ret;
-          return;
-        }
-        var reason = r.body && r.body.reason;
-        if (reason === 'already_exists') {
-          setError('That email is already registered. Try logging in instead.');
-          return;
-        }
-        if (reason === 'invalid_credentials') {
-          setError('Email or password is incorrect.');
-          return;
-        }
-        if (reason === 'weak_password') {
-          setError('Password too weak (8 characters minimum).');
-          return;
-        }
-        if (reason === 'invalid_email') {
-          setError('Email format invalid.');
-          return;
-        }
-        if (r.status === 503) {
-          setError('Authentication is being configured. Please try again in a few minutes.');
-          return;
-        }
-        setError('Something went wrong. Please retry.');
-      })
-      .catch(function() {
-        submitBtn.disabled = false;
-        submitBtn.textContent = origText;
-        setError('Network error. Check your connection and retry.');
-      });
+    var payload = { email: email, password: password };
+
+    function done() {
+      inFlight = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = origText;
+    }
+
+    function handleResponse(r) {
+      done();
+      if (r.status === 200 && r.body && r.body.ok) {
+        try { localStorage.setItem('antares_buyer_email', email); } catch(_) {}
+        // Honour ?return= so we can deep-link back into the pricing
+        // modal, /account, etc. after auth completes.
+        var params = new URLSearchParams(window.location.search);
+        var ret = params.get('return') || './account.html';
+        window.location.href = ret;
+        return;
+      }
+      // 429: explicit message + countdown so user doesn't hammer the
+      // form. Server sends "Burst limit exceeded. Retry in N seconds."
+      // in body.error which we surface verbatim.
+      if (r.status === 429) {
+        var msg = (r.body && (r.body.error || r.body.message)) ||
+          'Too many attempts. Wait 10 seconds and try again.';
+        setError(msg);
+        return;
+      }
+      // 401 / 400 reasons surface specific copy; everything else falls
+      // through to a status-aware generic message.
+      var reason = r.body && r.body.reason;
+      if (reason === 'already_exists') {
+        setError('That email is already registered. Try logging in instead.');
+        return;
+      }
+      if (reason === 'invalid_credentials') {
+        passwordEl.classList.add('invalid');
+        setError('Email or password is incorrect.');
+        return;
+      }
+      if (reason === 'weak_password') {
+        passwordEl.classList.add('invalid');
+        setError('Password too weak (8 characters minimum).');
+        return;
+      }
+      if (reason === 'invalid_email') {
+        emailEl.classList.add('invalid');
+        setError('Email format invalid.');
+        return;
+      }
+      if (r.status === 503) {
+        setError('Authentication is being configured. Please try again in a few minutes.');
+        return;
+      }
+      // Generic catch-all with status hint to help debugging.
+      setError('Server returned an error (HTTP ' + r.status + '). Please retry.');
+    }
+
+    function handleNetworkError(retried, err) {
+      if (!retried) {
+        // One automatic retry after a short backoff. Class 2 (CORS
+        // preflight cache mismatch) usually clears on second attempt
+        // because the browser refreshes the OPTIONS preflight. Class 1
+        // (genuine offline) will fail again and we surface that on the
+        // second .catch() landing.
+        setTimeout(function() {
+          postAuth(endpoint, payload)
+            .then(handleResponse)
+            .catch(function(e2) { handleNetworkError(true, e2); });
+        }, 600);
+        return;
+      }
+      done();
+      var detail = err && err.message ? ' (' + err.message + ')' : '';
+      setError(
+        'Could not reach the auth server' + detail +
+        '. Check your connection or try again in a moment.'
+      );
+    }
+
+    postAuth(endpoint, payload)
+      .then(handleResponse)
+      .catch(function(err) { handleNetworkError(false, err); });
   }
 
   submitBtn.addEventListener('click', submit);
