@@ -350,9 +350,9 @@ footer span{color:var(--c)}
     <h3 class="pay-title" id="pay-title">Antares Pro · 30 days</h3>
     <div class="pay-subtitle" id="pay-subtitle">Pay with any crypto &middot; 200+ supported</div>
     <div class="pay-email-row" id="pay-email-row">
-      <label for="pay-email">Your email (for the license + receipt)</label>
+      <label for="pay-email">Your email (account + receipt)</label>
       <input type="email" id="pay-email" name="email" autocomplete="email" placeholder="you@degen.sol" spellcheck="false">
-      <div class="pay-email-hint" id="pay-email-hint">We email your license key here. Use it to unlock Pro on any install.</div>
+      <div class="pay-email-hint" id="pay-email-hint">Pro auto-activates on every device where you sign in to your Antares account. We email a receipt here too.</div>
       <div class="pay-email-authnote" id="pay-email-authnote" style="display:none;font:400 10px/1.5 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.04em;margin-top:4px"></div>
       <div class="pay-email-loginlink" id="pay-email-loginlink" style="font:400 10px/1.5 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em;margin-top:4px">
         Already have an account? <a href="./auth.html?return=%2Fpricing.html" style="color:var(--c);text-decoration:none">Log in</a> to skip this step.
@@ -370,10 +370,10 @@ footer span{color:var(--c)}
       <span class="pay-coins-more">+ 200 more</span>
     </div>
     <div class="pay-license" id="pay-license" style="display:none">
-      <div class="pay-license-label">Your license key</div>
+      <div class="pay-license-label">Receipt &middot; Pro is now active</div>
       <div class="pay-license-key" id="pay-license-key">—</div>
       <button type="button" class="pay-license-copy" id="pay-license-copy">Copy</button>
-      <div class="pay-license-instr">Save this key. Open the extension's options page and paste it under <b>Redeem a Pro license</b>. You can also fetch it later at <a href="./account.html">antares-website.vercel.app/account</a>.</div>
+      <div class="pay-license-instr">Pro is now linked to your Antares account. Sign in on any device to activate it there — no codes to enter. The reference above is your purchase receipt; full history at <a href="./account.html">/account</a>.</div>
     </div>
     <button class="pay-cta-btn" id="pay-cta-btn" type="button" disabled>
       <span class="pay-cta-text">Continue to checkout</span>
@@ -672,9 +672,9 @@ footer span{color:var(--c)}
     licenseRow.style.display = 'none';
 
     if (hasInstall) {
-      emailHintEl.textContent = 'For your receipt + license key (you can use the same key on a new install later).';
+      emailHintEl.textContent = 'For your receipt. Pro syncs to every device where you sign in to your Antares account.';
     } else {
-      emailHintEl.textContent = 'After payment we issue a license key. You’ll paste it in the extension after installing to unlock Pro.';
+      emailHintEl.textContent = 'We create your account with this email. Pro auto-activates on every device where you sign in — no codes to enter.';
     }
     refreshCtaState();
     if (!loggedInEmail && !readEmail()) emailInput.focus();
