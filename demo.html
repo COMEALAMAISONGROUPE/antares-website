@@ -641,8 +641,11 @@ footer .foot-links a:hover{color:var(--c)}
   function buildHeaderNode(){
     var dragIcon=el('span',{'class':'drag-icon'});setStaticSvg(dragIcon,SVG_MOVE);
     var closeBtn=el('button',{'class':'x','id':'ant-close','type':'button','aria-label':'Close'});setStaticSvg(closeBtn,SVG_CLOSE);
+    // Gold ANTARES wordmark — same as the live extension renders for
+    // Pro / Yearly / Lifetime tiers. Demo shows the Pro state to put
+    // the premium visual signal front-and-centre.
     return el('div',{'class':'hd'},
-      el('span',{'class':'brand'},'ANTARES'),
+      el('span',{'class':'brand pro'},'ANTARES'),
       el('div',{'class':'hd-right'},dragIcon,closeBtn)
     );
   }
