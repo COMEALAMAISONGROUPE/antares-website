@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Antares anti-scam scanner for Solana — seven independent layers, one verdict, surfaced live in your overlay. Free unlimited scans. Pro and Yearly tiers paid direct in USDC or SOL, zero middleman.">
+<meta name="description" content="Antares anti-scam scanner for Solana — seven independent layers, one verdict, surfaced live in your overlay. Free unlimited scans. Pro and Yearly tiers paid in any of 200+ cryptocurrencies via NOWPayments hosted checkout — Pro syncs automatically across every device where you sign in.">
 <meta name="author" content="Antares">
 <link rel="canonical" href="https://antares-website.vercel.app/pricing">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antares-website.vercel.app/pricing">
 <meta property="og:title" content="Stop guessing at tokens — Antares pricing">
-<meta property="og:description" content="Seven independent scoring layers, one verdict, live in your overlay. Free with unlimited scans, Pro for paid features, Yearly to lock in the best price. USDC or SOL on-chain, zero middleman.">
+<meta property="og:description" content="Seven independent scoring layers, one verdict, live in your overlay. Free with unlimited scans. Pro and Yearly paid in any of 200+ cryptocurrencies — Pro syncs automatically across every device where you sign in.">
 <meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@antaresantiscam">
 <meta name="twitter:title" content="Stop guessing at tokens — Antares pricing">
-<meta name="twitter:description" content="Seven layers, one verdict, live in your overlay. Free with unlimited scans. Pro and Yearly paid direct in USDC or SOL, zero middleman.">
+<meta name="twitter:description" content="Seven layers, one verdict, live in your overlay. Free with unlimited scans. Pro and Yearly paid in any of 200+ cryptocurrencies, account-synced across every device.">
 <meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -278,7 +278,7 @@ footer span{color:var(--c)}
   <div class="tier featured">
     <div class="tier-name">Pro &middot; 30-day pass</div>
     <div class="tier-price"><span class="currency">$</span>24.99</div>
-    <div class="tier-period">USDC or SOL on Solana &middot; one-time, no auto-renew</div>
+    <div class="tier-period">Pay in any crypto &middot; one-time, no auto-renew</div>
     <div class="tier-tagline">For traders who need the <i>why</i> behind every verdict &mdash; AI summary, critical flags and the full Deep Analysis breakdown.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Free, plus:</b></li>
@@ -295,7 +295,7 @@ footer span{color:var(--c)}
     </ul>
     <div class="tier-quote">Pro is for the trader who needs the <i>why</i> behind the verdict &mdash; the AI summary, the critical flags, and the four Deep Analysis tabs that explain the math. Pay once, use it for thirty days, never see a card form.</div>
     <button class="tier-cta primary" id="cta-pro-monthly" data-tier="monthly" type="button">Get Pro now &rarr;</button>
-    <div class="tier-status"><span class="live">&middot; USDC or SOL &middot; on-chain</span></div>
+    <div class="tier-status"><span class="live">&middot; 200+ cryptos &middot; account-synced</span></div>
   </div>
 
   <!-- YEARLY — replaces the old "Lifetime" SKU as of 2026-05. The
@@ -308,7 +308,7 @@ footer span{color:var(--c)}
   <div class="tier lifetime">
     <div class="tier-name">Yearly</div>
     <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
-    <div class="tier-period">USDC or SOL payment &middot; 1 year</div>
+    <div class="tier-period">Pay in any crypto &middot; 1 year</div>
     <div class="tier-tagline">Pay once at $149.99. Every Pro feature for a full year. Breaks even after six monthly renewals.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Pro, for 1 year</b></li>
@@ -342,17 +342,18 @@ footer span{color:var(--c)}
 <!-- ── NOWPayments hosted-checkout modal ──────────────────────────────────
      Slim by design: collect email, show locked-in USD amount, redirect
      to the NOWPayments page where the buyer picks one of 200+ cryptos
-     and signs the payment in their preferred wallet. License key
-     surfaces on /account.html?ref=… after NOWPayments redirects back. -->
+     and signs the payment in their preferred wallet. Pro auto-activates
+     on every device where the buyer signs in to their Antares account
+     (purchase receipt visible at /account.html?ref=… after redirect). -->
 <div class="pay-overlay" id="pay-overlay" role="dialog" aria-labelledby="pay-title" aria-modal="true">
   <div class="pay-modal">
     <button class="pay-close" id="pay-close" aria-label="Close">&times;</button>
     <h3 class="pay-title" id="pay-title">Antares Pro · 30 days</h3>
     <div class="pay-subtitle" id="pay-subtitle">Pay with any crypto &middot; 200+ supported</div>
     <div class="pay-email-row" id="pay-email-row">
-      <label for="pay-email">Your email (for the license + receipt)</label>
+      <label for="pay-email">Your email (account + receipt)</label>
       <input type="email" id="pay-email" name="email" autocomplete="email" placeholder="you@degen.sol" spellcheck="false">
-      <div class="pay-email-hint" id="pay-email-hint">We email your license key here. Use it to unlock Pro on any install.</div>
+      <div class="pay-email-hint" id="pay-email-hint">Pro auto-activates on every device where you sign in to your Antares account. We email a receipt here too.</div>
       <div class="pay-email-authnote" id="pay-email-authnote" style="display:none;font:400 10px/1.5 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.04em;margin-top:4px"></div>
       <div class="pay-email-loginlink" id="pay-email-loginlink" style="font:400 10px/1.5 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em;margin-top:4px">
         Already have an account? <a href="./auth.html?return=%2Fpricing.html" style="color:var(--c);text-decoration:none">Log in</a> to skip this step.
@@ -370,10 +371,10 @@ footer span{color:var(--c)}
       <span class="pay-coins-more">+ 200 more</span>
     </div>
     <div class="pay-license" id="pay-license" style="display:none">
-      <div class="pay-license-label">Your license key</div>
+      <div class="pay-license-label">Receipt &middot; Pro is now active</div>
       <div class="pay-license-key" id="pay-license-key">—</div>
       <button type="button" class="pay-license-copy" id="pay-license-copy">Copy</button>
-      <div class="pay-license-instr">Save this key. Open the extension's options page and paste it under <b>Redeem a Pro license</b>. You can also fetch it later at <a href="./account.html">antares-website.vercel.app/account</a>.</div>
+      <div class="pay-license-instr">Pro is now linked to your Antares account. Sign in on any device to activate it there — no codes to enter. The reference above is your purchase receipt; full history at <a href="./account.html">/account</a>.</div>
     </div>
     <button class="pay-cta-btn" id="pay-cta-btn" type="button" disabled>
       <span class="pay-cta-text">Continue to checkout</span>
@@ -672,9 +673,9 @@ footer span{color:var(--c)}
     licenseRow.style.display = 'none';
 
     if (hasInstall) {
-      emailHintEl.textContent = 'For your receipt + license key (you can use the same key on a new install later).';
+      emailHintEl.textContent = 'For your receipt. Pro syncs to every device where you sign in to your Antares account.';
     } else {
-      emailHintEl.textContent = 'After payment we issue a license key. You’ll paste it in the extension after installing to unlock Pro.';
+      emailHintEl.textContent = 'We create your account with this email. Pro auto-activates on every device where you sign in — no codes to enter.';
     }
     refreshCtaState();
     if (!loggedInEmail && !readEmail()) emailInput.focus();

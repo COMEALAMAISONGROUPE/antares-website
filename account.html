@@ -89,10 +89,8 @@ h1 span{color:var(--c)}
 .lic-meta b{color:#9a9aa2;font-weight:600}
 .lic-state{grid-column:2;grid-row:1 / span 3;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
 .lic-state .badge{font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;border-radius:2px;white-space:nowrap}
-.lic-state .badge.unredeemed{color:var(--yellow);border:1px solid rgba(245,208,0,.4);background:rgba(245,208,0,.06)}
-.lic-state .badge.redeemed{color:#5a5a62;border:1px solid #2a2a30}
-.lic-state button{background:none;border:1px solid var(--border);color:#888;padding:6px 12px;font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s}
-.lic-state button:hover{color:var(--c);border-color:var(--c)}
+.lic-state .badge.active{color:var(--c);border:1px solid rgba(0,229,176,.4);background:rgba(0,229,176,.06)}
+.lic-state .badge.expired{color:#5a5a62;border:1px solid #2a2a30}
 
 .loading{padding:40px;text-align:center;color:#666;font-size:12px;letter-spacing:.04em}
 .spinner{display:inline-block;width:9px;height:9px;border-radius:50%;background:#666;margin-right:8px;animation:pulse 1.2s ease-in-out infinite;vertical-align:middle}
@@ -157,7 +155,7 @@ footer .foot-links a:hover{color:var(--c)}
       <div class="checkout-banner-key" id="checkout-banner-key">—</div>
       <button type="button" class="checkout-banner-key-copy" id="checkout-banner-key-copy">Copy</button>
     </div>
-    <div class="checkout-banner-instr" id="checkout-banner-instr">Save this key. Open the extension's options page and paste it under <b>Redeem a Pro license</b> to unlock Pro on this install.</div>
+    <div class="checkout-banner-instr" id="checkout-banner-instr">Pro is now active on every device where you sign in to your Antares account. The key above is your purchase receipt — keep it for your records, but you don't need to enter it anywhere.</div>
   </div>
 </div>
 
@@ -296,7 +294,7 @@ footer .foot-links a:hover{color:var(--c)}
         if (s === 'confirmed') {
           showCheckoutBanner('confirmed', {
             title: '✓ Payment confirmed',
-            msg: 'Pro is active. Your license key is below — save it somewhere safe. We also linked it to your account, so you can fetch it again here later.',
+            msg: 'Pro is now active on every device where you sign in to your Antares account. Open your extension — the Pro overlay unlocks automatically. The receipt below is for your records.',
             licenseKey: r.body.licenseKey || null,
           });
           return;
@@ -434,19 +432,14 @@ footer .foot-links a:hover{color:var(--c)}
     }
   }
 
-  // ── Activate-in-extension callout ─────────────────────────────────────
-  // Fires only when there's at least one unredeemed license. The user
-  // bought it but hasn't yet pasted the key into their browser
-  // extension, so the overlay is still showing Free. This bridges the
-  // gap with explicit step-by-step instructions.
-  // ── Probe the extension via the content-script bridge ───────────────────
+  // ── Probe the extension via the content-script bridge ──────────────────
   // The extension drops <meta name="antares-extension-installed"> at
   // document_start AND replies to postMessage queries with the install_id
   // (see contents/antares-website-bridge.ts in the extension repo).
-  // We probe once on /account.html load — if the extension is present
-  // we offer a one-click "Link to my extension" that auto-redeems the
-  // best unredeemed license against the detected install_id. Pasting a
-  // key in extension Options becomes optional UX, not the only path.
+  // We probe once on /account.html load — used by pushSessionTokenToExtension
+  // below to forward the JWT + install_id to /api/auth/sync-token, which
+  // auto-binds the install to the signed-in email so the very next scan
+  // resolves to the user's tier without manual work.
   function probeExtensionInstallId() {
     return new Promise(function(resolve) {
       var marker = document.querySelector('meta[name="antares-extension-installed"]');
@@ -469,109 +462,42 @@ footer .foot-links a:hover{color:var(--c)}
     });
   }
 
-  // Pick the "best" license to auto-link. Priority Lifetime > Yearly > Pro.
-  // Among multiples of the same tier we pick the most recent. Skip
-  // already-redeemed licenses — re-redeeming them would be a no-op at
-  // best, an "already_redeemed" error at worst when the buyer's earlier
-  // install owns it.
-  function pickBestUnredeemed(list) {
-    var unredeemed = list.filter(function(l) { return !l.redeemed; });
-    if (!unredeemed.length) return null;
-    var lifetime = unredeemed.filter(function(l) { return l.tier === 'lifetime'; });
-    var yearly = unredeemed.filter(function(l) { return l.tier === 'yearly'; });
-    var pool = lifetime.length ? lifetime : (yearly.length ? yearly : unredeemed);
-    // Most recent first
-    pool.sort(function(a, b) { return (b.createdAt || 0) - (a.createdAt || 0); });
-    return pool[0];
-  }
-
-  function tierLabel(tier) {
-    if (tier === 'lifetime') return 'Lifetime';
-    if (tier === 'yearly') return 'Yearly';
-    return 'Pro';
-  }
-
-  // Server-side redeem call. Same endpoint extension uses — keeps the
-  // accounting consistent regardless of whether the user pasted a key
-  // manually or clicked the auto-link button here.
-  function autoRedeemLicense(license, installId) {
-    return fetch(API + '/api/redeem', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ license_key: license.key, install_id: installId })
-    }).then(function(r) {
-      return r.json().then(function(b) { return { status: r.status, body: b }; });
-    });
-  }
-
+  // ── Activate-in-extension callout ───────────────────────────────────────
+  // Pro is auto-active on every device where the user signs in — the
+  // session JWT is pushed to the extension via the bridge below. This
+  // callout exists to confirm sync state to the user (extension detected
+  // or not) and explain the multi-device story; it does NOT ask anyone
+  // to copy or paste anything.
   function renderActivateCallout(list) {
     var wrap = document.getElementById('activate-wrap');
-    var unredeemed = list.filter(function(l) { return !l.redeemed; });
-    if (!unredeemed.length) { wrap.innerHTML = ''; return; }
-    var keyPreview = unredeemed[0].key;
+    if (!list.length) { wrap.innerHTML = ''; return; }
 
-    // Default state — paste-key instructions (fallback when no extension
-    // detected, or as instructions even when the auto-link button is
-    // shown so users on a different install can still redeem manually).
-    var fallbackHtml =
-      '<h3>&rarr; Activate in your browser extension</h3>' +
-      'You have <b>' + unredeemed.length + ' unredeemed license' + (unredeemed.length > 1 ? 's' : '') + '</b>. ' +
-      'To unlock Pro features in your overlay:' +
-      '<ol>' +
-        '<li>Click your <b>Antares extension icon</b> in the browser toolbar &rarr; <b>Options</b>.</li>' +
-        '<li>Find the <code>Redeem a Pro license</code> field.</li>' +
-        '<li>Paste your license key (e.g. <code>' + escapeHtml(keyPreview) + '</code>) and click <b>Redeem</b>.</li>' +
-        '<li>The overlay flips to your tier instantly &mdash; refresh any open token page to see it.</li>' +
-      '</ol>';
+    // Default copy assumes no extension detected — surfaces an install
+    // CTA. probeExtensionInstallId promotes it to a "✓ synced" state
+    // when the bridge answers.
+    wrap.innerHTML =
+      '<div class="activate-callout" id="activate-callout">' +
+        '<h3>&rarr; Activate Pro on your devices</h3>' +
+        'Pro is now linked to your Antares account. To use it on a device:' +
+        '<ol>' +
+          '<li>Make sure the <b>Antares extension</b> is installed on that device.</li>' +
+          '<li>Sign in to your account on that device — open the extension Options page or visit <a href="./auth.html">antares-website.vercel.app/auth</a>.</li>' +
+          '<li>The overlay flips to Pro automatically. No keys to paste, ever.</li>' +
+        '</ol>' +
+      '</div>';
 
-    wrap.innerHTML = '<div class="activate-callout" id="activate-callout">' + fallbackHtml + '</div>';
-
-    // Try to upgrade to a one-click auto-link if the extension is here.
+    // If the extension is present on THIS device, swap to a "synced"
+    // confirmation. The bridge has already pushed the JWT (handled by
+    // pushSessionTokenToExtension) so the extension is good to go.
     probeExtensionInstallId().then(function(installId) {
-      if (!installId) return; // no extension detected — keep the paste-key fallback
-      var best = pickBestUnredeemed(list);
-      if (!best) return;
-
+      if (!installId) return; // no extension detected on THIS device — keep CTA
       var calloutEl = document.getElementById('activate-callout');
       if (!calloutEl) return;
       calloutEl.innerHTML =
-        '<h3>&check; Antares extension detected</h3>' +
-        'We found your installed extension. Click below to auto-redeem your ' +
-        '<b>' + tierLabel(best.tier) + '</b> license to it &mdash; no copying or pasting required.' +
-        '<div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">' +
-          '<button type="button" id="auto-link-btn" style="background:var(--c);color:var(--bg);border:none;padding:11px 22px;font:700 11px/1 \'IBM Plex Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;border-radius:2px;cursor:pointer">Link to my extension &rarr;</button>' +
-          '<span id="auto-link-status" style="font-size:11px;color:#7a7a82;letter-spacing:.04em"></span>' +
-        '</div>' +
-        '<details style="margin-top:14px"><summary style="cursor:pointer;font-size:11px;color:#5a5a62;letter-spacing:.18em;text-transform:uppercase">Or paste the key manually</summary><div style="margin-top:10px">' +
-        fallbackHtml.replace(/^<h3>[^<]+<\/h3>/, '') +
-        '</div></details>';
-
-      var btn = document.getElementById('auto-link-btn');
-      var status = document.getElementById('auto-link-status');
-      btn.addEventListener('click', function() {
-        btn.disabled = true;
-        btn.style.opacity = '0.6';
-        status.textContent = 'Linking…';
-        autoRedeemLicense(best, installId).then(function(r) {
-          if (r.status === 200 && r.body && r.body.ok) {
-            status.innerHTML = '<span style="color:var(--c)">&check; Linked. Refresh any token page to see your tier.</span>';
-            btn.style.display = 'none';
-          } else if (r.body && r.body.reason === 'already_redeemed') {
-            status.innerHTML = '<span style="color:var(--c)">&check; Already linked to this extension.</span>';
-            btn.style.display = 'none';
-          } else {
-            var msg = (r.body && r.body.reason) || 'Redeem failed.';
-            status.innerHTML = '<span style="color:#ff7777">&times; ' + escapeHtml(msg) + '</span>';
-            btn.disabled = false;
-            btn.style.opacity = '1';
-          }
-        }).catch(function() {
-          status.innerHTML = '<span style="color:#ff7777">&times; Network error. Try again.</span>';
-          btn.disabled = false;
-          btn.style.opacity = '1';
-        });
-      });
+        '<h3>&check; Synced with this device&rsquo;s extension</h3>' +
+        'Your account is now linked to the Antares extension on this browser. ' +
+        'Pro features are active across the overlay — refresh any open token page to see it. ' +
+        'To use Pro on another device, just sign in to your account there.';
     });
   }
 
@@ -583,51 +509,44 @@ footer .foot-links a:hover{color:var(--c)}
     renderActivateCallout(list);
 
     if (!list.length) {
-      listEl.innerHTML = '<div class="empty"><p>You don\'t have any licenses yet. Pick a tier and pay direct on Solana &mdash; your license arrives within a minute of on-chain confirmation.</p><a href="./pricing.html">View pricing</a></div>';
+      listEl.innerHTML = '<div class="empty"><p>You don\'t have any subscriptions yet. Pick a tier and pay in any of 200+ supported cryptocurrencies &mdash; Pro activates automatically on every device where you sign in to your account.</p><a href="./pricing.html">View pricing</a></div>';
       return;
     }
     resultsLabel.style.display = 'block';
+    var now = Date.now();
     listEl.innerHTML = list.map(function(l) {
       var rowLabel = l.tier === 'lifetime'
         ? 'Lifetime'
         : l.tier === 'yearly'
           ? 'Yearly · 1 year'
           : 'Pro · 30 days';
-      var stateBadge = l.redeemed
-        ? '<span class="badge redeemed">Redeemed</span>'
-        : '<span class="badge unredeemed">Unredeemed</span>';
+      // Active = no expiry OR expiry in the future. Lifetime is always
+      // active. Pro/Yearly past their expiry render as "expired" so the
+      // user knows to renew without inferring it from the date alone.
+      var isActive = l.tier === 'lifetime' || !l.expiresAt || l.expiresAt > now;
+      var stateBadge = isActive
+        ? '<span class="badge active">Active</span>'
+        : '<span class="badge expired">Expired</span>';
       var expiryLine = l.tier === 'lifetime'
         ? '<b>Expires:</b> never'
         : '<b>Expires:</b> ' + fmtDate(l.expiresAt);
       return [
         '<div class="lic ' + l.tier + '">',
           '<div class="lic-tier ' + l.tier + '">' + rowLabel + '</div>',
+          // License key kept visible as a purchase receipt — useful for
+          // support tickets — but no copy button. Users no longer need
+          // to enter it anywhere; their account is the activator.
           '<div class="lic-key" id="key-' + escapeHtml(l.key) + '">' + escapeHtml(l.key) + '</div>',
           '<div class="lic-meta"><b>Issued:</b> ' + fmtDate(l.createdAt) + ' &middot; ',
             '<b>Paid:</b> $' + Number(l.amountUsd || 0).toFixed(2) + ' &middot; ',
             expiryLine,
-            (l.redeemed ? ' &middot; <b>Redeemed:</b> ' + fmtDate(l.redeemedAt) : ''),
           '</div>',
           '<div class="lic-state">',
             stateBadge,
-            '<button type="button" data-key="' + escapeHtml(l.key) + '">Copy key</button>',
           '</div>',
         '</div>'
       ].join('');
     }).join('');
-    listEl.querySelectorAll('.lic-state button').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var key = btn.getAttribute('data-key');
-        if (!key) return;
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(key).then(function() {
-            var orig = btn.textContent;
-            btn.textContent = '✓ Copied';
-            setTimeout(function() { btn.textContent = orig; }, 1800);
-          });
-        }
-      });
-    });
   }
 
   // Push the session JWT to the extension via the bridge so its scan
