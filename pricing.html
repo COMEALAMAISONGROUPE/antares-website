@@ -579,11 +579,20 @@ footer span{color:var(--c)}
     amountEl.textContent = formatUsd(PRICE_USD[tier] || 0);
   }
 
-  // ── The actual checkout: POST /api/payment-intent → redirect ────────────
+  // ── The actual checkout: POST /api/payment-intent → open new tab ────────
   // Server returns { reference, payUrl, tier, amountUsd, expiresAt }.
-  // We send the buyer to payUrl (NOWPayments hosted page); they pick a
-  // crypto, pay, and NOWPayments redirects back to /account.html?ref=…
-  // where the license key is surfaced.
+  // We open a NEW TAB on payUrl (NOWPayments hosted page); the user
+  // pays there and NOWPayments redirects that tab to /account.html?ref=…
+  // The original /pricing tab stays open so the user can come back to
+  // it without hitting "back" or re-opening — much smoother UX than
+  // replacing the tab with the checkout page.
+  //
+  // Pop-up gotcha: window.open() only bypasses the popup blocker when
+  // called SYNCHRONOUSLY inside a user-gesture handler. By the time
+  // fetch resolves, the gesture grace period is gone and window.open()
+  // gets blocked. Workaround: open the tab IMMEDIATELY on click with
+  // about:blank, then update its location.href once the API responds.
+  // If the API fails we close the tab + restore the form state.
   function startCheckout() {
     if (!currentTier) return;
     // Logged-in users may have empty email input — server reads the session
@@ -597,9 +606,37 @@ footer span{color:var(--c)}
       setStatus('expired', 'Enter a valid email above first');
       return;
     }
-    setStatus('waiting', 'Creating intent&hellip;');
+
+    // Open the placeholder tab synchronously. Without this, window.open
+    // called from inside the .then() below gets popup-blocked because
+    // the user-gesture has expired by then. The tab opens on
+    // about:blank; we navigate it to the real payUrl once ready.
+    var checkoutTab = window.open('', '_blank');
+    if (checkoutTab) {
+      // Provide a friendly placeholder while the API is still resolving
+      // — beats a stark blank page if the API takes a second or two.
+      try {
+        checkoutTab.document.write(
+          '<!doctype html><meta charset="utf-8">' +
+          '<title>Antares · Preparing checkout…</title>' +
+          '<style>body{margin:0;background:#0a0a0c;color:#888;font-family:monospace;display:flex;align-items:center;justify-content:center;height:100vh;letter-spacing:.04em}</style>' +
+          '<div>Preparing your secure checkout…</div>'
+        );
+        checkoutTab.document.close();
+      } catch (_) { /* about:blank doc.write may throw in some browsers */ }
+    }
+
+    setStatus('waiting', 'Creating intent in a new tab&hellip;');
     ctaBtn.disabled = true;
     ctaTextEl.textContent = 'Working&hellip;';
+
+    function restoreForm() {
+      ctaBtn.disabled = false;
+      ctaTextEl.textContent = 'Continue to checkout';
+    }
+    function closeTab() {
+      try { if (checkoutTab && !checkoutTab.closed) checkoutTab.close(); } catch (_) {}
+    }
 
     installProbe.then(function() {
       var body = { tier: currentTier };
@@ -618,36 +655,42 @@ footer span{color:var(--c)}
         .then(function(r) {
           if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
             setStatus('expired', 'Coming soon — checkout not configured yet');
-            ctaBtn.disabled = false;
-            ctaTextEl.textContent = 'Continue to checkout';
+            restoreForm();
+            closeTab();
             return;
           }
           if (r.status === 400) {
             setStatus('expired', (r.body && r.body.error) || 'Invalid request');
-            ctaBtn.disabled = false;
-            ctaTextEl.textContent = 'Continue to checkout';
+            restoreForm();
+            closeTab();
             return;
           }
           if (r.status !== 200 || !r.body || !r.body.payUrl) {
             setStatus('expired', 'Couldn’t create the intent. Try again in a moment.');
-            ctaBtn.disabled = false;
-            ctaTextEl.textContent = 'Continue to checkout';
+            restoreForm();
+            closeTab();
             return;
           }
-          // Success — redirect to NOWPayments hosted page. The user
-          // returns via successUrl (set server-side to
-          // /account.html?ref=<reference>) once payment finalises.
-          setStatus('waiting', 'Redirecting to checkout&hellip;');
-          // Tiny delay so the user sees the redirect message before the
-          // browser leaves — feels less abrupt than instant navigation.
-          setTimeout(function() {
-            window.location.href = r.body.payUrl;
-          }, 250);
+          // Success path — point the placeholder tab at the real
+          // NOWPayments invoice. The original /pricing tab stays open
+          // so the buyer can come back without losing context.
+          if (checkoutTab && !checkoutTab.closed) {
+            checkoutTab.location.href = r.body.payUrl;
+            setStatus('confirmed', 'Checkout opened in a new tab. Complete payment there — this tab will stay here.');
+          } else {
+            // Popup blocker got us despite the sync open. Surface a
+            // clickable link so the user can manually open the tab.
+            var safe = String(r.body.payUrl).replace(/[<>"']/g, '');
+            statusEl.className = 'pay-status show warn';
+            statusEl.innerHTML =
+              'Popup blocked — <a href="' + safe + '" target="_blank" rel="noopener noreferrer" style="color:var(--c);text-decoration:underline">click here to open the checkout in a new tab</a>.';
+          }
+          restoreForm();
         })
         .catch(function() {
           setStatus('expired', 'Network error. Check your connection and retry.');
-          ctaBtn.disabled = false;
-          ctaTextEl.textContent = 'Continue to checkout';
+          restoreForm();
+          closeTab();
         });
     });
   }
