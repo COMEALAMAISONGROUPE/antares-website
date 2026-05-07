@@ -15,10 +15,10 @@
   <rect x="220" y="100" width="180" height="28" rx="4" fill="none" stroke="#444" stroke-width="1"/>
   <text x="235" y="119" font-family="monospace" font-size="11" fill="#888">SOLANA TOKEN SCANNER</text>
   <!-- Main headline -->
-  <text x="60" y="200" font-family="Arial,sans-serif" font-size="72" font-weight="900" fill="#ffffff">STOP GETTING </text>
-  <text x="688" y="200" font-family="Arial,sans-serif" font-size="72" font-weight="900" fill="#ff4057">SCAMMED.</text>
+  <text x="60" y="200" font-family="Arial,sans-serif" font-size="72" font-weight="900" fill="#ffffff">SPOT SOLANA </text>
+  <text x="618" y="200" font-family="Arial,sans-serif" font-size="72" font-weight="900" fill="#f5d000">RUGS.</text>
   <!-- Subtitle -->
-  <text x="60" y="240" font-family="monospace" font-size="14" fill="#666">7 sources. 6 layers. 1000-point score. Real-time protection.</text>
+  <text x="60" y="240" font-family="monospace" font-size="14" fill="#666">7 sources. 6 layers. 1000-point score. The read before you click buy.</text>
   <!-- Card 1: SAFE -->
   <rect x="40" y="280" width="260" height="220" rx="8" fill="#111118" stroke="#00ff80" stroke-width="1.5"/>
   <text x="60" y="320" font-family="monospace" font-size="11" fill="#555">WIF dogwifhat</text>
