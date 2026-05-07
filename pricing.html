@@ -168,7 +168,12 @@ footer span{color:var(--c)}
   .tier-tagline{min-height:auto}
 }
 
-/* ── Solana Pay checkout modal ───────────────────────────────────────────── */
+/* ── NOWPayments hosted-checkout modal ──────────────────────────────────
+   Slim modal: email + amount + single CTA that redirects to NOWPayments.
+   The hosted page is where the user picks the cryptocurrency from 200+
+   options and signs the payment, so we don't render a QR or wallet UI
+   ourselves. License key surfaces on /account.html?ref=... after the
+   buyer is redirected back. */
 .pay-overlay{position:fixed;inset:0;background:rgba(5,5,7,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;animation:pay-fade-in .2s ease}
 .pay-overlay.open{display:flex}
 @keyframes pay-fade-in{from{opacity:0}to{opacity:1}}
@@ -176,24 +181,35 @@ footer span{color:var(--c)}
 .pay-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#555;font-size:18px;cursor:pointer;line-height:1;padding:4px 8px;transition:color .2s}
 .pay-close:hover{color:#ccc}
 .pay-title{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:8px;text-align:center}
-.pay-subtitle{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;text-align:center;margin-bottom:20px}
-/* QR shrunk 200 → 140 per Demo A. Wallet button is the desktop primary
-   CTA now; the QR is a fallback for mobile-wallet users only, so it
-   doesn't need to dominate the modal. */
-.pay-qr{background:#ffffff;border-radius:4px;padding:12px;margin:0 auto 14px;width:140px;height:140px;display:flex;align-items:center;justify-content:center}
-.pay-qr svg{width:116px;height:116px;display:block}
-.pay-amount{font:400 36px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-align:center;margin-bottom:4px}
-.pay-token{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;text-align:center;margin-bottom:18px}
-/* Email input — shown above the QR so the user enters it before paying.
-   The license key is delivered tied to this email (and the buyer can
+.pay-subtitle{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;text-align:center;margin-bottom:24px}
+.pay-amount{font:400 44px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:var(--c);text-align:center;margin-bottom:4px}
+.pay-amount-caption{font:600 10px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.22em;text-transform:uppercase;text-align:center;margin-bottom:22px}
+/* Email input — shown so the user enters it before checkout. The
+   license key is delivered tied to this email (and the buyer can
    re-fetch it later at /account.html), so we ask up-front rather than
    risk a confirmed payment with no recoverable identity. */
-.pay-email-row{display:flex;flex-direction:column;gap:6px;margin:0 0 14px}
+.pay-email-row{display:flex;flex-direction:column;gap:6px;margin:0 0 18px}
 .pay-email-row label{font:600 10px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase}
 .pay-email-row input{padding:10px 12px;background:#0a0a0c;color:#eaeaea;border:1px solid var(--border);border-radius:2px;font:400 13px/1 'IBM Plex Mono',monospace}
 .pay-email-row input:focus{border-color:var(--c);outline:none}
 .pay-email-row input.invalid{border-color:#ff5f5f}
 .pay-email-hint{font:400 10px/1.4 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em}
+.pay-coins{display:flex;justify-content:center;align-items:center;gap:6px;margin:0 0 18px;font:600 10px/1.5 'IBM Plex Mono',monospace;color:#888;letter-spacing:.12em;text-transform:uppercase;flex-wrap:wrap}
+.pay-coins .pay-coin{padding:3px 8px;background:#0a0a0c;border:1px solid #1a1a1e;border-radius:2px;color:#aaa}
+.pay-coins .pay-coins-more{color:#5a5a62}
+/* Primary CTA — redirects to the NOWPayments hosted page. */
+.pay-cta-btn{display:flex;width:100%;padding:14px;background:var(--c);color:var(--bg);border:none;border-radius:2px;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;transition:transform .2s,box-shadow .2s}
+.pay-cta-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
+.pay-cta-btn:disabled{opacity:.5;cursor:not-allowed}
+.pay-cta-btn .pay-cta-arrow{font-size:14px;line-height:1}
+.pay-status{padding:12px;border-radius:2px;text-align:center;font:600 10px/1.4 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--border);background:#0a0a0c;display:none}
+.pay-status.show{display:block}
+.pay-status.warn{color:#f5d000;border-color:rgba(245,208,0,.4);background:rgba(245,208,0,.05)}
+.pay-status.confirmed{color:var(--c);border-color:rgba(0,229,176,.4);background:rgba(0,229,176,.05)}
+.pay-status.expired{color:#ff7777;border-color:rgba(255,95,95,.4);background:rgba(255,95,95,.06)}
+.pay-status.waiting{color:#888;border-color:#2a2a30}
+.pay-status .pay-spinner{display:inline-block;width:8px;height:8px;border-radius:50%;background:#888;margin-right:8px;animation:pay-pulse 1.2s ease-in-out infinite}
+@keyframes pay-pulse{0%,100%{opacity:.3}50%{opacity:1}}
 .pay-license{margin:14px 0;padding:14px;background:rgba(0,229,176,.06);border:1px solid rgba(0,229,176,.4);border-radius:2px;text-align:center}
 .pay-license-label{font:600 9px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
 .pay-license-key{font:700 14px/1.3 'IBM Plex Mono',monospace;color:#eaeaea;letter-spacing:.12em;word-break:break-all;user-select:all;-webkit-user-select:all}
@@ -201,49 +217,12 @@ footer span{color:var(--c)}
 .pay-license-copy:hover{background:rgba(0,229,176,.12);border-color:var(--c)}
 .pay-license-instr{margin-top:12px;font:400 11px/1.5 'IBM Plex Mono',monospace;color:#888}
 .pay-license-instr a{color:var(--c)}
-.pay-toggle{display:flex;gap:0;justify-content:center;margin:0 auto 18px;border:1px solid var(--border);border-radius:2px;overflow:hidden;width:fit-content;background:#0a0a0c}
-.pay-toggle button{flex:0 0 auto;padding:9px 18px;background:transparent;border:none;color:#666;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:color .2s,background .2s;min-width:96px}
-.pay-toggle button.active{color:var(--bg);background:var(--c)}
-.pay-toggle button:not(.active):hover{color:#ccc}
-.pay-toggle button:disabled{opacity:.45;cursor:not-allowed}
-.pay-status.warn{color:#f5d000;border-color:rgba(245,208,0,.4);background:rgba(245,208,0,.05)}
-.pay-recipient{background:#0a0a0c;border:1px solid var(--border);border-radius:2px;padding:10px 12px;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aaa;display:flex;align-items:center;gap:8px;word-break:break-all}
-.pay-recipient .pay-addr{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pay-recipient button{background:none;border:1px solid #2a2a30;color:#888;padding:4px 8px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'IBM Plex Mono',monospace;transition:all .2s;flex-shrink:0}
-.pay-recipient button:hover{color:var(--c);border-color:var(--c)}
-/* ── Wallet-connect button (primary on desktop with wallet extension) ─────
-   Detected wallet → big branded button. The button just sets
-   window.location.href to the Solana Pay URL — every Solana wallet
-   extension intercepts `solana:` URLs and opens its transfer dialog
-   with recipient + amount + token + reference pre-filled. No web3.js
-   needed, no wallet adapter, ~zero JS overhead. */
-.pay-wallet-btn{display:none;width:100%;padding:14px;background:var(--c);color:var(--bg);border:none;border-radius:2px;font:700 12px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;transition:transform .2s,box-shadow .2s}
-.pay-wallet-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,176,.25)}
-.pay-wallet-btn.detected{display:flex}
-.pay-wallet-btn .pay-wallet-dot{width:8px;height:8px;border-radius:50%;background:#0a0a0c;flex-shrink:0}
-.pay-or{text-align:center;font:600 9px/1 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.32em;text-transform:uppercase;margin:14px 0;display:none;position:relative}
-.pay-or::before,.pay-or::after{content:'';position:absolute;top:50%;width:calc(50% - 22px);height:1px;background:#1a1a1e}
-.pay-or::before{left:0}.pay-or::after{right:0}
-.pay-or.show{display:block}
-
-.pay-status{padding:12px;border-radius:2px;text-align:center;font:600 10px/1.4 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--border);background:#0a0a0c}
-.pay-status.waiting{color:#888;border-color:#2a2a30}
-.pay-status.confirmed{color:var(--c);border-color:rgba(0,229,176,.4);background:rgba(0,229,176,.05)}
-.pay-status.expired{color:#ff7777;border-color:rgba(255,95,95,.4);background:rgba(255,95,95,.06)}
-.pay-status .pay-spinner{display:inline-block;width:8px;height:8px;border-radius:50%;background:#888;margin-right:8px;animation:pay-pulse 1.2s ease-in-out infinite}
-@keyframes pay-pulse{0%,100%{opacity:.3}50%{opacity:1}}
-.pay-status.confirmed .pay-spinner{background:var(--c);animation:none}
-.pay-tx{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#666;text-align:center;margin-top:10px;word-break:break-all;letter-spacing:.04em}
-.pay-tx a{color:var(--c);text-decoration:none}
-.pay-tx a:hover{text-decoration:underline}
-
 @media(max-width:520px){
   .pay-modal{padding:24px 20px}
-  .pay-qr{width:180px;height:180px}
-  .pay-qr svg{width:148px;height:148px}
+  .pay-amount{font-size:36px}
 }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Antares anti-scam scanner for Solana — seven independent scoring layers, one verdict, surfaced live in your overlay. Free with unlimited scans. Pro and Yearly tiers paid direct in USDC or SOL, zero middleman.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Pricing — Antares","description":"Antares anti-scam scanner for Solana — seven independent scoring layers, one verdict, surfaced live in your overlay. Free with unlimited scans. Pro and Yearly tiers paid in any of 200+ cryptocurrencies via NOWPayments hosted checkout.","url":"https://antares-website.vercel.app/pricing","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antares-website.vercel.app/"}}</script>
 </head>
 <body>
 <div class="stripe" role="presentation" aria-hidden="true"></div>
@@ -360,12 +339,16 @@ footer span{color:var(--c)}
 </main></div>
 <footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 
-<!-- ── Solana Pay checkout modal ────────────────────────────────────────── -->
+<!-- ── NOWPayments hosted-checkout modal ──────────────────────────────────
+     Slim by design: collect email, show locked-in USD amount, redirect
+     to the NOWPayments page where the buyer picks one of 200+ cryptos
+     and signs the payment in their preferred wallet. License key
+     surfaces on /account.html?ref=… after NOWPayments redirects back. -->
 <div class="pay-overlay" id="pay-overlay" role="dialog" aria-labelledby="pay-title" aria-modal="true">
   <div class="pay-modal">
     <button class="pay-close" id="pay-close" aria-label="Close">&times;</button>
-    <h3 class="pay-title" id="pay-title">Pay on Solana</h3>
-    <div class="pay-subtitle" id="pay-subtitle">Direct on Solana &middot; zero middleman</div>
+    <h3 class="pay-title" id="pay-title">Antares Pro · 30 days</h3>
+    <div class="pay-subtitle" id="pay-subtitle">Pay with any crypto &middot; 200+ supported</div>
     <div class="pay-email-row" id="pay-email-row">
       <label for="pay-email">Your email (for the license + receipt)</label>
       <input type="email" id="pay-email" name="email" autocomplete="email" placeholder="you@degen.sol" spellcheck="false">
@@ -375,103 +358,72 @@ footer span{color:var(--c)}
         Already have an account? <a href="./auth.html?return=%2Fpricing.html" style="color:var(--c);text-decoration:none">Log in</a> to skip this step.
       </div>
     </div>
-    <div class="pay-toggle" role="tablist" aria-label="Choose payment token">
-      <button type="button" id="pay-toggle-usdc" class="active" data-token="usdc" role="tab" aria-selected="true">USDC</button>
-      <button type="button" id="pay-toggle-sol" data-token="sol" role="tab" aria-selected="false">SOL</button>
-    </div>
     <div class="pay-amount" id="pay-amount">—</div>
-    <div class="pay-token" id="pay-token-label">USDC on Solana</div>
-    <div class="pay-qr" id="pay-qr"></div>
+    <div class="pay-amount-caption" id="pay-amount-caption">USD &middot; pay in any crypto</div>
+    <div class="pay-coins" aria-label="Supported cryptocurrencies">
+      <span class="pay-coin">BTC</span>
+      <span class="pay-coin">ETH</span>
+      <span class="pay-coin">USDT</span>
+      <span class="pay-coin">USDC</span>
+      <span class="pay-coin">SOL</span>
+      <span class="pay-coin">BNB</span>
+      <span class="pay-coins-more">+ 200 more</span>
+    </div>
     <div class="pay-license" id="pay-license" style="display:none">
       <div class="pay-license-label">Your license key</div>
       <div class="pay-license-key" id="pay-license-key">—</div>
       <button type="button" class="pay-license-copy" id="pay-license-copy">Copy</button>
       <div class="pay-license-instr">Save this key. Open the extension's options page and paste it under <b>Redeem a Pro license</b>. You can also fetch it later at <a href="./account.html">antares-website.vercel.app/account</a>.</div>
     </div>
-    <div class="pay-recipient">
-      <span class="pay-addr" id="pay-recipient">&mdash;</span>
-      <button id="pay-copy" type="button">Copy</button>
-    </div>
-    <!-- Primary CTA on desktop with wallet extension installed. JS
-         detects window.solana / window.solflare / window.backpack and
-         flips the label + .detected class. Clicking calls
-         provider.signAndSendTransaction() with a real Solana
-         transaction built via @solana/web3.js loaded as IIFE bundle. -->
-    <button class="pay-wallet-btn" id="pay-wallet-btn" type="button">
-      <span class="pay-wallet-dot"></span>
-      <span class="pay-wallet-text">Pay with wallet</span>
+    <button class="pay-cta-btn" id="pay-cta-btn" type="button" disabled>
+      <span class="pay-cta-text">Continue to checkout</span>
+      <span class="pay-cta-arrow">→</span>
     </button>
-    <div class="pay-or" id="pay-or">or scan QR with mobile wallet</div>
-    <div class="pay-status waiting" id="pay-status"><span class="pay-spinner"></span>Waiting for payment&hellip;</div>
-    <div class="pay-tx" id="pay-tx"></div>
+    <div class="pay-status" id="pay-status"></div>
   </div>
 </div>
 
-<!-- QR generator: tiny lib (~10KB), MIT license, served via jsdelivr.
-     Pinned to a specific version so the bundle we serve never silently
-     changes underneath users on a future CDN release. -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" crossorigin="anonymous"></script>
-
-<!-- Solana web3 SDK — single-file IIFE bundle from jsdelivr.
-     Exposes `window.solanaWeb3` with all the primitives we need
-     (PublicKey, Transaction, SystemProgram, Connection, etc). One
-     self-contained classic script — no module-import dependency
-     cascading, no /node/* polyfill resolution, no ?bundle redirector.
-
-     Previous attempt used `esm.sh/@solana/web3.js@1.95.4?bundle` which
-     returns a 233-byte stub that imports more files (`/node/buffer`,
-     `/node/process`, etc.) — works in some browsers but failed in
-     production for the user, leaving "Solana SDK failed to load" on
-     screen. This IIFE bundle is rock-solid: one file, no cascading.
-
-     Pinned to 1.95.4. We don't need @solana/spl-token — the SPL
-     transfer instruction is hand-built below in payWithWallet(). -->
-<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.4/lib/index.iife.min.js" crossorigin="anonymous"></script>
-
 <script>
-// ── Solana Pay checkout flow ─────────────────────────────────────────────────
+// ── NOWPayments hosted-checkout flow ────────────────────────────────────
 //
-// User picks a tier → modal opens defaulted to USDC → optional toggle to SOL
-// (price computed at intent-creation time using Jupiter v4) → POST
-// /api/payment-intent with { tier, token, install_id } → server returns a
-// fresh Solana Pay URL with a unique reference key → modal displays QR +
-// click-to-pay deep link + recipient + amount → user signs the transfer in
-// their wallet → our cron picks up the on-chain confirmation within ~1 min →
-// /api/payment-status flips to "confirmed" → modal shows success state.
+// User picks a tier → modal opens with email field → server creates a
+// NOWPayments invoice → user is redirected to the hosted checkout page
+// where they pick one of 200+ supported cryptos and pay. NOWPayments
+// fires our IPN webhook on confirmation; the buyer is redirected back
+// to /account.html?ref=… where the polling endpoint surfaces the
+// license key.
 //
-// Failure paths, all surfaced visibly:
-//   - 503 checkout_not_configured (env vars unset)  → "Coming soon", surface
-//                                                       a clear message inline
-//   - 502 sol_rate_unavailable (Jupiter down)       → flip back to USDC + warn
-//   - intent expired (30-min TTL)                   → "Expired", offer retry
-//   - network failure                               → "Network error", retry
+// Failure paths surfaced visibly:
+//   - 503 checkout_not_configured (env vars unset)   → "Coming soon"
+//   - 502 (NOWPayments unreachable)                   → "Try again"
+//   - 400 (invalid email/tier)                        → inline validator
+//   - network failure                                 → retry message
 (function() {
   var INSTALL_ID_RE = /^[a-zA-Z0-9_-]{8,128}$/;
   var API_BASE = 'https://antares-extension.vercel.app';
   var INTENT_API = API_BASE + '/api/payment-intent';
-  var STATUS_API = API_BASE + '/api/payment-status';
   var ME_API = API_BASE + '/api/auth/me';
+
+  // Locked-in USD prices (must match server defaults / env vars).
+  // The server is the source of truth; this is the display value before
+  // we hit the API. The server returns the actual amountUsd in its
+  // response — we update the UI when we receive it.
+  var PRICE_USD = { monthly: 24.99, yearly: 149.99 };
 
   var params = new URLSearchParams(window.location.search);
   var installId = (params.get('install') || '').trim();
   var hasInstall = installId && INSTALL_ID_RE.test(installId);
 
   // ── Probe the extension for install_id ──────────────────────────────────
-  // If the user lands here without ?install=… on the URL (i.e. they didn't
-  // come from the extension's quota-limit redirect), they might still
-  // have the extension installed. The content-script bridge in the
-  // extension (contents/antares-website-bridge.ts) injects a meta tag
-  // and answers postMessage queries with the install_id. We probe once
-  // on page load — if successful, paying customers' install_id flows
-  // into the payment intent and the cron auto-flips their tier on
-  // confirmation, no manual key paste needed.
+  // Same as before: the bridge content script (in the extension) drops a
+  // meta tag at document_start and answers postMessage queries with the
+  // install_id. We probe once on page load so paying customers' install_id
+  // flows into the payment intent and the IPN webhook auto-flips their
+  // tier on confirmation, no manual key paste needed.
   function probeExtensionInstallId() {
     return new Promise(function(resolve) {
-      // Synchronous fast-path: meta tag dropped by the bridge at
-      // document_start. If absent, no extension → bail without waiting.
       var marker = document.querySelector('meta[name="antares-extension-installed"]');
       if (!marker) return resolve(null);
-
       var nonce = String(Date.now()) + ':' + Math.random().toString(36).slice(2);
       var resolved = false;
       function onMsg(e) {
@@ -486,9 +438,6 @@ footer span{color:var(--c)}
       }
       window.addEventListener('message', onMsg);
       window.postMessage({ type: 'antares:get-install-id', nonce: nonce }, window.location.origin);
-      // 800ms timeout — bridge should respond in <50ms; this only fires
-      // if something's wrong (e.g. extension disabled but meta tag from a
-      // previous session lingering in DOM somehow).
       setTimeout(function() {
         if (!resolved) {
           window.removeEventListener('message', onMsg);
@@ -497,10 +446,6 @@ footer span{color:var(--c)}
       }, 800);
     });
   }
-
-  // Kick off the probe immediately. Modal-open code awaits this promise
-  // so we never submit a payment intent without the install_id when the
-  // extension is actually installed.
   var installProbe = probeExtensionInstallId().then(function(id) {
     if (!hasInstall && id && INSTALL_ID_RE.test(id)) {
       installId = id;
@@ -509,11 +454,10 @@ footer span{color:var(--c)}
     return id;
   });
 
-  // Logged-in state — populated async on page load. When set, we
-  // suppress the email input in the modal and use the session email
-  // for /api/payment-intent (the server reads it from the cookie too,
-  // but populating client-side keeps the UX honest about what we're
-  // about to send).
+  // ── Logged-in detection ─────────────────────────────────────────────────
+  // When set, the modal hides the email input and uses the session email.
+  // Server-side /api/payment-intent reads the session cookie too, so this
+  // is purely UX consistency.
   var loggedInEmail = null;
   fetch(ME_API, { credentials: 'include' })
     .then(function(r) { return r.ok ? r.json() : null; })
@@ -527,77 +471,76 @@ footer span{color:var(--c)}
 
   // DOM refs
   var overlay = document.getElementById('pay-overlay');
-  var modal = overlay.querySelector('.pay-modal');
   var titleEl = document.getElementById('pay-title');
-  var subtitleEl = document.getElementById('pay-subtitle');
   var amountEl = document.getElementById('pay-amount');
-  var tokenLabelEl = document.getElementById('pay-token-label');
-  var qrEl = document.getElementById('pay-qr');
-  var recipientEl = document.getElementById('pay-recipient');
-  var copyBtn = document.getElementById('pay-copy');
   var statusEl = document.getElementById('pay-status');
-  var txEl = document.getElementById('pay-tx');
   var closeBtn = document.getElementById('pay-close');
-  var toggleUsdc = document.getElementById('pay-toggle-usdc');
-  var toggleSol = document.getElementById('pay-toggle-sol');
   var emailInput = document.getElementById('pay-email');
   var emailHintEl = document.getElementById('pay-email-hint');
   var emailAuthnoteEl = document.getElementById('pay-email-authnote');
   var emailLoginLinkEl = document.getElementById('pay-email-loginlink');
+  var emailRow = document.getElementById('pay-email-row');
+  var ctaBtn = document.getElementById('pay-cta-btn');
+  var ctaTextEl = ctaBtn.querySelector('.pay-cta-text');
   var licenseRow = document.getElementById('pay-license');
   var licenseKeyEl = document.getElementById('pay-license-key');
   var licenseCopyBtn = document.getElementById('pay-license-copy');
 
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  var pollTimer = null;
-  var currentReference = null;
-  // Full intent object — needed by payWithWallet() to build the
-  // transaction (recipient, amount, splTokenMint, reference). Stays
-  // in sync with currentReference: set together, cleared together.
-  var currentIntent = null;
-  // Persists across re-opens so the user's last choice is remembered for
-  // the rest of the session — but defaults to USDC every fresh load to
-  // avoid surprising users who don't know SOL pricing fluctuates.
-  var currentToken = 'usdc';
   var currentTier = null;
-  // Whether the email field has been validated (for state transitions
-  // between "before pay" and "after pay confirmed").
-  var currentEmail = '';
 
   // Persist whatever the buyer typed locally so refreshes don't lose it.
   try {
     var saved = localStorage.getItem('antares_buyer_email') || '';
     if (saved) emailInput.value = saved;
   } catch(_) {}
+
+  function readEmail() {
+    var v = (emailInput.value || '').trim().toLowerCase();
+    return EMAIL_RE.test(v) ? v : '';
+  }
+
+  function refreshCtaState() {
+    // CTA enabled when: logged in (email comes from session) OR a valid
+    // email is in the input. Email field is hidden for logged-in users so
+    // we never block them on it.
+    var ready = !!loggedInEmail || !!readEmail();
+    ctaBtn.disabled = !ready;
+  }
+
   emailInput.addEventListener('input', function() {
     try { localStorage.setItem('antares_buyer_email', emailInput.value); } catch(_) {}
     emailInput.classList.remove('invalid');
+    refreshCtaState();
   });
+
+  function setStatus(state, html) {
+    if (!html) {
+      statusEl.className = 'pay-status';
+      statusEl.innerHTML = '';
+      return;
+    }
+    statusEl.className = 'pay-status show ' + state;
+    statusEl.innerHTML = (state === 'waiting' ? '<span class="pay-spinner"></span>' : '') + html;
+  }
 
   function closeModal() {
     overlay.classList.remove('open');
-    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-    currentReference = null;
-    currentIntent = null;
-    txEl.textContent = '';
+    setStatus(null);
     licenseRow.style.display = 'none';
     licenseKeyEl.textContent = '—';
+    ctaBtn.disabled = false;
+    ctaTextEl.textContent = 'Continue to checkout';
   }
 
-  // When a session cookie is detected, hide the email input + login
-  // link and show a "logged in as <email>" line instead. Server-side
-  // /api/payment-intent will use the cookie email regardless of body
-  // contents, but matching the UI keeps user trust intact.
   function applyLoggedInUI() {
     if (!loggedInEmail) return;
     emailInput.value = loggedInEmail;
-    emailInput.style.display = 'none';
-    document.querySelector('label[for="pay-email"]').style.display = 'none';
-    emailHintEl.style.display = 'none';
-    emailLoginLinkEl.style.display = 'none';
+    emailRow.style.display = 'none';
     emailAuthnoteEl.style.display = 'block';
     emailAuthnoteEl.textContent = '✓ Logged in as ' + loggedInEmail + '. License will be linked to this account.';
+    emailLoginLinkEl.style.display = 'none';
+    refreshCtaState();
   }
 
   closeBtn.addEventListener('click', closeModal);
@@ -606,524 +549,135 @@ footer span{color:var(--c)}
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
   });
 
-  function renderQR(payUrl) {
-    qrEl.innerHTML = '';
-    if (typeof qrcode !== 'function') {
-      qrEl.textContent = 'QR unavailable';
-      return;
-    }
-    var qr = qrcode(0, 'M');
-    qr.addData(payUrl);
-    qr.make();
-    // Render as inline SVG (sharp, scales cleanly, no raster artifacts)
-    qrEl.innerHTML = qr.createSvgTag({ scalable: true, margin: 0 });
-  }
-
-  function setStatus(state, html) {
-    statusEl.className = 'pay-status ' + state;
-    statusEl.innerHTML = (state === 'waiting' ? '<span class="pay-spinner"></span>' : '') + html;
-  }
-
-  function showSuccessBanner() {
-    if (document.getElementById('pay-success-banner')) return;
-    var banner = document.createElement('div');
-    banner.id = 'pay-success-banner';
-    banner.style.cssText = 'background:rgba(0,229,176,0.06);border:1px solid rgba(0,229,176,0.4);border-radius:2px;padding:14px 18px;margin:0 auto 24px;max-width:560px;text-align:center;font:600 11px/1.4 "IBM Plex Mono",monospace;color:#00e5b0;letter-spacing:0.22em;text-transform:uppercase';
-    banner.textContent = '✓ Payment confirmed — Pro is live in your extension';
-    var hero = document.querySelector('.page-hero');
-    if (hero && hero.parentNode) hero.parentNode.insertBefore(banner, hero.nextSibling);
-  }
-
-  function showLicense(key) {
-    if (!key) return;
-    licenseKeyEl.textContent = key;
-    licenseRow.style.display = 'block';
-  }
-
-  function pollStatus(reference) {
-    fetch(STATUS_API + '?reference=' + encodeURIComponent(reference))
-      .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
-      .then(function(r) {
-        // Stop polling if the user closed the modal or moved on
-        if (currentReference !== reference) return;
-        if (r.status === 200 && r.body) {
-          if (r.body.status === 'confirmed') {
-            setStatus('confirmed', '✓ Payment confirmed');
-            if (r.body.txSignature) {
-              txEl.innerHTML = 'Tx: <a href="https://solscan.io/tx/' +
-                encodeURIComponent(r.body.txSignature) +
-                '" target="_blank" rel="noopener">' +
-                r.body.txSignature.slice(0, 8) + '…' + r.body.txSignature.slice(-8) +
-                '</a>';
-            }
-            // Surface the license key inline so the buyer can save it
-            // before the modal auto-closes. We keep the modal open longer
-            // when a license is present (the key is the artifact they
-            // came for).
-            if (r.body.licenseKey) {
-              showLicense(r.body.licenseKey);
-            }
-            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-            // No license → close after the usual short pause. With a
-            // license → leave it open so the user has time to copy it.
-            // They can dismiss with Esc / close button when done.
-            if (!r.body.licenseKey) {
-              setTimeout(function() {
-                if (currentReference === reference) {
-                  closeModal();
-                  showSuccessBanner();
-                }
-              }, 2500);
-            } else {
-              showSuccessBanner();
-            }
-            return;
-          }
-          if (r.body.status === 'expired') {
-            setStatus('expired', '✕ Expired — close and try again');
-            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-            return;
-          }
-        }
-        // 404 (not_found yet) or pending → keep polling
-      })
-      .catch(function() { /* swallow, next tick will retry */ });
-  }
-
-  // SOL prices vary per intent so we always show 4 decimals + the SOL
-  // unit. USDC stays fixed and dollar-formatted. Both render the locked-in
-  // USD amount as a small caption so the user sees what they're committing
-  // to in fiat terms.
-  function renderAmount(intent) {
-    if (intent.token === 'sol') {
-      amountEl.textContent = Number(intent.amount).toFixed(4) + ' SOL';
-      tokenLabelEl.innerHTML = '&asymp; $' + Number(intent.amountUsd).toFixed(2) + ' &middot; SOL on Solana';
-    } else {
-      amountEl.textContent = '$' + Number(intent.amount).toFixed(2);
-      tokenLabelEl.textContent = 'USDC on Solana';
-    }
-  }
-
-  // ── Wallet detection + connect-and-pay button ────────────────────────────
-  // Browser-extension wallets all expose a global injection hook on
-  // window. We sniff the three majors (Phantom, Solflare, Backpack) so we
-  // can label the button with the wallet name. If none is installed,
-  // hide the button entirely and rely on the QR + "Open in wallet" deep
-  // link as the existing fallback.
-  //
-  // We deliberately don't load @solana/wallet-adapter or @solana/web3.js
-  // for this — every Solana wallet extension intercepts `solana:` URLs
-  // when set as window.location, so a single line drives the same
-  // signing flow that web3.js would, with zero JS payload.
-  function detectWallet() {
-    if (typeof window === 'undefined') return null;
-    if (window.solana && window.solana.isPhantom) return { name: 'Phantom', color: '#AB9FF2' };
-    if (window.solflare && window.solflare.isSolflare) return { name: 'Solflare', color: '#FC822B' };
-    if (window.backpack && window.backpack.isBackpack) return { name: 'Backpack', color: '#E33E3F' };
-    // Generic detection — some wallets identify only as window.solana
-    if (window.solana) return { name: 'Wallet', color: 'var(--c)' };
-    return null;
-  }
-
-  // The web3.js IIFE bundle exposes `window.solanaWeb3` with all the
-  // primitives we use. It's a classic <script> tag (loaded above) so
-  // it's typically ready before the inline script below runs — but we
-  // still poll briefly in case of slow CDN. 4s timeout returns a
-  // friendly error so the QR fallback gets used.
-  function waitForSolanaSDK() {
-    return new Promise(function(resolve, reject) {
-      if (window.solanaWeb3 && window.solanaWeb3.PublicKey) return resolve(window.solanaWeb3);
-      var elapsed = 0;
-      var interval = setInterval(function() {
-        if (window.solanaWeb3 && window.solanaWeb3.PublicKey) {
-          clearInterval(interval);
-          resolve(window.solanaWeb3);
-        } else if (elapsed > 4000) {
-          clearInterval(interval);
-          reject(new Error('Solana SDK failed to load — try the QR code instead.'));
-        }
-        elapsed += 100;
-      }, 100);
-    });
-  }
-
-  // ── Hand-built SPL token primitives ──────────────────────────────────────
-  // We don't load @solana/spl-token (no good single-file IIFE bundle exists
-  // for it on a CDN, and we'd need its full transitive tree). Instead, we
-  // build the two SPL primitives we need directly:
-  //
-  //   1. getAssociatedTokenAddress(mint, owner) — derive the ATA via
-  //      PDA from the SPL convention seeds [owner, TOKEN_PROGRAM, mint]
-  //      with the Associated Token Program ID.
-  //
-  //   2. createSPLTransferIx(...) — build the TransferChecked instruction
-  //      (variant 12) with a hand-serialised data buffer:
-  //        byte 0     : 0x0c (variant tag for TransferChecked)
-  //        bytes 1-8  : amount as u64 little-endian
-  //        byte 9     : decimals (u8)
-  //
-  // These two are stable parts of the SPL Token program ABI — they have
-  // not changed since 2020 and are unlikely to. The function is ~30 LOC
-  // vs ~30KB of npm dependencies. Audit-friendly, dep-free.
-  var TOKEN_PROGRAM_ID_STR = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
-  var ASSOCIATED_TOKEN_PROGRAM_ID_STR = 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL';
-
-  function getAssociatedTokenAddress(sdk, mint, owner) {
-    var tokenProg = new sdk.PublicKey(TOKEN_PROGRAM_ID_STR);
-    var ataProg = new sdk.PublicKey(ASSOCIATED_TOKEN_PROGRAM_ID_STR);
-    var seeds = [owner.toBuffer(), tokenProg.toBuffer(), mint.toBuffer()];
-    var result = sdk.PublicKey.findProgramAddressSync(seeds, ataProg);
-    return result[0];
-  }
-
-  function createSPLTransferIx(sdk, senderAta, mint, recipientAta, owner, rawAmount, decimals) {
-    var tokenProg = new sdk.PublicKey(TOKEN_PROGRAM_ID_STR);
-    var data = new Uint8Array(10);
-    data[0] = 12; // TransferChecked variant tag
-    var n = BigInt(rawAmount);
-    for (var i = 0; i < 8; i++) {
-      data[1 + i] = Number((n >> BigInt(i * 8)) & 0xffn);
-    }
-    data[9] = decimals;
-    return new sdk.TransactionInstruction({
-      keys: [
-        { pubkey: senderAta, isSigner: false, isWritable: true },
-        { pubkey: mint, isSigner: false, isWritable: false },
-        { pubkey: recipientAta, isSigner: false, isWritable: true },
-        { pubkey: owner, isSigner: true, isWritable: false },
-      ],
-      programId: tokenProg,
-      data: data,
-    });
-  }
-
-  // Get the active wallet provider. Phantom, Solflare, Backpack all
-  // expose the same Solana wallet-provider API — `connect()`,
-  // `publicKey`, `signAndSendTransaction(tx)`. We pick the first one
-  // we find. Backpack puts its provider on `window.backpack.solana`,
-  // not `window.backpack` directly.
-  function getWalletProvider() {
-    if (window.solana && window.solana.isPhantom) return window.solana;
-    if (window.solflare && window.solflare.isSolflare) return window.solflare;
-    if (window.backpack && window.backpack.solana) return window.backpack.solana;
-    if (window.solana) return window.solana; // generic
-    return null;
-  }
-
-  // ── The actual pay-with-wallet flow ──────────────────────────────────────
-  // Builds a real Solana transaction matching the intent's recipient +
-  // amount + token, attaches the unique reference key as a non-signer
-  // account so the server-side scanner can find this tx by reference,
-  // then asks the wallet to sign-and-send via its injected provider.
-  //
-  // Three error paths the user can hit:
-  //   1. SDK not loaded yet (slow connection)        → polite retry msg
-  //   2. User rejects the signing prompt in wallet   → "Cancelled" status
-  //   3. RPC blockhash fetch fails (mainnet down)    → "Try again" status
-  async function payWithWallet(intent) {
-    // Verbose logging is on by design — we want users to be able to
-    // open DevTools and tell us exactly where the flow breaks. Each
-    // step prefixes with [antares-pay] so it's easy to grep.
-    console.log('[antares-pay] click — starting wallet flow', { intent: intent });
-
-    var sdk;
-    try { sdk = await waitForSolanaSDK(); }
-    catch (e) { console.error('[antares-pay] SDK load failed', e); throw e; }
-    console.log('[antares-pay] SDK loaded — solanaWeb3 has', Object.keys(sdk).slice(0, 10).join(', '), '…');
-
-    var provider = getWalletProvider();
-    console.log('[antares-pay] provider detection', {
-      hasSolana: !!window.solana,
-      isPhantom: !!window.solana?.isPhantom,
-      hasSolflare: !!window.solflare,
-      hasBackpack: !!window.backpack,
-      provider: provider ? Object.keys(provider).slice(0, 10).join(', ') : null,
-    });
-    if (!provider) throw new Error('No wallet detected. Install Phantom (https://phantom.app) or use the QR code with a mobile wallet.');
-
-    // Connect — pops the wallet's permission prompt the first time;
-    // silent (returns publicKey immediately) on subsequent clicks.
-    if (!provider.publicKey) {
-      console.log('[antares-pay] calling provider.connect()…');
-      try {
-        var conn1 = await provider.connect();
-        console.log('[antares-pay] connect resolved', conn1);
-      } catch (e) {
-        console.error('[antares-pay] connect rejected', e);
-        throw new Error('Wallet connection cancelled. Click "Pay with Phantom" again to retry.');
-      }
-    }
-    var sender = provider.publicKey;
-    if (!sender) {
-      console.error('[antares-pay] provider.publicKey still null after connect()');
-      throw new Error('Could not get your wallet address. Refresh the page and try again.');
-    }
-    console.log('[antares-pay] connected as', sender.toString());
-
-    var recipient = new sdk.PublicKey(intent.recipient);
-    var reference = new sdk.PublicKey(intent.reference);
-
-    // Browser-CORS-friendly Solana RPC for the blockhash. We can't use
-    // `api.mainnet-beta.solana.com` from a browser — it returns
-    // 403 "Access forbidden" on cross-origin POSTs (Solana's official
-    // public RPC has been rate-limited / abuse-protected since 2024
-    // and effectively excludes browser clients). publicnode.com runs
-    // a free public Solana RPC with `Access-Control-Allow-Origin: *`,
-    // no auth required, and is the de-facto standard for client-side
-    // dApps that don't ship their own Helius key.
-    //
-    // We only call getLatestBlockhash here — the actual tx broadcast
-    // is handled by the wallet's own RPC, so even if publicnode is slow
-    // we only pay one cheap GET per pay attempt.
-    var conn = new sdk.Connection('https://solana-rpc.publicnode.com', 'confirmed');
-    console.log('[antares-pay] fetching recent blockhash from publicnode RPC…');
-    var bh;
-    try { bh = await conn.getLatestBlockhash('confirmed'); }
-    catch (e) {
-      console.error('[antares-pay] getLatestBlockhash failed', e);
-      throw new Error('Solana RPC is unreachable. Try again in a moment, or use the QR code.');
-    }
-    console.log('[antares-pay] blockhash', bh.blockhash);
-    var tx = new sdk.Transaction({ feePayer: sender, recentBlockhash: bh.blockhash });
-
-    if (intent.splTokenMint) {
-      // ── USDC (SPL token) transfer path ─────────────────────────────────
-      var mint = new sdk.PublicKey(intent.splTokenMint);
-      var senderAta = getAssociatedTokenAddress(sdk, mint, sender);
-      var recipientAta = getAssociatedTokenAddress(sdk, mint, recipient);
-      // USDC has 6 decimals — multiply UI amount by 10^6 to get raw units.
-      var rawAmount = Math.round(Number(intent.amount) * 1e6);
-      var ix = createSPLTransferIx(sdk, senderAta, mint, recipientAta, sender, rawAmount, 6);
-      // Solana Pay convention: include the unique reference as a
-      // read-only non-signer account on at least one instruction so
-      // the merchant's reference-scan finds the tx.
-      ix.keys.push({ pubkey: reference, isSigner: false, isWritable: false });
-      tx.add(ix);
-    } else {
-      // ── Native SOL transfer path ───────────────────────────────────────
-      var lamports = Math.round(Number(intent.amount) * sdk.LAMPORTS_PER_SOL);
-      var solIx = sdk.SystemProgram.transfer({
-        fromPubkey: sender, toPubkey: recipient, lamports: lamports,
+  // License copy button (visible if/when we surface a license — kept for
+  // post-checkout return cases. The primary post-redirect flow shows the
+  // license on /account.html, but if the user navigates back here with a
+  // ?ref=… we'll surface it here too).
+  licenseCopyBtn.addEventListener('click', function() {
+    var key = licenseKeyEl.textContent;
+    if (!key || key === '—') return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(key).then(function() {
+        var orig = licenseCopyBtn.textContent;
+        licenseCopyBtn.textContent = '✓ Copied';
+        setTimeout(function() { licenseCopyBtn.textContent = orig; }, 1800);
       });
-      solIx.keys.push({ pubkey: reference, isSigner: false, isWritable: false });
-      tx.add(solIx);
     }
+  });
 
-    // Sign + broadcast. Wallet shows its built-in signing UI here.
-    // Returns the on-chain tx signature once Phantom's RPC accepts it.
-    console.log('[antares-pay] tx built — calling signAndSendTransaction', { instructions: tx.instructions.length });
-    var result;
-    try { result = await provider.signAndSendTransaction(tx); }
-    catch (e) {
-      console.error('[antares-pay] signAndSendTransaction failed', e);
-      throw e;
-    }
-    console.log('[antares-pay] signed + broadcast', result);
-    var signature = (result && (result.signature || result)) || '';
-    return signature;
+  function formatUsd(n) {
+    var v = Number(n);
+    if (!isFinite(v)) return '—';
+    return '$' + v.toFixed(2);
   }
 
-  function setupWalletButton(payUrl) {
-    var btn = document.getElementById('pay-wallet-btn');
-    var dot = btn.querySelector('.pay-wallet-dot');
-    var text = btn.querySelector('.pay-wallet-text');
-    var orEl = document.getElementById('pay-or');
-    var wallet = detectWallet();
-    if (wallet) {
-      btn.classList.add('detected');
-      orEl.classList.add('show');
-      dot.style.background = wallet.color;
-      text.textContent = 'Pay with ' + wallet.name;
-      btn.onclick = async function() {
-        // We need access to the current intent object, not just the
-        // payUrl — the wallet flow builds its own tx. Read it back
-        // from the modal state via currentIntent (closure variable
-        // set in the outer payment flow).
-        if (!currentIntent) return;
-        btn.disabled = true;
-        var origText = text.textContent;
-        text.textContent = 'Open your wallet…';
-        try {
-          var sig = await payWithWallet(currentIntent);
-          text.textContent = 'Sent — confirming…';
-          // Don't block the existing /api/payment-status poll; it'll
-          // pick up the on-chain tx via the reference key in 5-15s.
-          // Print the signature in the existing tx area so the user
-          // can verify on Solscan if curious.
-          if (sig) {
-            txEl.innerHTML = '<a href="https://solscan.io/tx/' + sig + '" target="_blank" rel="noopener noreferrer" style="color:var(--c)">tx ' + sig.slice(0,6) + '…' + sig.slice(-6) + '</a>';
-          }
-        } catch (e) {
-          text.textContent = origText;
-          btn.disabled = false;
-          var msg = (e && e.message) || 'Wallet payment failed.';
-          // Phantom's user-rejection error has a specific code (4001).
-          if (e && (e.code === 4001 || /reject|cancel|denied/i.test(msg))) {
-            setStatus('waiting', 'Wallet payment cancelled. Try again or use the QR code.');
-          } else {
-            setStatus('warn', msg);
-          }
-        }
-      };
-    } else {
-      btn.classList.remove('detected');
-      orEl.classList.remove('show');
-    }
+  function renderTier(tier) {
+    titleEl.textContent = tier === 'yearly'
+      ? 'Antares Yearly · 1 year'
+      : 'Antares Pro · 30 days';
+    amountEl.textContent = formatUsd(PRICE_USD[tier] || 0);
   }
 
-  function setToggleUI(token, busy) {
-    var sel = token === 'sol' ? toggleSol : toggleUsdc;
-    var other = token === 'sol' ? toggleUsdc : toggleSol;
-    sel.classList.add('active');
-    sel.setAttribute('aria-selected', 'true');
-    other.classList.remove('active');
-    other.setAttribute('aria-selected', 'false');
-    toggleUsdc.disabled = !!busy;
-    toggleSol.disabled = !!busy;
-  }
-
-  function readEmail() {
-    var v = (emailInput.value || '').trim().toLowerCase();
-    return EMAIL_RE.test(v) ? v : '';
-  }
-
-  function createIntent(tier, token) {
+  // ── The actual checkout: POST /api/payment-intent → redirect ────────────
+  // Server returns { reference, payUrl, tier, amountUsd, expiresAt }.
+  // We send the buyer to payUrl (NOWPayments hosted page); they pick a
+  // crypto, pay, and NOWPayments redirects back to /account.html?ref=…
+  // where the license key is surfaced.
+  function startCheckout() {
+    if (!currentTier) return;
+    // Logged-in users may have empty email input — server reads the session
+    // cookie. Anonymous users need a valid email or we have no recovery
+    // path for the license. The CTA-disable logic above already enforces
+    // this; double-check defensively.
     var email = readEmail();
-    if (!email) {
-      // Surface the validation error inline; don't open the loading
-      // state for a bad email — that just confuses users into thinking
-      // the network is broken.
+    if (!loggedInEmail && !email) {
       emailInput.classList.add('invalid');
       emailInput.focus();
       setStatus('expired', 'Enter a valid email above first');
-      setToggleUI(currentToken, false);
       return;
     }
-    currentEmail = email;
-    currentTier = tier;
-    currentToken = token;
-    setToggleUI(token, true);
-
-    // Reset visible state — keep the toggle active so the user knows what
-    // they picked even while the request is in flight.
-    qrEl.innerHTML = '<div style="color:#666;font-size:10px;letter-spacing:.18em">Loading&hellip;</div>';
-    amountEl.textContent = '—';
-    tokenLabelEl.textContent = token === 'sol' ? 'SOL on Solana' : 'USDC on Solana';
-    recipientEl.textContent = '—';
     setStatus('waiting', 'Creating intent&hellip;');
-    txEl.textContent = '';
-    licenseRow.style.display = 'none';
-    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-    currentReference = null;
-    currentIntent = null;
+    ctaBtn.disabled = true;
+    ctaTextEl.textContent = 'Working&hellip;';
 
-    // Wait for the extension-bridge probe to complete (or time out) so
-    // we never submit a payment intent without the real install_id when
-    // the extension is in fact installed. The probe resolves in <50ms
-    // when the bridge is alive and ~800ms otherwise. Awaiting it here
-    // keeps the user-perceived latency minimal while guaranteeing
-    // install_id auto-link for paying customers.
     installProbe.then(function() {
-      var body = { tier: tier, token: token, email: email };
-      // hasInstall may have been promoted to true by the probe above —
-      // populate install_id from whichever source had it.
+      var body = { tier: currentTier };
+      if (email) body.email = email;
       if (hasInstall) body.install_id = installId;
 
-      _doPaymentIntentRequest(body, tier, token);
-    });
-    return;
-  }
-
-  function _doPaymentIntentRequest(body, tier, token) {
-    fetch(INTENT_API, {
-      method: 'POST',
-      // credentials: 'include' so the session cookie (if any) flows
-      // and the server can attach the license to the logged-in
-      // account regardless of what's in the body.
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    })
-      .then(function(r) { return r.json().then(function(body) { return { status: r.status, body: body }; }); })
-      .then(function(r) {
-        setToggleUI(currentToken, false);
-        if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
-          setStatus('expired', 'Coming soon — checkout not configured yet');
-          return;
-        }
-        // Jupiter price-feed failure: surface the issue, snap back to USDC
-        // automatically so the user can complete checkout instead of being
-        // stuck on a dead toggle.
-        if (r.status === 502 && r.body && r.body.error === 'sol_rate_unavailable') {
-          setStatus('warn', 'SOL price feed down &mdash; switched to USDC');
-          setTimeout(function() { createIntent(tier, 'usdc'); }, 800);
-          return;
-        }
-        if (r.status !== 200 || !r.body || !r.body.payUrl) {
-          setStatus('expired', 'Couldn&rsquo;t create the payment intent. Retry?');
-          return;
-        }
-
-        // Hydrate the modal with the intent we just minted
-        var intent = r.body;
-        currentReference = intent.reference;
-        currentIntent = intent;
-        titleEl.textContent = tier === 'yearly'
-          ? 'Antares Yearly · 1 year'
-          : 'Antares Pro · 30 days';
-        renderAmount(intent);
-        recipientEl.textContent = intent.recipient;
-        renderQR(intent.payUrl);
-        setupWalletButton(intent.payUrl);
-        setStatus('waiting', 'Waiting for payment&hellip;');
-
-        // Start polling
-        if (pollTimer) clearInterval(pollTimer);
-        pollTimer = setInterval(function() { pollStatus(intent.reference); }, 2500);
-        // First poll immediately so a fast wallet sees the success state
-        // without waiting the full 2.5s tick.
-        pollStatus(intent.reference);
+      fetch(INTENT_API, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
       })
-      .catch(function() {
-        setToggleUI(currentToken, false);
-        setStatus('expired', 'Network error. Check your connection and retry.');
-      });
+        .then(function(r) {
+          return r.json().then(function(b) { return { status: r.status, body: b }; });
+        })
+        .then(function(r) {
+          if (r.status === 503 || (r.body && r.body.error === 'checkout_not_configured')) {
+            setStatus('expired', 'Coming soon — checkout not configured yet');
+            ctaBtn.disabled = false;
+            ctaTextEl.textContent = 'Continue to checkout';
+            return;
+          }
+          if (r.status === 400) {
+            setStatus('expired', (r.body && r.body.error) || 'Invalid request');
+            ctaBtn.disabled = false;
+            ctaTextEl.textContent = 'Continue to checkout';
+            return;
+          }
+          if (r.status !== 200 || !r.body || !r.body.payUrl) {
+            setStatus('expired', 'Couldn’t create the intent. Try again in a moment.');
+            ctaBtn.disabled = false;
+            ctaTextEl.textContent = 'Continue to checkout';
+            return;
+          }
+          // Success — redirect to NOWPayments hosted page. The user
+          // returns via successUrl (set server-side to
+          // /account.html?ref=<reference>) once payment finalises.
+          setStatus('waiting', 'Redirecting to checkout&hellip;');
+          // Tiny delay so the user sees the redirect message before the
+          // browser leaves — feels less abrupt than instant navigation.
+          setTimeout(function() {
+            window.location.href = r.body.payUrl;
+          }, 250);
+        })
+        .catch(function() {
+          setStatus('expired', 'Network error. Check your connection and retry.');
+          ctaBtn.disabled = false;
+          ctaTextEl.textContent = 'Continue to checkout';
+        });
+    });
   }
+
+  ctaBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (!ctaBtn.disabled) startCheckout();
+  });
+
+  // Pressing Enter in the email field also starts checkout (when valid).
+  emailInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !ctaBtn.disabled) {
+      e.preventDefault();
+      startCheckout();
+    }
+  });
 
   function openModal(spec) {
-    // Anyone can open the modal — site-direct visitors who haven't
-    // installed yet pay with email only and receive a license key
-    // they redeem later. The install-id flow continues to work when
-    // present (?install=<id> in the URL).
     overlay.classList.add('open');
-    // Update the email-row hint based on whether we have an install
-    // already paired (extension users) vs. site-direct buyers (need
-    // the license key to bridge to a future install).
+    currentTier = spec.tier;
+    renderTier(currentTier);
+    setStatus(null);
+    licenseRow.style.display = 'none';
+
     if (hasInstall) {
       emailHintEl.textContent = 'For your receipt + license key (you can use the same key on a new install later).';
     } else {
       emailHintEl.textContent = 'After payment we issue a license key. You’ll paste it in the extension after installing to unlock Pro.';
     }
-    // Default token on each open is whatever the user last picked in this
-    // session, but USDC on first open (currentToken initialises to 'usdc').
-    // We don't auto-fire createIntent here — let the user fill in their
-    // email first. The toggle/CTA buttons trigger createIntent.
-    setStatus('waiting', 'Enter your email then pick a token to mint the intent');
-    qrEl.innerHTML = '<div style="color:#666;font-size:10px;letter-spacing:.18em;text-align:center">QR appears after intent is created</div>';
-    amountEl.textContent = '—';
-    recipientEl.textContent = '—';
-    txEl.textContent = '';
-    licenseRow.style.display = 'none';
-    currentTier = spec.tier;
-
-    // If we already have a valid email saved (from a previous session
-    // or a focused field), kick the intent immediately — preserves the
-    // one-click flow for returning users.
-    if (readEmail()) {
-      createIntent(spec.tier, currentToken);
-    } else {
-      emailInput.focus();
-    }
+    refreshCtaState();
+    if (!loggedInEmail && !readEmail()) emailInput.focus();
   }
 
   // Wire the tier CTAs
@@ -1138,67 +692,6 @@ footer span{color:var(--c)}
       e.preventDefault();
       openModal(spec);
     });
-  });
-
-  // Toggle handlers — switching token re-mints the intent (the reference
-  // key + amount are token-specific, so reusing a stale intent would let
-  // the user pay USDC for a SOL-quoted intent and never settle). Same
-  // path is also used to mint the *first* intent once the user has
-  // picked a tier and entered a valid email.
-  function onToggle(token) {
-    return function(e) {
-      e.preventDefault();
-      if (!currentTier) return;
-      // Same-token re-click after intent is already minted = no-op.
-      if (token === currentToken && currentReference) return;
-      createIntent(currentTier, token);
-    };
-  }
-  toggleUsdc.addEventListener('click', onToggle('usdc'));
-  toggleSol.addEventListener('click', onToggle('sol'));
-
-  // Email handlers — once the user finishes entering a valid email
-  // (blur or Enter), auto-mint the intent if a tier is selected and we
-  // don't already have one. Saves a click for returning visitors with
-  // remembered emails too.
-  function maybeMintFromEmail() {
-    if (!currentTier) return;
-    if (currentReference) return;
-    if (!readEmail()) return;
-    createIntent(currentTier, currentToken);
-  }
-  emailInput.addEventListener('blur', maybeMintFromEmail);
-  emailInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      maybeMintFromEmail();
-    }
-  });
-
-  // License copy button (visible after payment confirms)
-  licenseCopyBtn.addEventListener('click', function() {
-    var key = licenseKeyEl.textContent;
-    if (!key || key === '—') return;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(key).then(function() {
-        var orig = licenseCopyBtn.textContent;
-        licenseCopyBtn.textContent = '✓ Copied';
-        setTimeout(function() { licenseCopyBtn.textContent = orig; }, 1800);
-      });
-    }
-  });
-
-  // Copy-to-clipboard for the recipient address
-  copyBtn.addEventListener('click', function() {
-    var addr = recipientEl.textContent;
-    if (!addr || addr === '—') return;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(addr).then(function() {
-        var orig = copyBtn.textContent;
-        copyBtn.textContent = '✓';
-        setTimeout(function() { copyBtn.textContent = orig; }, 1500);
-      });
-    }
   });
 
   // "Install detected" banner when the user came via the extension
