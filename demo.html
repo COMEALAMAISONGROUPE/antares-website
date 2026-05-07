@@ -722,34 +722,34 @@ footer .foot-links a:hover{color:var(--c)}
       )
     );
 
-    var foNode=el('div',{'class':'fo'});
-    foNode.appendChild(el('button',{'class':'cf-btn','id':'ant-critical-flags-btn','type':'button'},'⚠ Critical Flags'));
-    // Native <a target="_blank"> with the real href baked in at creation
-    // time. Previous implementation used href="#" + a JS click handler
-    // calling window.open() — that approach had two problems: (1)
-    // window.open()'s third-arg features string (`noopener,noreferrer`)
-    // makes Chrome treat the call as a popup request and silently
-    // block it under certain heuristics; (2) inside the demo's shadow
-    // DOM the click handler had no fallback if JS bailed for any
-    // The anchor itself just carries data-ca for the click handler in
-    // attachInteractions() to read. We DELIBERATELY don't set
-    // target="antares-analysis" + rel="noopener" any more — Chrome's
-    // browsing-context-group isolation breaks named-target reuse when
-    // rel=noopener is on the link, AND when target navigates to a
-    // different origin (which we do: demo on antares-website,
-    // analysis on antares-extension). Result was 4+ tabs piling up.
+    // ─── Footer buttons rendered EXACTLY as the live extension shows
+    // them to a Free user: dimmed (.locked) + gold "PRO" pill on the
+    // right of each button. Demo simulates the Free tier (no signed-in
+    // session = Free) so the visual matches what someone who just
+    // installed will see on their first scan.
     //
-    // The click handler below holds a persistent window reference and
-    // either navigates that window to the new ?ca= (if still open) or
-    // opens a fresh one. Truly one tab regardless of how many tokens
-    // the user samples. href is kept on the anchor as a no-JS
-    // fallback / right-click target.
-    foNode.appendChild(el('a',{
+    // Click behaviour kept demo-functional: the panel toggles still
+    // work so visitors can explore Critical Flags / AI Summary content,
+    // and Full Analysis still opens the deep-dive page. Mirrors how the
+    // marketing intent of the demo is to SHOW what Pro unlocks while
+    // still letting people poke at it.
+    var foNode=el('div',{'class':'fo'});
+    var cfBtn=el('button',{'class':'cf-btn locked','id':'ant-critical-flags-btn','type':'button'},'⚠ Critical Flags');
+    cfBtn.appendChild(el('span',{'class':'lock-pill'},'PRO'));
+    foNode.appendChild(cfBtn);
+
+    var faAnchor=el('a',{
+      'class':'locked',
       'href':ANALYSIS_PAGE+'?ca='+encodeURIComponent(mint),
       'id':'ant-full-analysis',
       'data-ca':encodeURIComponent(mint)
-    },'Full Analysis →'));
-    foNode.appendChild(el('button',{'class':'ai-btn ai-btn--active','id':'ant-ai-summary-btn','type':'button'},'⬡ AI Summary'));
+    },'Full Analysis →');
+    faAnchor.appendChild(el('span',{'class':'lock-pill'},'PRO'));
+    foNode.appendChild(faAnchor);
+
+    var aiBtn=el('button',{'class':'ai-btn locked','id':'ant-ai-summary-btn','type':'button'},'⬡ AI Summary');
+    aiBtn.appendChild(el('span',{'class':'lock-pill'},'PRO'));
+    foNode.appendChild(aiBtn);
 
     var tkNode=tokenSymbol?el('div',{'class':'tk'},el('b',null,tokenSymbol),tokenName?(' '+tokenName):''):null;
 
