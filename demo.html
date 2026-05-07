@@ -417,11 +417,14 @@ footer .foot-links a:hover{color:var(--c)}
 .ai-panel.open{display:block;position:relative}
 .ai-panel.open.closing{animation:ai-panel-out .15s ease forwards}
 
-.ai-panel-inner{padding:10px 12px 8px;display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(167,139,250,.3) transparent}
-.ai-panel-inner::-webkit-scrollbar{width:4px}
-.ai-panel-inner::-webkit-scrollbar-track{background:transparent}
-.ai-panel-inner::-webkit-scrollbar-thumb{background:rgba(167,139,250,.3);border-radius:2px}
-.ai-panel-inner::-webkit-scrollbar-thumb:hover{background:rgba(167,139,250,.5)}
+/* Compact panel — was 220px, dropped to 140px so the overlay takes
+   much less vertical space when AI Summary is open. Scrollbar bumped
+   4px → 6px and brightened so the scroll affordance is visible. */
+.ai-panel-inner{padding:10px 12px 8px;display:flex;flex-direction:column;gap:6px;max-height:140px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(167,139,250,.5) transparent}
+.ai-panel-inner::-webkit-scrollbar{width:6px}
+.ai-panel-inner::-webkit-scrollbar-track{background:rgba(167,139,250,.04);border-radius:3px}
+.ai-panel-inner::-webkit-scrollbar-thumb{background:rgba(167,139,250,.5);border-radius:3px}
+.ai-panel-inner::-webkit-scrollbar-thumb:hover{background:rgba(167,139,250,.75)}
 .ai-panel-verdict{font-size:10px;font-weight:600;color:#c4b5fd;line-height:1.5;font-family:'IBM Plex Mono',monospace;letter-spacing:.01em;padding-bottom:6px;border-bottom:1px solid rgba(167,139,250,.1)}
 .ai-panel-line{font-size:9.5px;color:#8a8aad;line-height:1.55;font-family:'IBM Plex Mono',monospace;letter-spacing:.01em}
 .ai-panel-loading{padding:10px 12px;font-size:9px;color:#555;font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;text-align:center;animation:ant-pulse 1.2s ease-in-out infinite}
@@ -448,11 +451,12 @@ footer .foot-links a:hover{color:var(--c)}
 .cf-panel.open{display:block;position:relative}
 .cf-panel.open.closing{animation:cf-panel-out .15s ease forwards}
 
-.cf-panel-inner{padding:10px 12px 8px;display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,95,95,.3) transparent}
-.cf-panel-inner::-webkit-scrollbar{width:4px}
-.cf-panel-inner::-webkit-scrollbar-track{background:transparent}
-.cf-panel-inner::-webkit-scrollbar-thumb{background:rgba(255,95,95,.3);border-radius:2px}
-.cf-panel-inner::-webkit-scrollbar-thumb:hover{background:rgba(255,95,95,.5)}
+/* Same compact treatment for Critical Flags panel — keeps overlay short. */
+.cf-panel-inner{padding:10px 12px 8px;display:flex;flex-direction:column;gap:8px;max-height:140px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,95,95,.5) transparent}
+.cf-panel-inner::-webkit-scrollbar{width:6px}
+.cf-panel-inner::-webkit-scrollbar-track{background:rgba(255,95,95,.04);border-radius:3px}
+.cf-panel-inner::-webkit-scrollbar-thumb{background:rgba(255,95,95,.5);border-radius:3px}
+.cf-panel-inner::-webkit-scrollbar-thumb:hover{background:rgba(255,95,95,.75)}
 
 .cf-flag{display:flex;align-items:flex-start;gap:8px;padding:4px 0}
 .cf-flag + .cf-flag{border-top:1px solid rgba(255,255,255,.04);padding-top:8px}
