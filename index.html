@@ -91,7 +91,7 @@ nav .nav-account:hover{color:var(--c);border-color:var(--c);background:rgba(0,22
 /* Watermark — orbital logo behind overlay content. Pinned at fixed
    pixel offset so panel-open growth doesn't drift it. Mirrors the
    live extension's contents/modules/styles.ts .box::after rule. */
-.box::after{content:'';position:absolute;width:160px;height:160px;left:77%;top:77px;margin:-80px 0 0 -80px;background:url(/icon.png) no-repeat center/contain;opacity:.065;pointer-events:none;z-index:0}
+.box::after{content:'';position:absolute;width:160px;height:160px;left:77%;top:77px;margin:-80px 0 0 -80px;background:url(/icon.png) no-repeat center/contain;opacity:.12;pointer-events:none;z-index:0}
 .box.safe::before{background:#00e5b0}.box.caution::before{background:#f5d000}.box.danger::before{background:#ff5f5f}.box.rug::before{background:#ff2244}
 .box.safe{background:linear-gradient(180deg,#0b100f 0%,#090b0a 100%)}.box.caution{background:linear-gradient(180deg,#0e0d0a 0%,#0a0a09 100%)}.box.danger{background:linear-gradient(180deg,#0e0a0a 0%,#0a0909 100%)}.box.rug{background:linear-gradient(180deg,#100809 0%,#0a0808 100%)}
 .topbar{height:2px}
@@ -271,7 +271,7 @@ footer .foot-links a:hover{color:#5a5a62}
         <div class="sum">No issues found</div>
         <div class="sep"></div>
         <div class="ss"><div class="si"><span>Sell</span><b class="y">&#10003;</b></div><div class="si"><span>Mint</span><b class="y">&#10003;</b></div><div class="si"><span>Freeze</span><b class="y">&#10003;</b></div><div class="si"><span>LP Burned</span><b class="y">&#10003;</b></div><div class="si"><span>Liq</span><b class="y">$184K</b></div></div>
-        <div class="fo"><span class="cf-btn locked">&#9888; Critical Flags<span class="lock-pill">PRO</span></span><a href="#" class="locked">Full Analysis &rarr;<span class="lock-pill">PRO</span></a><span class="ai-btn locked">&#11041; AI Summary<span class="lock-pill">PRO</span></span></div>
+        <div class="fo"><span class="cf-btn">&#9888; Critical Flags</span><a href="#">Full Analysis &rarr;</a><span class="ai-btn ai-btn--active">&#11041; AI Summary</span></div>
       </div>
     </div>
   </div>
@@ -477,16 +477,11 @@ footer .foot-links a:hover{color:#5a5a62}
   // SVG_MOVE / SVG_CLOSE in contents/modules/constants.ts.
   var SVG_MOVE = '<svg width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 1L5.5 3h3L7 1Z" fill="currentColor"/><line x1="7" y1="2.5" x2="7" y2="6.5" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M7 13L5.5 11h3L7 13Z" fill="currentColor"/><line x1="7" y1="11.5" x2="7" y2="7.5" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M1 7L3 5.5V8.5L1 7Z" fill="currentColor"/><line x1="2.5" y1="7" x2="6.5" y2="7" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M13 7L11 5.5V8.5L13 7Z" fill="currentColor"/><line x1="11.5" y1="7" x2="7.5" y2="7" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/></svg>';
   var SVG_CLOSE = '<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="2" y1="2" x2="11" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="11" y1="2" x2="2" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
-  // Gold ANTARES wordmark — same as the live extension renders for
-  // Pro / Yearly / Lifetime tiers. The cycling cards on the home are
-  // marketing material for the premium experience, so they show the
-  // Pro state by default (gold wordmark + locked PRO pills).
+  // Gold ANTARES wordmark — Pro tier signal. Buttons stay in their
+  // unlocked Pro state (no lock pills) so the home cards reflect the
+  // full premium experience.
   var HEADER = '<div class="topbar"></div><div class="hd"><span class="brand pro">ANTARES</span><div class="hd-right"><span class="drag-icon">'+SVG_MOVE+'</span><span class="x">'+SVG_CLOSE+'</span></div></div>';
-  var FOOTER = '<div class="fo">'+
-    '<span class="cf-btn locked">⚠ Critical Flags<span class="lock-pill">PRO</span></span>'+
-    '<a href="#" class="locked">Full Analysis →<span class="lock-pill">PRO</span></a>'+
-    '<span class="ai-btn locked">⬡ AI Summary<span class="lock-pill">PRO</span></span>'+
-    '</div>';
+  var FOOTER = '<div class="fo"><span class="cf-btn">⚠ Critical Flags</span><a href="#">Full Analysis →</a><span class="ai-btn ai-btn--active">⬡ AI Summary</span></div>';
 
   // Sum line uses the same format as the live overlay's flagCount
   // logic in components.ts: "No issues found" / "N flags detected" /

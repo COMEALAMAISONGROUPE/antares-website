@@ -235,7 +235,7 @@ footer .foot-links a:hover{color:var(--c)}
 
 .box::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:180px;height:100px;border-radius:50%;filter:blur(60px);opacity:.08;z-index:0;pointer-events:none}
 
-.box::after{content:'';position:absolute;width:160px;height:160px;left:77%;top:77px;margin:-80px 0 0 -80px;background:url(/icon.png) no-repeat center/contain;opacity:.065;pointer-events:none;z-index:0}
+.box::after{content:'';position:absolute;width:160px;height:160px;left:77%;top:77px;margin:-80px 0 0 -80px;background:url(/icon.png) no-repeat center/contain;opacity:.12;pointer-events:none;z-index:0}
 
 .box.safe   {background:linear-gradient(180deg,#0b100f 0%,#090b0a 100%)}
 .box.caution{background:linear-gradient(180deg,#0e0d0a 0%,#0a0a09 100%)}
@@ -725,34 +725,17 @@ footer .foot-links a:hover{color:var(--c)}
       )
     );
 
-    // ─── Footer buttons rendered EXACTLY as the live extension shows
-    // them to a Free user: dimmed (.locked) + gold "PRO" pill on the
-    // right of each button. Demo simulates the Free tier (no signed-in
-    // session = Free) so the visual matches what someone who just
-    // installed will see on their first scan.
-    //
-    // Click behaviour kept demo-functional: the panel toggles still
-    // work so visitors can explore Critical Flags / AI Summary content,
-    // and Full Analysis still opens the deep-dive page. Mirrors how the
-    // marketing intent of the demo is to SHOW what Pro unlocks while
-    // still letting people poke at it.
+    // Footer buttons in the unlocked Pro state (clean, no PRO pills).
+    // The wordmark colour above already signals tier; the buttons are
+    // shown active so visitors can click them and explore the panels.
     var foNode=el('div',{'class':'fo'});
-    var cfBtn=el('button',{'class':'cf-btn locked','id':'ant-critical-flags-btn','type':'button'},'⚠ Critical Flags');
-    cfBtn.appendChild(el('span',{'class':'lock-pill'},'PRO'));
-    foNode.appendChild(cfBtn);
-
-    var faAnchor=el('a',{
-      'class':'locked',
+    foNode.appendChild(el('button',{'class':'cf-btn','id':'ant-critical-flags-btn','type':'button'},'⚠ Critical Flags'));
+    foNode.appendChild(el('a',{
       'href':ANALYSIS_PAGE+'?ca='+encodeURIComponent(mint),
       'id':'ant-full-analysis',
       'data-ca':encodeURIComponent(mint)
-    },'Full Analysis →');
-    faAnchor.appendChild(el('span',{'class':'lock-pill'},'PRO'));
-    foNode.appendChild(faAnchor);
-
-    var aiBtn=el('button',{'class':'ai-btn locked','id':'ant-ai-summary-btn','type':'button'},'⬡ AI Summary');
-    aiBtn.appendChild(el('span',{'class':'lock-pill'},'PRO'));
-    foNode.appendChild(aiBtn);
+    },'Full Analysis →'));
+    foNode.appendChild(el('button',{'class':'ai-btn ai-btn--active','id':'ant-ai-summary-btn','type':'button'},'⬡ AI Summary'));
 
     var tkNode=tokenSymbol?el('div',{'class':'tk'},el('b',null,tokenSymbol),tokenName?(' '+tokenName):''):null;
 
