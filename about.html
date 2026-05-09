@@ -94,9 +94,9 @@ footer .foot-links a:hover{color:var(--c)}
 </div>
 
 <h2>Who&rsquo;s behind it</h2>
-<p>Antares is operated by the <b>COMEALAMAISONGROUPE</b> open-source project, based in France. The maintainer is <a href="https://twitter.com/antaresantiscam">@antaresantiscam</a> on Twitter. Bug reports and feature requests are tracked publicly at <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">github.com/COMEALAMAISONGROUPE/antares-extension/issues</a>.</p>
+<p>Antares is operated by the <b>COMEALAMAISONGROUPE</b> project, based in France. The maintainer is reachable at <a href="mailto:antaresantiscam@gmail.com">antaresantiscam@gmail.com</a> or on Twitter as <a href="https://twitter.com/antaresantiscam">@antaresantiscam</a>. Bug reports and feature requests go through the <a href="./support.html">support page</a>.</p>
 
-<p>If you want to contribute &mdash; code, signals data, false-positive reports, edge-case rugs that slipped through &mdash; PRs and issues are welcome. Security disclosures via Private Vulnerability Reporting per <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/SECURITY.md">SECURITY.md</a>.</p>
+<p>Spotted a token we missed? A verdict that looked off? An overlay glitch? Drop a note via the <a href="./support.html">support page</a>. Security issues should go to <a href="mailto:antaresantiscam@gmail.com?subject=%5BSECURITY%5D">antaresantiscam@gmail.com</a> with subject <code>[SECURITY]</code> &mdash; please don&rsquo;t post exploit details in any public channel.</p>
 
 <h2>Roadmap</h2>
 <p><b>Q2 2026</b> &mdash; Chrome Web Store listing live, false-positive triage on real traffic, scoring engine refinements based on observed corpus.</p>
@@ -105,7 +105,7 @@ footer .foot-links a:hover{color:var(--c)}
 <p>Targets are aspirational, not contractual &mdash; everything is downstream of the Chrome Web Store listing approval and the first months of real traffic.</p>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 <script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>

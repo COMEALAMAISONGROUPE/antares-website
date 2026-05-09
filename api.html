@@ -84,7 +84,7 @@ footer .foot-links a:hover{color:var(--c)}
 
 <p>The Antares scan API is the same endpoint the Chrome extension uses. <b>Free, no auth required, rate-limited.</b> Designed for personal projects, integration in trading bots, and Discord/Telegram alert pipelines.</p>
 
-<div class="warn-box"><b style="color:#a8a060">Best-effort, no SLA.</b> The API runs on Vercel free tier with Upstash free Redis. Rate limits are conservative (60 req / minute per IP). Response shape is stable but not formally versioned. For production-grade integrations or higher quotas, please <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues" style="color:#f5d000">open an issue</a>.</div>
+<div class="warn-box"><b style="color:#a8a060">Best-effort, no SLA.</b> The API runs on Vercel free tier with Upstash free Redis. Rate limits are conservative (60 req / minute per IP). Response shape is stable but not formally versioned. For production-grade integrations or higher quotas, please <a href="./support.html">drop us a note via /support</a>.</div>
 
 <h2>Endpoint</h2>
 <pre><code><span class="method">GET</span><span class="endpoint">https://antares-extension.vercel.app/api/scan?ca={SOLANA_MINT_ADDRESS}</span></code></pre>
@@ -211,7 +211,7 @@ print(data['risk'], data['score'])</code></pre>
 <p>The response shape is informally stable. New optional fields may be added without notice. Existing fields will not be removed without a deprecation period announced in the <a href="./changelog.html">changelog</a>. The <code>scoring_version</code> field bumps on any change to scoring logic.</p>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 <script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>

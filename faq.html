@@ -105,7 +105,7 @@ footer .foot-links a:hover{color:var(--c)}
 </div>
 
 <div class="qa"><h3>Will there be student / underdog pricing?</h3>
-<p>Yes. Verifiable students and developers contributing to open source get 50% off Pro Monthly. Reach out by email (<a href="mailto:antaresantiscam@gmail.com">antaresantiscam@gmail.com</a>) with your situation and we&rsquo;ll set it up.</p>
+<p>Yes. Verifiable students and security-research contributors get 50% off Pro Monthly. Reach out by email (<a href="mailto:antaresantiscam@gmail.com">antaresantiscam@gmail.com</a>) with your situation and we&rsquo;ll set it up.</p>
 </div>
 
 <div class="section-label"><span>Engine &amp; verdicts</span></div>
@@ -125,7 +125,7 @@ footer .foot-links a:hover{color:var(--c)}
 <p>&bull; <b>LP not burned but token is mature &amp; liquid</b> &mdash; we still penalise unburned LP because the dev <em>can</em> rug at any time, even if the project looks legitimate (e.g. Fartcoin, DeFade). The <code>established-bonus</code> rule unlocks SAFE for tokens 30+ days old with 50k+ holders + GoPlus clean.</p>
 <p>&bull; <b>Volume/liquidity ratio above 5&times;</b> &mdash; flagged as wash-trading risk even on legitimate flash-pool venues where that ratio is structural.</p>
 <p>&bull; <b>Deceptive name detection</b> sometimes catches generic financial terms ("Vanguard Capital" matching "Vanguard"). We&rsquo;re tightening this.</p>
-<p>If you think a verdict is wrong, <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">open an issue</a> with the token CA.</p>
+<p>If you think a verdict is wrong, <a href="./support.html">drop us a note via /support</a> with the token CA.</p>
 </div>
 
 <div class="qa"><h3>What data does Antares collect about me?</h3>
@@ -152,12 +152,12 @@ footer .foot-links a:hover{color:var(--c)}
 </div>
 
 <div class="qa"><h3>How do I report a false positive / false negative / bug?</h3>
-<p>Open an issue at <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/issues">github.com/COMEALAMAISONGROUPE/antares-extension/issues</a> with: the token CA, what verdict you got, what you expected, and the timestamp of the scan (visible in the extension&rsquo;s metric tab as <code>requestId</code>).</p>
-<p>Security issues should use Private Vulnerability Reporting per <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/SECURITY.md">SECURITY.md</a> &mdash; do not include exploit details in a public issue.</p>
+<p>Open an issue at <a href="./support.html">antaresscan.com/support</a> with: the token CA, what verdict you got, what you expected, and the timestamp of the scan (visible in the extension&rsquo;s metric tab as <code>requestId</code>).</p>
+<p>Security issues should be reported privately by emailing <a href="mailto:antaresantiscam@gmail.com?subject=%5BSECURITY%5D">antaresantiscam@gmail.com</a> with subject <code>[SECURITY]</code> &mdash; do not include exploit details in any public channel.</p>
 </div>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 <script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>
