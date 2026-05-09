@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Support &mdash; Antares</title>
+<meta name="description" content="Antares support: contact, bug reports, feature requests, FAQ, security disclosure flow.">
+<meta name="author" content="Antares">
+<link rel="canonical" href="https://antares-website.vercel.app/support">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://antares-website.vercel.app/support">
+<meta property="og:title" content="Support &mdash; Antares">
+<meta property="og:description" content="Reach the Antares team. Bug reports, feature requests, FAQ, security flow.">
+<meta property="og:image" content="https://antares-website.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Antares">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@antaresantiscam">
+<meta name="twitter:title" content="Support &mdash; Antares">
+<meta name="twitter:description" content="Reach the Antares team. Bug reports, feature requests, FAQ, security flow.">
+<meta name="twitter:image" content="https://antares-website.vercel.app/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
+.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
+@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+.shell{position:relative;z-index:2;max-width:780px;margin:0 auto;padding:0 32px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;position:sticky;top:3px;z-index:100;max-width:780px;margin:0 auto}
+nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
+nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
+nav .brand img{height:38px;width:auto}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
+nav .links a:hover,nav .links a.active{color:var(--c)}
+nav .nav-actions{display:flex;align-items:center;gap:10px}
+nav .nav-cta,nav .nav-account{display:inline-flex;align-items:center;justify-content:center;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:6px 12px;border:1px solid;transition:.25s;white-space:nowrap;min-width:92px}
+nav .nav-cta{color:var(--bg);background:var(--c);border-color:var(--c)}
+nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
+nav .nav-account{color:#888;background:transparent;border-color:#2a2a30}
+nav .nav-account:hover{color:var(--c);border-color:var(--c);background:rgba(0,229,176,.04)}
+.page-hero{padding:80px 0 32px}
+.eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
+@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+h1{font:400 clamp(48px,8vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
+h2{font-size:13px;color:var(--c);letter-spacing:.1em;text-transform:uppercase;margin:40px 0 12px;font-weight:700}
+h3{font:400 18px/1.1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#e0e0e0;margin:24px 0 8px}
+p{font-size:13px;color:#7a7a82;line-height:1.85;margin-bottom:14px}
+p b{color:#aaa;font-weight:600}
+p a{color:var(--c)}
+ul{margin:0 0 14px 20px;font-size:13px;color:#7a7a82;line-height:1.85}
+ul li{margin-bottom:6px}
+ul li b{color:#aaa;font-weight:600}
+ul li code{background:#15151a;padding:1px 5px;border-radius:2px;color:#bbb;font-size:11px}
+.email-card{background:var(--card);border:1px solid var(--border);padding:24px;margin:18px 0 28px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.email-card .label{font-size:10px;color:var(--c);letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px;font-weight:700}
+.email-card .addr{font:600 16px/1.1 'IBM Plex Mono',monospace;color:#eaeaea;text-decoration:none}
+.email-card .addr:hover{color:var(--c)}
+.email-card .addr-cta{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:8px 14px;border:1px solid var(--c);color:var(--c);background:transparent;transition:.25s}
+.email-card .addr-cta:hover{background:var(--c);color:var(--bg)}
+.facts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:18px 0 28px}
+.fact-card{background:var(--card);padding:20px 22px}
+.fact-card h3{font:400 18px/1.1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#e0e0e0;margin-bottom:6px}
+.fact-card p{font-size:11px;color:#888;line-height:1.7;margin:0}
+.warn-box{background:rgba(245,208,0,.04);border-left:2px solid #f5d000;padding:14px 18px;font-size:11.5px;color:#a8a060;line-height:1.85;margin:18px 0}
+.warn-box b{color:#d4b040}
+.faq-q{font-size:13px;color:#cfcfd4;font-weight:600;margin:20px 0 4px;letter-spacing:.02em}
+footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin:60px auto 0;max-width:780px}
+footer span{color:var(--c)}
+footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
+footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a:hover{color:var(--c)}
+@media(max-width:760px){.facts-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="stripe" role="presentation"></div>
+<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html">Pricing</a><a href="./faq.html">Q&amp;A</a></div><div class="nav-actions"><a href="./auth.html" id="nav-account" class="nav-account">Log in</a><a href="./install.html" class="nav-cta">Install &rarr;</a></div></nav>
+<main class="shell">
+
+<section class="page-hero">
+  <div class="eyebrow">Reach the team</div>
+  <h1>SUPPORT</h1>
+</section>
+
+<p>If something&rsquo;s wrong with Antares &mdash; the overlay didn&rsquo;t show, a verdict looked off, you want a feature, you spotted a token we missed &mdash; this is where to tell us. We read every message and reply within 2 business days.</p>
+
+<h2>Contact</h2>
+<div class="email-card">
+  <div>
+    <div class="label">Direct email</div>
+    <a class="addr" href="mailto:antaresantiscam@gmail.com?subject=Antares%20Support">antaresantiscam@gmail.com</a>
+  </div>
+  <a class="addr-cta" href="mailto:antaresantiscam@gmail.com?subject=Antares%20Support">Send email &rarr;</a>
+</div>
+<p>Please include the following so we can help on the first reply:</p>
+<ul>
+  <li><b>Extension version</b> &mdash; visible in <code>chrome://extensions</code> &rarr; Antares &rarr; Details.</li>
+  <li><b>Browser and OS</b> &mdash; e.g. Chrome 130 on Windows 11.</li>
+  <li><b>Trading site</b> you were on (DexScreener, Birdeye, Photon, Axiom, GMGN, Pump.fun, GeckoTerminal, Telemetry).</li>
+  <li><b>Token contract address</b>, if applicable.</li>
+  <li><b>What you expected vs. what you saw.</b> A screenshot is the fastest possible repro.</li>
+</ul>
+
+<h2>What to use which channel for</h2>
+<div class="facts-grid">
+  <div class="fact-card"><h3>Bug report</h3><p>Email <code>antaresantiscam@gmail.com</code> with subject <code>[BUG]</code> + a one-line summary. Steps to reproduce + screenshot get triaged fastest.</p></div>
+  <div class="fact-card"><h3>Feature request</h3><p>Email with subject <code>[FEATURE]</code>. Tell us the problem you&rsquo;re trying to solve, not just the feature. Concrete examples beat abstract wishes.</p></div>
+  <div class="fact-card"><h3>Verdict feedback</h3><p>Subject <code>[VERDICT]</code> + the contract address. False negatives feed the rug DB; false positives tune the scoring weights.</p></div>
+  <div class="fact-card"><h3>Security issue</h3><p>Don&rsquo;t email exploit details. Use GitHub <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/security/advisories/new">Private Vulnerability Reporting</a>. Public disclosure before a fix puts users at risk.</p></div>
+</div>
+
+<div class="warn-box"><b>One important caveat.</b> Antares is a heuristic risk-screening tool. A SAFE verdict means none of our 7 detection layers found a critical signal at scan time &mdash; it is not a guarantee the token won&rsquo;t rug. False negatives happen, especially on novel attack patterns. Treat the verdict as a high-quality second opinion, not a verdict of innocence. Full disclaimer in <a href="./terms.html">Terms</a>.</div>
+
+<h2>Frequently asked</h2>
+
+<p class="faq-q">Why doesn&rsquo;t Antares show anything on my page?</p>
+<p>Antares only injects on the 8 trading platforms listed in our manifest: DexScreener, Birdeye, Pump.fun, Photon, Axiom, GMGN, Telemetry, GeckoTerminal. On any other site the extension is dormant by design. If you&rsquo;re on a supported site and still see nothing, refresh the page once &mdash; the content script attaches when the URL contains a Solana contract address.</p>
+
+<p class="faq-q">The verdict says DANGER but the price is going up &mdash; is Antares wrong?</p>
+<p>No. Antares scores <b>structural risk</b> (concentration, contract surface, LP burn status, holder distribution), not short-term price action. A token can pump while still being a coordinated dump risk. The Full Analysis page breaks down which specific layer triggered the verdict so you can decide for yourself.</p>
+
+<p class="faq-q">Why does the same token sometimes give a different score?</p>
+<p>Some inputs are real-time: liquidity, holder distribution, volume, and on-chain transfers all change as the token trades. The verdict reflects the state of the chain at scan time. If a critical wallet sells or LP gets pulled, the score moves accordingly.</p>
+
+<p class="faq-q">Does Antares store my wallet address or trades?</p>
+<p>No. Antares never reads your wallet, never reads form fields, never reads cookies. It extracts the public Solana contract address visible in the URL or DOM of supported pages and sends only that to our API. Read the <a href="./privacy.html">privacy policy</a> for the full data flow.</p>
+
+<p class="faq-q">I&rsquo;m getting &ldquo;rate limited&rdquo; errors. What&rsquo;s happening?</p>
+<p>The free public API enforces a sliding-window rate limit so it stays fast for everyone. If you hit it, wait 60 seconds and try again. If you&rsquo;re consistently hitting the limit, email us &mdash; we can usually figure out what&rsquo;s going on.</p>
+
+<p class="faq-q">Can I use Antares on Solana tokens that aren&rsquo;t on a DEX yet?</p>
+<p>Partially. Pre-launch tokens (no liquidity yet) have no price/holder data, so several layers of the score will be inconclusive. Antares will still surface what it can read on-chain (mint authority, freeze authority, supply, deployer history) but the overall verdict is most reliable once the token is trading.</p>
+
+<p class="faq-q">The overlay disappeared. How do I bring it back?</p>
+<p>The overlay can be hidden via the Stealth toggle in the extension popup. Click the Antares icon in your browser toolbar and turn Stealth off. If that&rsquo;s not it, refresh the page once.</p>
+
+<p class="faq-q">How do I report a token Antares missed or wrongly flagged?</p>
+<p>Email <code>antaresantiscam@gmail.com</code> with subject <code>[VERDICT]</code> and include the contract address plus what you observed on-chain. We use false negatives to tune the rug database and false positives to refine the scoring weights.</p>
+
+<h2>Status &amp; known issues</h2>
+<p>If multiple users are reporting the same problem, we post a status note here. As of <b>9 May 2026</b> there are no known outages or major regressions. Latest released version is <b>v1.3.0</b>.</p>
+
+<h2>Other places to look</h2>
+<ul>
+  <li><a href="./faq.html">FAQ</a> &mdash; longer-form answers on how Antares works.</li>
+  <li><a href="./security.html">Security</a> &mdash; permissions, code integrity, vulnerability disclosure.</li>
+  <li><a href="./privacy.html">Privacy</a> &mdash; what data the extension processes.</li>
+  <li><a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &mdash; source, releases, change log.</li>
+</ul>
+
+</main>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}}).catch(function(){})})();</script>
+</body>
+</html>
