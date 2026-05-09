@@ -85,10 +85,10 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="release-head"><div class="release-v">v1.3.0</div><div class="release-date">5 May 2026</div></div>
   <h3>Deep Analysis redesign — 4 new tabs replace the originals</h3>
   <ul>
-    <li><b>Insider Watch</b> replaces <em>Timeline</em>. Top 12 wallets in a colour-coded heatmap; each tile shows the wallet&rsquo;s 6h delta + action (Accumulating / Holding / Reducing / Selling / Dumping). Dev wallet flagged with a purple ring. Wired to <code>holderActivity.rows</code> with criticalActors fallback and concentration-tile fallback when both are missing. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/430">#430</a></li>
-    <li><b>Buy/Sell Flow</b> replaces <em>Holder Activity</em>. Pressure-gauge hero with ACCUMULATION / DISTRIBUTION / BALANCED status driven by DexScreener <code>pair.txns</code> + <code>pair.volume</code> across 5min / 1h / 6h / 24h windows. Per-window mini cards. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/430">#430</a></li>
-    <li><b>Wash Volume</b> replaces <em>Outcome Histogram</em>. 0-100 wash score donut + 4 metrics (reported, real estimate, total trades, avg trade size, buy/sell symmetry). Pivoted off Solscan to DexScreener data so it works on every token with a pair. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/430">#430</a></li>
-    <li><b>Sniper Map</b> replaces <em>Score Breakdown</em>. Concentration retention bar showing top-10 holding share vs distributed float, plus sniper / bundle flag count. Uses Helius top-N with RugCheck fallback so the tab populates even when Helius is unavailable. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/431">#431</a></li>
+    <li><b>Insider Watch</b> replaces <em>Timeline</em>. Top 12 wallets in a colour-coded heatmap; each tile shows the wallet&rsquo;s 6h delta + action (Accumulating / Holding / Reducing / Selling / Dumping). Dev wallet flagged with a purple ring. Wired to <code>holderActivity.rows</code> with criticalActors fallback and concentration-tile fallback when both are missing. <span class="pr-ref">#430</span></li>
+    <li><b>Buy/Sell Flow</b> replaces <em>Holder Activity</em>. Pressure-gauge hero with ACCUMULATION / DISTRIBUTION / BALANCED status driven by DexScreener <code>pair.txns</code> + <code>pair.volume</code> across 5min / 1h / 6h / 24h windows. Per-window mini cards. <span class="pr-ref">#430</span></li>
+    <li><b>Wash Volume</b> replaces <em>Outcome Histogram</em>. 0-100 wash score donut + 4 metrics (reported, real estimate, total trades, avg trade size, buy/sell symmetry). Pivoted off Solscan to DexScreener data so it works on every token with a pair. <span class="pr-ref">#430</span></li>
+    <li><b>Sniper Map</b> replaces <em>Score Breakdown</em>. Concentration retention bar showing top-10 holding share vs distributed float, plus sniper / bundle flag count. Uses Helius top-N with RugCheck fallback so the tab populates even when Helius is unavailable. <span class="pr-ref">#431</span></li>
     <li>Removed dead <code>buildOutcomeHistogramTab</code> and stale &quot;Outcome Histogram is not available&quot; user-facing string. Marketing copy across index / features / faq / compare / engine / about / terms / token updated to reference the new tabs.</li>
     <li>980/980 unit tests pass + new live-API integration test against 4 real tokens (BONK / PENGU / TRUMP / TROLL) verifies all four tabs render with real data.</li>
   </ul>
@@ -98,12 +98,12 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="release-head"><div class="release-v">v1.2.1</div><div class="release-date">27 April 2026</div></div>
   <h3>v5 backend wave — real data behind every section</h3>
   <ul>
-    <li><b>Critical Actors</b> composer ships real per-token data: dev reputation (prior tokens, prior rugs), insider sniper position, coordinated cluster from insider-graph union-find. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/321">#321</a></li>
-    <li><b>Verdict Timeline</b> persisted in Redis ZSET <code>vh:{ca}</code>. Each scan appends a snapshot; the tab renders real verdict progression instead of a static bookend. 60s dedupe, 50-entry cap, 30-day TTL. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/322">#322</a></li>
-    <li><b>Holder Activity</b> tab now classifies last-60min on-chain activity per top holder (Holding / Selling / Buying / Splitting / Reducing / Static) from <code>recentTransfers</code>. Net-flow footer detects pre-dump signature. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/323">#323</a></li>
-    <li><b>Outcome Stats</b> &mdash; TTR ring + Outcome Histogram &mdash; powered by a heuristic profile matcher (fast-rug / high-risk / slow-death). Indicative; corpus-backed KNN matcher coming. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/324">#324</a></li>
-    <li>TTR ring rendered only for RUG and DANGER verdicts (was previously also showing on CAUTION with misleading slow-death framing). <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/326">#326</a></li>
-    <li>Holder Activity tab shows honest empty-state when backend returns <code>rows=[]</code> instead of falling back to mock content. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/325">#325</a></li>
+    <li><b>Critical Actors</b> composer ships real per-token data: dev reputation (prior tokens, prior rugs), insider sniper position, coordinated cluster from insider-graph union-find. <span class="pr-ref">#321</span></li>
+    <li><b>Verdict Timeline</b> persisted in Redis ZSET <code>vh:{ca}</code>. Each scan appends a snapshot; the tab renders real verdict progression instead of a static bookend. 60s dedupe, 50-entry cap, 30-day TTL. <span class="pr-ref">#322</span></li>
+    <li><b>Holder Activity</b> tab now classifies last-60min on-chain activity per top holder (Holding / Selling / Buying / Splitting / Reducing / Static) from <code>recentTransfers</code>. Net-flow footer detects pre-dump signature. <span class="pr-ref">#323</span></li>
+    <li><b>Outcome Stats</b> &mdash; TTR ring + Outcome Histogram &mdash; powered by a heuristic profile matcher (fast-rug / high-risk / slow-death). Indicative; corpus-backed KNN matcher coming. <span class="pr-ref">#324</span></li>
+    <li>TTR ring rendered only for RUG and DANGER verdicts (was previously also showing on CAUTION with misleading slow-death framing). <span class="pr-ref">#326</span></li>
+    <li>Holder Activity tab shows honest empty-state when backend returns <code>rows=[]</code> instead of falling back to mock content. <span class="pr-ref">#325</span></li>
     <li>Cache prefix bumped <code>antares:v3:</code> &rarr; <code>antares:v4:</code> to invalidate stale results pre-dating the v5 fields.</li>
     <li>34 new tests added (composers + Redis-mocked verdict-history). Branch coverage 74.6%.</li>
   </ul>
@@ -113,8 +113,8 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="release-head"><div class="release-v">v1.2.0</div><div class="release-date">25 April 2026</div></div>
   <h3>v5 design + token page architecture</h3>
   <ul>
-    <li>Foldable, click-to-collapse sections everywhere (Critical Flags, AI Verdict, Security, Holders, Deep Analysis, Source Breakdown). <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/316">#316</a></li>
-    <li>Deep Analysis 5-tab widget &mdash; Timeline, Holder Activity, Score Breakdown (radar), Outcome Histogram, Exit Liquidity. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/317">#317</a></li>
+    <li>Foldable, click-to-collapse sections everywhere (Critical Flags, AI Verdict, Security, Holders, Deep Analysis, Source Breakdown). <span class="pr-ref">#316</span></li>
+    <li>Deep Analysis 5-tab widget &mdash; Timeline, Holder Activity, Score Breakdown (radar), Outcome Histogram, Exit Liquidity. <span class="pr-ref">#317</span></li>
     <li>SVG radar pentagon over 5 dimensions (LP / Holders / Trading / Maturity / Sources).</li>
     <li>Critical Actors preview with 3 cards (Dev / Insider / Cluster).</li>
     <li>Time-to-Rug ring in hero for RUG / DANGER verdicts.</li>
@@ -124,9 +124,9 @@ footer .foot-links a:hover{color:var(--c)}
   </ul>
   <h3>Backend resilience</h3>
   <ul>
-    <li>Per-fetch deadline with graceful degradation when one upstream stalls. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/275">#275</a></li>
-    <li>Runtime Zod validation for upstream GoPlus / RugCheck / Helius responses. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/276">#276</a></li>
-    <li>Structured <code>scan.outcome</code> + <code>scan.cache_hit</code> telemetry. <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/277">#277</a> <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/pull/279">#279</a></li>
+    <li>Per-fetch deadline with graceful degradation when one upstream stalls. <span class="pr-ref">#275</span></li>
+    <li>Runtime Zod validation for upstream GoPlus / RugCheck / Helius responses. <span class="pr-ref">#276</span></li>
+    <li>Structured <code>scan.outcome</code> + <code>scan.cache_hit</code> telemetry. <span class="pr-ref">#277</span> <span class="pr-ref">#279</span></li>
     <li>Rate limiting can key on <code>(IP, install)</code> &mdash; closes shared-NAT quota starvation.</li>
     <li>GoPlus <code>holder_count</code> finally read &mdash; the field was already in the response, just unused.</li>
     <li>Asymmetric Redis cache TTL: bad verdicts cache long, young-token safe verdicts cache short.</li>
@@ -146,10 +146,10 @@ footer .foot-links a:hover{color:var(--c)}
   </ul>
 </div>
 
-<div class="full-link">Full changelog with all merged PRs: <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/CHANGELOG.md">CHANGELOG.md</a></div>
+<div class="full-link">Full changelog with all merged PRs: <a href="./changelog.html">the changelog page</a></div>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 <script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>

@@ -88,10 +88,10 @@ footer .foot-links a:hover{color:var(--c)}
 
 <h2>Code integrity</h2>
 <div class="facts-grid">
-  <div class="fact-card"><h3>Open source</h3><p>The full extension source, the API server, the scoring engine and every test &mdash; public on <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a>. Read it, fork it, audit it.</p></div>
-  <div class="fact-card"><h3>Reproducible builds</h3><p>The Chrome Web Store package is built from a tagged commit on <code>master</code> with <code>npm run build</code>. Anyone can rebuild it locally and diff against the published bundle.</p></div>
-  <div class="fact-card"><h3>Signed by Chrome</h3><p>The published extension is signed by the Chrome Web Store. Chrome verifies the signature on every update; tampered code is rejected at install time.</p></div>
-  <div class="fact-card"><h3>No remote code</h3><p>The extension does not <code>eval</code> or load remote JavaScript. All logic ships in the static bundle. Manifest V3 enforces this at the browser level.</p></div>
+  <div class="fact-card"><h3>No remote code</h3><p>The extension never <code>eval</code>s, never loads JavaScript from a server at runtime. Everything is in the static bundle that Chrome reviewed at install time. Manifest V3 enforces this at the browser level.</p></div>
+  <div class="fact-card"><h3>Signed by Google</h3><p>The published bundle is signed by the Chrome Web Store. Chrome verifies the signature on every auto-update; tampered code is rejected before it runs.</p></div>
+  <div class="fact-card"><h3>Minimum permissions</h3><p>Five permissions, eight host permissions. No password access, no form-fill, no browsing history, no cookies, no <code>webRequest</code>, no identity, no downloads. Full list in <a href="./privacy.html">section 8 of the privacy policy</a>.</p></div>
+  <div class="fact-card"><h3>No analytics, no tracking</h3><p>No third-party analytics scripts, no fingerprinting, no scan-to-identity tying. The extension sends only the public Solana contract address you&rsquo;re looking at &mdash; nothing else leaves your browser.</p></div>
 </div>
 
 <h2>What permissions Antares asks for, and why</h2>
@@ -102,7 +102,7 @@ footer .foot-links a:hover{color:var(--c)}
   <li><b><code>notifications</code></b> &mdash; alert you when a token&rsquo;s verdict escalates (e.g. CAUTION → DANGER while you&rsquo;re still on the page).</li>
   <li><b><code>alarms</code></b> &mdash; periodic background re-scans for tokens you&rsquo;re actively watching.</li>
 </ul>
-<p>Permissions <b>not</b> requested: passwords, form-fill, browsing history, downloads, cookies, webRequest, identity. The full <code>permissions</code> and <code>host_permissions</code> arrays are visible in <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/plasmo.config.ts">plasmo.config.ts</a>.</p>
+<p>Permissions <b>not</b> requested: passwords, form-fill, browsing history, downloads, cookies, webRequest, identity. The full <code>permissions</code> and <code>host_permissions</code> arrays are visible in <a href="./privacy.html">section 8 of our privacy policy</a>.</p>
 
 <h2>What data leaves your browser</h2>
 <p>Only what the scan needs:</p>
@@ -118,12 +118,12 @@ footer .foot-links a:hover{color:var(--c)}
 <p>If a security issue is discovered between releases, an emergency update can be pushed within hours. The version number in the navbar of every page on this site (<code>v1.3.0</code>) is always the canonical released version.</p>
 
 <h2>Vulnerability disclosure</h2>
-<p>If you find a security issue &mdash; an XSS in the overlay, a way to bypass the safe gate, an upstream API that leaks data, anything that affects user safety &mdash; please report it privately rather than opening a public issue.</p>
+<p>If you find a security issue &mdash; an XSS in the overlay, a way to bypass the safe gate, an upstream API that leaks data, anything that affects user safety &mdash; please report it privately rather than posting it in any public channel.</p>
 <ul>
-  <li><b>Preferred:</b> GitHub <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/security/advisories/new">Private Vulnerability Reporting</a> on the repo.</li>
-  <li><b>Alternative:</b> DM <a href="https://twitter.com/antaresantiscam">@antaresantiscam</a> on Twitter (rotate to email if the report is long).</li>
+  <li><b>Preferred:</b> email <a href="mailto:antaresantiscam@gmail.com?subject=%5BSECURITY%5D">antaresantiscam@gmail.com</a> with subject <code>[SECURITY]</code> and a clear repro.</li>
+  <li><b>Alternative:</b> DM <a href="https://twitter.com/antaresantiscam">@antaresantiscam</a> on Twitter to coordinate (rotate to email for the actual report &mdash; DMs are not the right channel for exploit details).</li>
 </ul>
-<p>Full process documented in <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension/blob/master/SECURITY.md">SECURITY.md</a>. We acknowledge reports within 48 hours, target a fix within 7 days for critical issues, and publish a post-mortem after the fix ships.</p>
+<p>We acknowledge reports within 48 hours, target a fix within 7 days for critical issues, and publish a brief post-mortem on the <a href="./changelog.html">changelog</a> once the fix ships.</p>
 
 <div class="warn-box"><b>One thing we cannot promise.</b> Antares is a heuristic risk-screening tool. A SAFE verdict means none of our 7 detection layers found a critical signal at scan time &mdash; it is not a guarantee the token won&rsquo;t rug. False negatives happen, especially on novel attack patterns. Treat the verdict as a high-quality second opinion, not a verdict of innocence. See <a href="./terms.html">Terms</a> for the full disclaimer.</div>
 
@@ -131,7 +131,7 @@ footer .foot-links a:hover{color:var(--c)}
 <p>None publicly disclosed to date. If/when that changes, this section becomes a dated list with full post-mortems linked. Transparency over silence.</p>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./demo.html">Demo</a> &middot; <a href="./features.html">Features</a> &middot; <a href="./pricing.html">Pricing</a> &middot; <a href="./faq.html">Q&amp;A</a> &middot; <a href="./install.html">Install</a> &middot; <a href="https://github.com/COMEALAMAISONGROUPE/antares-extension">GitHub</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
 <script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>
