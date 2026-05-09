@@ -30,7 +30,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff2244;--yellow:#f5d000;--glow:rgba(0,229,176,.12)}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scrollbar-gutter:stable}
 body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
 
 /* ── STRIPE ── */
@@ -47,7 +47,7 @@ body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace
 .shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
 
 /* ── NAV ── */
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;position:sticky;top:3px;z-index:100}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;max-width:1160px;margin:0 auto;position:sticky;top:3px;z-index:100}
 nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
 nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none}
 nav .links{display:flex;gap:24px}
@@ -550,6 +550,6 @@ footer .foot-links a:hover{color:#5a5a62}
   }
 })()
 </script>
-<script>(function(){var e=document.getElementById('nav-account');if(!e)return;fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}}).catch(function(){})})();</script>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>
