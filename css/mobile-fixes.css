@@ -233,5 +233,36 @@ body.menu-open { overflow: hidden; }
      Half-size the numbers and tighten the gutter. */
   .step { grid-template-columns: 40px 1fr !important; gap: 16px !important; }
   .step-n { font-size: 38px !important; line-height: 1 !important; }
+
+  /* ── 8. FAQ accordion ────────────────────────────────────────────
+     Mobile FAQ collapses each .qa to just its <h3> until tapped.
+     js/faq-accordion.js wires the click + keyboard handlers and
+     toggles the .qa-collapsed class. A caret communicates the
+     disclosure state. /faq drops from ~9 screens to ~2 (just the
+     question list) — the user scans, taps what's relevant, reads. */
+  .qa h3 {
+    position: relative;
+    padding-right: 28px;
+  }
+  .qa h3::after {
+    content: "▾";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--c, #00e5b0);
+    transition: transform .2s ease;
+  }
+  .qa.qa-collapsed h3::after {
+    transform: translateY(-50%) rotate(-90deg);
+  }
+  .qa.qa-collapsed > *:not(h3) {
+    display: none !important;
+  }
+  /* Press-state feedback on tap (no hover on touch). */
+  .qa h3:active {
+    color: var(--c, #00e5b0);
+  }
 }
 
