@@ -230,8 +230,8 @@ footer span{color:var(--c)}
 
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
-  <div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html" class="active">Pricing</a><a href="./faq.html">Q&amp;A</a></div>
-  <div class="nav-actions"><a href="./auth.html" id="nav-account" class="nav-account">Log in</a><a href="./install.html" class="nav-cta">Install &rarr;</a></div>
+  <div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing" class="active">Pricing</a><a href="./faq">Q&amp;A</a></div>
+  <div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>
 </nav></header><main>
 
 <section class="page-hero">
@@ -270,7 +270,7 @@ footer span{color:var(--c)}
       <li class="no"><b>Scan history &amp; exports</b></li>
     </ul>
     <div class="tier-quote">Free is the gateway. The verdict, the score, the overlay &mdash; the core of what makes Antares useful. We&rsquo;ve never reduced what&rsquo;s on it. We never will.</div>
-    <a href="./install.html" class="tier-cta secondary">Install free &rarr;</a>
+    <a href="./install" class="tier-cta secondary">Install free &rarr;</a>
     <div class="tier-status"><span class="live">&middot; Live now</span></div>
   </div>
 
@@ -333,11 +333,11 @@ footer span{color:var(--c)}
 <div class="cta-final">
   <h2>Trade with <span>the lights on</span>.</h2>
   <p>Six independent data sources. One purpose-built scoring engine. Zero accounts, zero tracking, zero card details to leak. Antares lives in your browser, signs nothing, sees nothing, sells nothing &mdash; the only thing it asks is that you stop trading blind.</p>
-  <a class="cta" href="./install.html">↗ Install in 60 seconds</a>
+  <a class="cta" href="./install">↗ Install in 60 seconds</a>
 </div>
 
 </main></div>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a></div></footer>
 
 <!-- ── NOWPayments hosted-checkout modal ──────────────────────────────────
      Slim by design: collect email, show locked-in USD amount, redirect
@@ -356,7 +356,7 @@ footer span{color:var(--c)}
       <div class="pay-email-hint" id="pay-email-hint">Pro auto-activates on every device where you sign in to your Antares account. We email a receipt here too.</div>
       <div class="pay-email-authnote" id="pay-email-authnote" style="display:none;font:400 10px/1.5 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.04em;margin-top:4px"></div>
       <div class="pay-email-loginlink" id="pay-email-loginlink" style="font:400 10px/1.5 'IBM Plex Mono',monospace;color:#5a5a62;letter-spacing:.04em;margin-top:4px">
-        Already have an account? <a href="./auth.html?return=%2Fpricing.html" style="color:var(--c);text-decoration:none">Log in</a> to skip this step.
+        Already have an account? <a href="./auth?return=%2Fpricing.html" style="color:var(--c);text-decoration:none">Log in</a> to skip this step.
       </div>
     </div>
     <div class="pay-amount" id="pay-amount">—</div>
@@ -374,7 +374,7 @@ footer span{color:var(--c)}
       <div class="pay-license-label">Receipt &middot; Pro is now active</div>
       <div class="pay-license-key" id="pay-license-key">—</div>
       <button type="button" class="pay-license-copy" id="pay-license-copy">Copy</button>
-      <div class="pay-license-instr">Pro is now linked to your Antares account. Sign in on any device to activate it there — no codes to enter. The reference above is your purchase receipt; full history at <a href="./account.html">/account</a>.</div>
+      <div class="pay-license-instr">Pro is now linked to your Antares account. Sign in on any device to activate it there — no codes to enter. The reference above is your purchase receipt; full history at <a href="./account">/account</a>.</div>
     </div>
     <button class="pay-cta-btn" id="pay-cta-btn" type="button" disabled>
       <span class="pay-cta-text">Continue to checkout</span>
@@ -750,6 +750,6 @@ footer span{color:var(--c)}
 })();
 </script>
 
-<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>

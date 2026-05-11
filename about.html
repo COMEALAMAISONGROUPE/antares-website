@@ -68,7 +68,7 @@ footer .foot-links a:hover{color:var(--c)}
 </head>
 <body>
 <div class="stripe" role="presentation"></div>
-<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html">Pricing</a><a href="./faq.html">Q&amp;A</a></div><div class="nav-actions"><a href="./auth.html" id="nav-account" class="nav-account">Log in</a><a href="./install.html" class="nav-cta">Install &rarr;</a></div></nav>
+<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div></nav>
 <main class="shell">
 
 <section class="page-hero">
@@ -83,7 +83,7 @@ footer .foot-links a:hover{color:var(--c)}
 <h2>What Antares is, what it isn&rsquo;t</h2>
 <p>Antares is a <b>risk-screening tool</b>. It tells you what 7 independent detection layers find about a Solana token in 3-5 seconds. It is <b>not</b> financial advice, it does not predict the future, and it cannot guarantee a SAFE token won&rsquo;t rug. False positives and false negatives both happen &mdash; we trade off in favour of safety (better one false alarm than one missed honeypot).</p>
 
-<p>The Wash Volume score and Sniper Map retention are <b>indicative</b> &mdash; derived from heuristic signals (avg trade size relative to liquidity, top-10 concentration), not validated forecasts. Treat them as context, not certainty. See <a href="./terms.html">Terms</a> for the full disclaimer.</p>
+<p>The Wash Volume score and Sniper Map retention are <b>indicative</b> &mdash; derived from heuristic signals (avg trade size relative to liquidity, top-10 concentration), not validated forecasts. Treat them as context, not certainty. See <a href="./terms">Terms</a> for the full disclaimer.</p>
 
 <h2>How it stays free</h2>
 <div class="values-grid">
@@ -94,9 +94,9 @@ footer .foot-links a:hover{color:var(--c)}
 </div>
 
 <h2>Who&rsquo;s behind it</h2>
-<p>Antares is operated by the <b>COMEALAMAISONGROUPE</b> project, based in France. The maintainer is reachable at <a href="mailto:antaresantiscam@gmail.com">antaresantiscam@gmail.com</a> or on Twitter as <a href="https://twitter.com/antaresantiscam">@antaresantiscam</a>. Bug reports and feature requests go through the <a href="./support.html">support page</a>.</p>
+<p>Antares is operated by the <b>COMEALAMAISONGROUPE</b> project, based in France. The maintainer is reachable at <a href="mailto:antaresantiscam@gmail.com">antaresantiscam@gmail.com</a> or on Twitter as <a href="https://twitter.com/antaresantiscam">@antaresantiscam</a>. Bug reports and feature requests go through the <a href="./support">support page</a>.</p>
 
-<p>Spotted a token we missed? A verdict that looked off? An overlay glitch? Drop a note via the <a href="./support.html">support page</a>. Security issues should go to <a href="mailto:antaresantiscam@gmail.com?subject=%5BSECURITY%5D">antaresantiscam@gmail.com</a> with subject <code>[SECURITY]</code> &mdash; please don&rsquo;t post exploit details in any public channel.</p>
+<p>Spotted a token we missed? A verdict that looked off? An overlay glitch? Drop a note via the <a href="./support">support page</a>. Security issues should go to <a href="mailto:antaresantiscam@gmail.com?subject=%5BSECURITY%5D">antaresantiscam@gmail.com</a> with subject <code>[SECURITY]</code> &mdash; please don&rsquo;t post exploit details in any public channel.</p>
 
 <h2>Roadmap</h2>
 <p><b>Q2 2026</b> &mdash; Chrome Web Store listing live, false-positive triage on real traffic, scoring engine refinements based on observed corpus.</p>
@@ -105,7 +105,7 @@ footer .foot-links a:hover{color:var(--c)}
 <p>Targets are aspirational, not contractual &mdash; everything is downstream of the Chrome Web Store listing approval and the first months of real traffic.</p>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
-<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a></div></footer>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>

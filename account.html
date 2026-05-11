@@ -136,7 +136,7 @@ footer .foot-links a:hover{color:var(--c)}
 
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
-  <div class="links"><a href="./pricing.html">Pricing</a><a href="./faq.html">Q&amp;A</a><a href="./install.html">Install</a></div>
+  <div class="links"><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a><a href="./install">Install</a></div>
 </nav></header>
 
 <main id="main-content">
@@ -195,7 +195,7 @@ footer .foot-links a:hover{color:var(--c)}
 </main>
 
 </div>
-<footer>Antares <div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+<footer>Antares <div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a></div></footer>
 
 <script>
 (function() {
@@ -272,7 +272,7 @@ footer .foot-links a:hover{color:var(--c)}
         if (r.status === 404) {
           showCheckoutBanner('error', {
             title: 'Payment not found',
-            msg: 'We could not find this checkout. The reference may have expired (intents live 1h). <a href="./pricing.html">Try again</a>.',
+            msg: 'We could not find this checkout. The reference may have expired (intents live 1h). <a href="./pricing">Try again</a>.',
             hideKeyBlock: true,
           });
           return;
@@ -302,7 +302,7 @@ footer .foot-links a:hover{color:var(--c)}
         if (s === 'expired') {
           showCheckoutBanner('error', {
             title: '✕ Payment expired',
-            msg: 'This checkout window has expired. <a href="./pricing.html">Start a new payment</a> to retry — no funds were charged.',
+            msg: 'This checkout window has expired. <a href="./pricing">Start a new payment</a> to retry — no funds were charged.',
             hideKeyBlock: true,
           });
           return;
@@ -344,7 +344,7 @@ footer .foot-links a:hover{color:var(--c)}
   if (checkoutCancelled) {
     showCheckoutBanner('warn', {
       title: 'Checkout cancelled',
-      msg: 'No funds were charged. <a href="./pricing.html">Try again</a> when you’re ready.',
+      msg: 'No funds were charged. <a href="./pricing">Try again</a> when you’re ready.',
       hideKeyBlock: true,
     });
   } else if (hasCheckoutRef) {
@@ -481,7 +481,7 @@ footer .foot-links a:hover{color:var(--c)}
         'Pro is now linked to your Antares account. To use it on a device:' +
         '<ol>' +
           '<li>Make sure the <b>Antares extension</b> is installed on that device.</li>' +
-          '<li>Sign in to your account on that device — open the extension Options page or visit <a href="./auth.html">antaresscan.com/auth</a>.</li>' +
+          '<li>Sign in to your account on that device — open the extension Options page or visit <a href="./auth">antaresscan.com/auth</a>.</li>' +
           '<li>The overlay flips to Pro automatically. No keys to paste, ever.</li>' +
         '</ol>' +
       '</div>';
@@ -509,7 +509,7 @@ footer .foot-links a:hover{color:var(--c)}
     renderActivateCallout(list);
 
     if (!list.length) {
-      listEl.innerHTML = '<div class="empty"><p>You don\'t have any subscriptions yet. Pick a tier and pay in any of 200+ supported cryptocurrencies &mdash; Pro activates automatically on every device where you sign in to your account.</p><a href="./pricing.html">View pricing</a></div>';
+      listEl.innerHTML = '<div class="empty"><p>You don\'t have any subscriptions yet. Pick a tier and pay in any of 200+ supported cryptocurrencies &mdash; Pro activates automatically on every device where you sign in to your account.</p><a href="./pricing">View pricing</a></div>';
       return;
     }
     resultsLabel.style.display = 'block';

@@ -103,8 +103,8 @@ footer .foot-links a:hover{color:var(--c)}
 <div class="shell">
 <header><nav aria-label="Main navigation">
   <a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a>
-  <div class="links"><a href="./demo.html" class="active">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html">Pricing</a><a href="./faq.html">Q&amp;A</a></div>
-  <div class="nav-actions"><a href="./auth.html" id="nav-account" class="nav-account">Log in</a><a href="./install.html" class="nav-cta">Install &rarr;</a></div>
+  <div class="links"><a href="./demo" class="active">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a></div>
+  <div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>
 </nav></header><main>
 
 <section class="page-hero">
@@ -145,10 +145,10 @@ footer .foot-links a:hover{color:var(--c)}
 <div class="cta-final">
   <h2>Get this on every Solana page.</h2>
   <p>Install the extension and the overlay appears automatically &mdash; on DexScreener, pump.fun, Birdeye, Photon, Axiom, GMGN, GeckoTerminal and Telemetry. You drag it where you like, it remembers the position.</p>
-  <a class="cta" href="./install.html">Install</a>
+  <a class="cta" href="./install">Install</a>
 </div>
 
-</main><footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
+</main><footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a></div></footer>
 </div>
 
 <script>
@@ -1152,6 +1152,6 @@ footer .foot-links a:hover{color:var(--c)}
   }
 })();
 </script>
-<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>

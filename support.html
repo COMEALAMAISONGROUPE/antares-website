@@ -75,7 +75,7 @@ footer .foot-links a:hover{color:var(--c)}
 </head>
 <body>
 <div class="stripe" role="presentation"></div>
-<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html">Pricing</a><a href="./faq.html">Q&amp;A</a></div><div class="nav-actions"><a href="./auth.html" id="nav-account" class="nav-account">Log in</a><a href="./install.html" class="nav-cta">Install &rarr;</a></div></nav>
+<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div></nav>
 <main class="shell">
 
 <section class="page-hero">
@@ -132,7 +132,7 @@ footer .foot-links a:hover{color:var(--c)}
 </div>
 
 <div class="qa"><h3>Does Antares store my wallet address or trades?</h3>
-<p>No. Antares never reads your wallet, never reads form fields, never reads cookies. It extracts the public Solana contract address visible in the URL or DOM of supported pages and sends only that to our API. Read the <a href="./privacy.html">privacy policy</a> for the full data flow.</p>
+<p>No. Antares never reads your wallet, never reads form fields, never reads cookies. It extracts the public Solana contract address visible in the URL or DOM of supported pages and sends only that to our API. Read the <a href="./privacy">privacy policy</a> for the full data flow.</p>
 </div>
 
 <div class="qa"><h3>I&rsquo;m getting &ldquo;rate limited&rdquo; errors. What&rsquo;s happening?</h3>
@@ -161,15 +161,15 @@ footer .foot-links a:hover{color:var(--c)}
 
 <div class="qa"><h3>Self-serve before you email</h3>
 <ul>
-<li><a href="./faq.html">FAQ</a> &mdash; longer-form answers on how Antares works.</li>
-<li><a href="./security.html">Security</a> &mdash; permissions, code integrity, vulnerability disclosure.</li>
-<li><a href="./privacy.html">Privacy</a> &mdash; what data the extension processes.</li>
-<li><a href="./support.html">our support page</a> &mdash; source, releases, change log.</li>
+<li><a href="./faq">FAQ</a> &mdash; longer-form answers on how Antares works.</li>
+<li><a href="./security">Security</a> &mdash; permissions, code integrity, vulnerability disclosure.</li>
+<li><a href="./privacy">Privacy</a> &mdash; what data the extension processes.</li>
+<li><a href="./support">our support page</a> &mdash; source, releases, change log.</li>
 </ul>
 </div>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
-<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a></div></footer>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>

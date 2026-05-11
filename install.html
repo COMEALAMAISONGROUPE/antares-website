@@ -84,7 +84,7 @@ footer .foot-links a:hover{color:var(--c)}
 </head>
 <body>
 <div class="stripe" role="presentation"></div>
-<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html">Pricing</a><a href="./faq.html">Q&amp;A</a></div><div class="nav-actions"><a href="./auth.html" id="nav-account" class="nav-account">Log in</a><a href="./install.html" class="nav-cta">Install &rarr;</a></div></nav>
+<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div></nav>
 <main class="shell">
 
 <section class="page-hero">
@@ -98,7 +98,7 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="step-body">
     <h3>Open the Chrome Web Store</h3>
     <p>Antares is published on the Chrome Web Store. Click the button below to open the listing.</p>
-    <a class="cta" href="./support.html">Get notified at launch</a>
+    <a class="cta" href="./support">Get notified at launch</a>
     <div class="warn-box"><b style="color:#a8a060">Listing pending approval.</b> Until the Chrome Web Store review is complete, the link above goes to the GitHub repository where you can sideload the extension manually (load unpacked from the latest <code>build/chrome-mv3-prod</code>). Once the listing is live, this page will update automatically.</div>
   </div>
 </div>
@@ -109,7 +109,7 @@ footer .foot-links a:hover{color:var(--c)}
     <h3>Click "Add to Chrome"</h3>
     <p>The Web Store will show a permission dialog. Antares requests minimum permissions:</p>
     <p>&bull; <code>storage</code> &mdash; remember your settings locally (theme, alert thresholds)<br>&bull; <code>notifications</code> &mdash; alert you when a token&rsquo;s verdict escalates<br>&bull; <code>activeTab</code> + <code>tabs</code> &mdash; read the URL and visible DOM on supported sites only<br>&bull; <code>alarms</code> &mdash; periodic background re-scans</p>
-    <div class="note-box">No password access, no form-fill access, no browsing history. The extension is dormant on every site that isn&rsquo;t a supported Solana platform. Full breakdown in <a href="./privacy.html">/privacy</a>.</div>
+    <div class="note-box">No password access, no form-fill access, no browsing history. The extension is dormant on every site that isn&rsquo;t a supported Solana platform. Full breakdown in <a href="./privacy">/privacy</a>.</div>
   </div>
 </div>
 
@@ -144,12 +144,12 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="step-body">
     <h3>Try the demo first</h3>
     <p>Not sure what the verdict looks like? Test Antares without installing &mdash; click one of the four sample tokens in the live demo and see the full scan inline.</p>
-    <a class="cta" href="./demo.html" style="background:transparent;color:var(--c);border:1px solid var(--c)">↗ Open the demo</a>
+    <a class="cta" href="./demo" style="background:transparent;color:var(--c);border:1px solid var(--c)">↗ Open the demo</a>
   </div>
 </div>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
-<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a></div></footer>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>
