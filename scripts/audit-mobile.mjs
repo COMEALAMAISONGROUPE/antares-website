@@ -60,14 +60,21 @@ const MIME = {
 };
 function ext(p) { const i = p.lastIndexOf('.'); return i < 0 ? '' : p.slice(i).toLowerCase(); }
 
-/* Mirror vercel.json cleanUrls: /pricing → pricing.html */
+/* Mirror vercel.json: cleanUrls + rewrites pointing into /pages/.
+   Order matters: we look in pages/ first (where every public page now
+   lives), then fall back to the repo root (for 404.html which Vercel
+   serves from the output-directory root, plus assets like icon.png). */
 async function resolveFile(urlPath) {
   const safe = normalize(urlPath.replace(/^\/+/, '')).replace(/\\/g, '/');
   const tries = [];
-  if (urlPath === '/' || urlPath === '') tries.push('index.html');
-  else {
+  if (urlPath === '/' || urlPath === '') {
+    tries.push('pages/index.html', 'index.html');
+  } else {
+    tries.push(`pages/${safe}`);
+    if (!ext(safe)) tries.push(`pages/${safe}.html`);
     tries.push(safe);
-    if (!ext(safe)) tries.push(safe + '.html');
+    if (!ext(safe)) tries.push(`${safe}.html`);
+    tries.push(join('pages', safe, 'index.html'));
     tries.push(join(safe, 'index.html'));
   }
   for (const t of tries) {
