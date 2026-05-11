@@ -1,0 +1,56 @@
+# Mobile regression audit — runs on every PR and on pushes to main.
+#
+# Boots a local static server against the working tree, drives a
+# headless Chromium at 375x812, and asserts on every public route:
+#   - zero horizontal overflow
+#   - burger button is wired up on pages that have a desktop nav
+#   - no uncaught JS errors from inline <script>s
+#
+# The same script (scripts/audit-mobile.mjs) is what we run locally
+# before pushing, so PASS in CI matches PASS on a dev machine.
+#
+# The bug that motivated this workflow: PR #146 silently shipped a
+# burger menu that skipped /auth and /account because their nav
+# markup differed slightly. Visible at iPhone width, invisible to
+# reviewers. With this job in place, the same PR would have been
+# blocked by a failing `auth: burger-hidden` check.
+
+name: Mobile audit
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Cancel an in-progress run for the same PR if a new commit lands.
+concurrency:
+  group: mobile-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: 375px mobile audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # We don't track package.json in the repo (it's a static site, no
+      # build step). The audit script needs Playwright — install it
+      # transiently here. Pinning to a major so a Playwright minor bump
+      # doesn't surprise us on a Tuesday morning.
+      - name: Install Playwright
+        run: |
+          npm install --no-save --no-package-lock playwright@^1.49
+          npx playwright install --with-deps chromium
+
+      - name: Run mobile audit
+        run: node scripts/audit-mobile.mjs
