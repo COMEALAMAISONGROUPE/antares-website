@@ -2,10 +2,18 @@
    mobile-fixes.css
    ──────────────────────────────────────────────────────────────────
    Isolated mobile-only overrides. Lives in its own file so changes
-   stay scoped to viewport <= 760px and never touch the HTML or the
-   inline <style> blocks of individual pages. To opt a page in, add:
+   stay scoped and never touch the HTML or the inline <style> blocks
+   of individual pages. To opt a page in:
        <link rel="stylesheet" href="/css/mobile-fixes.css">
-   in <head>. To revert, remove that one line.
+       <script src="/js/burger.js" defer></script>
+   in <head>. To revert, remove those two lines.
+
+   What's inside:
+     1. Per-page overflow fixes (/install step-body, /privacy table)
+     2. Burger menu + drawer styles. The burger HTML is *not* in the
+        pages — js/burger.js injects it at runtime from the existing
+        <nav> .links. So pages that load this CSS + that JS get a
+        working mobile nav without any HTML edit beyond two <head> tags.
    ────────────────────────────────────────────────────────────────── */
 
 /* ── /install ────────────────────────────────────────────────────────
@@ -44,4 +52,109 @@
   main table thead,
   main table tbody,
   main table tr { width: max-content; min-width: 100%; }
+}
+
+/* ── Burger menu + drawer ────────────────────────────────────────────
+   Activated by js/burger.js which injects the button + drawer markup
+   at runtime. We only ship the styles here; the HTML is portable
+   across pages with different <nav> structures.
+   ──────────────────────────────────────────────────────────────── */
+.nav-burger {
+  display: none;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  z-index: 210;
+}
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--c, #00e5b0);
+  transition: transform .3s ease, opacity .2s ease;
+}
+.nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 12, .97);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+}
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .3s ease;
+}
+.mobile-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: 0;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--c, #00e5b0);
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  text-align: center;
+}
+.mobile-links a {
+  font: 400 26px/1 'Bebas Neue', sans-serif;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #e0e0e0;
+  text-decoration: none;
+  transition: color .25s, transform .2s;
+  padding: 6px 12px;
+}
+.mobile-links a:hover,
+.mobile-links a.active {
+  color: var(--c, #00e5b0);
+  transform: translateY(-1px);
+}
+body.menu-open { overflow: hidden; }
+
+@media (max-width: 820px) {
+  /* The burger replaces the desktop links on mobile. Targets every
+     known nav variant we ship (<header><nav>, plain <nav>, .nav-inner). */
+  nav .links,
+  nav .nav-actions,
+  .nav-inner .links,
+  .nav-inner .nav-actions { display: none; }
+  .nav-burger { display: flex; }
+}
+@media (min-width: 821px) {
+  .mobile-menu { display: none; }
 }
