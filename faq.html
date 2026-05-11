@@ -70,7 +70,7 @@ footer .foot-links a:hover{color:var(--c)}
 </head>
 <body>
 <div class="stripe" role="presentation"></div>
-<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo.html">Demo</a><a href="./features.html">Features</a><a href="./engine.html">Engine</a><a href="./compare.html">Compare</a><a href="./pricing.html">Pricing</a><a href="./faq.html" class="active">Q&amp;A</a></div><div class="nav-actions"><a href="./auth.html" id="nav-account" class="nav-account">Log in</a><a href="./install.html" class="nav-cta">Install &rarr;</a></div></nav>
+<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq" class="active">Q&amp;A</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div></nav>
 <main class="shell">
 
 <section class="page-hero">
@@ -97,7 +97,7 @@ footer .foot-links a:hover{color:var(--c)}
 </div>
 
 <div class="qa"><h3>How do I activate Pro on the extension?</h3>
-<p>Automatically. The moment you sign in to your Antares account on a device where the extension is installed, the Pro overlay unlocks. No codes to copy, no fields to paste &mdash; the website sends a session token to the extension via a content-script bridge, and every scan after that resolves your tier from your account email. Sign out and the next scan reverts to Free. Sign in on another device and Pro syncs there too. Want to see your active subscriptions? <a href="./account.html">/account</a>.</p>
+<p>Automatically. The moment you sign in to your Antares account on a device where the extension is installed, the Pro overlay unlocks. No codes to copy, no fields to paste &mdash; the website sends a session token to the extension via a content-script bridge, and every scan after that resolves your tier from your account email. Sign out and the next scan reverts to Free. Sign in on another device and Pro syncs there too. Want to see your active subscriptions? <a href="./account">/account</a>.</p>
 </div>
 
 <div class="qa"><h3>Can I get a refund?</h3>
@@ -117,7 +117,7 @@ footer .foot-links a:hover{color:var(--c)}
 
 <div class="qa"><h3>Can a SAFE token still rug?</h3>
 <p>Yes. Antares is a probabilistic risk screen, not a guarantee. We can detect what 6 independent sources surface at scan time &mdash; novel exploits, coordinated dumps via fresh wallets, or social-engineering attacks may not register.</p>
-<p>The Wash Volume score and Sniper Map retention bar are <b>indicative</b>, derived from heuristic signals (avg trade size relative to liquidity, top-10 holder concentration) &mdash; they are not validated forecasts. See the <a href="./terms.html">Terms</a> for the full disclaimer.</p>
+<p>The Wash Volume score and Sniper Map retention bar are <b>indicative</b>, derived from heuristic signals (avg trade size relative to liquidity, top-10 holder concentration) &mdash; they are not validated forecasts. See the <a href="./terms">Terms</a> for the full disclaimer.</p>
 </div>
 
 <div class="qa"><h3>Why is this token flagged DANGER when it looks fine?</h3>
@@ -125,12 +125,12 @@ footer .foot-links a:hover{color:var(--c)}
 <p>&bull; <b>LP not burned but token is mature &amp; liquid</b> &mdash; we still penalise unburned LP because the dev <em>can</em> rug at any time, even if the project looks legitimate (e.g. Fartcoin, DeFade). The <code>established-bonus</code> rule unlocks SAFE for tokens 30+ days old with 50k+ holders + GoPlus clean.</p>
 <p>&bull; <b>Volume/liquidity ratio above 5&times;</b> &mdash; flagged as wash-trading risk even on legitimate flash-pool venues where that ratio is structural.</p>
 <p>&bull; <b>Deceptive name detection</b> sometimes catches generic financial terms ("Vanguard Capital" matching "Vanguard"). We&rsquo;re tightening this.</p>
-<p>If you think a verdict is wrong, <a href="./support.html">drop us a note via /support</a> with the token CA.</p>
+<p>If you think a verdict is wrong, <a href="./support">drop us a note via /support</a> with the token CA.</p>
 </div>
 
 <div class="qa"><h3>What data does Antares collect about me?</h3>
 <p>None personal. The API receives the contract address you scan plus standard HTTPS metadata (IP, user-agent) used for rate-limiting only. We don&rsquo;t store profiles, we don&rsquo;t correlate scans across users, we don&rsquo;t sell anything.</p>
-<p>Full disclosure with retention windows per system: <a href="./privacy.html">/privacy</a>.</p>
+<p>Full disclosure with retention windows per system: <a href="./privacy">/privacy</a>.</p>
 </div>
 
 <div class="qa"><h3>Why does the extension require <code>activeTab</code> and <code>tabs</code> permissions?</h3>
@@ -152,12 +152,12 @@ footer .foot-links a:hover{color:var(--c)}
 </div>
 
 <div class="qa"><h3>How do I report a false positive / false negative / bug?</h3>
-<p>Open an issue at <a href="./support.html">antaresscan.com/support</a> with: the token CA, what verdict you got, what you expected, and the timestamp of the scan (visible in the extension&rsquo;s metric tab as <code>requestId</code>).</p>
+<p>Open an issue at <a href="./support">antaresscan.com/support</a> with: the token CA, what verdict you got, what you expected, and the timestamp of the scan (visible in the extension&rsquo;s metric tab as <code>requestId</code>).</p>
 <p>Security issues should be reported privately by emailing <a href="mailto:antaresantiscam@gmail.com?subject=%5BSECURITY%5D">antaresantiscam@gmail.com</a> with subject <code>[SECURITY]</code> &mdash; do not include exploit details in any public channel.</p>
 </div>
 
 </main>
-<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install.html">Install</a> &middot; <a href="./support.html">Support</a> &middot; <a href="./privacy.html">Privacy</a> &middot; <a href="./about.html">About</a></div></footer>
-<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account.html';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth.html';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
+<footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a></div></footer>
+<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
 </body>
 </html>
