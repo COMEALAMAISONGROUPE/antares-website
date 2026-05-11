@@ -158,3 +158,80 @@ body.menu-open { overflow: hidden; }
 @media (min-width: 821px) {
   .mobile-menu { display: none; }
 }
+
+/* ──────────────────────────────────────────────────────────────────
+   Quick wins — strip noise from the mobile experience
+   ──────────────────────────────────────────────────────────────────
+   The mobile build is meant to PRESENT, not convert. Anything that
+   exists purely for desktop "wow" (particle canvas, cursor halo,
+   glitch text, candle chart, hero preview widget) earns its keep
+   only when there's room and a mouse to drive it. On a 375px screen
+   they stretch already-too-long pages without helping the user read
+   the page or decide whether to install on desktop.
+
+   Everything in this block is gated behind a single
+   @media (max-width: 760px) rule, so desktop renders byte-identical
+   to before this change.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+
+  /* ── 1. Hero preview widget ──────────────────────────────────────
+     #pv-wrap is the right column of the home hero (the SAFE 847/1000
+     mock overlay). Its parent <div class="reveal delay-3"> uses
+     display:flex inline, so even when #pv-wrap itself is hidden the
+     wrapper keeps the grid track height — that's the huge empty grey
+     rectangle visible in the middle of the home screenshot.
+     We collapse the wrapper too. The /demo page keeps its widget:
+     #pv-wrap there is outside .hero. */
+  .hero > div:nth-of-type(2) { display: none !important; }
+
+  /* ── 2. Loss-strip candle chart on home ──────────────────────────
+     The .loss-chart-bg SVG is a 40-element animated candle pattern
+     sitting behind the "$2.8B" loss number. The number reads fine
+     on its own; the chart adds visual weight and a perpetual reveal
+     animation that does nothing on mobile. Keep the surrounding
+     copy, drop the chart. */
+  .loss-strip .loss-chart-bg { display: none !important; }
+
+  /* ── 3. Particle canvas + cursor-glow ───────────────────────────
+     The canvas runs at 60fps on every page that ships hero-effects.js
+     (home, engine, features, sources). Mobile pays for that in
+     battery and reading focus. cursor-glow chases a pointer mobile
+     users don't have. */
+  #particles-canvas,
+  .cursor-glow { display: none !important; }
+
+  /* ── 4. Top stripe animation ─────────────────────────────────────
+     .stripe is a 3px-tall animated gradient pinned to top:0. To a
+     first-time mobile visitor it reads as a never-ending loading bar.
+     Freeze the gradient — keep the colour for brand continuity but
+     stop the motion. */
+  .stripe { animation: none !important; }
+
+  /* ── 5. Reveal-on-scroll fades ───────────────────────────────────
+     .reveal elements start at opacity:0 and animate to 1 when scrolled
+     into view. Layered onto an already-tall mobile page that means
+     every section starts invisible and the scroll feels janky on slow
+     connections. Show them immediately — the page is short enough
+     not to need a tease. */
+  .reveal { opacity: 1 !important; transform: none !important; }
+
+  /* ── 6. Glitch text effect ───────────────────────────────────────
+     .glitch::before / ::after duplicate the headline and shift it
+     in opposite directions, mostly meant to read as a hover effect.
+     Mobile has no hover, the duplicates just sit there as ghost
+     text and reduce legibility. Strip the pseudo-elements; the
+     real headline stays untouched. */
+  .glitch::before,
+  .glitch::after { display: none !important; }
+
+  /* ── 7. Oversized step numbers on /install ───────────────────────
+     The .step-n elements ("01", "02", "03", "04") render at 80px and
+     the parent .step grid reserves 80px for them. On 375px that
+     leaves only ~263px for the actual instructions — long inline
+     <code> and domain lists then jam against the right edge.
+     Half-size the numbers and tighten the gutter. */
+  .step { grid-template-columns: 40px 1fr !important; gap: 16px !important; }
+  .step-n { font-size: 38px !important; line-height: 1 !important; }
+}
+
