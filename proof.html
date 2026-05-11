@@ -6,13 +6,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <title>Proof &mdash; Antares</title>
-<meta name="description" content="How we prove the Antares scoring engine works. 523 real Solana tokens in the backtest corpus, daily drift check, case studies, and what auditability means for a closed-source product.">
+<meta name="description" content="How we prove the Antares scoring engine works. A frozen corpus of real Solana tokens, a nightly drift check against the same /api/scan endpoint your extension hits, and a scoped audit path for security researchers.">
 <meta name="author" content="Antares">
 <link rel="canonical" href="https://antaresscan.com/proof">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antaresscan.com/proof">
 <meta property="og:title" content="Proof &mdash; Antares">
-<meta property="og:description" content="523 real Solana tokens. Re-tested daily. Public results. How we keep an honest scoring engine when the source is closed.">
+<meta property="og:description" content="Real Solana tokens. Re-tested nightly. Public method, scoped audit on request. How we keep an honest scoring engine when the source is closed.">
 <meta property="og:image" content="https://antaresscan.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@antaresantiscam">
 <meta name="twitter:title" content="Proof &mdash; Antares">
-<meta name="twitter:description" content="523 real Solana tokens. Re-tested daily. Public results.">
+<meta name="twitter:description" content="Real Solana tokens. Re-tested nightly. Public method, scoped audit on request.">
 <meta name="twitter:image" content="https://antaresscan.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,7 +50,7 @@ nav .nav-account:hover{color:var(--c);border-color:var(--c);background:rgba(0,22
 .eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
 @keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
 h1{font:400 clamp(48px,8vw,72px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:16px;color:#eaeaea}
-.intro{font-size:14px;color:#9a9aa2;line-height:1.85;margin-bottom:24px;max-width:720px}
+.intro{font-size:14px;color:#9a9aa2;line-height:1.85;margin-bottom:24px;max-width:760px}
 .intro b{color:#d0d0d6}
 h2{font-size:13px;color:var(--c);letter-spacing:.1em;text-transform:uppercase;margin:48px 0 14px;font-weight:700}
 p{font-size:13px;color:#7a7a82;line-height:1.85;margin-bottom:14px}
@@ -60,55 +60,8 @@ ul{margin:0 0 14px 20px;font-size:13px;color:#7a7a82;line-height:1.85}
 ul li{margin-bottom:6px}
 ul li b{color:#aaa;font-weight:600}
 code{background:#15151a;padding:1px 5px;border-radius:2px;color:#bbb;font-size:11px}
-
-/* Big stat-grid at the top */
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:24px 0 36px}
-.stat-card{background:var(--card);padding:22px;text-align:center}
-.stat-card .v{font:400 38px/1 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;display:block;margin-bottom:6px}
-.stat-card .l{font-size:10px;color:#888;letter-spacing:.18em;text-transform:uppercase;line-height:1.4}
-
-/* Verdict distribution bar */
-.dist-section{margin:20px 0 32px}
-.dist-row{display:flex;align-items:center;gap:14px;margin-bottom:10px;font-size:12px}
-.dist-label{width:90px;text-transform:uppercase;letter-spacing:.14em;font-weight:600;font-size:11px}
-.dist-label.safe{color:var(--c)}
-.dist-label.caution{color:var(--yellow)}
-.dist-label.danger{color:#ff8800}
-.dist-label.rug{color:var(--red)}
-.dist-bar{flex:1;background:#0f0f12;height:12px;border-radius:2px;overflow:hidden;border:1px solid var(--border)}
-.dist-fill{height:100%;background:var(--c);transition:width 1s ease}
-.dist-fill.caution{background:var(--yellow)}
-.dist-fill.danger{background:#ff8800}
-.dist-fill.rug{background:var(--red)}
-.dist-count{width:120px;color:#888;font-size:11px;letter-spacing:.06em;text-align:right}
-.dist-count b{color:#cfcfd4;font-weight:600}
-
-/* Case studies table */
-.case-table{width:100%;border-collapse:collapse;margin:14px 0 24px;font-size:11.5px;background:var(--card);border:1px solid var(--border);table-layout:fixed}
-.case-table th,.case-table td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);color:#9a9aa2;vertical-align:top}
-.case-table th{color:var(--c);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:10px;background:#0e0e11}
-.case-table tr:last-child td{border-bottom:none}
-.case-table .ticker{color:#e0e0e0;font-weight:700;letter-spacing:.04em}
-.case-table .verdict{font-weight:700;letter-spacing:.06em;font-size:10.5px;text-transform:uppercase}
-.case-table .verdict.safe{color:var(--c)}
-.case-table .verdict.caution{color:var(--yellow)}
-.case-table .verdict.danger{color:#ff8800}
-.case-table .verdict.rug{color:var(--red)}
-.case-table .score{color:#cfcfd4;font-weight:600;font-variant-numeric:tabular-nums}
-.case-table .why{color:#7a7a82;font-size:10.5px;line-height:1.55}
-.case-table .why b{color:#9a9aa2;font-weight:500}
-@media(max-width:760px){
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
-  .case-table th:nth-child(4),.case-table td:nth-child(4){display:none}
-  .dist-count{width:90px}
-}
-
-/* Callout boxes */
 .warn-box{background:rgba(245,208,0,.04);border-left:2px solid var(--yellow);padding:14px 18px;font-size:11.5px;color:#a8a060;line-height:1.85;margin:18px 0}
 .warn-box b{color:#d4b040}
-.info-box{background:rgba(0,229,176,.04);border-left:2px solid var(--c);padding:14px 18px;font-size:11.5px;color:#9accba;line-height:1.85;margin:18px 0}
-.info-box b{color:#c0e8d6}
-
 footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;max-width:1160px;margin:60px auto 0}
 footer span{color:var(--c)}
 footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
@@ -125,178 +78,60 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="eyebrow">Proof, not promises</div>
   <h1>HOW WE PROVE THE SCORING WORKS</h1>
   <p class="intro">
-    The Antares scoring engine is closed source &mdash; not because we have something to hide, but because publishing the code would also publish every loophole a rug-puller needs to evade detection. That puts us in the same boat as anti-fraud teams at banks, ad networks, and exchanges: <b>credibility has to come from outcomes, not from the codebase.</b>
+    The Antares scoring engine is closed source &mdash; not because we have something to hide, but because publishing the code would also publish every loophole a rug-puller needs to evade detection. That puts us in the same boat as the anti-fraud teams at banks, ad networks, and exchanges: <b>credibility has to come from outcomes, not from the codebase.</b>
   </p>
   <p class="intro">
-    This page documents what we test against, how often, what the results look like, and what an independent auditor can verify without ever seeing a line of source.
+    This page documents what we test against, how often, and what an independent reviewer can verify without ever seeing a line of source.
   </p>
 </section>
 
 <h2>The corpus &mdash; what we test against</h2>
 <p>
-  The backtest corpus is a frozen snapshot of <b>523 real Solana token scans</b>, captured by hitting the same <code>/api/scan</code> endpoint your extension hits. Each snapshot records the verdict, the 1000-point score, every flag the engine raised, holder count, liquidity, and the LP-burn status at capture time. The corpus is intentionally skewed toward known rugs &mdash; that's where false negatives hurt users most.
+  The backtest corpus is a frozen library of real Solana token scans, captured by hitting the exact same <code>/api/scan</code> endpoint your extension hits. Each entry records the verdict the engine returned, the score it produced, every flag it raised, and the supporting on-chain state at capture time &mdash; holder count, liquidity, LP-burn status. <b>Nothing is synthesised. Every row is a real mint that traded on Solana.</b>
+</p>
+<p>
+  The corpus is intentionally skewed toward known rug pulls. False negatives on rugs are the catastrophic failure mode &mdash; a SAFE verdict on a token that turns out to drain its LP is what destroys user trust &mdash; so the test set is built to hammer the engine on the worst cases. Clean blue-chip memecoins are represented to catch the inverse failure mode (false positives on legitimate liquidity), and the borderline middle bands have enough coverage that a tuning change can't silently re-flag half the corpus.
 </p>
 
-<div class="stat-grid">
-  <div class="stat-card"><span class="v">523</span><span class="l">tokens<br>in corpus</span></div>
-  <div class="stat-card"><span class="v">368</span><span class="l">known<br>rugs labelled</span></div>
-  <div class="stat-card"><span class="v">292</span><span class="l">mean score<br>(of 1000)</span></div>
-  <div class="stat-card"><span class="v">daily</span><span class="l">drift check<br>03:00 UTC</span></div>
-</div>
-
-<h2>Verdict distribution across the corpus</h2>
-<div class="dist-section">
-  <div class="dist-row">
-    <span class="dist-label safe">SAFE</span>
-    <div class="dist-bar"><div class="dist-fill" style="width:5.2%"></div></div>
-    <span class="dist-count"><b>27</b> &middot; 5.2%</span>
-  </div>
-  <div class="dist-row">
-    <span class="dist-label caution">CAUTION</span>
-    <div class="dist-bar"><div class="dist-fill caution" style="width:13.4%"></div></div>
-    <span class="dist-count"><b>70</b> &middot; 13.4%</span>
-  </div>
-  <div class="dist-row">
-    <span class="dist-label danger">DANGER</span>
-    <div class="dist-bar"><div class="dist-fill danger" style="width:11.1%"></div></div>
-    <span class="dist-count"><b>58</b> &middot; 11.1%</span>
-  </div>
-  <div class="dist-row">
-    <span class="dist-label rug">RUG</span>
-    <div class="dist-bar"><div class="dist-fill rug" style="width:70.4%"></div></div>
-    <span class="dist-count"><b>368</b> &middot; 70.4%</span>
-  </div>
-</div>
-
-<h2>What the daily drift check does</h2>
+<h2>How the nightly drift check works</h2>
 <p>
-  Every night at <b>03:00 UTC</b>, an automated job re-scans every token in the corpus against the live <code>/api/scan</code> endpoint and compares the new verdict and score against the captured snapshot. The check has three independent failure modes:
+  Every night an automated job re-scans every token in the corpus against the live <code>/api/scan</code> endpoint and compares the new verdict and score against the captured snapshot. The check has three independent failure modes, ranked by severity:
 </p>
 <ul>
-  <li><b>False negative regression</b> &mdash; a labelled rug starts coming back SAFE. <b>Hard failure</b>, opens a tracking issue immediately.</li>
-  <li><b>False positive regression</b> &mdash; a labelled blue-chip starts coming back DANGER or RUG. <b>Hard failure</b>, same.</li>
-  <li><b>Verdict-band drift</b> &mdash; borderline tokens shift one band (e.g. CAUTION &rarr; DANGER). Warning only, surfaces in the daily report so a human can decide whether to relabel or tune.</li>
+  <li><b>False negative regression.</b> A labelled rug starts coming back SAFE. Hard failure &mdash; opens a tracking issue immediately, blocks merges to the scoring layer until resolved.</li>
+  <li><b>False positive regression.</b> A labelled blue-chip starts coming back DANGER or RUG. Same severity, same gate.</li>
+  <li><b>Verdict-band drift.</b> Borderline tokens shift one band (CAUTION &rarr; DANGER or back). Warning only; surfaces in the daily report so a human can decide whether the label needs an update or the engine needs a tune.</li>
 </ul>
 <p>
-  The job hits the same production endpoint your extension uses &mdash; <b>no mocks, no synthetic data, no shortcuts.</b> Rate-limited at 2.5 s between requests so it doesn't compete with real traffic. Results are visible in the daily run log; a tracking issue opens automatically when drift exceeds 5 %.
+  The job hits production &mdash; the same endpoint your extension uses. <b>No mocks, no synthetic data, no shortcuts.</b> Requests are rate-limited so the check doesn't compete with real user traffic. The corpus itself is read-only; the job verifies, it never mutates.
 </p>
-
-<h2>Sample case studies (real fixtures, real verdicts)</h2>
-<p>
-  Twelve tokens pulled directly from the corpus. Verdict and score are exactly what <code>/api/scan</code> returned when the snapshot was taken. The "why" column quotes the most-critical flag the engine raised &mdash; everything visible to a paying user in the overlay's Critical Flags panel.
-</p>
-
-<table class="case-table">
-  <thead>
-    <tr>
-      <th style="width:18%">Ticker</th>
-      <th style="width:18%">Verdict</th>
-      <th style="width:14%">Score</th>
-      <th style="width:50%">Primary signal</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="ticker">BONK</td>
-      <td class="verdict safe">SAFE</td>
-      <td class="score">1000 / 1000</td>
-      <td class="why">LP burned, 974 k holders, $889 k LP &mdash; no critical flags.</td>
-    </tr>
-    <tr>
-      <td class="ticker">$CWIF</td>
-      <td class="verdict safe">SAFE</td>
-      <td class="score">1000 / 1000</td>
-      <td class="why">LP burned, 1.5 M holders, $360 k LP &mdash; established memecoin profile.</td>
-    </tr>
-    <tr>
-      <td class="ticker">PONKE</td>
-      <td class="verdict caution">CAUTION</td>
-      <td class="score">852 / 1000</td>
-      <td class="why"><b>Single wallet holds 17 % of supply.</b> Mature pair otherwise &mdash; flag surfaced, not RUG.</td>
-    </tr>
-    <tr>
-      <td class="ticker">GRIFFAIN</td>
-      <td class="verdict caution">CAUTION</td>
-      <td class="score">852 / 1000</td>
-      <td class="why"><b>Single wallet holds 16 % of supply.</b> $1.9 M LP and 57 k holders soften it to CAUTION.</td>
-    </tr>
-    <tr>
-      <td class="ticker">ORCA</td>
-      <td class="verdict caution">CAUTION</td>
-      <td class="score">863 / 1000</td>
-      <td class="why"><b>Single wallet holds 19 % of supply.</b> DAO mechanics, blue-chip liq.</td>
-    </tr>
-    <tr>
-      <td class="ticker">GMT</td>
-      <td class="verdict danger">DANGER</td>
-      <td class="score">452 / 1000</td>
-      <td class="why"><b>Single wallet holds 48 % &middot; top-10 hold 80 % &middot; no socials</b> &mdash; concentration kills the score.</td>
-    </tr>
-    <tr>
-      <td class="ticker">SRM</td>
-      <td class="verdict danger">DANGER</td>
-      <td class="score">452 / 1000</td>
-      <td class="why"><b>Single wallet holds 85 % &middot; top-10 hold 99 %.</b> Liquid pool but the float is captive.</td>
-    </tr>
-    <tr>
-      <td class="ticker">DONUTS</td>
-      <td class="verdict danger">DANGER</td>
-      <td class="score">421 / 1000</td>
-      <td class="why"><b>Very low liquidity ($&lt;1 k) &middot; no socials &middot; 24 % single-wallet</b> &mdash; structural rug profile.</td>
-    </tr>
-    <tr>
-      <td class="ticker">YAHU</td>
-      <td class="verdict rug">RUG</td>
-      <td class="score">68 / 1000</td>
-      <td class="why"><b>Liquidity $116 &middot; wash trading (vol/liq &gt; 20) &middot; no socials.</b> Classic bundler dump.</td>
-    </tr>
-    <tr>
-      <td class="ticker">GREMLIN</td>
-      <td class="verdict rug">RUG</td>
-      <td class="score">44 / 1000</td>
-      <td class="why"><b>Liquidity $493 &middot; 8 holders &middot; wash trading detected.</b> 13 flags raised, none survivable.</td>
-    </tr>
-    <tr>
-      <td class="ticker">CR7 (fake)</td>
-      <td class="verdict rug">RUG</td>
-      <td class="score">47 / 1000</td>
-      <td class="why"><b>Abandoned pool: volume with zero liquidity.</b> Celebrity-impersonation rug pattern.</td>
-    </tr>
-    <tr>
-      <td class="ticker">GMAR</td>
-      <td class="verdict rug">RUG</td>
-      <td class="score">68 / 1000</td>
-      <td class="why"><b>Pump +1668 % on a &lt;30 min token &middot; liquidity $41.</b> Pure exit-trap fingerprint.</td>
-    </tr>
-  </tbody>
-</table>
 
 <h2>What an auditor can verify without source access</h2>
 <p>
-  Closed source doesn't mean unauditable &mdash; it means the audit happens through behaviour, not through code review. Here is exactly what an independent reviewer can confirm today:
+  Closed source doesn't mean unauditable. The audit happens through behaviour, not through code review. Here is exactly what an independent reviewer can confirm today:
 </p>
 <ul>
-  <li><b>The endpoint is real.</b> Every public <code>/api/scan</code> call is the same code path the corpus drift check hits. You can compare the JSON your extension receives against a token's known on-chain state and the result is reproducible (subject to the cache TTL).</li>
-  <li><b>The verdicts have a logic.</b> Re-scan any token on the corpus list &mdash; the score should land in the same band as the snapshot unless the on-chain state moved (more holders, less liquidity, etc.). When it doesn't, that's a story we owe to whoever flags it.</li>
-  <li><b>Flags are explicit, not vibes.</b> Every flag exposed in the overlay is a named string with a severity. A paying user opens Critical Flags and sees exactly which signal moved the score &mdash; not "score 105, trust us".</li>
-  <li><b>The drift check has teeth.</b> A regression in either direction (false negative or false positive) trips a hard CI failure on the daily run.</li>
+  <li><b>The endpoint is real.</b> Every public <code>/api/scan</code> call is the same code path the corpus drift check hits. You can compare the JSON your extension receives against a token's known on-chain state and the result is reproducible.</li>
+  <li><b>The verdicts have a logic.</b> Re-scan any token currently in the corpus and the score should land in the same band as the snapshot unless the on-chain state genuinely moved &mdash; more holders, lower liquidity, fresh deployer activity. When the band changes for no chain reason, that's a story we owe to whoever flags it.</li>
+  <li><b>Flags are explicit, not vibes.</b> Every flag exposed in the overlay is a named string with a severity. A paying user opens the Critical Flags panel and sees exactly which signal moved the score &mdash; not "score 105, trust us".</li>
+  <li><b>The drift check has teeth.</b> A regression in either direction trips a hard CI failure on the daily run, not a soft warning that someone has to remember to read.</li>
 </ul>
 
 <h2>Request a private code review</h2>
 <p>
-  For security researchers, integration partners, and exchange compliance teams who need a deeper look than behaviour can give: we hand out <b>read-only scoped access</b> to the scoring repository under a one-page NDA. The review covers the engine, the cross-validation layer, and the Safe Gate logic &mdash; everything that turns inputs into a verdict.
+  For security researchers, integration partners, and exchange compliance teams who need a deeper look than behaviour can give: we hand out <b>scoped read-only access</b> to the scoring repository under a one-page NDA. The review covers the engine, the cross-validation layer, and the Safe Gate logic &mdash; everything that turns inputs into a verdict.
 </p>
 <p>
   Email <a href="mailto:antaresantiscam@gmail.com?subject=%5BAUDIT%5D%20Code%20review%20request">antaresantiscam@gmail.com</a> with subject <code>[AUDIT]</code> and a short description of who you are and what you want to verify. Replies within 48 hours.
 </p>
 
 <div class="warn-box">
-  <b>One thing we can't promise.</b> Antares is a heuristic risk-screening tool, not an oracle. A SAFE verdict means none of the seven layers found a critical signal at scan time &mdash; it is not a guarantee the token won't rug. False negatives happen, especially on novel attack patterns. The whole point of the corpus drift check is to catch them as fast as the corpus reflects the new attack &mdash; not to pretend they never occur. Read the <a href="./terms">terms</a> for the full disclaimer.
+  <b>One thing we can't promise.</b> Antares is a heuristic risk-screening tool, not an oracle. A SAFE verdict means none of the detection layers found a critical signal at scan time &mdash; it is not a guarantee the token won't rug. False negatives happen, especially on novel attack patterns. The whole point of the corpus drift check is to catch them as fast as the corpus reflects the new attack &mdash; not to pretend they never occur. Read the <a href="./terms">terms</a> for the full disclaimer.
 </div>
 
 <h2>How this page stays honest</h2>
 <p>
-  The numbers on this page are pulled directly from the captured fixtures in the test corpus and are republished as we add tokens. They are not marketing claims; they are exactly what the test runner sees. If a token in the case-study table starts behaving differently &mdash; a known SAFE goes RUG, a flagged DANGER moves to CAUTION &mdash; the daily drift check catches it and we update the entry here in the same PR that updates the test. <b>If we are wrong, the test fails, and the truth shows up in the same place this page does.</b>
+  The description above is exactly what the test runner does &mdash; not a marketing reframe of it. If the corpus grows, the same loop runs against the new tokens. If a labelled rug starts evading the engine, the test fails before the new build ships. <b>If we are wrong, the test fails, and the truth shows up in the same place this page does.</b>
 </p>
 
 </main>
