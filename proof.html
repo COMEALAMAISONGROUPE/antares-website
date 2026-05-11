@@ -122,12 +122,42 @@ footer span{color:var(--c)}
 footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
 footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
 footer .foot-links a:hover{color:var(--c)}
+
+/* ANTARES-BURGER-INJECT */
+.nav-burger{display:none;background:transparent;border:0;padding:8px;cursor:pointer;width:40px;height:40px;flex-direction:column;justify-content:center;align-items:center;gap:5px;position:relative;z-index:210}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--c);transition:transform .3s ease,opacity .2s ease}
+.nav-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;background:rgba(10,10,12,.97);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);z-index:200;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:40px;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
+.mobile-menu.open{opacity:1;visibility:visible;transition:opacity .3s ease}
+.mobile-close{position:absolute;top:20px;right:20px;background:transparent;border:0;font-size:38px;line-height:1;color:var(--c);cursor:pointer;width:48px;height:48px;display:flex;align-items:center;justify-content:center;padding:0;font-family:'IBM Plex Mono',monospace}
+.mobile-links{display:flex;flex-direction:column;gap:22px;text-align:center}
+.mobile-links a{font:400 26px/1 'Bebas Neue',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#e0e0e0;text-decoration:none;transition:color .25s,transform .2s;padding:6px 12px}
+.mobile-links a:hover,.mobile-links a.active{color:var(--c);transform:translateY(-1px)}
+.mobile-actions{display:flex;flex-direction:column;gap:12px;width:80%;max-width:280px;margin-top:20px}
+.mobile-actions a{font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:14px 20px;text-align:center;border:1px solid;transition:.25s}
+.mobile-actions .m-install{color:var(--bg);background:var(--c);border-color:var(--c)}
+.mobile-actions .m-install:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
+.mobile-actions .m-login{color:#aaa;background:transparent;border-color:#2a2a30}
+.mobile-actions .m-login:hover{color:var(--c);border-color:var(--c)}
+body.menu-open{overflow:hidden}
+@media(max-width:820px){
+  nav .links,nav .nav-actions{display:none}
+  .nav-burger{display:flex}
+}
+@media(min-width:821px){
+  .mobile-menu{display:none}
+}
 </style>
 </head>
 <body>
 <div class="stripe" role="presentation"></div>
 <div class="bg-atom" aria-hidden="true"></div>
-<nav aria-label="Main navigation"><a href="./index" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div></nav>
+<nav aria-label="Main navigation"><a href="./index" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>  <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
+    <span></span><span></span><span></span>
+  </button>
+      </nav>
 <main class="shell">
 
 <section class="page-hero">
@@ -248,5 +278,33 @@ footer .foot-links a:hover{color:var(--c)}
 </main>
 <footer>Antares v1.3.1 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a></div></footer>
 <script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
+<script>
+/* antares-burger-js */
+(function(){
+  var btn = document.querySelector('.nav-burger');
+  var menu = document.getElementById('mobile-menu');
+  if (!btn || !menu) return;
+  var closeBtn = menu.querySelector('.mobile-close');
+  var links = menu.querySelectorAll('a');
+
+  function setOpen(open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    menu.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+  }
+  btn.addEventListener('click', function(){ setOpen(!menu.classList.contains('open')); });
+  closeBtn.addEventListener('click', function(){ setOpen(false); });
+  links.forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && menu.classList.contains('open')) setOpen(false); });
+
+  // Highlight active link in mobile menu based on current path
+  var p = location.pathname.replace(/\/$/,'').replace(/\.html$/,'') || '/';
+  links.forEach(function(a){
+    var href = (a.getAttribute('href') || '').replace(/^\.\//,'/').replace(/\.html$/,'');
+    if (href === p || (p === '/' && href === '/')) a.classList.add('active');
+  });
+})();
+</script>
 </body>
 </html>
