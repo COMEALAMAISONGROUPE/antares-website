@@ -211,7 +211,7 @@ body.menu-open{overflow:hidden}
   reveals.forEach(function(el){observer.observe(el)});
 })()
 </script>
-<script>(function(){var e=document.getElementById('nav-account');if(!e)return;function setIn(){e.textContent='Account';e.href='./account';e.setAttribute('aria-label','Account')}function setOut(){e.textContent='Log in';e.href='./auth';e.setAttribute('aria-label','Log in')}try{if(localStorage.getItem('antares.signed-in')==='1')setIn()}catch(_){}fetch('https://antares-extension.vercel.app/api/auth/me',{credentials:'include'}).then(function(r){if(r.ok){setIn();try{localStorage.setItem('antares.signed-in','1')}catch(_){}}else{setOut();try{localStorage.removeItem('antares.signed-in')}catch(_){}}}).catch(function(){})})();</script>
+<script src="/js/nav-account.js" defer></script>
 <script>
 /* antares-burger-js */
 (function(){
