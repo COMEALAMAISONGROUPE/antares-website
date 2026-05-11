@@ -1,0 +1,47 @@
+/* ──────────────────────────────────────────────────────────────────
+   mobile-fixes.css
+   ──────────────────────────────────────────────────────────────────
+   Isolated mobile-only overrides. Lives in its own file so changes
+   stay scoped to viewport <= 760px and never touch the HTML or the
+   inline <style> blocks of individual pages. To opt a page in, add:
+       <link rel="stylesheet" href="/css/mobile-fixes.css">
+   in <head>. To revert, remove that one line.
+   ────────────────────────────────────────────────────────────────── */
+
+/* ── /install ────────────────────────────────────────────────────────
+   The "01 / 02 / 03 / 04" steps use grid-template-columns: 80px 1fr.
+   On a 375px viewport with the shell's 20–32px padding, the 1fr
+   column can't shrink below its content because grid items have an
+   implicit min-width:auto. Anything inside that won't wrap (long
+   inline <code> like "pump.fun" or domain lists) then pushes the
+   whole grid past the viewport.
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .step { min-width: 0; }
+  .step-body { min-width: 0; }
+  .step-body p,
+  .step-body h3,
+  .step-body li { overflow-wrap: anywhere; word-break: break-word; }
+  .step-body code { word-break: break-all; white-space: normal; }
+}
+
+/* ── /privacy ────────────────────────────────────────────────────────
+   The processors / cookies table has 3–4 columns that together need
+   ~450px of horizontal room. At 375px viewport the table forces a
+   page-level horizontal scroll. Make the table itself scroll
+   horizontally so the surrounding page stays at 100% width.
+   Scoped to <table> inside <main> so we don't catch decorative
+   tables elsewhere.
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  main table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  main table thead,
+  main table tbody,
+  main table tr { width: max-content; min-width: 100%; }
+}
