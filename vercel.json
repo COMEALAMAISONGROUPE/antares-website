@@ -20,7 +20,8 @@
     { "source": "/support", "destination": "/support.html" },
     { "source": "/auth", "destination": "/auth.html" },
     { "source": "/account", "destination": "/account.html" },
-    { "source": "/pricing", "destination": "/pricing.html" }
+    { "source": "/pricing", "destination": "/pricing.html" },
+    { "source": "/proof", "destination": "/proof.html" }
   ],
   "redirects": [
     {
