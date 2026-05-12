@@ -194,7 +194,26 @@ X-XSS-Protection: 1; mode=block
 Referrer-Policy: strict-origin-when-cross-origin
 Permissions-Policy: camera=(), microphone=(), geolocation=()
 Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; …
 ```
+
+CSP allowlist:
+- `script-src 'self' 'unsafe-inline'` — inline scripts everywhere; no
+  build step means no nonce/hash path, `'unsafe-inline'` is the price.
+- `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com` —
+  inline `<style>` blocks + Google Fonts CSS.
+- `font-src 'self' https://fonts.gstatic.com` — actual font files.
+- `connect-src 'self' https://antares-extension.vercel.app https://api.dexscreener.com`
+  — auth/payment/scan API + the demo's price-data API.
+- `frame-src https://dexscreener.com` — the demo embeds a price
+  chart iframe from dexscreener.
+- `img-src 'self' data:` — local PNGs plus inline data: SVGs.
+- `frame-ancestors 'none'` — we don't allow being framed (matches
+  `X-Frame-Options: DENY`).
+
+The audit applies these headers when serving locally, so CSP
+violations from a new endpoint show up as `js-errors=N` and fail CI.
+If you add a fetch to a new third-party domain, update CSP first.
 
 If you ever need to allow iframing (e.g. embedding the demo elsewhere),
 do it per-route with a more permissive `X-Frame-Options`, not globally.
@@ -235,7 +254,26 @@ Stuff worth remembering before you change anything:
 Reading the PR descriptions in <https://github.com/COMEALAMAISONGROUPE/antares-website/pulls?q=is%3Apr+is%3Aclosed> is the fastest way to understand
 why a given rule exists.
 
-## 9. Things that are deliberately not in the codebase
+## 9. Accessibility
+
+What's wired up:
+- `.nav-burger` has `aria-label`, `aria-expanded`, `aria-controls`
+- `<nav>` has `aria-label="Main navigation"`
+- Logo `<img>` has `alt="Antares Logo"`
+- `:focus-visible` outline (in `css/base.css`) — visible focus ring
+  on keyboard navigation, invisible on mouse clicks
+- `prefers-reduced-motion` (in `css/base.css`) — freezes the stripe
+  gradient, particle drift, scroll-triggered fades and typewriter
+  sweeps when the user has reduced-motion set in their OS
+
+Known gaps (worth fixing if the trade-off comes up):
+- No skip-link (would let keyboard users jump past the nav)
+- Color contrast on `#454550` nav links over `#0a0a0c` background is
+  on the low end of WCAG AA at ~4.0:1
+- Animations beyond the stripe/particles aren't gated behind reduced
+  motion preference (the JS-driven counter and typewriter still run)
+
+## 10. Things that are deliberately not in the codebase
 
 - **No CSS preprocessor.** Sass/PostCSS would buy us nesting and
   variables. We already have CSS custom properties for variables and

@@ -31,3 +31,32 @@ html{scroll-behavior:smooth;scrollbar-gutter:stable}
 body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
 .stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
 @keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
+
+/* ── Keyboard focus indicator ──────────────────────────────────────
+   :focus-visible only fires for keyboard navigation, not mouse
+   clicks, so mouse users don't see an outline ring on every click.
+   ──────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--c, #00e5b0);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Reduced-motion preference ─────────────────────────────────────
+   Users who set "Reduce motion" in their OS get a static page: no
+   stripe gradient loop, no particle drift, no scroll-triggered fades,
+   no typewriter sweeps. The site stays readable; only the decoration
+   stops moving. Keeps scroll-behavior smooth for anchor navigation
+   though — that's accessibility benefit, not motion sickness risk.
+   ──────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  .stripe { animation: none !important; }
+}

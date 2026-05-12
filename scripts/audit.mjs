@@ -131,6 +131,22 @@ async function resolveFile(urlPath) {
   return null;
 }
 
+/* Apply the same security headers Vercel sends in production, so the
+   local audit catches CSP misconfig (blocked fetches, blocked inline
+   scripts, etc.) the same way it would in prod. We read vercel.json
+   and apply every header from the catch-all "/(.*)" route. */
+async function loadVercelHeaders() {
+  try {
+    const vj = JSON.parse(await readFile(resolve(ROOT, 'vercel.json'), 'utf8'));
+    const block = (vj.headers || []).find(h => h.source === '/(.*)');
+    if (!block) return {};
+    const out = {};
+    for (const h of block.headers) out[h.key] = h.value;
+    return out;
+  } catch { return {}; }
+}
+const vercelHeaders = await loadVercelHeaders();
+
 let server, base;
 if (remoteBase) {
   base = remoteBase.replace(/\/$/, '');
@@ -140,6 +156,7 @@ if (remoteBase) {
     const f = await resolveFile(decodeURIComponent(u.pathname));
     if (!f) { res.statusCode = 404; res.end('404'); return; }
     res.setHeader('content-type', MIME[ext(f)] || 'application/octet-stream');
+    for (const [k, v] of Object.entries(vercelHeaders)) res.setHeader(k, v);
     res.end(await readFile(f));
   });
   await new Promise(r => server.listen(0, '127.0.0.1', r));
