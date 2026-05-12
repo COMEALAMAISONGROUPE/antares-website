@@ -54,7 +54,7 @@ jobs:
   audit:
     name: Mobile + desktop audit (local)
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -83,7 +83,7 @@ jobs:
     name: Mobile + desktop audit (Vercel preview)
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     needs: audit   # don't waste a preview run if the local audit is red
 
     steps:
