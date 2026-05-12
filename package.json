@@ -1,0 +1,26 @@
+{
+  "name": "antares-website",
+  "version": "1.0.0",
+  "description": "Antares — marketing site (static HTML, no build step)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audit": "node scripts/audit.mjs",
+    "audit:mobile": "node scripts/audit.mjs --viewport=mobile",
+    "audit:desktop": "node scripts/audit.mjs --viewport=desktop",
+    "audit:prod": "node scripts/audit.mjs --base=https://antaresscan.com",
+    "test": "node scripts/audit.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/COMEALAMAISONGROUPE/antares-website.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/COMEALAMAISONGROUPE/antares-website/issues"
+  },
+  "homepage": "https://github.com/COMEALAMAISONGROUPE/antares-website#readme",
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
+}
