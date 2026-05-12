@@ -586,3 +586,71 @@ body.menu-open { overflow: hidden; }
 @media (min-width: 761px) {
   footer span { color: inherit !important; }
 }
+
+/* ──────────────────────────────────────────────────────────────────
+   14. Mobile watermarks — drawer + cta-final
+   ──────────────────────────────────────────────────────────────────
+   User feedback after walking the site on iPhone:
+     • Burger drawer had two stray curved lines bleeding through.
+       Cause: .stripe sits at z-index:999, above the drawer's 200,
+       so the rainbow gradient bar at the top of the page (which
+       has fade endings on both sides → it reads as a curve, not a
+       straight line, on a 375px column) shows up on top of the
+       drawer.
+     • Drawer and the bottom cta-final both feel visually empty
+       on mobile. Asked to put the antares atom icon as a faint
+       background watermark in both places.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+
+  /* 14a. Hide the top stripe whenever the burger drawer is open.
+     burger.js already adds .menu-open to <body> for the same
+     reason it locks scroll. Reusing the hook lets us suppress the
+     stripe without touching its z-index globally. */
+  body.menu-open .stripe { display: none !important; }
+
+  /* 14b. Antares atom watermark behind the drawer links.
+     ::before sits at z-index:-1 against the drawer's content, so
+     the links read clearly on top. Opacity .04 keeps it as texture,
+     not a focal point. */
+  .mobile-menu::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/icon.png');
+    background-position: center;
+    background-size: 280px auto;
+    background-repeat: no-repeat;
+    opacity: .06;
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* Push the drawer's own contents above the watermark. */
+  .mobile-menu > * { position: relative; z-index: 1; }
+
+  /* 14c. Same watermark behind the home's bottom cta-final
+     ("The next rug pull won't warn you. ANTARES WILL."). PR #163
+     hid .cta-final::before and ::after to drop the giant text
+     watermark + radial pulse. Re-purpose ::after to carry the
+     icon watermark instead — explicit !important to win against
+     that hide rule. */
+  .cta-final::after {
+    display: block !important;
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+    background: url('/icon.png') no-repeat center !important;
+    background-size: 240px auto !important;
+    opacity: .06 !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    animation: none !important;
+  }
+  /* The cta-final's own content already sits at z-index:1 in the
+     home stylesheet, so this watermark stays in the back. */
+}
