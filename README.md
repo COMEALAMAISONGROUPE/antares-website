@@ -57,10 +57,11 @@ python3 -m http.server 8000
 npx serve .
 ```
 
-To exercise the audit (Playwright is the only dependency):
+To exercise the audit + lint locally:
 
 ```bash
-npm ci                   # install playwright from package-lock.json
+npm ci                   # install playwright, htmlhint, stylelint
+npm run lint             # HTMLHint + Stylelint (fast — < 1 s)
 npm test                 # = npm run audit — both viewports, 19 routes
 npm run audit:mobile     # mobile (375×812) only
 npm run audit:desktop    # desktop (1280×800) only
@@ -68,8 +69,20 @@ npm run audit:prod       # audit https://antaresscan.com instead of local
 ```
 
 The audit exits non-zero on any regression and prints which routes
-failed which contract. Same script runs in CI on every PR — see
-`.github/workflows/audit.yml`.
+failed which contract. Both lint and audit run in CI on every PR —
+see `.github/workflows/audit.yml`.
+
+### Optional: pre-commit hook
+
+One-time per clone, install a git pre-commit hook that runs `npm run
+lint` before every commit (catches HTML/CSS typos at commit time
+rather than CI time):
+
+```bash
+npm run hooks:install    # creates .git/hooks/pre-commit
+```
+
+Bypass with `git commit --no-verify` if you ever need to.
 
 ## Deploy
 

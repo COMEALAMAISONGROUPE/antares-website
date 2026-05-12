@@ -9,6 +9,11 @@
     "audit:mobile": "node scripts/audit.mjs --viewport=mobile",
     "audit:desktop": "node scripts/audit.mjs --viewport=desktop",
     "audit:prod": "node scripts/audit.mjs --base=https://antaresscan.com",
+    "lint": "npm run lint:html && npm run lint:css",
+    "lint:html": "htmlhint \"*.html\"",
+    "lint:css": "stylelint \"css/**/*.css\"",
+    "lint:fix": "stylelint \"css/**/*.css\" --fix",
+    "hooks:install": "node scripts/install-hooks.mjs",
     "test": "node scripts/audit.mjs"
   },
   "repository": {
@@ -21,6 +26,8 @@
   },
   "homepage": "https://github.com/COMEALAMAISONGROUPE/antares-website#readme",
   "devDependencies": {
-    "playwright": "^1.60.0"
+    "htmlhint": "^1.9.2",
+    "playwright": "^1.60.0",
+    "stylelint": "^16.26.1"
   }
 }
