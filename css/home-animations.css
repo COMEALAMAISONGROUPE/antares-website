@@ -1,0 +1,72 @@
+/* ──────────────────────────────────────────────────────────────────
+   css/home-animations.css
+   ──────────────────────────────────────────────────────────────────
+   Styles paired with js/home-animations.js. Only loaded by the home
+   (index.html), so these selectors won't accidentally collide with
+   other pages' .cta-final blocks.
+
+   The script tags two elements with class .typewrite once it sees
+   them: .cta-threat (the "next rug pull" line) and the headline
+   (the "ANTARES WILL." h2). They start visually clipped to zero
+   width via clip-path:inset(0 100% 0 0) so the first paint is
+   already pre-animation — no flash of fully-rendered text before
+   the JS catches up.
+
+   Adding .typewrite-run animates clip-path back to inset(0 0 0 0)
+   using steps(N, end). N is supplied per-element by the JS in a
+   --steps CSS custom property so the cadence scales with text
+   length. The default fallbacks below are sized for the current
+   copy if the JS is slow to attach.
+   ────────────────────────────────────────────────────────────────── */
+
+.typewrite {
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0);
+  /* Smooth-out for browsers that can't render steps() cleanly on
+     clip-path. Most modern browsers handle it; this is the floor. */
+  transition: clip-path 1.2s steps(var(--steps, 28), end),
+              -webkit-clip-path 1.2s steps(var(--steps, 28), end);
+}
+
+.typewrite-run {
+  clip-path: inset(0 0 0 0);
+  -webkit-clip-path: inset(0 0 0 0);
+}
+
+/* The headline carries fewer characters and we want the cadence to
+   land slightly faster so the punchline doesn't drag. */
+.typewrite-headline {
+  transition-duration: 1.0s;
+  transition-timing-function: steps(var(--steps, 13), end);
+}
+
+/* Caret accent — a small mint bar that hangs off the right edge
+   while the line is in mid-type, then fades out once it lands.
+   ::after rides the clip box of its parent, so it appears at the
+   "current cursor" position naturally without any JS positioning. */
+.typewrite::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 0.95em;
+  margin-left: 4px;
+  vertical-align: -.08em;
+  background: var(--c, #00e5b0);
+  opacity: 0;
+  transition: opacity .15s linear;
+}
+.typewrite-run::after {
+  opacity: 1;
+  animation: typewrite-blink .9s steps(1, end) infinite;
+}
+/* Hide the caret once the line is fully revealed.
+   Animation duration matches the parent transition. */
+.typewrite-run.typewrite-done::after {
+  opacity: 0;
+  animation: none;
+}
+@keyframes typewrite-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
