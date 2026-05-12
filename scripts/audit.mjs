@@ -191,6 +191,8 @@ async function auditMobile(page, route) {
     const drawer = document.getElementById('mobile-menu');
     const links = document.querySelector('nav .links, .nav-inner .links');
     const footer = document.querySelector('footer');
+    const main = document.querySelector('main');
+    const skipLink = document.querySelector('.skip-link');
     const isHome = document.body.classList.contains('is-home');
     return {
       overflow: d.scrollWidth - d.clientWidth,
@@ -201,6 +203,9 @@ async function auditMobile(page, route) {
       linksGroupDisplay: links ? getComputedStyle(links).display : null,
       footerExists: !!footer,
       footerDisplay: footer ? getComputedStyle(footer).display : null,
+      mainExists: !!main,
+      skipLinkExists: !!skipLink,
+      skipLinkTargetsMain: skipLink && main ? skipLink.getAttribute('href') === '#' + main.id : false,
       isHome,
     };
   });
@@ -242,6 +247,13 @@ async function auditMobile(page, route) {
     }
   }
 
+  /* Skip-link contract — every page that has a <main> should also
+     have an injected skip-link pointing at it (js/a11y.js). */
+  if (probe.mainExists) {
+    if (!probe.skipLinkExists) fails.push('skip-link-missing');
+    else if (!probe.skipLinkTargetsMain) fails.push('skip-link-target-mismatch');
+  }
+
   return { fails, probe };
 }
 
@@ -253,6 +265,8 @@ async function auditDesktop(page, route) {
     const h1 = document.querySelector('h1');
     const footer = document.querySelector('footer');
     const footerSpan = footer ? footer.querySelector('span') : null;
+    const main = document.querySelector('main');
+    const skipLink = document.querySelector('.skip-link');
     return {
       overflow: d.scrollWidth - d.clientWidth,
       linksExists: !!links,
@@ -261,6 +275,9 @@ async function auditDesktop(page, route) {
       h1Empty: h1 ? !h1.textContent.trim() : true,
       footerSpanColor: footerSpan ? getComputedStyle(footerSpan).color : null,
       footerColor: footer ? getComputedStyle(footer).color : null,
+      mainExists: !!main,
+      skipLinkExists: !!skipLink,
+      skipLinkTargetsMain: skipLink && main ? skipLink.getAttribute('href') === '#' + main.id : false,
     };
   });
 
@@ -283,6 +300,12 @@ async function auditDesktop(page, route) {
     fails.push(
       `footer-span-color-mismatch (span=${probe.footerSpanColor}, footer=${probe.footerColor})`
     );
+  }
+
+  /* Skip-link contract (same as mobile). */
+  if (probe.mainExists) {
+    if (!probe.skipLinkExists) fails.push('skip-link-missing');
+    else if (!probe.skipLinkTargetsMain) fails.push('skip-link-target-mismatch');
   }
 
   /* Home-only animation contract (PR #166). */

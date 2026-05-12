@@ -263,15 +263,20 @@ What's wired up:
 - `:focus-visible` outline (in `css/base.css`) — visible focus ring
   on keyboard navigation, invisible on mouse clicks
 - `prefers-reduced-motion` (in `css/base.css`) — freezes the stripe
-  gradient, particle drift, scroll-triggered fades and typewriter
-  sweeps when the user has reduced-motion set in their OS
+  gradient, scroll-triggered fades, and any other CSS animation when
+  the user has reduced-motion set in their OS
+- JS animations also respect `prefers-reduced-motion` —
+  `js/home-animations.js` lands the counter on its final value and
+  the typewriter on its final state immediately; `js/hero-effects.js`
+  skips the particle canvas
+- Skip-link (`js/a11y.js`) — injects `<a class="skip-link">Skip to
+  content</a>` as the first focusable element on every page. Hidden
+  off-screen by default; tabbing once from page load reveals it and
+  pressing Enter focuses `<main>`. Audit enforces the contract.
 
-Known gaps (worth fixing if the trade-off comes up):
-- No skip-link (would let keyboard users jump past the nav)
+Known gaps:
 - Color contrast on `#454550` nav links over `#0a0a0c` background is
   on the low end of WCAG AA at ~4.0:1
-- Animations beyond the stripe/particles aren't gated behind reduced
-  motion preference (the JS-driven counter and typewriter still run)
 
 ## 10. Things that are deliberately not in the codebase
 

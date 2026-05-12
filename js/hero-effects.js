@@ -34,8 +34,14 @@
   // calculations per second for nothing visible. Skip both blocks on
   // mobile. The reveal observer (block 3) is cheap and still useful,
   // so it always runs.
-  var isMobile = typeof window.matchMedia === 'function' &&
-                 window.matchMedia('(max-width: 760px)').matches;
+  //
+  // Same logic for users with prefers-reduced-motion: skip the
+  // continuous particle animation and the cursor-glow chase. The
+  // reveal observer still runs — it's a one-shot opacity/transform
+  // change, not continuous motion.
+  var hasMM = typeof window.matchMedia === 'function';
+  var isMobile = hasMM && window.matchMedia('(max-width: 760px)').matches;
+  var prefersReduced = hasMM && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var canvas = document.getElementById('particles-canvas');
   if (!canvas) {
@@ -44,8 +50,10 @@
     runRevealObserver();
     return;
   }
-  if (isMobile) {
-    // Canvas exists but is display:none on mobile — skip blocks 1 + 2.
+  if (isMobile || prefersReduced) {
+    // Either mobile (where CSS hides the canvas) or a user who's
+    // explicitly opted out of motion. The canvas stays present but
+    // empty — no paint cost since draw() never runs.
     runRevealObserver();
     return;
   }

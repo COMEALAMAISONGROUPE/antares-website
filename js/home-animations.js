@@ -27,6 +27,12 @@
 (function () {
   'use strict';
 
+  // Respect prefers-reduced-motion. Users with it set see the final
+  // state immediately — counter shows "2.8", typewriter shows the
+  // text without the staircase reveal. Same information, no motion.
+  var prefersReduced = typeof window.matchMedia === 'function' &&
+                       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   /* ── A1: counter tick-up ─────────────────────────────────────── */
   function initCounter() {
     var el = document.getElementById('loss-counter');
@@ -34,6 +40,11 @@
 
     var target = parseFloat(el.getAttribute('data-target') || '2.8');
     if (!isFinite(target) || target <= 0) return;
+
+    if (prefersReduced) {
+      el.textContent = target.toFixed(1);
+      return;
+    }
 
     // Lock the rendered width to the FINAL value so the number
     // doesn't reflow as the digits change (0.0 → 2.8 has the same
@@ -75,6 +86,15 @@
     var threat = section.querySelector('.cta-threat');
     var headline = section.querySelector('h2');
     if (!threat || !headline) return;
+
+    if (prefersReduced) {
+      // Land on the end state without the staircase: add all 4
+      // marker classes so any other code (e.g. the audit) sees the
+      // same DOM as a successful animation run.
+      threat.classList.add('typewrite', 'typewrite-run', 'typewrite-done');
+      headline.classList.add('typewrite', 'typewrite-headline', 'typewrite-run', 'typewrite-done');
+      return;
+    }
 
     // Tag the elements so the CSS knows to start them clipped.
     threat.classList.add('typewrite');

@@ -42,6 +42,41 @@ body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace
   border-radius: 2px;
 }
 
+/* Don't paint the focus ring on <main> when we hand focus to it via
+   the skip-link — the user wanted to read the content, not see a
+   ring around the whole section. */
+main:focus,
+main:focus-visible { outline: none; }
+
+/* ── Skip-link ─────────────────────────────────────────────────────
+   Injected by js/a11y.js as the first focusable element on every
+   public page. Hidden off-screen by default; the moment a keyboard
+   user tabs onto it, it slides into view at the top-left corner so
+   they can hit Enter to jump past the nav.
+   ──────────────────────────────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  padding: 10px 16px;
+  background: var(--c, #00e5b0);
+  color: var(--bg, #0a0a0c);
+  font: 700 12px/1 'IBM Plex Mono', monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  transform: translateY(-150%);
+  transition: transform .2s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--bg, #0a0a0c);
+  outline-offset: -4px;
+}
+
 /* ── Reduced-motion preference ─────────────────────────────────────
    Users who set "Reduce motion" in their OS get a static page: no
    stripe gradient loop, no particle drift, no scroll-triggered fades,
