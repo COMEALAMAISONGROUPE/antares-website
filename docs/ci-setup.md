@@ -2,9 +2,9 @@
 
 ## What it does
 
-The `audit-preview` job in `.github/workflows/mobile-audit.yml` runs the
-mobile regression audit against the **real** Vercel preview deployment
-of every PR, not just a local static server.
+The `audit-preview` job in `.github/workflows/audit.yml` runs the
+mobile + desktop regression audit against the **real** Vercel preview
+deployment of every PR, not just a local static server.
 
 This is what catches routing / vercel.json bugs before merge — the kind
 that broke #153 (the `/pages/` folder move) by passing the local audit
@@ -52,9 +52,11 @@ deployment.
 
 After setup, push any small PR. In the Actions tab you should see:
 
-- ✅ `audit` (local) — completes in ~1m
-- ✅ `audit-preview` (Vercel) — completes in ~2-4m, includes a step
-  named "Wait for Vercel preview"
+- ✅ `Mobile + desktop audit (local)` — completes in ~5-6m
+- ✅ `Mobile + desktop audit (Vercel preview)` — completes in ~3-5m,
+  includes a step named "Wait for Vercel preview"
 
-If `audit-preview` is yellow with a "skipped" badge, the secret isn't
-configured (or its name doesn't match `VERCEL_BYPASS_TOKEN` exactly).
+If the preview job ends in ~6 seconds and the run log shows
+"VERCEL_BYPASS_TOKEN secret not configured — skipping preview audit",
+the secret isn't configured (or its name doesn't match
+`VERCEL_BYPASS_TOKEN` exactly).
