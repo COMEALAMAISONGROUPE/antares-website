@@ -509,3 +509,27 @@ body.menu-open { overflow: hidden; }
   .cta-final::after { display: none !important; }
 }
 
+/* ──────────────────────────────────────────────────────────────────
+   Desktop-only footer tweak
+   ──────────────────────────────────────────────────────────────────
+   On desktop every page renders a footer line like:
+
+     Antares v1.3.0 · No mercy for scammers
+     Install · Support · Privacy · About
+
+   The version text and the link row both inherit the dim grey
+   var(--dim) / #3a3a40 from <footer>. The "No mercy for scammers"
+   span, however, was styled in inline <style> blocks as
+   `footer span { color: var(--c) }` — mint — so it stood out as
+   a brand accent on every page.
+
+   The user asked for that span to read in the same dim grey as the
+   rest of the line so the footer reads as one muted strip.
+
+   Gated under min-width: 761px so the mobile rule above
+   (font-size: 0 to hide the whole text line) is unchanged on
+   small screens.
+   ────────────────────────────────────────────────────────────────── */
+@media (min-width: 761px) {
+  footer span { color: inherit !important; }
+}
