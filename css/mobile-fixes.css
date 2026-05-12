@@ -374,5 +374,89 @@ body.menu-open { overflow: hidden; }
     font: 500 12px/1.6 'IBM Plex Mono', monospace;
     text-align: center;
   }
-}
 
+  /* ── 12. Polish pass #2 ──────────────────────────────────────────
+     Adjustments from user review after PRs #156–#162. Every rule
+     stays inside the parent @media (max-width: 760px). */
+
+  /* 12a. Home — hide the "Scroll ↓" arrow under the hero. The bounce
+     animation pulls focus and the user already knows how to scroll. */
+  .scroll-indicator { display: none !important; }
+
+  /* 12b. /demo — collapse the page to its hero on mobile. PR #162
+     already hid the iframe + 4-token switcher; this drops the rest
+     (demo-notice, bottom CTA) so the page is just title + an
+     "open on desktop" line. */
+  body.is-demo main > *:not(.page-hero) { display: none !important; }
+  body.is-demo main::after {
+    content: "↗  Open on desktop to interact with the live demo.";
+    display: block;
+    margin: 28px 16px 0;
+    padding: 20px;
+    border: 1px solid var(--c, #00e5b0);
+    background: rgba(0, 229, 176, .04);
+    color: #aaa;
+    font: 500 12px/1.6 'IBM Plex Mono', monospace;
+    text-align: center;
+  }
+
+  /* 12c. /engine — drop the "Score Ranges" band. .score-visual is
+     unique to /engine, so sibling-has() also drops the
+     .section-label that introduces it. */
+  .section-label:has(+ .score-visual),
+  .score-visual { display: none !important; }
+
+  /* 12d. /compare — drop the bottom "Try the demo. Decide for
+     yourself." cta-final block. The matrix above is the page's
+     value; the demo card was a second CTA target on a page that
+     already has "Install" in nav and footer. */
+  body.is-compare .cta-final { display: none !important; }
+
+  /* 12e. /pricing eyebrow "Two seconds · seven layers · one verdict"
+     wraps onto multiple lines at 375px. Shrink + nowrap so it
+     reads as a tagline, not a paragraph. */
+  body.is-pricing .page-hero .eyebrow {
+    font-size: 9px !important;
+    letter-spacing: .18em !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* 12f. /pricing — hide the three tier CTAs entirely on mobile.
+     "Install free", "Subscribe on desktop" Pro, "Subscribe on
+     desktop" Yearly are all dead ends on a phone. Showing the
+     prices + feature lists is enough — the page becomes a
+     brochure, not a checkout. */
+  body.is-pricing .tier-cta { display: none !important; }
+
+  /* 12g. "Open on desktop" rewrites — these used to render as
+     primary buttons. A button you can't action is worse than a
+     sentence; strip the button chrome so they read as plain inline
+     copy. pointer-events:none also makes "tap then nothing" go
+     away — the text is informational, not interactive. */
+  [data-mobile-rewritten] {
+    display: inline !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    box-shadow: none !important;
+    color: var(--c, #00e5b0) !important;
+    font: 500 12px/1.5 'IBM Plex Mono', monospace !important;
+    letter-spacing: .04em !important;
+    text-transform: none !important;
+    text-align: left !important;
+    cursor: default !important;
+    pointer-events: none !important;
+  }
+  /* If the parent was a CTA row, the inline span ends up sandwiched
+     between paragraphs. Give it a small breathing block. */
+  .cta-row > [data-mobile-rewritten],
+  .tier > [data-mobile-rewritten] {
+    display: block !important;
+    margin: 12px 0 !important;
+  }
+}

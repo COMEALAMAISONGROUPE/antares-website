@@ -20,9 +20,19 @@
   'use strict';
 
   function init() {
-    // Skip if some other piece of the page already injected a burger
-    // (the 15 pages patched by PR #146 still ship it inline).
-    if (document.querySelector('.nav-burger')) return;
+    // If the page already ships a .nav-burger markup (15 of the pages
+    // patched by PR #146 do, inline), don't inject a second one — but
+    // DO wire it ourselves if it isn't already responding. Pages we
+    // load this script on need their burger functional regardless of
+    // whether the inline <script> ran. Idempotency is guarded by the
+    // data-burger-wired attribute.
+    var existing = document.querySelector('.nav-burger');
+    if (existing) {
+      if (existing.dataset.burgerWired === '1') return;
+      wireExistingBurger(existing);
+      existing.dataset.burgerWired = '1';
+      return;
+    }
 
     var nav = document.querySelector('header nav, nav .nav-inner, nav');
     if (!nav) return;
@@ -120,6 +130,47 @@
     mobileLinks.querySelectorAll('a').forEach(function (a) {
       var href = (a.getAttribute('href') || '').replace(/^\.\//, '/').replace(/\.html$/, '');
       if (href === here || (here === '/' && href === '/')) a.classList.add('active');
+    });
+  }
+
+  /* Wire a burger that's already in the DOM (inline-markup pages) so
+     it actually responds to taps. The inline version on most pages
+     already runs its own toggle script — but on a couple of pages
+     that script silently fails (faq.html most visibly). Re-wiring
+     from a single source of truth fixes those and is idempotent
+     thanks to the data-burger-wired flag set by the caller.
+     We replace the button node first so any stale handlers attached
+     by the inline script are dropped (the new clean clone gets fresh
+     handlers below). The drawer / closeBtn / links are left in place
+     — adding extra listeners there is harmless because their effect
+     is idempotent toggling. */
+  function wireExistingBurger(originalBtn) {
+    var menu = document.getElementById('mobile-menu');
+    if (!menu) return;
+
+    var btn = originalBtn.cloneNode(true);
+    originalBtn.parentNode.replaceChild(btn, originalBtn);
+
+    var closeBtn = menu.querySelector('.mobile-close');
+    var links = menu.querySelectorAll('a');
+
+    function setOpen(open) {
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      menu.classList.toggle('open', open);
+      document.body.classList.toggle('menu-open', open);
+    }
+    btn.addEventListener('click', function () {
+      setOpen(!menu.classList.contains('open'));
+    });
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () { setOpen(false); });
+    }
+    links.forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) setOpen(false);
     });
   }
 
