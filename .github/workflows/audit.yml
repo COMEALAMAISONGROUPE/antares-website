@@ -1,22 +1,42 @@
-# Mobile regression audit — runs on every PR and on pushes to main.
+# Regression audit — runs on every PR and on pushes to main.
+#
+# Runs scripts/audit.mjs which exercises every public route at TWO
+# viewports (mobile 375×812 and desktop 1280×800) and asserts on
+# layout, DOM, behaviour, and animation contracts. CI fails on any
+# regression so we can't merge a PR that breaks an existing page.
+#
+# What it catches (non-exhaustive):
+#   • Horizontal overflow at mobile or desktop
+#   • Missing burger / missing drawer markup on a page that has a
+#     desktop links group (the PR #146 bug pattern)
+#   • A burger that exists but doesn't toggle the drawer when tapped
+#   • The home loss-counter animation not landing on "2.8"
+#   • The home cta-final typewriter not running on scroll
+#   • Footer "No mercy for scammers" span painting mint instead of
+#     inheriting the footer's grey
+#   • Missing or empty <h1> on any page
+#   • Mobile footer state regressions (home should hide, others show)
+#   • Uncaught JS errors at page-load
 #
 # Two jobs:
-#   audit        — boots a local static server against the working tree
-#                  and runs Playwright against it. Fast (< 2 min). Catches
-#                  HTML/CSS/JS regressions but cannot exercise Vercel's
-#                  rewrite engine, cleanUrls, or cache rules.
+#   audit         — boots a local static server against the working
+#                   tree and runs Playwright against it. Fast (< 3 min).
+#                   Catches HTML/CSS/JS regressions but cannot exercise
+#                   Vercel's rewrite engine, cleanUrls, or cache rules.
 #   audit-preview — waits for the Vercel preview deployment to go live,
-#                  then runs the same audit against it. Catches routing
-#                  / vercel.json bugs that the local server can't (this
-#                  is the job that would have flagged the broken /pages
-#                  rewrite in #153 before it merged). Requires the
-#                  VERCEL_BYPASS_TOKEN repo secret; if absent the job
-#                  is skipped (the local audit still gates merges).
+#                   then runs the same audit against it. Catches routing
+#                   / vercel.json bugs that the local server can't (this
+#                   is the job that would have flagged the broken /pages
+#                   rewrite in #153 before it merged). Requires the
+#                   VERCEL_BYPASS_TOKEN repo secret; if absent the job
+#                   is skipped (the local audit still gates merges).
 #
-# Same script (scripts/audit-mobile.mjs) for both — accepts --base=<url>
-# and reads VERCEL_BYPASS_TOKEN from the environment.
+# Same script (scripts/audit.mjs) for both — accepts --base=<url>
+# and reads VERCEL_BYPASS_TOKEN from the environment. Default behaviour
+# runs both viewports; pass --viewport=mobile or --viewport=desktop
+# locally to scope down.
 
-name: Mobile audit
+name: Audit (mobile + desktop)
 
 on:
   pull_request:
@@ -26,13 +46,13 @@ on:
 
 # Cancel an in-progress run for the same PR if a new commit lands.
 concurrency:
-  group: mobile-audit-${{ github.ref }}
+  group: audit-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   # ── 1. Local audit (no Vercel involvement) ──────────────────────────
   audit:
-    name: 375px mobile audit (local)
+    name: Mobile + desktop audit (local)
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -50,14 +70,14 @@ jobs:
           npm install --no-save --no-package-lock playwright@^1.49
           npx playwright install --with-deps chromium
 
-      - name: Run mobile audit (local files)
-        run: node scripts/audit-mobile.mjs
+      - name: Run audit (local files, both viewports)
+        run: node scripts/audit.mjs
 
   # ── 2. Vercel preview audit ─────────────────────────────────────────
   # Only runs on pull requests (no preview on push-to-main since that
   # deploys to prod, which has its own URL and isn't password-protected).
   audit-preview:
-    name: 375px mobile audit (Vercel preview)
+    name: Mobile + desktop audit (Vercel preview)
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -95,11 +115,11 @@ jobs:
           npm install --no-save --no-package-lock playwright@^1.49
           npx playwright install --with-deps chromium
 
-      - name: Run mobile audit (Vercel preview)
+      - name: Run audit (Vercel preview, both viewports)
         if: steps.secret_check.outputs.available == 'true'
         env:
           VERCEL_BYPASS_TOKEN: ${{ secrets.VERCEL_BYPASS_TOKEN }}
-        run: node scripts/audit-mobile.mjs --base=${{ steps.vercel_preview.outputs.url }}
+        run: node scripts/audit.mjs --base=${{ steps.vercel_preview.outputs.url }}
 
       - name: Note skipped preview audit
         if: steps.secret_check.outputs.available != 'true'
