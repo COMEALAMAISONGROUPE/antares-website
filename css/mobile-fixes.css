@@ -459,4 +459,53 @@ body.menu-open { overflow: hidden; }
     display: block !important;
     margin: 12px 0 !important;
   }
+
+  /* ── 13. Polish pass #3 ──────────────────────────────────────────
+     Five more user-flagged adjustments after walking the site again
+     on iPhone. Everything stays inside the parent
+     @media (max-width: 760px). */
+
+  /* 13a. Hide "Demo" from the navigation entirely on mobile — the
+     /demo page is now a single-screen redirect anyway (PR #163),
+     and the user wants the burger menu to surface only pages that
+     read well on a phone. Targets both the desktop link group
+     (already hidden by the burger swap but defence-in-depth) AND
+     the mobile drawer where the burger.js injection copies links
+     verbatim. */
+  nav .links a[href*="demo"],
+  .mobile-links a[href*="demo"] { display: none !important; }
+
+  /* 13b. Hide the install / "Open on desktop" CTAs from the drawer.
+     The drawer is meant to be navigation, not action buttons. The
+     mobile-cta-rewrite already turned the inline CTAs on each page
+     into plain text; the drawer copies of those links should just
+     drop out. We match on href (the install target) AND on the
+     m-install class that the inline drawer uses, so we catch both
+     the inline-shipped drawer (15 pages) and the JS-injected drawer
+     (auth + account + faq). */
+  .mobile-links a[href*="install"],
+  .mobile-actions a[href*="install"],
+  .mobile-actions .m-install { display: none !important; }
+
+  /* 13c. Footer — drop the "Antares v1.3.0 · No mercy for scammers"
+     versioning line. It's a desktop signature; mobile users don't
+     care which version they're reading. The .foot-links row with
+     Install / Support / Privacy / About stays.
+
+     The version text is a raw text node inside <footer> (not in a
+     selectable element), so we hide it by zeroing the footer font
+     and re-enabling it on .foot-links. The <span>No mercy</span> is
+     covered by the zero-font rule too. */
+  footer { font-size: 0 !important; }
+  footer .foot-links { font-size: 9px !important; }
+  footer .foot-links * { font-size: inherit !important; }
+
+  /* 13d. Home — drop the giant "ANTARES" wordmark watermark behind
+     the bottom cta-final. The pseudo-element renders at 280px on
+     desktop where there's room; on a 375px column it just bleeds
+     off both sides and adds nothing. The radial-glow pulse goes
+     too (less motion = calmer page). */
+  .cta-final::before,
+  .cta-final::after { display: none !important; }
 }
+

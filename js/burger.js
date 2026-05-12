@@ -20,19 +20,33 @@
   'use strict';
 
   function init() {
-    // If the page already ships a .nav-burger markup (15 of the pages
-    // patched by PR #146 do, inline), don't inject a second one — but
-    // DO wire it ourselves if it isn't already responding. Pages we
-    // load this script on need their burger functional regardless of
-    // whether the inline <script> ran. Idempotency is guarded by the
-    // data-burger-wired attribute.
-    var existing = document.querySelector('.nav-burger');
-    if (existing) {
-      if (existing.dataset.burgerWired === '1') return;
-      wireExistingBurger(existing);
-      existing.dataset.burgerWired = '1';
+    // Four states to handle:
+    //
+    //   1. button + drawer both exist (e.g. /index)
+    //      → just wire (idempotent) and return.
+    //   2. button exists but drawer is missing (PR #146 outlier:
+    //      shipped the inline JS that referenced #mobile-menu but
+    //      not the drawer DIV itself — that's why /faq and /proof
+    //      burgers do nothing in production).
+    //      → drop the orphan button + inject a fresh pair.
+    //   3. drawer exists but no button (no real-world case yet but
+    //      defended for symmetry).
+    //      → drop the orphan drawer + inject a fresh pair.
+    //   4. neither exists (e.g. /auth, /account).
+    //      → inject from scratch.
+    var existingBtn = document.querySelector('.nav-burger');
+    var existingMenu = document.getElementById('mobile-menu');
+
+    if (existingBtn && existingMenu) {
+      if (existingBtn.dataset.burgerWired === '1') return;
+      wireExistingBurger(existingBtn);
+      existingBtn.dataset.burgerWired = '1';
       return;
     }
+
+    // Any partial state → reset to clean injection.
+    if (existingBtn) existingBtn.remove();
+    if (existingMenu) existingMenu.remove();
 
     var nav = document.querySelector('header nav, nav .nav-inner, nav');
     if (!nav) return;
@@ -133,42 +147,58 @@
     });
   }
 
-  /* Wire a burger that's already in the DOM (inline-markup pages) so
-     it actually responds to taps. The inline version on most pages
-     already runs its own toggle script — but on a couple of pages
-     that script silently fails (faq.html most visibly). Re-wiring
-     from a single source of truth fixes those and is idempotent
-     thanks to the data-burger-wired flag set by the caller.
-     We replace the button node first so any stale handlers attached
-     by the inline script are dropped (the new clean clone gets fresh
-     handlers below). The drawer / closeBtn / links are left in place
-     — adding extra listeners there is harmless because their effect
-     is idempotent toggling. */
+  /* Wire a burger that's already in the DOM (inline-markup pages).
+     The previous version cloned the <button> to drop stale handlers
+     and re-attached fresh ones — that survived /faq but the user
+     still reports the burger as unresponsive on /faq AND /proof.
+
+     This version uses event delegation: one capture-phase click
+     listener on `document` that walks up from the event target with
+     `closest('.nav-burger')`. Because the listener lives on document,
+     it survives every possible mutation downstream — node clones,
+     stacking-context overlays, re-renders by the inline script. It
+     also stops the event in the capture phase so any conflicting
+     bubble-phase handler on the burger itself never fires.
+
+     The same pattern handles .mobile-close and the in-drawer links
+     (close the drawer after tapping a link). Escape key closes too. */
   function wireExistingBurger(originalBtn) {
     var menu = document.getElementById('mobile-menu');
     if (!menu) return;
 
-    var btn = originalBtn.cloneNode(true);
-    originalBtn.parentNode.replaceChild(btn, originalBtn);
-
-    var closeBtn = menu.querySelector('.mobile-close');
-    var links = menu.querySelectorAll('a');
-
     function setOpen(open) {
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var burger = document.querySelector('.nav-burger');
+      if (burger) burger.setAttribute('aria-expanded', open ? 'true' : 'false');
       menu.setAttribute('aria-hidden', open ? 'false' : 'true');
       menu.classList.toggle('open', open);
       document.body.classList.toggle('menu-open', open);
     }
-    btn.addEventListener('click', function () {
-      setOpen(!menu.classList.contains('open'));
-    });
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function () { setOpen(false); });
-    }
-    links.forEach(function (a) {
-      a.addEventListener('click', function () { setOpen(false); });
-    });
+
+    // Capture-phase delegate — runs before any other click handler
+    // that might be attached to the button by the inline script.
+    document.addEventListener('click', function (e) {
+      // Tap on the burger (or any descendant span).
+      if (e.target.closest('.nav-burger')) {
+        e.preventDefault();
+        e.stopPropagation();
+        setOpen(!menu.classList.contains('open'));
+        return;
+      }
+      // Tap on the drawer's close button.
+      if (e.target.closest('.mobile-close')) {
+        e.preventDefault();
+        e.stopPropagation();
+        setOpen(false);
+        return;
+      }
+      // Tap on a link inside the open drawer → close after the link
+      // would navigate. We don't preventDefault here so the link
+      // still fires.
+      if (menu.classList.contains('open') && e.target.closest('.mobile-menu a')) {
+        setOpen(false);
+      }
+    }, true);
+
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menu.classList.contains('open')) setOpen(false);
     });
