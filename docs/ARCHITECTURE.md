@@ -24,6 +24,34 @@ first.
   PR via `.github/workflows/audit.yml` and runs at both viewports
   against every public route. It encodes the contracts in this doc.
 
+### Root-folder placement rules
+
+The repo root only holds files that have a reason to be there. Every
+other category has a dedicated folder so the root listing stays
+scannable.
+
+| Lives at the root | Why |
+|-------------------|-----|
+| `*.html` (public routes) | Vercel `cleanUrls` resolves `/foo` to `/foo.html`. Sub-folders + `cleanUrls` was tried in PR #153 and broke prod with 404s. |
+| `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md` | GitHub UI surfaces these four in the repo tab / community-standards panel. They have to sit at the root to be discovered. |
+| `package.json`, `package-lock.json`, `manifest.json` | npm + PWA manifest both resolve relative to the root by convention. |
+| `vercel.json`, `.htmlhintrc`, `stylelint.config.mjs` | Build/host tools look for their config at the root. |
+| `robots.txt`, `sitemap.xml` | Crawlers fetch them at the root by spec. |
+
+| Has its own folder | Why |
+|--------------------|-----|
+| `assets/` | All non-text static files (favicon, icon, og-image, etc.) — long-immutable cache, 301 redirects from old root paths preserve existing OG-share crawler URLs. |
+| `css/` | Shared stylesheets loaded by every page. |
+| `js/` | Shared modules loaded by every page. |
+| `fonts/` | Self-hosted woff2 (Bebas Neue, IBM Plex Mono). |
+| `scripts/` | Anything Node-executable: audit, migrations, regen, dev tools (og-generator, setup-auth). Nothing here is served to users. |
+| `docs/` | Deeper docs for contributors: `ARCHITECTURE.md` (this file), `AUTH-SETUP.md`, `ci-setup.md`. The four root-level MDs are the entry points; everything that drills deeper goes here. |
+| `_audit/`, `_screenshots/` | Local Playwright artifacts. Gitignored. The leading underscore signals "not part of the source tree". |
+
+> **Rule of thumb:** if a new file isn't in the "root" table above,
+> it belongs in one of the folders. Adding a sibling to `*.html` or a
+> stray MD at the root creates ambiguity for the next reader.
+
 ## 2. CSS architecture
 
 ### The split

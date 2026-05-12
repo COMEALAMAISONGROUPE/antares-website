@@ -12,19 +12,28 @@ Sister repo (the extension + backend): [`antares-extension`](https://github.com/
 
 | Path                              | What it is |
 |-----------------------------------|-----------|
-| `*.html` (top level)              | One file per route. Each page is self-contained: `<style>` for desktop, links to shared CSS/JS for shared concerns. |
+| `*.html` (top level)              | One file per public route. Each page is self-contained: `<style>` for desktop, links to shared CSS/JS for shared concerns. |
+| `assets/`                         | Static images shared across pages — favicon, app icon, og-share images. Served with a long-immutable cache; legacy root paths (`/favicon.png`, `/icon.png`, `/og-image.{png,svg}`) 301 to here. |
+| `css/base.css`                    | Universal rules (skip-link, `:focus-visible`, `prefers-reduced-motion`). Loaded by every page. |
 | `css/mobile-fixes.css`            | All mobile (<761 px) overrides. The single source of truth for mobile layout — never edit inline `<style>` for mobile. |
 | `css/home-animations.css`         | Counter + typewriter keyframes used only on `/`. |
-| `js/burger.js`                    | Mobile drawer. Auto-injects on any page that has a `.nav-burger` button. State-aware: handles all four "button × drawer present/missing" combinations. |
+| `js/error-monitor.js`             | Cross-cutting client-side error catcher. Loaded first on every page. |
+| `js/a11y.js`                      | Injects skip-link + tags focusable scroll regions on every page. |
+| `js/burger.js`                    | Mobile drawer. State-aware: handles all four "button × drawer present/missing" combinations. |
 | `js/nav-account.js`               | Swaps "Log in" → "Account" in the nav when a session cookie is present. |
 | `js/mobile-cta-rewrite.js`        | Mobile-only: pulls every desktop nav `.cta` into the drawer so the top bar stays clean. |
 | `js/hero-effects.js`              | Particles + parallax on the home hero. Gated behind `body.is-home`. |
 | `js/home-animations.js`           | A1 counter tick-up + B1 typewriter on the home page only. |
 | `js/faq-accordion.js`             | Q&A accordion behaviour for `/faq` and `/support`. |
+| `fonts/`                          | Self-hosted woff2 (Bebas Neue + IBM Plex Mono). |
 | `vercel.json`                     | `cleanUrls: true` + per-route rewrites + security headers + per-route cache rules. |
+| `manifest.json`                   | PWA install manifest (icons point at `/assets/`). |
 | `scripts/audit.mjs`               | Playwright-based regression audit. Runs both viewports against every public route. CI gates every PR on this passing. |
+| `scripts/setup-auth.sh`           | One-shot bootstrap for the auth backend env var + redeploy. |
+| `scripts/og-generator.html`       | Dev tool for crafting the OG share image — open it locally to render. Not a public route. |
+| `scripts/migrations/`             | Archived one-shot rewrites. Each migration is a record of how a cross-page change landed. |
 | `.github/workflows/audit.yml`     | Wires the audit to `pull_request` and `push: main`. Two jobs: local-static-server audit + Vercel-preview audit (latter needs `VERCEL_BYPASS_TOKEN` secret — see `docs/ci-setup.md`). |
-| `docs/ARCHITECTURE.md`            | Deeper map of CSS/JS conventions and the body-class opt-in pattern. Read this before touching anything cross-page. |
+| `docs/ARCHITECTURE.md`            | Deeper map of conventions and the body-class opt-in pattern. Read this before touching anything cross-page. The placement-rules table in §1 covers what lives where. |
 | `docs/ci-setup.md`                | One-time setup for the Vercel preview audit secret. |
 | `docs/AUTH-SETUP.md`              | Operational runbook for the auth + payment pipeline (cross-repo with `antares-extension`). |
 | `_audit/`, `_screenshots/`        | Local-only artifacts (gitignored). |
