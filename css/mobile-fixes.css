@@ -475,17 +475,27 @@ body.menu-open { overflow: hidden; }
   nav .links a[href*="demo"],
   .mobile-links a[href*="demo"] { display: none !important; }
 
-  /* 13b. Hide the install / "Open on desktop" CTAs from the drawer.
-     The drawer is meant to be navigation, not action buttons. The
-     mobile-cta-rewrite already turned the inline CTAs on each page
-     into plain text; the drawer copies of those links should just
-     drop out. We match on href (the install target) AND on the
-     m-install class that the inline drawer uses, so we catch both
-     the inline-shipped drawer (15 pages) and the JS-injected drawer
-     (auth + account + faq). */
+  /* 13b. Hide install + login CTAs from the burger drawer.
+     The drawer is meant to be navigation, not action buttons.
+     The mobile-cta-rewrite already turned the inline CTAs on each
+     page into plain text; their drawer copies should drop out too.
+
+     Install side: matched on href + .m-install class (catches both
+     inline-shipped drawers from PR #146 and the JS-injected drawer
+     on /auth /account /faq).
+
+     Login side: same treatment. Antares accounts only matter for
+     paying users (Pro / Yearly), and paying happens on desktop —
+     the checkout modal needs a popup that mobile browsers block.
+     Surfacing "Log in" on mobile is a dead end. The /auth page
+     itself stays reachable by typing the URL, just not advertised
+     in the drawer. */
   .mobile-links a[href*="install"],
+  .mobile-links a[href*="auth"],
   .mobile-actions a[href*="install"],
-  .mobile-actions .m-install { display: none !important; }
+  .mobile-actions a[href*="auth"],
+  .mobile-actions .m-install,
+  .mobile-actions .m-login { display: none !important; }
 
   /* 13c. Footer — mobile rules.
        • Home (body.is-home) — footer is hidden entirely. The home
