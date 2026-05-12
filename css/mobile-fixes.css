@@ -487,14 +487,46 @@ body.menu-open { overflow: hidden; }
   .mobile-actions a[href*="install"],
   .mobile-actions .m-install { display: none !important; }
 
-  /* 13c. Footer — hide the whole footer on mobile.
-     User feedback: the bottom row "Open on desktop · Support ·
-     Privacy · About" duplicates options the burger drawer already
-     surfaces, and the versioning line above it is desktop noise.
-     A mobile visitor doesn't need either; the page just ends.
-     Legal links (Privacy / Terms) stay reachable via the burger
-     menu. */
-  footer { display: none !important; }
+  /* 13c. Footer — mobile rules.
+       • Home (body.is-home) — footer is hidden entirely. The home
+         page ends on the cta-final and doesn't need a secondary
+         link strip below.
+       • All other pages — the version line ("Antares v1.3.0 ·
+         No mercy for scammers") is hidden via font-size:0 trick,
+         and the .foot-links row is re-rendered as two lines:
+            line 1: "Open on desktop"  (the install link, rewritten
+                                        by mobile-cta-rewrite.js)
+            line 2: "Support · Privacy · About"
+         The " · " text-node separator between the install link
+         and Support is stripped at runtime by mobile-cta-rewrite.js
+         (otherwise it would orphan at the start of line 2). */
+  body.is-home footer { display: none !important; }
+
+  body:not(.is-home) footer {
+    /* Hides the "Antares v1.3.0" text node + <span>No mercy</span>
+       by zeroing the inherited font. We restore the font on
+       .foot-links below. */
+    font-size: 0 !important;
+    padding: 24px 16px !important;
+    margin-top: 32px !important;
+    text-align: center !important;
+  }
+  body:not(.is-home) footer .foot-links {
+    font-size: 9px !important;
+    line-height: 1.8 !important;
+    letter-spacing: .18em;
+    display: block;
+    margin-top: 0 !important;
+  }
+  body:not(.is-home) footer .foot-links * {
+    font-size: inherit !important;
+  }
+  /* Install / "Open on desktop" sits on its own line above the
+     other links. */
+  body:not(.is-home) footer .foot-links a[href*="install"] {
+    display: block;
+    margin-bottom: 6px;
+  }
 
   /* 13d. Home — drop the giant "ANTARES" wordmark watermark behind
      the bottom cta-final. The pseudo-element renders at 280px on
