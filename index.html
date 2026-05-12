@@ -27,15 +27,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <title>Antares — Stop Getting Scammed.</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/base.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
 :root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff2244;--yellow:#f5d000;--glow:rgba(0,229,176,.12)}
-html{scroll-behavior:smooth;scrollbar-gutter:stable}
 body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
 
 /* ── STRIPE ── */
-.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
-@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
 
 /* ── CURSOR GLOW ── */
 .cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(0,229,176,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}

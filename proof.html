@@ -24,15 +24,12 @@
 <meta name="twitter:image" content="https://antaresscan.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/css/base.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
 :root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--card-2:#0d0d10;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5566;--yellow:#f5d000}
-html{scroll-behavior:smooth;scrollbar-gutter:stable}
 body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;overflow-x:hidden}
 
 /* Top stripe + atom watermark (consistent with the rest of the site) */
-.stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
-@keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
 .bg-atom{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:1100px;height:1100px;opacity:.05;pointer-events:none;z-index:0;background:radial-gradient(ellipse at center,rgba(0,229,176,.18) 0%,transparent 60%)}
 .bg-atom::before{content:'';position:absolute;inset:0;background:url('icon.png') no-repeat center;background-size:80%;filter:invert(1) brightness(.8) sepia(.5) hue-rotate(115deg) saturate(2.2);opacity:.5}
 
