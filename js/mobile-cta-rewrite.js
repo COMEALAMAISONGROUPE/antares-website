@@ -48,19 +48,11 @@
     var text = (a.textContent || '').trim();
     if (!/install/i.test(text)) return;
 
-    // Different copy for footer links vs. body CTAs:
-    //   • Footer link  → "Full content available on desktop ↗"
-    //     The footer link is navigational and sits at the bottom of
-    //     a page that already ends. Communicating that the FULL site
-    //     is on desktop reads more honestly than the action verb
-    //     "Open" — there's nothing imminent to open.
-    //   • Body CTAs (hero, mid-page, etc.) → "Open on desktop ↗"
-    //     These are direct calls to action — the user is action-
-    //     oriented when they tap an "Install" button.
-    var inFooter = a.closest('footer') !== null;
-    a.textContent = inFooter
-      ? 'Full content available on desktop ↗'
-      : 'Open on desktop ↗';
+    // One copy everywhere: "Full content available on desktop ↗".
+    // The earlier two-copy branch (body vs. footer) was inconsistent
+    // — the user gets a different sentence depending on where they
+    // tap on the page. One line, applied uniformly, reads better.
+    a.textContent = 'Full content available on desktop ↗';
     a.setAttribute('data-mobile-rewritten', 'install');
   });
 
