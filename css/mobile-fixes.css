@@ -448,7 +448,11 @@ body.menu-open { overflow: hidden; }
     font: 500 12px/1.5 'IBM Plex Mono', monospace !important;
     letter-spacing: .04em !important;
     text-transform: none !important;
-    text-align: left !important;
+    /* Centre the rewritten copy. These rewrites replace CTAs that
+       were originally button-shaped and visually centred. Even where
+       the rewrite renders inline inside a paragraph, centring reads
+       more like a quiet aside than a fragment that drifted left. */
+    text-align: center !important;
     cursor: default !important;
     pointer-events: none !important;
   }
@@ -458,6 +462,7 @@ body.menu-open { overflow: hidden; }
   .tier > [data-mobile-rewritten] {
     display: block !important;
     margin: 12px 0 !important;
+    text-align: center !important;
   }
 
   /* ── 13. Polish pass #3 ──────────────────────────────────────────
