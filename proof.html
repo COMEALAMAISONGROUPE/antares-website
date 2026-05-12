@@ -3,7 +3,7 @@
 <head>
 <script src="/js/error-monitor.js"></script>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#00e5b0">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://antaresscan.com/proof">
 <meta property="og:title" content="Proof &mdash; Antares">
 <meta property="og:description" content="Real Solana tokens. Re-tested nightly. Public method, scoped audit on request. How we keep an honest scoring engine when the source is closed.">
-<meta property="og:image" content="https://antaresscan.com/og-image.png">
+<meta property="og:image" content="https://antaresscan.com/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Antares">
@@ -23,14 +23,14 @@
 <meta name="twitter:site" content="@antaresantiscam">
 <meta name="twitter:title" content="Proof &mdash; Antares">
 <meta name="twitter:description" content="Real Solana tokens. Re-tested nightly. Public method, scoped audit on request.">
-<meta name="twitter:image" content="https://antaresscan.com/og-image.png">
+<meta name="twitter:image" content="https://antaresscan.com/assets/og-image.png">
 <link rel="stylesheet" href="/css/base.css">
 <style>
 :root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--card-2:#0d0d10;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5566;--yellow:#f5d000}
 
 /* Top stripe + atom watermark (consistent with the rest of the site) */
 .bg-atom{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:1100px;height:1100px;opacity:.05;pointer-events:none;z-index:0;background:radial-gradient(ellipse at center,rgba(0,229,176,.18) 0%,transparent 60%)}
-.bg-atom::before{content:'';position:absolute;inset:0;background:url('icon.png') no-repeat center;background-size:80%;filter:invert(1) brightness(.8) sepia(.5) hue-rotate(115deg) saturate(2.2);opacity:.5}
+.bg-atom::before{content:'';position:absolute;inset:0;background:url('/assets/icon.png') no-repeat center;background-size:80%;filter:invert(1) brightness(.8) sepia(.5) hue-rotate(115deg) saturate(2.2);opacity:.5}
 
 .shell{position:relative;z-index:2;max-width:880px;margin:0 auto;padding:0 32px}
 nav{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;position:sticky;top:3px;z-index:100;max-width:1160px;margin:0 auto}
@@ -140,7 +140,7 @@ footer .foot-links a:hover{color:var(--c)}
 <body class="short-mobile">
 <div class="stripe" role="presentation"></div>
 <div class="bg-atom" aria-hidden="true"></div>
-<nav aria-label="Main navigation"><a href="./index" class="brand"><img src="icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>  <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
+<nav aria-label="Main navigation"><a href="./index" class="brand"><img src="/assets/icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a><a href="./faq">Q&amp;A</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>  <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
     <span></span><span></span><span></span>
   </button>
       </nav>
