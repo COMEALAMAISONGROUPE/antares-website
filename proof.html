@@ -57,10 +57,13 @@ nav .nav-account:hover{color:var(--c);border-color:var(--c);background:rgba(0,22
 .eyebrow::before{content:'';display:block;width:26px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
 @keyframes pulse-line{0%,100%{opacity:.5;width:26px}50%{opacity:1;width:34px}}
 .h1-wrap{position:relative;display:inline-block}
-h1{font:400 clamp(52px,7.5vw,72px)/.92 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:18px;color:#eaeaea;position:relative;text-shadow:0 0 30px rgba(0,229,176,.10)}
-h1::before,h1::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
-h1::before{color:#00E5B0;clip-path:polygon(0 0,100% 0,100% 45%,0 45%);transform:translate(-3px,1px);opacity:.7;mix-blend-mode:screen}
-h1::after{color:#ff4466;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%);transform:translate(3px,-1px);opacity:.7;mix-blend-mode:screen}
+/* Headline — matches the page-hero h1 style used on /engine,
+   /features, /sources etc. Plain Bebas Neue white headline, no
+   RGB-split glitch (the previous mint+red shift didn't match the
+   rest of the site). The .accent span keeps the option of
+   highlighting one word in mint if/when needed. */
+h1{font:400 clamp(52px,9vw,100px)/.9 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:20px;color:#eaeaea}
+h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.15)}
 
 .intro{font-size:15px;color:#a8a8b0;line-height:1.78;margin-bottom:18px;max-width:760px}
 .intro b{color:#e8e8ee;font-weight:600}
@@ -85,10 +88,15 @@ h1::after{color:#ff4466;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%);trans
 .modes{display:grid;grid-template-columns:1fr;gap:1px;margin:20px 0 16px;background:var(--border);border:1px solid var(--border)}
 .mode{background:var(--card-2);padding:18px 22px;display:flex;gap:18px;align-items:flex-start}
 .mode .dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex-shrink:0;box-shadow:0 0 12px currentColor}
-.mode.crit .dot{color:var(--red);background:var(--red)}
-.mode.crit .tag{color:var(--red)}
-.mode.warn .dot{color:var(--yellow);background:var(--yellow)}
-.mode.warn .tag{color:var(--yellow)}
+/* Severity colours flattened to mint — matches the brand accent
+   used everywhere else on the site. The Critical vs Warning
+   distinction stays readable via the .tag text itself
+   ("Critical · hard failure" vs "Warning · soft signal"); the
+   colour is no longer the carrier. */
+.mode.crit .dot,
+.mode.warn .dot{color:var(--c);background:var(--c)}
+.mode.crit .tag,
+.mode.warn .tag{color:var(--c)}
 .mode-body{flex:1}
 .mode .tag{display:inline-block;font:700 10px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
 .mode h4{font:400 22px/1.15 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:6px}
@@ -165,7 +173,7 @@ body.menu-open{overflow:hidden}
 
 <section class="page-hero">
   <div class="eyebrow">Proof, not promises</div>
-  <h1 data-text="HOW WE PROVE THE SCORING WORKS">HOW WE PROVE THE SCORING WORKS</h1>
+  <h1>HOW WE PROVE<br><span class="accent">THE SCORING WORKS.</span></h1>
   <p class="intro">
     The Antares scoring engine is closed source &mdash; not because we have something to hide, but because publishing the code would also publish every loophole a rug-puller needs to evade detection. That puts us in the same boat as the anti-fraud teams at banks, ad networks, and exchanges: <b>credibility has to come from outcomes, not from the codebase.</b>
   </p>
