@@ -264,5 +264,53 @@ body.menu-open { overflow: hidden; }
   .qa h3:active {
     color: var(--c, #00e5b0);
   }
+
+  /* ── 9. Legal pages typography (privacy + terms) ─────────────────
+     /privacy and /terms ship 6-7 mobile screens of dense legal copy
+     with 1.85 line-height and 22-30px paragraph margins. The desktop
+     defaults (built for an 880px-wide column) leave too much vertical
+     air on a 375px column where the eye is already tracking 70+
+     characters per line.
+
+     Scoped to <body class="legal-page"> (added only on privacy.html
+     and terms.html) so other pages' typography is untouched. We do
+     NOT collapse content here — these are legal documents users
+     should be able to scroll and read end-to-end on any device. */
+  .legal-page main h1 { font-size: 36px !important; margin-bottom: 12px !important; }
+  .legal-page main h2 {
+    font-size: 14px !important;
+    letter-spacing: .12em;
+    margin-top: 24px !important;
+    margin-bottom: 8px !important;
+    color: var(--c, #00e5b0);
+  }
+  .legal-page main h3 {
+    font-size: 12px !important;
+    margin-top: 14px !important;
+    margin-bottom: 6px !important;
+  }
+  .legal-page main p,
+  .legal-page main li {
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 10px !important;
+  }
+  .legal-page main ul,
+  .legal-page main ol {
+    margin: 6px 0 12px 18px !important;
+  }
+  .legal-page main ul li,
+  .legal-page main ol li {
+    margin-bottom: 4px !important;
+  }
+  .legal-page main {
+    padding: 0 16px !important;
+  }
+  /* The "Last updated: …" line on these pages can disappear into the
+     normal paragraph rhythm — keep it visually distinct but compact. */
+  .legal-page main .updated {
+    font-size: 11px !important;
+    margin-bottom: 18px !important;
+  }
 }
 
