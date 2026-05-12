@@ -634,7 +634,7 @@ body.menu-open { overflow: hidden; }
     font: 400 26px/1 'Bebas Neue', sans-serif;
     letter-spacing: .18em;
     color: #e0e0e0;
-    background: url('/icon.png') no-repeat left center;
+    background: url('/assets/icon.png') no-repeat left center;
     background-size: 32px auto;
     pointer-events: none;
     z-index: 0;
@@ -656,7 +656,7 @@ body.menu-open { overflow: hidden; }
     width: auto !important;
     height: auto !important;
     transform: none !important;
-    background: url('/icon.png') no-repeat center !important;
+    background: url('/assets/icon.png') no-repeat center !important;
     /* Same enlarge as the drawer: 440px fills the empty space between
        the threat line and the bottom hand-off message, .12 opacity
        reads as a clear logo without competing with the headline. */

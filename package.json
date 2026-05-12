@@ -9,6 +9,7 @@
     "audit:mobile": "node scripts/audit.mjs --viewport=mobile",
     "audit:desktop": "node scripts/audit.mjs --viewport=desktop",
     "audit:prod": "node scripts/audit.mjs --base=https://antaresscan.com",
+    "serve": "node scripts/serve.mjs",
     "lint": "npm run lint:html && npm run lint:css",
     "lint:html": "htmlhint \"*.html\"",
     "lint:css": "stylelint \"css/**/*.css\"",

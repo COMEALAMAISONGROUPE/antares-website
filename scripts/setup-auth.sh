@@ -12,7 +12,7 @@
 #
 # Usage:
 #   cd /path/to/antares-extension
-#   bash /path/to/antares-website/setup-auth.sh
+#   bash /path/to/antares-website/scripts/setup-auth.sh
 #
 # Requirements:
 #   - Vercel CLI installed (`npm i -g vercel`)

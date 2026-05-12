@@ -14,7 +14,7 @@ Run the bundled bootstrap script from the **antares-extension** repo:
 
 ```bash
 cd /path/to/antares-extension
-bash /path/to/antares-website/setup-auth.sh
+bash /path/to/antares-website/scripts/setup-auth.sh
 ```
 
 It:
