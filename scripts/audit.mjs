@@ -267,6 +267,8 @@ async function auditDesktop(page, route) {
     const footerSpan = footer ? footer.querySelector('span') : null;
     const main = document.querySelector('main');
     const skipLink = document.querySelector('.skip-link');
+    const manifest = document.querySelector('link[rel="manifest"]');
+    const themeColor = document.querySelector('meta[name="theme-color"]');
     return {
       overflow: d.scrollWidth - d.clientWidth,
       linksExists: !!links,
@@ -278,6 +280,8 @@ async function auditDesktop(page, route) {
       mainExists: !!main,
       skipLinkExists: !!skipLink,
       skipLinkTargetsMain: skipLink && main ? skipLink.getAttribute('href') === '#' + main.id : false,
+      manifestLinked: !!manifest,
+      themeColor: themeColor ? themeColor.getAttribute('content') : null,
     };
   });
 
@@ -306,6 +310,13 @@ async function auditDesktop(page, route) {
   if (probe.mainExists) {
     if (!probe.skipLinkExists) fails.push('skip-link-missing');
     else if (!probe.skipLinkTargetsMain) fails.push('skip-link-target-mismatch');
+  }
+
+  /* PWA contract: every public route declares the manifest + a
+     theme-color matching the brand mint (#00e5b0). */
+  if (!probe.manifestLinked) fails.push('manifest-link-missing');
+  if (probe.themeColor !== '#00e5b0') {
+    fails.push(`theme-color-mismatch (got="${probe.themeColor}")`);
   }
 
   /* Home-only animation contract (PR #166). */
