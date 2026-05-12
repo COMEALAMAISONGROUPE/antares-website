@@ -312,5 +312,44 @@ body.menu-open { overflow: hidden; }
     font-size: 11px !important;
     margin-bottom: 18px !important;
   }
+
+  /* ── 10. Secondary pages: short-mobile mode ──────────────────────
+     /about, /api, /security, /changelog, /proof are reference pages
+     a mobile visitor doesn't need in full — they're either developer
+     docs (api), historical records (changelog), or marketing-density
+     reads (proof, security, about) that fit better on a desktop
+     column. We keep the hero (h1 + eyebrow + intro paragraphs) so the
+     page identity is intact, and hide everything starting at the
+     first <h2>. A short "continue on desktop" line replaces the
+     missing content so the page doesn't end mid-sentence.
+
+     Opt-in via <body class="short-mobile">. Pages that ship this
+     pattern lose 3-7 mobile screens each without losing brand
+     presence. Desktop is untouched. */
+  /* Cutoff points across the 5 pages we apply this to:
+       - about, api, security: first <h2> sibling under <main>
+       - changelog: every <div class="release"> block
+       - proof: <div class="section-label"> dividers and what follows
+     Listing all three keeps the rule one block long and resilient to
+     pages adopting either shape later. */
+  body.short-mobile main > h2,
+  body.short-mobile main > h2 ~ *,
+  body.short-mobile main > .section-label,
+  body.short-mobile main > .section-label ~ *,
+  body.short-mobile main > .release {
+    display: none !important;
+  }
+  body.short-mobile main::after {
+    content: "↗  See the full version on desktop";
+    display: block;
+    margin: 28px 0 0;
+    padding: 18px 20px;
+    border: 1px solid var(--border, #1a1a1e);
+    color: var(--c, #00e5b0);
+    text-align: center;
+    font: 600 11px/1.5 'IBM Plex Mono', monospace;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
 }
 
