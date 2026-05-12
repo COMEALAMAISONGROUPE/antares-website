@@ -132,46 +132,46 @@ footer span{color:var(--c)}
 </div><main>
 
 <section class="page-hero">
-  <div class="eyebrow reveal">Data Sources</div>
-  <h1 class="reveal delay-1"><span class="glitch" data-text="6 SOURCES.">6 SOURCES.</span><br><span class="accent glitch" data-text="ZERO TRUST.">ZERO TRUST.</span></h1>
-  <p class="sub reveal delay-2">Antares never trusts a single source. Six independent APIs are queried in parallel on every scan. Each covers a distinct attack surface &mdash; market data, contract security, on-chain truth, holder distribution, chart patterns. When sources conflict, the most conservative verdict wins.</p>
+  <div class="eyebrow">Data Sources</div>
+  <h1><span class="glitch" data-text="6 SOURCES.">6 SOURCES.</span><br><span class="accent glitch" data-text="ZERO TRUST.">ZERO TRUST.</span></h1>
+  <p class="sub">Antares never trusts a single source. Six independent APIs are queried in parallel on every scan. Each covers a distinct attack surface &mdash; market data, contract security, on-chain truth, holder distribution, chart patterns. When sources conflict, the most conservative verdict wins.</p>
 </section>
 
-<div class="section-label reveal"><span>The 6 sources</span></div>
+<div class="section-label"><span>The 6 sources</span></div>
 <div class="source-grid">
 
-  <div class="source reveal delay-1">
+  <div class="source">
     <div class="source-name"><h3>DexScreener</h3><div class="role">Market Data</div></div>
     <div class="source-body"><p>Primary market data layer. Provides real-time price, market cap, liquidity depth across all active pairs, and granular transaction counts across 5m, 1h, 6h, and 24h windows. A token with no DexScreener pair is likely not yet indexed or too illiquid to trade safely.</p><div class="data-tags"><span>Price</span><span>Market Cap</span><span>Liquidity</span><span>Volume</span><span>Transactions</span></div></div>
   </div>
 
-  <div class="source reveal delay-2">
+  <div class="source">
     <div class="source-name"><h3>RugCheck</h3><div class="role">Token Audit</div></div>
     <div class="source-body"><p>Specialises in Solana token audit. Checks LP burn/lock status, metadata mutability, mint and freeze authorities, and bundler detection &mdash; identifying tokens launched via coordinated bots that pre-buy supply before public trading.</p><div class="data-tags"><span>LP Status</span><span>Metadata</span><span>Mint Auth</span><span>Freeze Auth</span><span>Bundler</span></div></div>
   </div>
 
-  <div class="source reveal delay-3">
+  <div class="source">
     <div class="source-name"><h3>GoPlus</h3><div class="role">Contract Security <em style="font-size:9px;color:#5a3a3a;letter-spacing:.16em;text-transform:uppercase;font-style:normal;margin-left:6px">when available</em></div></div>
     <div class="source-body"><p>Performs a simulated transaction to detect contract vulnerabilities &mdash; honeypots, proxy contracts, blacklist functions, transfer restrictions, hidden fees. Used opportunistically: when the GoPlus public endpoint is rate-limited or unavailable for a given token, the source is gracefully skipped and the verdict is computed from the remaining 5 layers.</p><div class="data-tags"><span>Honeypot</span><span>Proxy</span><span>Blacklist</span><span>Fees</span><span>Sellability</span></div></div>
   </div>
 
-  <div class="source reveal delay-4">
+  <div class="source">
     <div class="source-name"><h3>Helius</h3><div class="role">On-Chain RPC</div></div>
     <div class="source-body"><p>Premium Solana RPC endpoint for direct on-chain calls. The ground truth layer &mdash; bypasses any API aggregator and reads state directly from the blockchain. Verifies mint authority, freeze authority, supply, and active accounts. Cannot be faked.</p><div class="data-tags"><span>Mint Auth</span><span>Freeze Auth</span><span>Supply</span><span>Accounts</span></div></div>
   </div>
 
-  <div class="source reveal delay-5">
+  <div class="source">
     <div class="source-name"><h3>Solscan</h3><div class="role">Holder Analysis</div></div>
     <div class="source-body"><p>Holder distribution and token history. Provides unique holders, top wallet percentages, creation timestamp, and independent 24h volume. A token created 1 hour ago with 12 holders and 90% in one wallet is a textbook pre-rug setup.</p><div class="data-tags"><span>Holders</span><span>Concentration</span><span>Token Age</span><span>Volume</span></div></div>
   </div>
 
-  <div class="source reveal delay-6">
+  <div class="source">
     <div class="source-name"><h3>GeckoTerminal</h3><div class="role">Chart Data</div></div>
     <div class="source-body"><p>OHLCV candle data provider for the Chart Intelligence layer. Raw price candles across 5m, 1h, 6h, and 24h windows. Pump-and-dump detection, blow-off top analysis, and wash trading identification depend on this feed.</p><div class="data-tags"><span>OHLCV</span><span>5m</span><span>1h</span><span>6h</span><span>24h</span></div></div>
   </div>
 </div>
 
-<div class="conflict-box reveal">
+<div class="conflict-box">
   <h3 class="glitch" data-text="CONFLICT RESOLUTION">CONFLICT RESOLUTION</h3>
   <p>When sources disagree, Antares always resolves to the most conservative (most dangerous) verdict. A failed source is skipped gracefully without blocking the scan. The system is designed to over-protect, never under-protect.</p>
 </div>

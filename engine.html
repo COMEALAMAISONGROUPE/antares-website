@@ -135,21 +135,21 @@ footer .foot-links a:hover{color:var(--c)}
 </div><main>
 
 <section class="page-hero">
-  <div class="eyebrow reveal">Scoring Engine</div>
-  <h1 class="reveal delay-1"><span class="glitch" data-text="7 LAYERS.">7 LAYERS.</span><br><span class="accent glitch" data-text="1000 POINTS.">1000 POINTS.</span></h1>
-  <p class="sub reveal delay-2">Seven independent analysis layers each contribute weighted deductions to a 0&ndash;1000 composite score. The score is the geometric mean of layer trusts &mdash; one bad source can&rsquo;t hide; one false-positive can&rsquo;t flip a clean token to RUG. The Safe Gate overrides on critical hard flags (LP open, honeypot, mint/freeze active, deceptive name).</p>
+  <div class="eyebrow">Scoring Engine</div>
+  <h1><span class="glitch" data-text="7 LAYERS.">7 LAYERS.</span><br><span class="accent glitch" data-text="1000 POINTS.">1000 POINTS.</span></h1>
+  <p class="sub">Seven independent analysis layers each contribute weighted deductions to a 0&ndash;1000 composite score. The score is the geometric mean of layer trusts &mdash; one bad source can&rsquo;t hide; one false-positive can&rsquo;t flip a clean token to RUG. The Safe Gate overrides on critical hard flags (LP open, honeypot, mint/freeze active, deceptive name).</p>
 </section>
 
-<div class="section-label reveal"><span>Score Ranges</span></div>
-<div class="score-visual reveal">
+<div class="section-label"><span>Score Ranges</span></div>
+<div class="score-visual">
   <div class="sv-item"><div class="sv-val red">349</div><div class="sv-label">Rug Pull</div></div>
   <div class="sv-item"><div class="sv-val orange">350&thinsp;&ndash;&thinsp;599</div><div class="sv-label">Danger</div></div>
   <div class="sv-item"><div class="sv-val yellow">600&thinsp;&ndash;&thinsp;899</div><div class="sv-label">Caution</div></div>
   <div class="sv-item"><div class="sv-val green">900</div><div class="sv-label">Safe</div></div>
 </div>
 
-<div class="section-label reveal"><span>Detection Layers</span></div>
-<div class="layer-list reveal">
+<div class="section-label"><span>Detection Layers</span></div>
+<div class="layer-list">
   <div class="layer"><div class="layer-num">L1</div><div class="layer-body"><h3>Liquidity &amp; Market</h3><span class="tag">DexScreener</span><p>Real-time price, volume, liquidity depth, transaction counts across 5m, 1h, 6h, 24h. Near-zero liquidity is a Safe Gate trigger. Volume/liquidity ratio feeds wash trading detection.</p></div></div>
   <div class="layer"><div class="layer-num">L2</div><div class="layer-body"><h3>Token Audit</h3><span class="tag">RugCheck</span><p>LP burn/lock status, metadata mutability, mint &amp; freeze authority, bundler detection, sniper activity. Solana-native token-audit signal.</p></div></div>
   <div class="layer"><div class="layer-num">L3</div><div class="layer-body"><h3>Contract Security</h3><span class="tag">GoPlus</span><p>Honeypot simulation, hidden fees, transfer restrictions, blacklist functions, sell tax / buy tax, anti-whale rules. Honeypot detection is an immediate Safe Gate trigger.</p></div></div>
@@ -159,7 +159,7 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="layer"><div class="layer-num">L7</div><div class="layer-body"><h3>Cross-Validation</h3><span class="tag">Internal</span><p>Detects disagreements between layers (e.g. LP burn claimed by RugCheck but LP program still holds tokens per Helius). Disagreement triggers a 0.7&ndash;0.9&times; penalty so a single suspicious source can&rsquo;t mask a hidden risk.</p></div></div>
 </div>
 
-<div class="safegate-box reveal">
+<div class="safegate-box">
   <h3 class="glitch" data-text="SAFE GATE">SAFE GATE</h3>
   <p>Hard verdict overrides on top of the numeric score. Some risks reflect attack surfaces that can never be soft-unlocked by maturity or holder count &mdash; when one of them fires, the gate keeps the verdict at DANGER or RUG no matter how high the rest of the score lands. The score band tells you how a token <em style="font-style:normal">looks</em>; the Safe Gate tells you when it doesn&rsquo;t matter.</p>
 </div>

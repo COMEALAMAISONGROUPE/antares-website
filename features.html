@@ -139,35 +139,35 @@ footer span{color:var(--c)}
 </div><main>
 
 <section class="page-hero">
-  <div class="eyebrow reveal">Chrome Extension</div>
-  <h1 class="reveal delay-1"><span class="glitch" data-text="EVERY FEATURE">EVERY FEATURE</span><br><span class="accent glitch" data-text="EXPLAINED.">EXPLAINED.</span></h1>
-  <p class="sub reveal delay-2">Antares runs silently as you browse. No manual input, no setup. Every Solana address you encounter triggers a full multi-source scan in seconds.</p>
+  <div class="eyebrow">Chrome Extension</div>
+  <h1><span class="glitch" data-text="EVERY FEATURE">EVERY FEATURE</span><br><span class="accent glitch" data-text="EXPLAINED.">EXPLAINED.</span></h1>
+  <p class="sub">Antares runs silently as you browse. No manual input, no setup. Every Solana address you encounter triggers a full multi-source scan in seconds.</p>
 </section>
 
-<div class="section-label reveal"><span>Core Features</span></div>
+<div class="section-label"><span>Core Features</span></div>
 
 <div class="feat-grid">
-  <div class="feat-card reveal delay-1" data-num="01">
+  <div class="feat-card" data-num="01">
     <h3>Critical Actors</h3>
     <div class="benefit">Who holds what, in 3 cards.</div>
     <p>Dev wallet reputation (prior tokens launched, prior rugs), insider sniper position, coordinated cluster size and coordination score. Each card surfaces the structural risk vector behind the score, not just a number.</p>
   </div>
-  <div class="feat-card reveal delay-2" data-num="02">
+  <div class="feat-card" data-num="02">
     <h3>Insider Watch (live heatmap)</h3>
     <div class="benefit">See top wallets dumping in real time.</div>
     <p>Top 12 wallets in a colour-coded tile grid. Each tile shows the wallet&rsquo;s 6h delta and what they&rsquo;re doing (<em>Accumulating · Holding · Reducing · Selling · Dumping</em>). Dev wallet flagged with a purple ring. Catches what static screenshots miss.</p>
   </div>
-  <div class="feat-card reveal delay-3" data-num="03">
+  <div class="feat-card" data-num="03">
     <h3>Buy/Sell Flow (per window)</h3>
     <div class="benefit">Money in vs money out, in real time.</div>
     <p>Pressure gauge with <em>ACCUMULATION / DISTRIBUTION / BALANCED</em> banner driven by buy/sell transaction counts and volume across 5min / 1h / 6h / 24h windows. Lean indicator + per-window mini cards. Tells you the direction before you click buy.</p>
   </div>
-  <div class="feat-card reveal delay-4" data-num="04">
+  <div class="feat-card" data-num="04">
     <h3>Wash Volume Score</h3>
     <div class="benefit">Is the volume real, or fake?</div>
     <p>0-100 wash score derived from average trade size relative to liquidity + buy/sell symmetry. Tiny trades cycling against a thin LP score high; healthy organic trading scores low. Real volume estimate alongside the reported headline. No more falling for puffed numbers.</p>
   </div>
-  <div class="feat-card reveal delay-5" data-num="05">
+  <div class="feat-card" data-num="05">
     <h3>7-Layer Consensus</h3>
     <div class="benefit">No single source can lie alone.</div>
     <p>DexScreener, RugCheck, GoPlus, Helius, Solscan, the in-house Chart engine and a CrossValidation layer that catches inter-source disagreements. Geometric mean of all 7 layers means a single false-clean source can&rsquo;t override real risk &mdash; and a single false-positive can&rsquo;t flip a healthy token to RUG.</p>
@@ -175,24 +175,24 @@ footer span{color:var(--c)}
 </div>
 
 <section class="detail-section">
-  <div class="section-label reveal"><span>What Else You Get</span></div>
-  <div class="detail-block reveal">
+  <div class="section-label"><span>What Else You Get</span></div>
+  <div class="detail-block">
     <div class="label">Source Breakdown</div>
     <div class="content"><h4>One row per upstream</h4><p>RugCheck, Helius, Solscan, Chart Engine, DexScreener &mdash; each with its own derived verdict (<em>OK</em> / <em>Risk</em> / <em>Flagged</em> / <em>N/A</em>) and a one-line note. Open the accordion at the bottom of any analysis to see exactly which source said what. Forensic provenance, not a black-box score.</p></div>
   </div>
-  <div class="detail-block reveal">
+  <div class="detail-block">
     <div class="label">Sniper Map</div>
     <div class="content"><h4>Did the launch bots cash out yet?</h4><p>Retention bar showing how much of supply the top 10 holders still control vs how much has distributed. Combined with sniper / bundle flag detection: when launch buyers still hold a large share, the dump is yet to come. When they&rsquo;ve already sold, you&rsquo;re behind smart money. Real measured concentration &mdash; no estimates.</p></div>
   </div>
-  <div class="detail-block reveal">
+  <div class="detail-block">
     <div class="label">Exit Liquidity Calculator</div>
     <div class="content"><h4>How much can you actually sell</h4><p>Slippage tiers from $100 to $20K against the live LP, computed with the constant-product AMM formula. Color-coded: green for safe exits, yellow for tax, red for &ldquo;you&rsquo;d crash the price&rdquo;. Tells you the size you can realistically dump before you ape in.</p></div>
   </div>
-  <div class="detail-block reveal">
+  <div class="detail-block">
     <div class="label">AI Verdict Synthesis</div>
     <div class="content"><h4>Plain English, not jargon</h4><p>Gemini-powered explanation of why the verdict landed where it did, in 2-4 sentences. References the actual data: dev wallet history, holder concentration, last-hour flow. Explains the mechanism (&ldquo;coordinated wallets bought together at launch and now control a large share&rdquo;), not just the verdict.</p></div>
   </div>
-  <div class="detail-block reveal">
+  <div class="detail-block">
     <div class="label">Foldable Sections</div>
     <div class="content"><h4>Read at your pace</h4><p>Critical Flags, AI Verdict, Security strip, Critical Actors, Deep Analysis, Source Breakdown &mdash; every section is independently collapsible. Power users keep everything open; quick scans collapse to just the verdict + critical flags.</p></div>
   </div>
