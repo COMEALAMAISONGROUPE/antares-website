@@ -273,6 +273,7 @@ async function auditDesktop(page, route) {
     const skipLink = document.querySelector('.skip-link');
     const manifest = document.querySelector('link[rel="manifest"]');
     const themeColor = document.querySelector('meta[name="theme-color"]');
+    const errorMonitor = document.querySelector('script[src="/js/error-monitor.js"]');
     return {
       overflow: d.scrollWidth - d.clientWidth,
       linksExists: !!links,
@@ -286,6 +287,7 @@ async function auditDesktop(page, route) {
       skipLinkTargetsMain: skipLink && main ? skipLink.getAttribute('href') === '#' + main.id : false,
       manifestLinked: !!manifest,
       themeColor: themeColor ? themeColor.getAttribute('content') : null,
+      errorMonitorLoaded: !!errorMonitor,
     };
   });
 
@@ -322,6 +324,10 @@ async function auditDesktop(page, route) {
   if (probe.themeColor !== '#00e5b0') {
     fails.push(`theme-color-mismatch (got="${probe.themeColor}")`);
   }
+
+  /* Resilience contract: every public route loads the error monitor
+     so production errors surface somewhere instead of vanishing. */
+  if (!probe.errorMonitorLoaded) fails.push('error-monitor-not-loaded');
 
   /* Home-only animation contract (PR #166). */
   if (route === '/') {
