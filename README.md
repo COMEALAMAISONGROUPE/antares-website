@@ -57,19 +57,19 @@ python3 -m http.server 8000
 npx serve .
 ```
 
-To exercise the audit (Playwright is installed via `package.json` — npm
-install once):
+To exercise the audit (Playwright is the only dependency):
 
 ```bash
-npm install              # installs playwright
-node scripts/audit.mjs                   # both viewports, all 19 routes
-node scripts/audit.mjs --viewport=mobile # mobile only
-node scripts/audit.mjs --viewport=desktop
-node scripts/audit.mjs --base=https://antaresscan.com   # audit prod
+npm ci                   # install playwright from package-lock.json
+npm test                 # = npm run audit — both viewports, 19 routes
+npm run audit:mobile     # mobile (375×812) only
+npm run audit:desktop    # desktop (1280×800) only
+npm run audit:prod       # audit https://antaresscan.com instead of local
 ```
 
 The audit exits non-zero on any regression and prints which routes
-failed which contract.
+failed which contract. Same script runs in CI on every PR — see
+`.github/workflows/audit.yml`.
 
 ## Deploy
 

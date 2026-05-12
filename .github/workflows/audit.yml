@@ -65,13 +65,13 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Playwright
+      - name: Install dependencies
         run: |
-          npm install --no-save --no-package-lock playwright@^1.49
+          npm ci
           npx playwright install --with-deps chromium
 
       - name: Run audit (local files, both viewports)
-        run: node scripts/audit.mjs
+        run: npm test
 
   # ── 2. Vercel preview audit ─────────────────────────────────────────
   # Only runs on pull requests (no preview on push-to-main since that
@@ -109,10 +109,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 300
 
-      - name: Install Playwright
+      - name: Install dependencies
         if: steps.secret_check.outputs.available == 'true'
         run: |
-          npm install --no-save --no-package-lock playwright@^1.49
+          npm ci
           npx playwright install --with-deps chromium
 
       - name: Run audit (Vercel preview, both viewports)
