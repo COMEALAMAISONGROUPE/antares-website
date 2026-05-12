@@ -52,4 +52,21 @@
     a.textContent = 'Open on desktop ↗';
     a.setAttribute('data-mobile-rewritten', 'install');
   });
+
+  // Pricing tier buttons: the Pro and Yearly tiers open a checkout
+  // modal that calls window.open() → NOWPayments. Popups are
+  // unreliable on mobile (iOS Safari often blocks; Android opens
+  // the URL but the in-tab UX is rough). Rewrite + disable the
+  // click so we redirect the user to desktop instead of letting
+  // them hit a broken flow.
+  document.querySelectorAll('button.tier-cta.primary, button.tier-cta.purple').forEach(function (btn) {
+    btn.textContent = 'Subscribe on desktop ↗';
+    btn.setAttribute('data-mobile-rewritten', 'tier-cta');
+    // Capture-phase listener so we beat the inline handler attached
+    // by pricing.html's own checkout script.
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+  });
 })();

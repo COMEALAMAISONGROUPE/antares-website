@@ -351,5 +351,28 @@ body.menu-open { overflow: hidden; }
     letter-spacing: .14em;
     text-transform: uppercase;
   }
+
+  /* ── 11. /demo : drop the embedded DexScreener iframe ────────────
+     The .browser-frame on /demo embeds a live DexScreener iframe
+     plus the Antares overlay host. On mobile the iframe is too small
+     to be readable, the drag-handle UX assumes a mouse, and the
+     four-token switcher just makes the page longer. Hide the frame +
+     the controls and surface a short "open on desktop" line where
+     the demo-notice sits. The hero, the demo-notice intro and the
+     bottom "Install" CTA stay — the page still reads as a demo
+     teaser. */
+  body.is-demo .browser-frame,
+  body.is-demo .demo-controls { display: none !important; }
+  body.is-demo .demo-notice::after {
+    content: "↗  Open on desktop to interact with the live demo (drag the overlay, switch between the four token examples).";
+    display: block;
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid var(--c, #00e5b0);
+    background: rgba(0, 229, 176, .04);
+    color: #aaa;
+    font: 500 12px/1.6 'IBM Plex Mono', monospace;
+    text-align: center;
+  }
 }
 
