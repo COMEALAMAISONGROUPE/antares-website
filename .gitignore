@@ -1,3 +1,4 @@
 node_modules/
 _audit/
 _screenshots/
+.claude/
