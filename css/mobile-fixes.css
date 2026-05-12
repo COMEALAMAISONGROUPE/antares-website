@@ -541,6 +541,11 @@ body.menu-open { overflow: hidden; }
   body:not(.is-home) footer .foot-links a[href*="install"] {
     display: block !important;
     margin-bottom: 6px !important;
+    /* Centre the rewritten label. Block 12g globally pins every
+       rewritten CTA to text-align:left so they read as inline body
+       copy; in the footer we want the line centred under the rest
+       of the link row. Override with !important. */
+    text-align: center !important;
   }
 
   /* 13d. Home — drop the giant "ANTARES" wordmark watermark behind
