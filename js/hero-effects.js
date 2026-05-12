@@ -31,30 +31,20 @@
   // css/mobile-fixes.css, but the JS would still attach a mousemove
   // listener and run a 60 fps RAF on an invisible canvas — 30
   // particles × ~29 neighbour checks per frame = ~50 k distance
-  // calculations per second for nothing visible. Skip both blocks on
-  // mobile. The reveal observer (block 3) is cheap and still useful,
-  // so it always runs.
+  // calculations per second for nothing visible. Skip on mobile.
   //
   // Same logic for users with prefers-reduced-motion: skip the
-  // continuous particle animation and the cursor-glow chase. The
-  // reveal observer still runs — it's a one-shot opacity/transform
-  // change, not continuous motion.
+  // continuous particle animation and the cursor-glow chase.
   var hasMM = typeof window.matchMedia === 'function';
   var isMobile = hasMM && window.matchMedia('(max-width: 760px)').matches;
   var prefersReduced = hasMM && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var canvas = document.getElementById('particles-canvas');
-  if (!canvas) {
-    // No canvas at all — skip blocks 1 + 2 but still try the reveal
-    // observer below.
-    runRevealObserver();
-    return;
-  }
+  if (!canvas) return;
   if (isMobile || prefersReduced) {
     // Either mobile (where CSS hides the canvas) or a user who's
     // explicitly opted out of motion. The canvas stays present but
     // empty — no paint cost since draw() never runs.
-    runRevealObserver();
     return;
   }
 
@@ -148,20 +138,4 @@
     });
   }
 
-  // ── 3. REVEAL OBSERVER ──
-  runRevealObserver();
-
-  function runRevealObserver() {
-    var reveals = document.querySelectorAll('.reveal');
-    if (!reveals.length) return;
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(function (el) { observer.observe(el); });
-  }
 })();
