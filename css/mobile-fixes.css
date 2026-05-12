@@ -521,11 +521,16 @@ body.menu-open { overflow: hidden; }
   body:not(.is-home) footer .foot-links * {
     font-size: inherit !important;
   }
-  /* Install / "Open on desktop" sits on its own line above the
-     other links. */
+  /* Install / "Full content available on desktop" sits on its own
+     line above the other links. The !important is required to beat
+     the global `[data-mobile-rewritten] { display: inline !important }`
+     rule below (block 12g) — that rule strips button chrome from
+     rewritten CTAs, but in the footer we want the rewritten link
+     on its own line. Without !important the 12g rule wins because
+     it carries its own !important. */
   body:not(.is-home) footer .foot-links a[href*="install"] {
-    display: block;
-    margin-bottom: 6px;
+    display: block !important;
+    margin-bottom: 6px !important;
   }
 
   /* 13d. Home — drop the giant "ANTARES" wordmark watermark behind
