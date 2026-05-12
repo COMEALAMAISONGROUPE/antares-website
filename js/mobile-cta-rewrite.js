@@ -69,4 +69,26 @@
       e.stopImmediatePropagation();
     }, true);
   });
+
+  // Footer cleanup — only on non-home pages, where css/mobile-fixes.css
+  // promotes the install link to its own line. The original markup
+  // shipped a " · " text node between every <a> in .foot-links to act
+  // as the visual separator on desktop. With the install link now
+  // display:block, that text node orphans at the start of the second
+  // line ("· Support · Privacy · About"). Strip just the one " · "
+  // that sits between Install and Support; leave the other separators
+  // alone so Support · Privacy · About still reads correctly. */
+  if (!document.body.classList.contains('is-home')) {
+    var footInstall = document.querySelector('footer .foot-links a[href*="install"]');
+    if (footInstall) {
+      var node = footInstall.nextSibling;
+      // Walk text-node siblings until we hit the next <a>; clear
+      // those text contents (usually just one " · " node).
+      while (node && node.nodeType === 3) {
+        var next = node.nextSibling;
+        node.textContent = '';
+        node = next;
+      }
+    }
+  }
 })();
