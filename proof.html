@@ -32,20 +32,7 @@
 .bg-atom{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:1100px;height:1100px;opacity:.05;pointer-events:none;z-index:0;background:radial-gradient(ellipse at center,rgba(0,229,176,.18) 0%,transparent 60%)}
 .bg-atom::before{content:'';position:absolute;inset:0;background:url('/assets/icon.png') no-repeat center;background-size:80%;filter:invert(1) brightness(.8) sepia(.5) hue-rotate(115deg) saturate(2.2);opacity:.5}
 
-.shell{position:relative;z-index:2;max-width:880px;margin:0 auto;padding:0 32px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;position:sticky;top:3px;z-index:100;max-width:1160px;margin:0 auto}
-nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
-nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
-nav .brand img{height:38px;width:auto}
-nav .links{display:flex;gap:24px}
-nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
-nav .links a:hover,nav .links a.active{color:var(--c)}
-nav .nav-actions{display:flex;align-items:center;gap:10px}
-nav .nav-cta,nav .nav-account{display:inline-flex;align-items:center;justify-content:center;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:6px 12px;border:1px solid;transition:.25s;white-space:nowrap;min-width:92px}
-nav .nav-cta{color:var(--bg);background:var(--c);border-color:var(--c)}
-nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
-nav .nav-account{color:#888;background:transparent;border-color:#2a2a30}
-nav .nav-account:hover{color:var(--c);border-color:var(--c);background:rgba(0,229,176,.04)}
+/* nav + .shell live in css/base.css; .shell.mid sets max-width:880px */
 
 /* Hero — glitch RGB-shift on the headline, matches the brand promos */
 .page-hero{padding:88px 0 32px}
@@ -144,7 +131,7 @@ footer .foot-links a:hover{color:var(--c)}
     <span></span><span></span><span></span>
   </button>
       </nav>
-<main class="shell">
+<main class="shell mid">
 
 <section class="page-hero">
   <div class="eyebrow">Proof, not promises</div>

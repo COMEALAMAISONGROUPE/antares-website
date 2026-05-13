@@ -39,22 +39,7 @@
 /* ── PARTICLES ── */
 #particles-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:.35}
 
-/* ── LAYOUT ── */
-.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
-
-/* ── NAV ── */
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;max-width:1160px;margin:0 auto;position:sticky;top:3px;z-index:100}
-nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
-nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none}
-nav .links{display:flex;gap:24px}
-nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s,transform .2s}
-nav .links a:hover,nav .links a.active{color:var(--c);transform:translateY(-1px)}
-nav .nav-actions{display:flex;align-items:center;gap:10px}
-nav .nav-cta,nav .nav-account{display:inline-flex;align-items:center;justify-content:center;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:6px 12px;border:1px solid;transition:.25s;white-space:nowrap;min-width:92px}
-nav .nav-cta{color:var(--bg);background:var(--c);border-color:var(--c)}
-nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
-nav .nav-account{color:#888;background:transparent;border-color:#2a2a30}
-nav .nav-account:hover{color:var(--c);border-color:var(--c);background:rgba(0,229,176,.04)}
+/* nav + .shell live in css/base.css; default .shell = 1160px */
 
 /* ── SCROLL REVEAL ── */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
@@ -245,16 +230,14 @@ footer .foot-links a:hover{color:#5a5a62}
 <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
-<div class="shell">
-
-<header><nav aria-label="Main navigation">
+<nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="/assets/icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a></div>
   <div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>
         <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
     <span></span><span></span><span></span>
   </button>
-      </nav></header>
+      </nav>
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <button class="mobile-close" aria-label="Close menu" type="button">&times;</button>
   <nav class="mobile-links" aria-label="Mobile navigation">
@@ -268,7 +251,8 @@ footer .foot-links a:hover{color:#5a5a62}
     <a href="./auth" class="m-login">Log in</a>
     <a href="./install" class="m-install">Install &rarr;</a>
   </div>
-</div><main id="main-content">
+</div>
+<main id="main-content" class="shell">
 
 <!-- ═══════ HERO ═══════ -->
 <section class="hero" style="position:relative">
@@ -465,7 +449,6 @@ footer .foot-links a:hover{color:#5a5a62}
 </div>
 
 </main><footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a> &middot; <a href="./faq">Q&amp;A</a></div></footer>
-</div>
 
 <script>
 // ── PARTICLES ──

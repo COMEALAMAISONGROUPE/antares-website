@@ -27,20 +27,7 @@
 <link rel="stylesheet" href="/css/base.css">
 <style>
 :root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f;--yellow:#f5d000;--purple:#a78bfa}
-.shell{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:0 32px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;max-width:1160px;margin:0 auto;position:sticky;top:3px;z-index:100}
-nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
-nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
-nav .brand img{height:38px;width:auto}
-nav .links{display:flex;gap:24px}
-nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
-nav .links a:hover,nav .links a.active{color:var(--c)}
-nav .nav-actions{display:flex;align-items:center;gap:10px}
-nav .nav-cta,nav .nav-account{display:inline-flex;align-items:center;justify-content:center;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:6px 12px;border:1px solid;transition:.25s;white-space:nowrap;min-width:92px}
-nav .nav-cta{color:var(--bg);background:var(--c);border-color:var(--c)}
-nav .nav-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 20px rgba(0,229,176,.25)}
-nav .nav-account{color:#888;background:transparent;border-color:#2a2a30}
-nav .nav-account:hover{color:var(--c);border-color:var(--c);background:rgba(0,229,176,.04)}
+/* nav + .shell live in css/base.css; default .shell = 1160px */
 
 .page-hero{padding:80px 0 24px;text-align:center}
 .eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:24px;display:inline-flex;align-items:center;gap:10px}
@@ -230,16 +217,14 @@ footer span{color:var(--c)}
 </head>
 <body class="is-pricing">
 <div class="stripe" role="presentation" aria-hidden="true"></div>
-<div class="shell">
-
-<header><nav aria-label="Main navigation">
+<nav aria-label="Main navigation">
   <a href="./index.html" class="brand"><img src="/assets/icon.png" alt="Antares Logo">ANTARES</a>
   <div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing" class="active">Pricing</a></div>
   <div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>
   <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
     <span></span><span></span><span></span>
   </button>
-      </nav></header>
+      </nav>
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <button class="mobile-close" aria-label="Close menu" type="button">&times;</button>
   <nav class="mobile-links" aria-label="Mobile navigation">
@@ -253,7 +238,8 @@ footer span{color:var(--c)}
     <a href="./auth" class="m-login">Log in</a>
     <a href="./install" class="m-install">Install &rarr;</a>
   </div>
-</div><main>
+</div>
+<main class="shell">
 
 <section class="page-hero">
   <div class="eyebrow">Two seconds &middot; seven layers &middot; one verdict</div>
@@ -357,7 +343,7 @@ footer span{color:var(--c)}
   <a class="cta" href="./install">↗ Install in 60 seconds</a>
 </div>
 
-</main></div>
+</main>
 <footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a> &middot; <a href="./faq">Q&amp;A</a></div></footer>
 
 <!-- ── NOWPayments hosted-checkout modal ──────────────────────────────────

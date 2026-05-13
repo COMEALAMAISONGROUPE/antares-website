@@ -28,8 +28,7 @@
 <style>
 :root{--c:#00e5b0;--bg:#0a0a0c;--border:#1a1a1e;--txt:#c8c8cc}
 .shell{max-width:780px;margin:0 auto;padding:80px 32px 60px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 32px;position:sticky;top:3px;z-index:100;max-width:1160px;margin:0 auto}
-nav::before{content:'';position:absolute;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);z-index:-1;pointer-events:none}
+/* nav + nav::before live in css/base.css */
 nav a.brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none}
 nav a.back{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
 nav a.back:hover{color:var(--c)}
