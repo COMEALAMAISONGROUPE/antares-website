@@ -146,10 +146,29 @@
 .cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none;animation:cta-pulse 3s ease infinite}
 /* Logo watermark — the atom icon, faint, sits behind "The next rug pull
    won't warn you. ANTARES WILL." so the slogan reads against a soft
-   brand glyph instead of empty negative space. Opacity matches the
-   existing ANTARES text watermark (.012) plus a green-tint drop shadow
-   so it picks up the brand colour at a whisper. */
-.cta-final .cta-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:auto;opacity:.08;pointer-events:none;z-index:0;filter:drop-shadow(0 0 80px rgba(0,229,176,.35))}
+   brand glyph instead of empty negative space.
+
+   Two animations make it feel alive:
+     1. `reveal`: starts at opacity 0, fades to .08 over 1.6s when the
+        parent .cta-final picks up the .visible class (existing scroll
+        observer). Slow enough to register as a deliberate entrance,
+        not a flash.
+     2. `float`: continuous 9s loop. Slight translate (±2px), rotate
+        (±2deg), and scale (1 → 1.025) so the atom drifts and breathes.
+        The whole thing lives behind the slogan so the motion is
+        ambient, never distracting.
+
+   Reduced-motion users get a static watermark — base.css has the
+   global `@media (prefers-reduced-motion)` rule that pins all
+   animation/transition durations to 0.01ms. */
+.cta-final .cta-watermark{position:absolute;top:50%;left:50%;width:900px;height:auto;opacity:0;pointer-events:none;z-index:0;filter:drop-shadow(0 0 80px rgba(0,229,176,.35));transition:opacity 1.6s cubic-bezier(.22,1,.36,1);animation:cta-watermark-float 9s ease-in-out infinite}
+.cta-final.visible .cta-watermark{opacity:.08}
+@keyframes cta-watermark-float{
+  0%,100% { transform:translate(-50%,-50%) rotate(0deg) scale(1) }
+  25%     { transform:translate(-50%,-52%) rotate(2deg) scale(1.02) }
+  50%     { transform:translate(-50%,-48%) rotate(-1.5deg) scale(1.01) }
+  75%     { transform:translate(-50%,-51%) rotate(1.5deg) scale(1.025) }
+}
 @keyframes cta-pulse{0%,100%{opacity:.5}50%{opacity:1}}
 .cta-threat{font:500 14px/1.4 'IBM Plex Mono',monospace;color:#7a4a4a;letter-spacing:.18em;text-transform:uppercase;margin-bottom:28px;position:relative;z-index:1}
 .cta-final h2{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:56px;position:relative;z-index:1;color:#eaeaea}
