@@ -131,11 +131,6 @@ footer .foot-links a:hover{color:var(--c)}
   <button type="button" class="reset" id="reset-pos" title="Reset overlay position">↺ Reset position</button>
 </div>
 
-<div class="demo-notice">
-  <b>⚠ Demonstrative scores</b>
-  The verdicts shown for these four tokens are point-in-time snapshots used to illustrate how the overlay looks across the SAFE / CAUTION / DANGER / RUG bands. <b style="display:inline;text-transform:none;letter-spacing:normal;font-size:inherit;color:#d4b040;margin:0">Real verdicts evolve in real time</b> with the market &mdash; liquidity moves, holders rebalance, scores drift &mdash; so the score you see in the live extension on a given token can differ from what this demo shows. The on-chain truth is whatever <code style="color:#a07e2a;background:rgba(0,0,0,.2);padding:1px 4px;font-size:10px">/api/scan</code> returns at the moment you scan.
-</div>
-
 <div class="browser-frame" id="browser-frame">
   <div class="browser-bar">
     <div class="dots-bar"><i></i><i></i><i></i></div>
@@ -145,6 +140,11 @@ footer .foot-links a:hover{color:var(--c)}
     <iframe class="chart" id="chart" loading="lazy" title="Live price chart" src="about:blank"></iframe>
     <div id="antares-host" aria-live="polite"></div>
   </div>
+</div>
+
+<div class="demo-notice">
+  <b>⚠ Demonstrative scores</b>
+  The verdicts shown for these four tokens are point-in-time snapshots used to illustrate how the overlay looks across the SAFE / CAUTION / DANGER / RUG bands. <b style="display:inline;text-transform:none;letter-spacing:normal;font-size:inherit;color:#d4b040;margin:0">Real verdicts evolve in real time</b> with the market &mdash; liquidity moves, holders rebalance, scores drift &mdash; so the score you see in the live extension on a given token can differ from what this demo shows. The on-chain truth is whatever <code style="color:#a07e2a;background:rgba(0,0,0,.2);padding:1px 4px;font-size:10px">/api/scan</code> returns at the moment you scan.
 </div>
 
 <div class="cta-final">
