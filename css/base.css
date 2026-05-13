@@ -251,27 +251,6 @@ h1 .accent {
   color: var(--c);
   text-shadow: 0 0 60px rgba(0, 229, 176, .15);
 }
-h1 span { color: var(--c); }
-
-/* ── Page hero — centered, symmetric ───────────────────────────────
-   Every non-home page uses `<section class="page-hero">` as the
-   top-of-page banner (eyebrow + h1 + optional .sub). Centring it
-   gives the whole site a symmetric, "baroque" landing-to-content
-   rhythm. The home page uses `.hero` (different class) and is not
-   affected — it keeps its left-aligned 130px hero.
-
-   `.sub` paragraphs keep their internal text-align:left so the
-   green left-border accent reads as a quote bar, not a floating
-   stripe under centred text. Block is centred via `margin:0 auto`;
-   text inside is left.
-   ──────────────────────────────────────────────────────────────── */
-.page-hero { text-align: center; }
-.page-hero .eyebrow { justify-content: center; }
-.page-hero .sub {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
 
 /* ── Reduced-motion preference ─────────────────────────────────────
    Users who set "Reduce motion" in their OS get a static page: no
