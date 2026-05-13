@@ -36,9 +36,6 @@
 /* ── CURSOR GLOW ── */
 .cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(0,229,176,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
 
-/* ── PARTICLES ── */
-#particles-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:.35}
-
 /* nav + .shell live in css/base.css; default .shell = 1160px */
 
 /* ── SCROLL REVEAL ── */
@@ -253,7 +250,6 @@ footer .foot-links a:hover{color:#5a5a62}
 
 <div class="stripe" role="presentation" aria-hidden="true"></div>
 <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
-<canvas id="particles-canvas" aria-hidden="true"></canvas>
 
 <nav aria-label="Main navigation">
   <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="/assets/icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
@@ -477,18 +473,7 @@ footer .foot-links a:hover{color:#5a5a62}
 </main><footer>Antares v1.3.0 &middot; <span>No mercy for scammers</span><div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a> &middot; <a href="./faq">Q&amp;A</a></div></footer>
 
 <script>
-// ── PARTICLES ──
 ;(function(){
-  var canvas=document.getElementById('particles-canvas');if(!canvas)return;
-  var ctx=canvas.getContext('2d'),particles=[],C=40,MR=120,MF=.8,CN=110,mouse={x:-9999,y:-9999,a:false};
-  var COLS=[[0,255,157],[0,255,200],[0,200,130],[255,255,255],[120,255,200]];
-  function rs(){canvas.width=innerWidth;canvas.height=innerHeight}addEventListener('resize',rs);rs();
-  document.addEventListener('mousemove',function(e){mouse.x=e.clientX;mouse.y=e.clientY;mouse.a=true});
-  document.addEventListener('mouseleave',function(){mouse.a=false});
-  function mk(){var c=COLS[Math.random()*COLS.length|0];return{x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.5+.5,c:c,a:Math.random()*.25+.08}}
-  for(var i=0;i<C;i++)particles.push(mk());
-  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);for(var i=0;i<particles.length;i++){var p=particles[i];if(mouse.a){var dx=p.x-mouse.x,dy=p.y-mouse.y,d=Math.sqrt(dx*dx+dy*dy);if(d<MR){var f=MF*(1-d/MR);p.vx+=dx/d*f;p.vy+=dy/d*f}}p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.vy*=.99;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba('+p.c.join(',')+','+p.a+')';ctx.fill();for(var j=i+1;j<particles.length;j++){var q=particles[j],dx2=p.x-q.x,dy2=p.y-q.y,d2=Math.sqrt(dx2*dx2+dy2*dy2);if(d2<CN){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle='rgba(0,229,176,'+(.06*(1-d2/CN))+')';ctx.stroke()}}}requestAnimationFrame(draw)}draw();
-
   // ── CURSOR GLOW ──
   var glow=document.getElementById('cursor-glow');
   document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';glow.style.opacity='1'});
