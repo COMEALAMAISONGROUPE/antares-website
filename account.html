@@ -15,15 +15,8 @@
 <style>
 :root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f;--purple:#a78bfa;--yellow:#f5d000}
 body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;min-height:100vh;display:flex;flex-direction:column}
-.shell{position:relative;z-index:2;max-width:780px;margin:0 auto;padding:0 32px;flex:1;width:100%}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;max-width:1160px;margin:0 auto;position:sticky;top:3px;z-index:100;background:rgba(10,10,12,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-nav .brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none;display:flex;align-items:center;gap:10px}
-nav .brand img{height:38px;width:auto}
-nav .links{display:flex;gap:14px;align-items:center}
-nav .links a{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
-nav .links a:hover{color:var(--c)}
-.skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#0f0f11;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none}
-.skip-link:focus{top:0}
+/* nav + .shell live in css/base.css; .shell.narrow sets max-width:780px */
+main.shell{flex:1;width:100%}
 
 main{padding:50px 0 80px}
 .head-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:18px}
@@ -134,14 +127,12 @@ footer .foot-links a:hover{color:var(--c)}
 <body>
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div class="stripe" role="presentation" aria-hidden="true"></div>
-<div class="shell">
-
-<header><nav aria-label="Main navigation">
+<nav aria-label="Main navigation">
   <a href="./index.html" class="brand"><img src="/assets/icon.png" alt="Antares Logo">ANTARES</a>
   <div class="links"><a href="./pricing">Pricing</a><a href="./install">Install</a></div>
-</nav></header>
+</nav>
 
-<main id="main-content">
+<main id="main-content" class="shell narrow">
 <!-- Post-checkout banner — visible only when ?ref=<reference> is present
      in the URL (i.e. user just came back from NOWPayments). Renders
      independently of auth state. Hidden by default. -->
@@ -196,7 +187,6 @@ footer .foot-links a:hover{color:var(--c)}
 </div>
 </main>
 
-</div>
 <footer>Antares <div class="foot-links"><a href="./install">Install</a> &middot; <a href="./support">Support</a> &middot; <a href="./privacy">Privacy</a> &middot; <a href="./about">About</a> &middot; <a href="./faq">Q&amp;A</a></div></footer>
 
 <script>

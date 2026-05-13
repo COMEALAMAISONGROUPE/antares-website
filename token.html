@@ -36,13 +36,7 @@ body{background:#0f0f11;color:#d0d0d0;font-family:'IBM Plex Mono',monospace;over
 
 .shell{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:40px 24px}
 
-nav{display:flex;justify-content:space-between;align-items:center;
-  padding:22px 0;border-bottom:1px solid #1a1a1d;margin-bottom:50px;
-  position:sticky;top:3px;z-index:100;background:#0f0f11}
-nav .brand{font:400 26px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none}
-nav a{color:#454550;text-decoration:none;font-size:11px;
-  text-transform:uppercase;letter-spacing:.1em;transition:.2s}
-nav a:hover{color:#d0d0d0}
+/* nav lives in css/base.css */
 
 .hero-row{display:grid;grid-template-columns:1.3fr .7fr;gap:44px;
   align-items:center;margin-bottom:44px}
@@ -319,12 +313,11 @@ footer span{color:var(--c)}
       <a href="#main-content" class="skip-link">Skip to content</a>
       <div class="stripe" role="presentation" aria-hidden="true"></div>
           <canvas id="particles-canvas" aria-hidden="true"></canvas>
-    <main id="main-content" class="shell">
-
           <nav aria-label="Main navigation">
-  <a href="/" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="/assets/icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
-  <a href="/">← Back</a>
+  <a href="/" class="brand glitch" data-text="ANTARES"><img src="/assets/icon.png" alt="Antares Logo">ANTARES</a>
+  <div class="links"><a href="/">← Back</a></div>
 </nav>
+    <main id="main-content" class="shell">
 
 <div class="hero-row">
   <div class="hero-left">
