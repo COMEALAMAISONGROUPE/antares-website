@@ -232,47 +232,6 @@ nav .nav-account:hover {
 .shell.api    { max-width: 920px; }
 .shell.wide   { max-width: 1240px; }
 
-/* ── Page title (h1) ───────────────────────────────────────────────
-   Was inlined per page with 7 different size scales (clamp(40,7vw,68)
-   on demo all the way up to clamp(68,11vw,130) on the home hero, plus
-   fixed 48/56px on legal/auth/account). Navigating between pages made
-   the page title pop bigger then smaller — user-visible inconsistency.
-   One size everywhere. The home hero keeps its oversized title via the
-   `.hero h1` scoped selector in index.html which beats this rule on
-   specificity.
-   ──────────────────────────────────────────────────────────────── */
-h1 {
-  font: 400 clamp(48px, 8vw, 72px) / .9 'Bebas Neue', sans-serif;
-  letter-spacing: .04em;
-  color: #eaeaea;
-  margin-bottom: 16px;
-}
-h1 .accent {
-  color: var(--c);
-  text-shadow: 0 0 60px rgba(0, 229, 176, .15);
-}
-h1 span { color: var(--c); }
-
-/* ── Page hero — centered, symmetric ───────────────────────────────
-   Every non-home page uses `<section class="page-hero">` as the
-   top-of-page banner (eyebrow + h1 + optional .sub). Centring it
-   gives the whole site a symmetric, "baroque" landing-to-content
-   rhythm. The home page uses `.hero` (different class) and is not
-   affected — it keeps its left-aligned 130px hero.
-
-   `.sub` paragraphs keep their internal text-align:left so the
-   green left-border accent reads as a quote bar, not a floating
-   stripe under centred text. Block is centred via `margin:0 auto`;
-   text inside is left.
-   ──────────────────────────────────────────────────────────────── */
-.page-hero { text-align: center; }
-.page-hero .eyebrow { justify-content: center; }
-.page-hero .sub {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-
 /* ── Reduced-motion preference ─────────────────────────────────────
    Users who set "Reduce motion" in their OS get a static page: no
    stripe gradient loop, no particle drift, no scroll-triggered fades,
