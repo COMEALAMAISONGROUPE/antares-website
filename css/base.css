@@ -242,14 +242,33 @@ nav .nav-account:hover {
    specificity.
    ──────────────────────────────────────────────────────────────── */
 h1 {
-  font: 400 clamp(48px, 8vw, 72px) / .9 'Bebas Neue', sans-serif;
+  font: 400 clamp(52px, 9vw, 100px) / .9 'Bebas Neue', sans-serif;
   letter-spacing: .04em;
   color: #eaeaea;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 h1 .accent {
   color: var(--c);
   text-shadow: 0 0 60px rgba(0, 229, 176, .15);
+}
+
+/* ── Page hero — same shape on every non-home page ─────────────────
+   User asked: "même hauteur, largeur, emplacement pour chaque page".
+   The features/engine/sources pattern (min-height 50vh + vertically
+   centred flex column) is the most "baroque" — title floats in the
+   upper half, content opens below. Made it the default so every
+   `<section class="page-hero">` lands the title at the same screen
+   position, with the same h1 size + left-aligned eyebrow above.
+
+   Left-aligned by default; no centering. Only home uses `.hero`
+   (different class) so it's not affected and keeps its 130px hero.
+   ──────────────────────────────────────────────────────────────── */
+.page-hero {
+  padding: 100px 0 80px;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* ── Reduced-motion preference ─────────────────────────────────────
