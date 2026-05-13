@@ -27,7 +27,8 @@
 <link rel="stylesheet" href="/css/base.css">
 <style>
 :root{--c:#00e5b0;--bg:#0a0a0c;--border:#1a1a1e;--txt:#c8c8cc}
-.shell{max-width:780px;margin:0 auto;padding:80px 32px 60px}
+/* .shell.narrow gives 780px; this just adds the legal-page vertical breathing room */
+.shell{padding:80px 32px 60px}
 /* nav + nav::before live in css/base.css */
 nav a.brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#e0e0e0;text-decoration:none}
 nav a.back{font-size:11px;color:#454550;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
@@ -59,7 +60,7 @@ footer .foot-links a:hover{color:var(--c)}
 <body class="legal-page">
 <div class="stripe" role="presentation"></div>
 <nav><a href="./index.html" class="brand">ANTARES</a><a href="./index.html" class="back">← Back</a></nav>
-<main class="shell">
+<main class="shell narrow">
 <h1>Privacy Policy</h1>
 <p class="updated">Last updated: 27 April 2026</p>
 
