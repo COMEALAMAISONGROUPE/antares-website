@@ -106,8 +106,8 @@ footer{
 /* ── HERO (fullscreen) ── */
 .hero{min-height:calc(100vh - 80px);display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center;padding:60px 0 80px}
 .hero-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.hero-eye::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
-@keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
+.hero-eye::before{content:'';display:block;width:22px;height:2px;background:var(--c);transform-origin:left center;animation:pulse-line 2s ease infinite;will-change:transform,opacity}
+@keyframes pulse-line{0%,100%{opacity:.5;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.364)}}
 .hero h1{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:28px;color:#eaeaea}
 .hero h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.2)}
 .hero-sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:460px;margin-bottom:36px;border-left:2px solid var(--c);padding-left:16px}
