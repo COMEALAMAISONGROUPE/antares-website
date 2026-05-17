@@ -66,6 +66,36 @@
 [data-anim-paused] *::before,
 [data-anim-paused] *::after{animation-play-state:paused !important}
 
+/* ── CSS containment + content-visibility ──
+   Lighthouse pre-fix showed styleLayout=10s and paintCompositeRender
+   =6.5s dominating the main thread. Both grow with the total amount
+   of CSS work the browser does on every recalc/repaint.
+
+   `content-visibility:auto` lets the browser SKIP rendering an
+   off-screen section entirely — no layout, no paint, no style match
+   for its descendants until it's about to scroll into view. With
+   `contain-intrinsic-size` set, the section still reserves space
+   so the scrollbar isn't jumpy.
+
+   `contain: layout style paint` on the in-view sections tells the
+   browser that style recalc / layout / paint inside the section
+   cannot escape its bounds — so a recalc trigger inside .cta-final
+   no longer invalidates the rest of the page.
+
+   Both attributes are pure performance hints. The visual is
+   byte-identical. The IntersectionObserver-based [data-anim-paused]
+   above still fires correctly on these sections — content-visibility
+   doesn't disable IntersectionObserver. */
+.loss-strip,
+.proof-section,
+.how-section,
+.cta-final,
+footer{
+  content-visibility:auto;
+  contain-intrinsic-size:auto 600px;
+  contain:layout style paint;
+}
+
 /* nav + .shell live in css/base.css; default .shell = 1160px */
 
 /* ── SCROLL REVEAL ── */
