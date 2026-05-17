@@ -80,51 +80,33 @@
   }
 
   /* ── B1: typewriter on the bottom cta-final ──────────────────── */
+  // Only animates the .cta-threat (the "next rug pull won't warn you"
+  // eyebrow). The H2 headline ("ANTARES WILL.") stays with its
+  // inline-CSS .glitch effect untouched — the typewriter's clip-path
+  // and ::after caret used to override the glitch's ::before/::after
+  // pseudo-elements, breaking the colored-offset glitch on hover.
   function initTypewriter() {
     var section = document.querySelector('.cta-final');
     if (!section) return;
     var threat = section.querySelector('.cta-threat');
-    var headline = section.querySelector('h2');
-    if (!threat || !headline) return;
+    if (!threat) return;
 
     if (prefersReduced) {
-      // Land on the end state without the staircase: add all 4
-      // marker classes so any other code (e.g. the audit) sees the
-      // same DOM as a successful animation run.
       threat.classList.add('typewrite', 'typewrite-run', 'typewrite-done');
-      headline.classList.add('typewrite', 'typewrite-headline', 'typewrite-run', 'typewrite-done');
       return;
     }
 
-    // Tag the elements so the CSS knows to start them clipped.
     threat.classList.add('typewrite');
-    headline.classList.add('typewrite', 'typewrite-headline');
 
-    // Approximate the steps() value from the text length so the
-    // staircase reveal lands one character at a time regardless of
-    // copy length. Min 8 / max 60 keeps the cadence comfortable for
-    // edge-case edits.
     function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
     var threatSteps = clamp((threat.textContent || '').trim().length, 8, 60);
-    var headSteps = clamp((headline.textContent || '').trim().length, 8, 30);
     threat.style.setProperty('--steps', String(threatSteps));
-    headline.style.setProperty('--steps', String(headSteps));
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         threat.classList.add('typewrite-run');
-        // Fade the caret out once the threat line is done so the
-        // headline's caret can take over without two cursors blinking
-        // on screen at the same time.
         setTimeout(function () { threat.classList.add('typewrite-done'); }, 1200);
-        // Start the headline once the threat line lands. 1.2s
-        // matches the CSS transition; 100ms extra gives a beat
-        // of silence before the punchline.
-        setTimeout(function () {
-          headline.classList.add('typewrite-run');
-        }, 1300);
-        setTimeout(function () { headline.classList.add('typewrite-done'); }, 2300);
         observer.disconnect();
       });
     }, { threshold: 0.35 });
