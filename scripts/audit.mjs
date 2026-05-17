@@ -345,24 +345,23 @@ async function auditDesktop(page, route) {
     }
 
     /* Trigger B1 — typewriter on cta-final — by scrolling it into
-       view. Threat line + headline both should reach
-       .typewrite-run + .typewrite-done within ~2.5s. */
+       view. Only the threat eyebrow gets the typewriter now; the H2
+       headline keeps its inline-CSS .glitch effect untouched (the
+       typewriter's clip-path and ::after caret used to override the
+       glitch's ::before/::after pseudo-elements). */
     await page.evaluate(() => {
       document.querySelector('.cta-final')?.scrollIntoView({ behavior: 'instant' });
     });
-    await page.waitForTimeout(2700);
+    await page.waitForTimeout(1500);
     const cta = await page.evaluate(() => {
       const threat = document.querySelector('.cta-threat');
-      const headline = document.querySelector('.cta-final h2');
       return {
         threatRun: threat?.classList.contains('typewrite-run') ?? false,
         threatDone: threat?.classList.contains('typewrite-done') ?? false,
-        headlineRun: headline?.classList.contains('typewrite-run') ?? false,
-        headlineDone: headline?.classList.contains('typewrite-done') ?? false,
       };
     });
     if (!cta.threatRun) fails.push('B1-typewriter-threat-not-running');
-    if (!cta.headlineRun) fails.push('B1-typewriter-headline-not-running');
+    if (!cta.threatDone) fails.push('B1-typewriter-threat-not-done');
   }
 
   return { fails, probe };
