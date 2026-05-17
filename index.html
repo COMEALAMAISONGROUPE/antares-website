@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="/js/error-monitor.js"></script>
 <meta charset="UTF-8">
+<link rel="preload" href="/fonts/bebas-neue-400.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
         <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#00e5b0">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/js/error-monitor.js" defer></script>
             <meta name="description" content="Antares scans every Solana token in seconds. Insider Watch, Buy/Sell Flow, Wash Volume, Sniper Map, Exit Liquidity — 7-layer verdict. Free Chrome extension — stop getting scammed.">
     <meta name="author" content="Antares">
     <link rel="canonical" href="https://antaresscan.com/">
@@ -33,8 +34,25 @@
 
 /* ── STRIPE ── */
 
-/* ── CURSOR GLOW ── */
-.cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(0,229,176,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
+/* ── CURSOR GLOW ──
+   translate3d() promotes the element to its own GPU compositor layer
+   so mouse-tracking style writes don't trigger main-thread repaints
+   on the page underneath. Combined with rAF-throttling in JS
+   (see bottom of file) this drops cursor-tracking cost to near zero. */
+.cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(0,229,176,.06) 0%,transparent 70%);transform:translate3d(-50%,-50%,0);transition:opacity .3s;opacity:0;will-change:left,top}
+
+/* ── Off-screen animation pause ──
+   Sections tagged with [data-anim-paused] freeze every animation
+   inside them (including ::before/::after) until they scroll back
+   into view. Invisible to the user — they only ever see paused
+   animations on sections they aren't looking at. Massive CPU/GPU
+   savings: the cta-watermark rotate+scale loop, the loss-chart
+   clip-path sweep, and the three how-light cycles all stop while
+   off-screen. animation-play-state is the cheapest possible pause
+   (the keyframe state is preserved; resume picks up where it left). */
+[data-anim-paused] *,
+[data-anim-paused] *::before,
+[data-anim-paused] *::after{animation-play-state:paused !important}
 
 /* nav + .shell live in css/base.css; default .shell = 1160px */
 
@@ -63,7 +81,7 @@
 
 /* ── POPUP PREVIEW (1:1 with the live extension overlay — see contents/modules/styles.ts) ── */
 #pv-wrap{width:290px;transition:all .5s cubic-bezier(.22,1,.36,1)}
-.box{width:290px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.06);box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.02) inset;animation:float 4s ease-in-out infinite;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.4}
+.box{width:290px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.06);box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.02) inset;animation:float 4s ease-in-out infinite;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.4;will-change:transform;transform:translateZ(0)}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .box::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:180px;height:100px;border-radius:50%;filter:blur(60px);opacity:.08;z-index:0;pointer-events:none}
 /* Watermark — orbital logo behind overlay content. Pinned at fixed
@@ -158,7 +176,7 @@
    Reduced-motion users get a static watermark — base.css has the
    global `@media (prefers-reduced-motion)` rule that pins all
    animation/transition durations to 0.01ms. */
-.cta-final .cta-watermark{position:absolute;top:50%;left:50%;width:900px;height:auto;opacity:0;pointer-events:none;z-index:0;filter:drop-shadow(0 0 80px rgba(0,229,176,.35));transition:opacity 1.6s cubic-bezier(.22,1,.36,1);animation:cta-watermark-float 9s ease-in-out infinite}
+.cta-final .cta-watermark{position:absolute;top:50%;left:50%;width:900px;height:auto;opacity:0;pointer-events:none;z-index:0;filter:drop-shadow(0 0 80px rgba(0,229,176,.35));transition:opacity 1.6s cubic-bezier(.22,1,.36,1);animation:cta-watermark-float 9s ease-in-out infinite;will-change:transform}
 .cta-final.visible .cta-watermark{opacity:.08}
 @keyframes cta-watermark-float{
   0%,100% { transform:translate(-50%,-50%) rotate(0deg) scale(1) }
@@ -203,7 +221,7 @@ footer .foot-links a:hover{color:#5a5a62}
 /* Background candlestick chart: climb → crash, reveals left-to-right
    every 8s. Each side (green climb, red crash) fades in with the
    reveal so the chart reads as drawn live, not flickering. */
-.loss-chart-bg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.32;z-index:0;clip-path:inset(0 100% 0 0);animation:loss-chart-reveal 8s ease-in-out infinite}
+.loss-chart-bg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.32;z-index:0;clip-path:inset(0 100% 0 0);animation:loss-chart-reveal 8s ease-in-out infinite;will-change:clip-path}
 .loss-chart-bg .candles-up rect,.loss-chart-bg .candles-up line{filter:drop-shadow(0 0 4px rgba(0,229,176,.4))}
 .loss-chart-bg .candles-down rect,.loss-chart-bg .candles-down line{filter:drop-shadow(0 0 6px rgba(255,34,68,.55))}
 @keyframes loss-chart-reveal{
@@ -252,7 +270,7 @@ footer .foot-links a:hover{color:#5a5a62}
 <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 
 <nav aria-label="Main navigation">
-  <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="/assets/icon.png" alt="Antares Logo" style="height:38px;width:auto">ANTARES</a>
+  <a href="./index.html" class="brand glitch" data-text="ANTARES" style="display:flex;align-items:center;gap:10px"><img src="/assets/icon.png" alt="Antares Logo" width="38" height="38" decoding="async" style="height:38px;width:auto">ANTARES</a>
   <div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a></div>
   <div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>
         <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
@@ -464,7 +482,7 @@ footer .foot-links a:hover{color:#5a5a62}
      above already explained everything. The slogan needs the room
      to land. -->
 <div class="cta-final reveal">
-  <img class="cta-watermark" src="/assets/icon.png" alt="" aria-hidden="true">
+  <img class="cta-watermark" src="/assets/icon.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="900" height="900">
   <div class="cta-threat">The next rug pull won&#x27;t warn you.</div>
   <h2 class="glitch" data-text="ANTARES WILL."><span>ANTARES</span> WILL.</h2>
   <a class="cta main" href="./install">Install</a>
@@ -475,14 +493,54 @@ footer .foot-links a:hover{color:#5a5a62}
 <script>
 ;(function(){
   // ── CURSOR GLOW ──
+  // rAF-throttled: even a fast mouse only fires ~60 style writes/sec
+  // instead of one per pixel of motion. Disabled on touch devices
+  // (no cursor exists, the glow would never have shown anyway) and
+  // on viewports where the layout collapses to a single column.
+  // passive:true tells the browser this listener will never call
+  // preventDefault, so scroll/move handling stays smooth.
   var glow=document.getElementById('cursor-glow');
-  document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';glow.style.opacity='1'});
-  document.addEventListener('mouseleave',function(){glow.style.opacity='0'});
+  var fineHover = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if (glow && fineHover) {
+    var mx=0, my=0, raf=0;
+    document.addEventListener('mousemove',function(e){
+      mx=e.clientX; my=e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(function(){
+        glow.style.left=mx+'px';
+        glow.style.top=my+'px';
+        glow.style.opacity='1';
+        raf=0;
+      });
+    }, {passive:true});
+    document.addEventListener('mouseleave',function(){glow.style.opacity='0'});
+  }
 
   // ── SCROLL REVEAL ──
   var reveals=document.querySelectorAll('.reveal');
   var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
   reveals.forEach(function(el){observer.observe(el)});
+
+  // ── PAUSE OFF-SCREEN ANIMATIONS ──
+  // The CSS rule above ([data-anim-paused] *) freezes every
+  // animation inside a section once we set the attribute. We watch
+  // the three heaviest sections (loss-strip with the SVG candle
+  // sweep, how-section with the three light cycles, cta-final with
+  // the rotating watermark + pulsing radial). 200px rootMargin
+  // resumes animations a little before they enter view so users
+  // never see a frozen frame.
+  var heavySections = document.querySelectorAll('.loss-strip, .how-section, .cta-final');
+  if (heavySections.length && 'IntersectionObserver' in window) {
+    // Start everything paused — they'll unpause on first intersection.
+    heavySections.forEach(function(s){ s.setAttribute('data-anim-paused',''); });
+    var pauseObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) e.target.removeAttribute('data-anim-paused');
+        else e.target.setAttribute('data-anim-paused','');
+      });
+    }, {rootMargin:'200px 0px'});
+    heavySections.forEach(function(s){ pauseObs.observe(s); });
+  }
 
   
 
@@ -540,10 +598,30 @@ footer .foot-links a:hover{color:#5a5a62}
     ])
   ];
 
-  var ci=0, pw=document.getElementById('pv-wrap');
+  // Parse all 4 cards into DOM nodes ONCE at init instead of
+  // re-parsing the HTML string every 4.5s. The previous impl called
+  // pw.innerHTML = cards[ci] on every cycle, which forced the browser
+  // to: tokenise ~5KB of HTML → build a fresh DOM subtree → discard
+  // the old one → recalc layout → repaint. Doing this every 4.5s on
+  // the hero (above-the-fold, always visible on desktop — the popup
+  // is display:none on mobile) was a recurring ~10-20ms hitch on
+  // mid-tier hardware. We now keep the 4 nodes alive in a JS array
+  // and just swap which one is the firstChild via replaceChildren().
+  // Same fade + transform transition on #pv-wrap, same visual cadence.
+  var pw=document.getElementById('pv-wrap');
+  var cardNodes = cards.map(function(html){
+    var tpl = document.createElement('template');
+    tpl.innerHTML = html;
+    return tpl.content.firstElementChild;
+  });
+  var ci=0;
   setInterval(function(){
     pw.style.opacity='0';pw.style.transform='translateY(10px) scale(.98)';
-    setTimeout(function(){ci=(ci+1)%cards.length;pw.innerHTML=cards[ci];pw.style.opacity='1';pw.style.transform='translateY(0) scale(1)'},400);
+    setTimeout(function(){
+      ci=(ci+1)%cardNodes.length;
+      pw.replaceChildren(cardNodes[ci]);
+      pw.style.opacity='1';pw.style.transform='translateY(0) scale(1)';
+    },400);
   },4500);
 
   // ── LOSS COUNTER (count-up on first scroll-into-view) ──
