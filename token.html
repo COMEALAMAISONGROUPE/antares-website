@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><script src="/js/error-monitor.js"></script><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en"><head><script src="/js/error-monitor.js" defer></script><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#00e5b0">
@@ -484,18 +484,18 @@ function render(d,ca){
   const socials=d.pair?.info?.socials||[]
   const websites=d.pair?.info?.websites||[]
   let socialHtml=""
-  websites.forEach(w=>{socialHtml+=`<a class="soc-btn" href="${w.url}" target="_blank">🌐 ${w.label||"Website"}</a>`})
+  websites.forEach(w=>{socialHtml+=`<a class="soc-btn" href="${safeUrl(w.url)}" target="_blank" rel="noopener noreferrer">🌐 ${esc(w.label||"Website")}</a>`})
   socials.forEach(s=>{
     const isX=/twitter|x/i.test(s.type||s.url||"")
     const isTg=/telegram/i.test(s.type||s.url||"")
     const icon=isX?"𝕏":isTg?"✈":"🔗"
     const lbl=isX?"Twitter":isTg?"Telegram":"Social"
-    socialHtml+=`<a class="soc-btn" href="${s.url}" target="_blank">${icon} ${lbl}</a>`
+    socialHtml+=`<a class="soc-btn" href="${safeUrl(s.url)}" target="_blank" rel="noopener noreferrer">${icon} ${lbl}</a>`
   })
   document.getElementById("socials-row").innerHTML=socialHtml
   if(d.pair?.dexId){
     document.getElementById("dex-tag-wrap").innerHTML=
-      `<span class="dex-tag">DEX: ${d.pair.dexId.toUpperCase()} · <a href="${d.pair.url}" target="_blank" style="color:var(--c);text-decoration:none">View on DexScreener ↗</a></span>`
+      `<span class="dex-tag">DEX: ${esc(d.pair.dexId.toUpperCase())} · <a href="${safeUrl(d.pair.url)}" target="_blank" rel="noopener noreferrer" style="color:var(--c);text-decoration:none">View on DexScreener ↗</a></span>`
   }
 
   document.getElementById("score-num").textContent=d.score||"—"
@@ -764,6 +764,19 @@ function esc(s){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#39;")
+}
+
+/** URL-safe whitelist for href interpolation. The token page renders
+ *  DexScreener-supplied `websites[].url`, `socials[].url`, and
+ *  `pair.url` — any of which could contain `javascript:` /
+ *  `data:text/html` schemes if a hostile token creator crafted them.
+ *  This guard limits href to http/https/mailto and HTML-escapes the
+ *  result so it can be safely interpolated into innerHTML. Invalid or
+ *  empty URLs collapse to "#" so the anchor renders but does nothing. */
+function safeUrl(u){
+  const s=String(u==null?"":u).trim()
+  if(/^(https?|mailto):/i.test(s))return esc(s)
+  return "#"
 }
 
 ;(function(){
