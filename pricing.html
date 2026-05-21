@@ -61,7 +61,7 @@
 .tier.free .tier-features li{color:#666;border-bottom-color:#0e0e10}
 .tier.free .tier-features li::before{color:#3a7060}
 .tier.lifetime{border:1px solid #2a2a30}
-.tier.lifetime::before{content:'BEST VALUE';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--purple);color:var(--bg);font:700 9px/1 'IBM Plex Mono',monospace;padding:7px 14px;letter-spacing:.22em;white-space:nowrap}
+.tier.lifetime::before{content:'−20% · LAUNCH OFFER';position:absolute;top:-1px;left:50%;transform:translateX(-50%) translateY(-50%);background:var(--purple);color:var(--bg);font:700 9.5px/1 'IBM Plex Mono',monospace;padding:8px 16px;letter-spacing:.22em;white-space:nowrap;border-radius:2px;box-shadow:0 6px 22px rgba(167,139,250,.4)}
 
 .tier-name{font:600 11px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
 .tier.featured .tier-name{color:var(--c)}
@@ -311,9 +311,9 @@ footer span{color:var(--c)}
        to Free at expiry unless renewed. -->
   <div class="tier lifetime">
     <div class="tier-name">Yearly</div>
-    <div class="tier-price"><span class="strike">$249</span><span class="currency">$</span>149.99</div>
-    <div class="tier-period">Pay in any crypto &middot; 1 year</div>
-    <div class="tier-tagline">Pay once at $149.99. Every Pro feature for a full year. Breaks even after six monthly renewals.</div>
+    <div class="tier-price"><span class="strike">$250</span><span class="currency">$</span>200</div>
+    <div class="tier-period">Pay in any crypto &middot; 1 year &middot; 20% off launch price</div>
+    <div class="tier-tagline">Pay once at $200 (launch pricing, normally $250). Every Pro feature for a full year. Breaks even after eight monthly renewals.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Pro, for 1 year</b></li>
       <li><b>AI Summary</b> in overlay</li>
@@ -413,7 +413,7 @@ footer span{color:var(--c)}
   // The server is the source of truth; this is the display value before
   // we hit the API. The server returns the actual amountUsd in its
   // response — we update the UI when we receive it.
-  var PRICE_USD = { monthly: 24.99, yearly: 149.99 };
+  var PRICE_USD = { monthly: 24.99, yearly: 200 };
 
   var params = new URLSearchParams(window.location.search);
   var installId = (params.get('install') || '').trim();
