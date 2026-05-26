@@ -423,6 +423,26 @@ footer span{color:var(--c)}
   var installId = (params.get('install') || '').trim();
   var hasInstall = installId && INSTALL_ID_RE.test(installId);
 
+  // ── Strip ?install= from the visible URL ────────────────────────────────
+  // The value is already captured in the `installId` JS variable above and
+  // flows into the payment-intent body from there. Keeping the UUID in the
+  // address bar would let users accidentally share their own install_id by
+  // copy-pasting the link — anyone else paying via that URL would unlock
+  // PRO on the original user's extension, not their own. Strip surgically:
+  // only the `install` param is removed, other query params (utm_*, ref,
+  // etc.) survive for marketing attribution.
+  if (hasInstall && window.history && typeof window.history.replaceState === 'function') {
+    try {
+      params.delete('install');
+      var qs = params.toString();
+      var cleanUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+      window.history.replaceState(null, '', cleanUrl);
+    } catch (e) {
+      // history API restricted (sandboxed iframe, file:// protocol, etc.)
+      // — harmless, payment flow still has the id in the JS variable.
+    }
+  }
+
   // ── Probe the extension for install_id ──────────────────────────────────
   // Same as before: the bridge content script (in the extension) drops a
   // meta tag at document_start and answers postMessage queries with the
