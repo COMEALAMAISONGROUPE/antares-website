@@ -147,7 +147,7 @@ footer{
 .sr{display:flex;align-items:center;gap:8px;padding:0 14px;margin-top:10px}.sr .n{font-size:11px;color:#555;font-weight:600}.sr .n b{color:#aaa}
 .dots{display:flex;gap:2px;align-items:center}.dt{width:4px;height:4px;border-radius:50%}.dt.on{background:#00e5b0}.dt.off{background:#222226}
 .sbar{margin:6px 14px 0;height:2px;background:#181818;border-radius:1px;overflow:hidden}.sbar-fill{height:100%;border-radius:1px;transition:.5s ease}
-.box.safe .sbar-fill{background:linear-gradient(90deg,#00e5b055,#00e5b0);width:84.7%}.box.caution .sbar-fill{background:linear-gradient(90deg,#f5d00044,#f5d000);width:52.3%}.box.danger .sbar-fill{background:linear-gradient(90deg,#ff5f5f44,#ff5f5f);width:28.5%}.box.rug .sbar-fill{background:linear-gradient(90deg,#ff224444,#ff2244);width:8.7%}
+.box.safe .sbar-fill{background:linear-gradient(90deg,#00e5b055,#00e5b0);width:100%}.box.caution .sbar-fill{background:linear-gradient(90deg,#f5d00044,#f5d000);width:75%}.box.danger .sbar-fill{background:linear-gradient(90deg,#ff5f5f44,#ff5f5f);width:50%}.box.rug .sbar-fill{background:linear-gradient(90deg,#ff224444,#ff2244);width:25%}
 .sum{padding:8px 14px 0;font-size:9px;letter-spacing:.04em}
 .box.safe .sum{color:#3a7060}.box.caution .sum{color:#8a7820}.box.danger .sum{color:#aa5050}.box.rug .sum{color:#cc3344}
 .sep{height:1px;margin:8px 14px;background:#1a1a1e}
@@ -319,7 +319,7 @@ footer .foot-links a:hover{color:#5a5a62}
         <div class="topbar"></div>
         <div class="hd"><span class="brand pro">ANTARES</span><div class="hd-right"><span class="drag-icon"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M7 1L5.5 3h3L7 1Z" fill="currentColor"/><line x1="7" y1="2.5" x2="7" y2="6.5" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M7 13L5.5 11h3L7 13Z" fill="currentColor"/><line x1="7" y1="11.5" x2="7" y2="7.5" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M1 7L3 5.5V8.5L1 7Z" fill="currentColor"/><line x1="2.5" y1="7" x2="6.5" y2="7" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path d="M13 7L11 5.5V8.5L13 7Z" fill="currentColor"/><line x1="11.5" y1="7" x2="7.5" y2="7" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/></svg></span><span class="x"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="2" y1="2" x2="11" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="11" y1="2" x2="2" y2="11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span></div></div>
         <div class="vb"><h1>SAFE</h1></div>
-        <div class="sr"><span class="n"><b>847</b> / 1000</span><div class="dots"><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt off"></div></div></div>
+        <div class="sr"><span class="n"><b>1000</b> / 1000</span><div class="dots"><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div><div class="dt on"></div></div></div>
         <div class="sbar"><div class="sbar-fill"></div></div>
         <div class="sum">No issues found</div>
         <div class="sep"></div>
@@ -595,16 +595,16 @@ footer .foot-links a:hover{color:#5a5a62}
   // schema is identical card-to-card so the demo reads as one
   // consistent UI, not four random layouts.
   var cards = [
-    card('safe',    'SAFE',     952, 5, 'No issues found', [
+    card('safe',    'SAFE',    1000, 5, 'No issues found', [
       {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Burned',cls:'y',v:'✓'},{k:'Liq',cls:'y',v:'$9.0M'}
     ]),
-    card('caution', 'CAUTION',  768, 4, '1 flags detected', [
+    card('caution', 'CAUTION',  750, 4, '1 flags detected', [
       {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'y',v:'✓'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Burned',cls:'y',v:'✓'},{k:'Liq',cls:'',v:'$32K'}
     ]),
-    card('danger',  'DANGER',   485, 2, '3 flags — 1 critical', [
+    card('danger',  'DANGER',   500, 3, '3 flags — 1 critical', [
       {k:'Sell',cls:'y',v:'✓'},{k:'Mint',cls:'n',v:'✗'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Locked',cls:'y',v:'✓'},{k:'Liq',cls:'',v:'$48K'}
     ]),
-    card('rug',     'RUG PULL', 120, 1, '5 flags — 3 critical', [
+    card('rug',     'RUG PULL', 250, 1, '5 flags — 3 critical', [
       {k:'Sell',cls:'n',v:'✗'},{k:'Mint',cls:'n',v:'✗'},{k:'Freeze',cls:'y',v:'✓'},{k:'LP Lock',cls:'n',v:'✗'},{k:'Liq',cls:'n',v:'$1.8K'}
     ])
   ];
