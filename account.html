@@ -21,9 +21,9 @@ h1 span{color:var(--c)}
 
 main{padding:50px 0 80px}
 .head-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:18px}
-.account-meta{font-size:11px;color:#666;letter-spacing:.04em;line-height:1.7;text-align:right}
+.account-meta{font-size:11px;color:#666;letter-spacing:.04em;line-height:1.7;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
 .account-meta b{color:#9a9aa2;font-weight:600}
-.logout-btn{margin-top:6px;background:none;border:1px solid var(--border);color:#888;padding:7px 14px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s}
+.logout-btn{background:none;border:1px solid var(--border);color:#888;padding:7px 14px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s}
 .logout-btn:hover{color:#ff7777;border-color:rgba(255,95,95,.4)}
 
 .section-label{font-size:10px;color:#5a5a62;letter-spacing:.22em;text-transform:uppercase;margin:24px 0 14px;text-align:center}
@@ -157,7 +157,7 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="head-row">
     <h1>Your <span>account</span>.</h1>
     <div class="account-meta">
-      Logged in as <b id="account-email">&mdash;</b><br>
+      <span>Logged in as <b id="account-email">&mdash;</b></span>
       <button class="logout-btn" id="logout-btn" type="button">Log out</button>
     </div>
   </div>
