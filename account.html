@@ -646,33 +646,58 @@ footer .foot-links a:hover{color:var(--c)}
   // 3. Logout
   //
   // Clear both the API session cookie AND the bridge-stored session
-  // token in the extension. Without the second step the extension would
-  // keep a stale token in chrome.storage.local and continue authenticating
-  // as the just-logged-out user on its next scan — exactly the
-  // "overlay isn't synced with the website" bug.
-  logoutBtn.addEventListener('click', function() {
-    // Tell the bridge to drop the stored token before we navigate away,
-    // since the bridge only listens while THIS page is alive. No need
-    // to wait for the ack — the chrome.storage write is synchronous-ish
-    // and finishes before the page tears down.
+  // token in the extension. The bridge clear is async (chrome.storage.
+  // local.remove returns a callback) and we MUST wait for the ack before
+  // navigating away — otherwise the page tears down mid-flight, the
+  // chrome.storage.remove callback is canceled, and the JWT stays in
+  // storage. The extension keeps authenticating as the just-logged-out
+  // user on its next scan → "overlay still shows Pro after I logged out"
+  // bug. Without this race fix the user could log out 10 times in a row
+  // and the overlay would stay locked on the old tier.
+  function waitForBridgeAck() {
     var marker = document.querySelector('meta[name="antares-extension-installed"]');
-    if (marker) {
+    if (!marker) return Promise.resolve(); // no extension installed → skip
+    return new Promise(function(resolve) {
+      var settled = false;
+      function done() {
+        if (settled) return;
+        settled = true;
+        window.removeEventListener('message', listener);
+        resolve();
+      }
+      function listener(ev) {
+        if (ev.source !== window) return;
+        if (!ev.data || ev.data.type !== 'antares:session-token-cleared') return;
+        done();
+      }
+      window.addEventListener('message', listener);
       window.postMessage(
         { type: 'antares:clear-session-token' },
         window.location.origin
       );
-    }
-    fetch(API + '/api/auth/logout', {
+      // Fail-safe: 800ms is comfortably above the p99 of a chrome.storage.
+      // local.remove() callback (typically <20ms). If we hit the timeout
+      // the extension was probably disabled mid-click or the browser is
+      // under heavy load — proceed with the logout either way so the
+      // server-side cookie clear still happens. The session-tagged cache
+      // backstop in cache.ts will catch the stale token on the next scan.
+      setTimeout(done, 800);
+    });
+  }
+
+  logoutBtn.addEventListener('click', function() {
+    // Run both clears in parallel — the bridge wait is the critical path
+    // for tier sync; the API logout invalidates the server-side cookie.
+    // Promise.all so we don't navigate until BOTH are settled (or until
+    // the bridge wait hits its 800ms timeout, whichever comes first).
+    var logoutFetch = fetch(API + '/api/auth/logout', {
       method: 'POST',
       credentials: 'include'
-    })
-      .then(function() {
-        try { localStorage.removeItem('antares_buyer_email'); } catch(_) {}
-        window.location.href = './auth.html';
-      })
-      .catch(function() {
-        window.location.href = './auth.html';
-      });
+    }).catch(function() { /* network error — proceed with logout anyway */ });
+    Promise.all([waitForBridgeAck(), logoutFetch]).then(function() {
+      try { localStorage.removeItem('antares_buyer_email'); } catch(_) {}
+      window.location.href = './auth.html';
+    });
   });
 })();
 </script>
