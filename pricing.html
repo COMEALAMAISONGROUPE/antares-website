@@ -487,16 +487,26 @@ footer span{color:var(--c)}
   // When set, the modal hides the email input and uses the session email.
   // Server-side /api/payment-intent reads the session cookie too, so this
   // is purely UX consistency.
+  //
+  // Exposed as a promise so openModal() can await the auth check before
+  // deciding whether to show the modal or bounce to /auth.html. Without
+  // this, a quick clicker could hit the tier CTA before the /api/auth/me
+  // probe resolves, see the modal open, and never get sent through the
+  // account-required redirect.
   var loggedInEmail = null;
-  fetch(ME_API, { credentials: 'include' })
+  var authProbe = fetch(ME_API, { credentials: 'include' })
     .then(function(r) { return r.ok ? r.json() : null; })
     .then(function(body) {
       if (body && body.ok && body.email) {
         loggedInEmail = body.email;
         applyLoggedInUI();
       }
+      return loggedInEmail;
     })
-    .catch(function() { /* not authed, stay anonymous */ });
+    .catch(function() {
+      /* not authed, stay anonymous — modal redirects to /auth.html */
+      return null;
+    });
 
   // DOM refs
   var overlay = document.getElementById('pay-overlay');
@@ -737,19 +747,44 @@ footer span{color:var(--c)}
   });
 
   function openModal(spec) {
-    overlay.classList.add('open');
-    currentTier = spec.tier;
-    renderTier(currentTier);
-    setStatus(null);
-    licenseRow.style.display = 'none';
-
-    if (hasInstall) {
-      emailHintEl.textContent = 'For your receipt. Pro syncs to every device where you sign in to your Antares account.';
-    } else {
-      emailHintEl.textContent = 'We create your account with this email. Pro auto-activates on every device where you sign in — no codes to enter.';
-    }
-    refreshCtaState();
-    if (!loggedInEmail && !readEmail()) emailInput.focus();
+    // ── Account required before checkout ─────────────────────────────────
+    // Old flow let users type an email and pay without ever creating an
+    // account. After the on-chain confirmation they had no way to sign in
+    // ("compte n'existe pas") — paid first, signed up second, frustrated
+    // in between. New flow: bounce unauthenticated users to /auth before
+    // they can pay. They sign up (or log in), then return to this page
+    // with ?openCheckout=<tier> which auto-reopens the modal pre-filled
+    // with their session email. Net effect: by the time the payment
+    // intent fires, the account already exists and the license auto-
+    // attaches; post-payment they're already logged in on /account.
+    //
+    // We only consult `loggedInEmail` AFTER the /api/auth/me probe has
+    // settled (see `authProbe` promise below). Until then we delay the
+    // modal-open decision; the user just sees the button click is
+    // "processing" for ~200ms. Avoids a false redirect on a logged-in
+    // user whose session check is still in flight.
+    return authProbe.then(function() {
+      if (!loggedInEmail) {
+        // Build return URL: come back to /pricing with ?openCheckout=<tier>
+        // so we auto-reopen this exact modal after auth.
+        var returnUrl = '/pricing.html?openCheckout=' + encodeURIComponent(spec.tier);
+        // Default to the signup tab — most users hitting Pricing for the
+        // first time don't have an account yet. Existing users can flip
+        // to "Log in" inside auth.html.
+        window.location.href = './auth.html?return=' +
+          encodeURIComponent(returnUrl) + '#signup';
+        return;
+      }
+      overlay.classList.add('open');
+      currentTier = spec.tier;
+      renderTier(currentTier);
+      setStatus(null);
+      licenseRow.style.display = 'none';
+      // Logged-in users skip the email input (handled by applyLoggedInUI
+      // which already hid the row + showed the "✓ Logged in as …" note).
+      // refreshCtaState picks up the session email so the CTA is enabled.
+      refreshCtaState();
+    });
   }
 
   // Wire the tier CTAs
@@ -765,6 +800,35 @@ footer span{color:var(--c)}
       openModal(spec);
     });
   });
+
+  // ── Auto-reopen modal after sign-up redirect ──────────────────────────
+  // When openModal redirects an unauthenticated user to /auth.html, it
+  // includes ?return=/pricing.html?openCheckout=<tier> so the user lands
+  // back here with their session active. Read the param and trigger the
+  // same openModal flow we'd have run if they'd clicked the CTA logged-
+  // in. We strip the param from the visible URL so a refresh doesn't
+  // re-trigger the modal and so the URL is shareable without leaking
+  // tier intent.
+  (function() {
+    var openTier = (params.get('openCheckout') || '').trim();
+    if (openTier !== 'monthly' && openTier !== 'yearly') return;
+    var match = BTNS.find(function(b) { return b.tier === openTier; });
+    if (!match) return;
+    // Strip the param from the URL — same pattern as the install_id strip
+    // above so refresh / share doesn't re-trigger the modal.
+    if (window.history && typeof window.history.replaceState === 'function') {
+      try {
+        params.delete('openCheckout');
+        var qs = params.toString();
+        var cleanUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+        window.history.replaceState(null, '', cleanUrl);
+      } catch (e) { /* harmless */ }
+    }
+    // authProbe gates the modal — if the user just signed up they're
+    // logged in, modal opens. If somehow their session was lost in
+    // transit, openModal will bounce them right back to /auth.
+    openModal(match);
+  })();
 
   // "Install detected" banner when the user came via the extension
   if (hasInstall) {

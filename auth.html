@@ -237,8 +237,23 @@ footer .foot-links a:hover{color:var(--c)}
         try { localStorage.setItem('antares_buyer_email', email); } catch(_) {}
         // Honour ?return= so we can deep-link back into the pricing
         // modal, /account, etc. after auth completes.
+        //
+        // SECURITY: validate the return URL is a same-origin path before
+        // navigating. Without this gate, ?return=https://evil.com would
+        // bounce the freshly-logged-in user off our domain — useful in
+        // a phishing kit ("our login flow approved you, now visit X").
+        // We accept paths starting with a SINGLE `/` only (e.g.
+        // `/pricing.html?openCheckout=monthly`). Protocol-relative
+        // `//evil.com/x` and absolute `https://...` are both rejected
+        // and fall through to the safe default `./account.html`.
         var params = new URLSearchParams(window.location.search);
-        var ret = params.get('return') || './account.html';
+        var rawRet = params.get('return') || '';
+        var ret = (
+          typeof rawRet === 'string' &&
+          rawRet.length > 0 &&
+          rawRet.charAt(0) === '/' &&
+          rawRet.charAt(1) !== '/'
+        ) ? rawRet : './account.html';
         window.location.href = ret;
         return;
       }
