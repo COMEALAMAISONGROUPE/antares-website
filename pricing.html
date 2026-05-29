@@ -71,7 +71,7 @@
 .tier-price .currency{font-size:32px;color:#888;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0}
 .tier-price .strike{font-size:22px;color:#3a3a40;text-decoration:line-through;font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:0;margin-right:6px}
 .tier-period{font-size:11px;color:#5a5a62;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;min-height:14px}
-.tier-savings{font:600 10.5px/1.5 'IBM Plex Mono',monospace;color:#7a7a82;letter-spacing:.04em;margin-bottom:14px;text-align:center}
+.tier-savings{font:600 10.5px/1.5 'IBM Plex Mono',monospace;color:#7a7a82;letter-spacing:.04em;margin:0 0 14px;text-align:center}
 .tier-savings b{color:var(--purple);font-weight:700}
 /* Tagline min-height set to fit a 3-line copy block at 11.5px / 1.6 line-
    height. All three taglines are written to wrap to ~3 lines so this
@@ -312,12 +312,16 @@ footer span{color:var(--c)}
        the $249.99 sticker) — the "−20% · LAUNCH OFFER" badge above
        the card surfaces the discount as a marketing message rather
        than burying it in the price diff.
-       Two complementary savings statements stack visually:
-         - tier-period: "20% off launch price"  (urgency/FOMO frame:
-           normal sticker is $249.99, this is the launch deal)
-         - tier-savings: "save 33% vs paying monthly"  (analytical
-           frame: $24.99/mo × 12 = $299.88 → yearly $199.99 = 33% off)
+       Two complementary savings statements:
+         - tier-period (top of card): "20% off launch price" — urgency
+           frame next to the strikethrough $249.99 ($249.99→$199.99).
+         - tier-savings (just above the CTA): "save 33% vs paying
+           monthly" — analytical ROI frame ($24.99×12=$299.88 vs $199.99).
        Both true at the same time, both true for different reasons.
+       Top placement = first impression; bottom placement = final nudge
+       before the click. Founder moved the analytical line down so the
+       feature list breathes and the ROI argument lands right before
+       the CTA.
        Existing Lifetime customers from before the rename keep their
        grandfathered tier; new buyers get a yearly that auto-downgrades
        to Free at expiry unless renewed. -->
@@ -325,7 +329,6 @@ footer span{color:var(--c)}
     <div class="tier-name">Yearly</div>
     <div class="tier-price"><span class="strike">$249.99</span><span class="currency">$</span>199.99</div>
     <div class="tier-period">Pay in any crypto &middot; 1 year &middot; 20% off launch price</div>
-    <div class="tier-savings">Equivalent to ~8 months of Pro &middot; <b>save 33% vs paying monthly</b></div>
     <div class="tier-tagline">Pay once at $199.99 (launch pricing, normally $249.99). Every Pro feature for a full year. Save $99.89 vs twelve monthly renewals at $24.99.</div>
     <ul class="tier-features">
       <li class="bonus"><b>Everything in Pro, for 1 year</b></li>
@@ -341,6 +344,11 @@ footer span{color:var(--c)}
       <li>One payment, 365 days of Pro</li>
     </ul>
     <div class="tier-quote">Yearly is the simplest math: pay once now, get every Pro feature for a full year. Cheaper than monthly after six months &mdash; and you can renew at the locked-in price when the year is up.</div>
+    <!-- Moved from below tier-period (top of card) to here (just before the
+         CTA) per founder feedback. The ROI line works better as the LAST
+         thing the visitor reads before clicking — final analytical nudge
+         after they've scanned the feature list and the quote. -->
+    <div class="tier-savings">Equivalent to ~8 months of Pro &middot; <b>save 33% vs paying monthly</b></div>
     <button class="tier-cta purple" id="cta-yearly" data-tier="yearly" type="button">Claim a Yearly spot &rarr;</button>
     <div class="tier-status"><span class="purple">&middot; 1 year &middot; on-chain</span></div>
   </div>
