@@ -315,12 +315,14 @@ footer span{color:var(--c)}
        Two complementary savings statements:
          - tier-period (top of card): "20% off launch price" — urgency
            frame next to the strikethrough $249.99 ($249.99→$199.99).
-         - tier-savings (just above the CTA): "save 33% vs paying
+         - tier-savings (right under the feature list, immediately
+           below "One payment, 365 days of Pro"): "save 33% vs paying
            monthly" — analytical ROI frame ($24.99×12=$299.88 vs $199.99).
        Both true at the same time, both true for different reasons.
-       Top placement = first impression; bottom placement = final nudge
-       before the click. Founder moved the analytical line down so the
-       feature list breathes and the ROI argument lands right before
+       Top placement = first impression; the analytical ROI sits
+       attached to the feature list — it reads as part of WHAT you
+       get for the single payment, not as a separate sales push.
+       The quote then closes the card on the strategic note before
        the CTA.
        Existing Lifetime customers from before the rename keep their
        grandfathered tier; new buyers get a yearly that auto-downgrades
@@ -343,12 +345,14 @@ footer span{color:var(--c)}
       <li>No affiliate prompts</li>
       <li>One payment, 365 days of Pro</li>
     </ul>
-    <div class="tier-quote">Yearly is the simplest math: pay once now, get every Pro feature for a full year. Cheaper than monthly after six months &mdash; and you can renew at the locked-in price when the year is up.</div>
-    <!-- Moved from below tier-period (top of card) to here (just before the
-         CTA) per founder feedback. The ROI line works better as the LAST
-         thing the visitor reads before clicking — final analytical nudge
-         after they've scanned the feature list and the quote. -->
+    <!-- ROI line sits directly under the feature list, immediately
+         below the "One payment, 365 days of Pro" bullet, per founder
+         feedback (2026-05-29). The savings frame is part of WHAT you
+         get for the single payment, so it reads better attached to
+         the feature block than below the quote. The quote then closes
+         the card on the emotional/strategic note before the CTA. -->
     <div class="tier-savings">Equivalent to ~8 months of Pro &middot; <b>save 33% vs paying monthly</b></div>
+    <div class="tier-quote">Yearly is the simplest math: pay once now, get every Pro feature for a full year. Cheaper than monthly after six months &mdash; and you can renew at the locked-in price when the year is up.</div>
     <button class="tier-cta purple" id="cta-yearly" data-tier="yearly" type="button">Claim a Yearly spot &rarr;</button>
     <div class="tier-status"><span class="purple">&middot; 1 year &middot; on-chain</span></div>
   </div>
