@@ -120,12 +120,10 @@ footer .foot-links a:hover{color:var(--c)}
 
 <div class="try-row">
   <span class="lbl">Click a token:</span>
-  <!-- Order is intentional: SAFE → CAUTION → DANGER → RUG so the four
-       chips read left-to-right as a risk progression. The verdicts
-       below all match what /api/scan returns live (verified with curl
-       at time of writing) and feed the prebaked fallback identically. -->
-  <button type="button" data-ca="2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv">PENGU</button>
+  <!-- Order: SAFE → CAUTION → DANGER → RUG. One chip per verdict band.
+       Verdicts are demonstrative snapshots; real verdicts evolve in real time. -->
   <button type="button" data-ca="9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump">FARTCOIN</button>
+  <button type="button" data-ca="MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5">MEW</button>
   <button type="button" data-ca="Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump">PIPPIN</button>
   <button type="button" data-ca="4GFe6MBDorSy5bLbiUMrgETr6pZcjyfxMDm5ehSgpump">HAWK</button>
   <button type="button" class="reset" id="reset-pos" title="Reset overlay position">↺ Reset position</button>
@@ -491,7 +489,13 @@ footer .foot-links a:hover{color:var(--c)}
     "Sniper activity detected":"Bots bought massively at launch before anyone else could — supply is concentrated.",
     "Top 10 holders > 70%":"Ten wallets control over 70% of the supply. If they sell together, the price collapses.",
     "Top 10 holders > 50%":"Half the supply is in 10 wallets — high dump risk.",
-    "Single wallet holds":"One wallet controls a huge portion of supply and can crash the price alone.",
+    "Top 10 hold":"The top 10 wallets control a significant share of supply. On established tokens some may be exchanges; on fresh tokens this is a coordinated dump risk.",
+    "Single wallet holds":"One wallet controls a large portion of supply — can crash the price alone. (Legacy flag from pre-7.7.4 scans.)",
+    "Pumped +":"The token has surged significantly in the last 24 hours. You are buying near the top of a run — historical retrace risk from this entry point is disproportionate even if the token is structurally clean.",
+    "Buy/sell imbalance":"The 5-minute buy/sell ratio is heavily skewed — far more buyers than sellers right now. This is the fingerprint of a coordinated pump: orchestrated buy pressure before the group rotates out.",
+    "Progressive dump":"Price is declining systematically across multiple timeframes. This is not a random dip — a progressive multi-timeframe decline is the chart signature of a controlled insider distribution.",
+    "Dev wallet sold":"The creator wallet has sold tokens. This directly conflicts with the 'hold and build' narrative typical of legitimate projects — dev exits early are one of the strongest predictors of eventual rug.",
+    "Post-ATH dump":"The token has crashed significantly from its peak within the current analysis window. This is not a correction — it is the exit phase of a pump-and-dump, where the organized cluster sells into the retail buyers attracted by the run.",
     "Metadata mutable":"The dev can change the token name, symbol and logo after launch — common in rug setups.",
     "No website / Twitter / Telegram":"Zero social presence — the team can disappear without any trace.",
     "Wash trading detected":"The trading volume is fake — bots trading with themselves to create false activity.",
@@ -941,58 +945,75 @@ footer .foot-links a:hover{color:var(--c)}
   // If you need to refresh the values: capture live, audit, then
   // hand-edit the constants here. Never auto-generate.
   var DEMO_PREBAKED={
+    // 4 tokens — one per verdict band: SAFE · CAUTION · DANGER · RUG
     '9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump':{
-      // FARTCOIN — CAUTION. Score display: 750 (clean band value).
-      risk:'CAUTION',score:750,confidence:100,
+      // FARTCOIN — SAFE (7.7.5). Top-10=34% on an established blue-chip
+      // → normal exchange distribution, no concentration risk.
+      risk:'SAFE',score:1000,confidence:100,
       tokenSymbol:'Fartcoin',tokenName:'Fartcoin',
       mintAuthority:false,freezeAuthority:false,honeypot:false,
       lpBurned:true,lpLocked:false,liquidity:7400000,marketCap:1450000000,
       flags:[
-        {severity:'warning',label:'Single wallet holds 11% of supply'},
+        {severity:'info',label:'Top 10 hold 34% — normal for established token · likely exchanges & long-term holders'},
         {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
         {severity:'bonus',label:'Established token (30d+) ✓'}
       ],
-      aiSummary:'Fartcoin lands on CAUTION because a single wallet holds 11% of supply — a meaningful concentration risk even with otherwise solid fundamentals. LP is fully burned, mint and freeze authorities are revoked, no honeypot, and the token has 30d+ of trading history. The verdict is not DANGER because the rest of the structural posture is clean; it is not SAFE because the concentrated wallet alone has enough leverage to swing the price.'
+      aiSummary:'Fartcoin shows a SAFE profile with fully burned LP and 30d+ established trading on Solana. The top 10 wallets hold 34% of supply — within normal range for a token of this maturity. At this age and holder count, top wallets are typically exchange cold wallets, custodians, and long-term holders rather than coordinated sellers. Mint and freeze authorities are revoked, no honeypot, all structural signals clean.'
+    },
+    'MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5':{
+      // MEW — CAUTION. Three compounding signals: top-10 concentration
+      // + +187% 24h pump + buy/sell imbalance (zero sells in 5m window).
+      risk:'CAUTION',score:750,confidence:100,
+      tokenSymbol:'MEW',tokenName:'cat in a dogs world',
+      mintAuthority:false,freezeAuthority:false,honeypot:false,
+      lpBurned:true,lpLocked:false,liquidity:6480000,marketCap:342000000,
+      flags:[
+        {severity:'warning',label:'Top 10 hold 55% — elevated · exchanges may be included'},
+        {severity:'warning',label:'Pumped +187% in 24h — elevated retrace risk on entry (blue-chip)'},
+        {severity:'warning',label:'Buy/sell imbalance (coordinated pump)'},
+        {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
+        {severity:'bonus',label:'Established token (30d+) ✓'}
+      ],
+      aiSummary:'MEW lands on CAUTION from three compounding signals across three analysis layers. Helius flags 55% top-10 concentration — elevated, though on a 164k-holder blue-chip the large wallets are most likely exchanges and custodians. The chart layer flags a +187% 24h run: you are not buying a base, you are buying someone\'s retrace entry point. DexScreener confirms the momentum: 38 buys vs 0 sells in the last 5 minutes — the fingerprint of a coordinated pump that has not yet found its top. The contract is structurally sound (LP burned, no mint or freeze, no honeypot), which is why this is CAUTION and not DANGER. But CAUTION here is about entry timing: after a +187% run, a 40-50% retrace is statistically common. The three flags are not predicting a rug — they are telling you that you are entering at the worst possible moment.'
     },
     'Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump':{
-      // PIPPIN — DANGER. Score display: 500 (clean band value).
+      // PIPPIN — DANGER. Five flags from four layers: top-10 68%
+      // (Helius) + snipers + dev sold (RugCheck) + progressive dump
+      // (DexScreener) + metadata mutable (GoPlus).
       risk:'DANGER',score:500,confidence:100,
       tokenSymbol:'pippin',tokenName:'Pippin',
       mintAuthority:false,freezeAuthority:false,honeypot:false,
       lpBurned:true,lpLocked:false,liquidity:4448431,marketCap:26242298,
       flags:[
-        {severity:'critical',label:'Single wallet holds 27% of supply'},
-        {severity:'warning',label:'Top 10 wallets hold 67% of supply'},
+        {severity:'critical',label:'Top 10 hold 68% — high concentration'},
+        {severity:'critical',label:'Sniper activity detected'},
+        {severity:'warning',label:'Progressive dump: -8% (1h) + -28% (24h)'},
+        {severity:'warning',label:'Dev wallet sold tokens'},
+        {severity:'warning',label:'Metadata mutable'},
         {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
         {severity:'bonus',label:'Established token (30d+) ✓'}
       ],
-      aiSummary:'Pippin lands on DANGER because of stacked concentration risk — a single wallet holds 27% of supply and the top 10 wallets together control 67%. Either of those alone would already trigger a soft block; together they make a coordinated dump trivially possible. The LP is burned and the contract is clean (no mint, no freeze, no honeypot), which keeps the verdict from collapsing all the way to RUG, but the holder structure alone is enough to treat this as exit-liquidity risk.'
+      aiSummary:'Pippin lands on DANGER because five independent signals from four analysis layers all describe the same thing: an organized insider exit in progress. Helius shows the top 10 wallets controlling 68% of supply. RugCheck independently confirms sniper activity at launch and that the dev wallet has already sold. DexScreener shows a systematic multi-timeframe decline — -8% in 1h, -28% in 24h — the controlled-bleed shape of a distribution, not a crash. Metadata remains mutable: the team can rebrand mid-exit. LP is burned and the contract has no mint or freeze authority — real positives that confirm you can still sell, but they do not change the underlying reality: 68% of supply is in organized hands that entered at launch and are currently reducing positions into retail. Five flags from four sources do not coincide by accident. This is DANGER.'
     },
     '4GFe6MBDorSy5bLbiUMrgETr6pZcjyfxMDm5ehSgpump':{
-      // HAWK — RUG. Score display: 250 (clean band value).
+      // HAWK — RUG. Five critical flags, zero mitigating signals.
+      // Cross-source confirmation: Helius (top-10=87%) + RugCheck (bundle
+      // ~87%) + DexScreener (vol/liq>20 wash) + chart (-82% ATH dump)
+      // + RugCheck (snipers at launch).
       risk:'RUG',score:250,confidence:100,
       tokenSymbol:'HawkTuah',tokenName:'Hawk Tuah',
       mintAuthority:false,freezeAuthority:false,honeypot:false,
       lpBurned:true,lpLocked:false,liquidity:71186,marketCap:157299,
       flags:[
-        {severity:'critical',label:'Single wallet holds 44% of supply'},
+        {severity:'critical',label:'Top 10 hold 87% — extreme concentration'},
+        {severity:'critical',label:'Bundle holds ~87% of supply — coordinated buy/dump'},
+        {severity:'critical',label:'Wash trading detected (vol/liq > 20) — bundler dump'},
+        {severity:'critical',label:'Post-ATH dump -82% — rug exit in progress'},
+        {severity:'critical',label:'Sniper activity detected'},
         {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
         {severity:'bonus',label:'Established token (30d+) ✓'}
       ],
-      aiSummary:'Hawk Tuah is the textbook concentration rug — a single wallet holds 44% of total supply, more than enough to crash the price to zero in one transaction. LP is technically burned and the token has 30d+ of trading history, but those signals are completely overridden by the wallet concentration: the dev (or whoever controls that wallet) can dump at any moment and the remaining holders cannot defend the price. Hard kill. Treat any remaining liquidity as exit-only.'
-    },
-    '2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv':{
-      // PENGU — SAFE. Score display: 1000 (clean band value).
-      risk:'SAFE',score:1000,confidence:80,
-      tokenSymbol:'PENGU',tokenName:'Pudgy Penguins',
-      mintAuthority:false,freezeAuthority:false,honeypot:false,
-      lpBurned:true,lpLocked:false,liquidity:4400000,marketCap:920000000,
-      flags:[
-        {severity:'info',label:'Helius unavailable'},
-        {severity:'bonus',label:'LP Burned 100% (GoPlus) ✓'},
-        {severity:'bonus',label:'Established token (30d+) ✓'}
-      ],
-      aiSummary:'PENGU shows a SAFE profile with locked liquidity and 30d+ established trading on Solana. Helius source temporarily unavailable lowers confidence to 80% but RugCheck and GoPlus cross-validate the safe verdict. Strong holder distribution.'
+      aiSummary:'Five critical flags, zero mitigating signals — every analysis layer returns red. The Helius top-holder analysis and the RugCheck bundle detection are two independent algorithms reading different on-chain data; both return 87% controlled by a coordinated cluster. That cross-source convergence is not coincidence. The DexScreener vol/liq ratio exceeded 20:1 — the technical threshold for manufactured volume — meaning the organic-looking trading activity that attracted retail was the cluster trading with itself. The chart layer confirms a post-ATH dump of -82%: the exit already executed. Snipers loaded at launch, coordinated the pump into that fake volume, then liquidated. LP is technically burned. This is irrelevant — burning LP on a token where 87% of supply is in 10 coordinated wallets does not protect any holder. The rug is complete. What remains is the bleed phase: no buyers, thin residual liquidity, slow dilution to zero. Do not trade this token in any direction.'
     }
   };
 
@@ -1143,7 +1164,7 @@ footer .foot-links a:hover{color:var(--c)}
   if(initialCa&&DEMO_PREBAKED[initialCa]){
     positionThenScan(initialCa);
   }else{
-    positionThenScan('2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv');
+    positionThenScan('9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump');
   }
 })();
 </script>
