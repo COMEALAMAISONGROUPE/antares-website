@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#00e5b0">
+<meta name="theme-color" content="#0ca88c">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Sign in or create an Antares account to manage your Pro / Yearly licenses.">
 <meta name="robots" content="noindex,nofollow">
@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="/css/base.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5f5f}
+:root{--c:#0ca88c;--bg:#bce8d8;--card:rgba(255,255,255,.34);--border:rgba(14,80,70,.16);--dim:#4d7a72;--txt:#1d4a43;--red:#d64848}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace;min-height:100vh;display:flex;flex-direction:column}
 .stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
@@ -25,32 +25,32 @@ body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace
 h1{text-align:center}
 h1 span{color:var(--c)}
 main{padding:120px 0 60px;flex:1;display:flex;flex-direction:column;justify-content:center}
-.lead{font-size:12px;color:#7a7a82;line-height:1.7;text-align:center;margin-bottom:28px}
+.lead{font-size:12px;color:#57837b;line-height:1.7;text-align:center;margin-bottom:28px}
 
-.tabs{display:flex;gap:0;justify-content:center;margin:0 0 22px;border:1px solid var(--border);border-radius:2px;overflow:hidden;background:#0a0a0c}
-.tabs button{flex:1;padding:11px 0;background:transparent;border:none;color:#666;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.tabs{display:flex;gap:0;justify-content:center;margin:0 0 22px;border:1px solid var(--border);border-radius:2px;overflow:hidden;background:#e7f7f0}
+.tabs button{flex:1;padding:11px 0;background:transparent;border:none;color:#6a958c;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:.2s}
 .tabs button.active{color:var(--bg);background:var(--c)}
-.tabs button:not(.active):hover{color:#ccc}
+.tabs button:not(.active):hover{color:#2e5d55}
 
 .card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:28px}
-.card label{display:block;font:600 10px/1 'IBM Plex Mono',monospace;color:#888;letter-spacing:.18em;text-transform:uppercase;margin:14px 0 6px}
+.card label{display:block;font:600 10px/1 'IBM Plex Mono',monospace;color:#4f7d74;letter-spacing:.18em;text-transform:uppercase;margin:14px 0 6px}
 .card label:first-child{margin-top:0}
-.card input{width:100%;padding:11px 13px;background:#0a0a0c;color:#eaeaea;border:1px solid var(--border);border-radius:2px;font:400 13px/1.2 'IBM Plex Mono',monospace;letter-spacing:.04em}
+.card input{width:100%;padding:11px 13px;background:#e7f7f0;color:#123b35;border:1px solid var(--border);border-radius:2px;font:400 13px/1.2 'IBM Plex Mono',monospace;letter-spacing:.04em}
 .card input:focus{border-color:var(--c);outline:none}
 .card input.invalid{border-color:var(--red)}
-.card .hint{font-size:10px;color:#5a5a62;margin-top:4px;letter-spacing:.04em}
+.card .hint{font-size:10px;color:#6f9c93;margin-top:4px;letter-spacing:.04em}
 .submit{margin-top:22px;width:100%;padding:14px;background:var(--c);color:var(--bg);border:none;border-radius:2px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s}
-.submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,229,176,.2)}
+.submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(11,150,128,.2)}
 .submit:disabled{opacity:.5;cursor:not-allowed}
-.error{margin-top:14px;padding:11px 13px;background:rgba(255,95,95,.06);border:1px solid rgba(255,95,95,.4);border-radius:2px;color:#ff7070;font-size:12px;letter-spacing:.04em;line-height:1.55}
-.spinner{display:inline-block;width:9px;height:9px;border-radius:50%;background:rgba(10,10,12,.6);margin-right:8px;animation:pulse 1.2s ease-in-out infinite;vertical-align:middle}
+.error{margin-top:14px;padding:11px 13px;background:rgba(214,72,72,.06);border:1px solid rgba(214,72,72,.4);border-radius:2px;color:#ff7070;font-size:12px;letter-spacing:.04em;line-height:1.55}
+.spinner{display:inline-block;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.6);margin-right:8px;animation:pulse 1.2s ease-in-out infinite;vertical-align:middle}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
-.foot{margin-top:18px;text-align:center;font-size:10.5px;color:#5a5a62;letter-spacing:.04em}
-.foot a{color:#888}
+.foot{margin-top:18px;text-align:center;font-size:10.5px;color:#6f9c93;letter-spacing:.04em}
+.foot a{color:#4f7d74}
 .foot a:hover{color:var(--c)}
 
-footer{text-align:center;padding:24px 32px;color:#3a3a40;font-size:9px;border-top:1px solid var(--border);letter-spacing:.18em;text-transform:uppercase}
-footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px}
+footer{text-align:center;padding:24px 32px;color:#8fb8ae;font-size:9px;border-top:1px solid var(--border);letter-spacing:.18em;text-transform:uppercase}
+footer .foot-links a{color:#82aaa1;text-decoration:none;margin:0 4px}
 footer .foot-links a:hover{color:var(--c)}
 </style>
 <link rel="stylesheet" href="/css/mobile-fixes.css">
@@ -58,7 +58,29 @@ footer .foot-links a:hover{color:var(--c)}
 <script src="/js/mobile-cta-rewrite.js" defer></script>
 <script src="/js/burger.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://antaresscan.com/"},{"@type":"ListItem","position":2,"name":"Sign in","item":"https://antaresscan.com/auth"}]}</script>
-</head>
+<style id="mint-demo-overrides">
+/* ===== DEMO GLASS MINT - apercu local uniquement ===== */
+body{background:linear-gradient(118deg,#cfefe1 0%,#a8e3ce 32%,#84d7c9 65%,#6fcdd0 100%) fixed;text-shadow:0 1px 1px rgba(255,255,255,.2)}
+/* titres en verre (emboss) */
+h1,.hero h1,.cta-final h2{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+h1 .accent,.hero h1 .accent,.page-hero h1 .accent,.cta-final h2 span{color:rgba(10,140,118,.5);text-shadow:0 1px 1px rgba(255,255,255,.7),0 -1px 1px rgba(8,80,64,.32),0 0 34px rgba(11,150,128,.22)}
+/* header : wordmark + logo couleur "SCAMMED." + liens en verre */
+nav .brand{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+nav .brand img{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75);opacity:.42}
+nav .links a{color:rgba(14,66,58,.5);text-shadow:0 1px 1px rgba(255,255,255,.6),0 -1px 1px rgba(8,60,52,.22);font-size:13px}
+nav .links a:hover,nav .links a.active{color:rgba(10,140,118,.8)}
+/* protections : overlays produit, boutons pleins, glitch */
+#pv-wrap,#antares-host{text-shadow:none}
+.cta,.nav-cta,.skip-link,button{text-shadow:none}
+.glitch::before,.glitch::after{text-shadow:none}
+img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75)}
+/* cartes givrees (vernis E adopte, sans contours) */
+.how-item,.proof-stat,.feat-card,.tier,.src-card,.faq-item,.cmp-row,.layer,.step-card,.install-card,.values-grid>*,.layer-list>*,.score-visual>*,.feat-grid>*,.how-grid>*,.modes>*,.invariants>*,.facts-grid>*,.source-grid>*{backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);background:rgba(255,255,255,.24)!important;border:none!important;box-shadow:0 14px 38px rgba(8,80,70,.1)!important;border-radius:10px}
+.values-grid,.layer-list,.score-visual,.feat-grid,.how-grid,.modes,.invariants,.facts-grid,.source-grid{background:transparent!important;border:none!important;gap:18px}
+/* boutons arrondis comme les cartes */
+.cta,a.cta,.nav-cta,.nav-account,.tier-cta,button{border-radius:10px}
+:focus-visible{outline-color:#0b7d68}
+</style></head>
 <body>
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div class="stripe" role="presentation" aria-hidden="true"></div>

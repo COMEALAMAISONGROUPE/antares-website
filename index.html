@@ -6,7 +6,7 @@
 <link rel="preload" href="/fonts/bebas-neue-400.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
         <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#00e5b0">
+<meta name="theme-color" content="#0ca88c">
 <script src="/js/error-monitor.js" defer></script>
             <meta name="description" content="Antares scans every Solana token in seconds. Insider Watch, Buy/Sell Flow, Wash Volume, Sniper Map, Exit Liquidity — 7-layer verdict. Free Chrome extension — stop getting scammed.">
     <meta name="author" content="Antares">
@@ -42,7 +42,7 @@
 <script src="/js/mobile-cta-rewrite.js" defer></script>
 <script src="/js/home-animations.js" defer></script>
 <style>
-:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff2244;--yellow:#f5d000;--glow:rgba(0,229,176,.12)}
+:root{--c:#0ca88c;--bg:#bce8d8;--card:rgba(255,255,255,.34);--border:rgba(14,80,70,.16);--dim:#4d7a72;--txt:#1d4a43;--red:#d2334f;--yellow:#b89b00;--glow:rgba(11,150,128,.12)}
 
 /* ── STRIPE ── */
 
@@ -51,7 +51,7 @@
    so mouse-tracking style writes don't trigger main-thread repaints
    on the page underneath. Combined with rAF-throttling in JS
    (see bottom of file) this drops cursor-tracking cost to near zero. */
-.cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(0,229,176,.06) 0%,transparent 70%);transform:translate3d(-50%,-50%,0);transition:opacity .3s;opacity:0;will-change:left,top}
+.cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(11,150,128,.06) 0%,transparent 70%);transform:translate3d(-50%,-50%,0);transition:opacity .3s;opacity:0;will-change:left,top}
 
 /* ── Off-screen animation pause ──
    Sections tagged with [data-anim-paused] freeze every animation
@@ -108,22 +108,22 @@ footer{
 .hero-eye{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
 .hero-eye::before{content:'';display:block;width:22px;height:2px;background:var(--c);transform-origin:left center;animation:pulse-line 2s ease infinite;will-change:transform,opacity}
 @keyframes pulse-line{0%,100%{opacity:.5;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.364)}}
-.hero h1{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:28px;color:#eaeaea}
-.hero h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(0,229,176,.2)}
-.hero-sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:460px;margin-bottom:36px;border-left:2px solid var(--c);padding-left:16px}
+.hero h1{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:28px;color:#123b35}
+.hero h1 .accent{color:var(--c);text-shadow:0 0 60px rgba(11,150,128,.2)}
+.hero-sub{font-size:13px;color:#6f9c93;line-height:1.85;max-width:460px;margin-bottom:36px;border-left:2px solid var(--c);padding-left:16px}
 .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
 
 /* ── BUTTONS ── */
 .cta{padding:15px 32px;font:700 11px/1 'IBM Plex Mono',monospace;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;transition:all .3s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;cursor:pointer}
-.cta.main{background:var(--c);color:var(--bg);box-shadow:3px 3px 0 rgba(255,255,255,.8)}
+.cta.main{background:var(--c);color:var(--bg);box-shadow:3px 3px 0 rgba(17,70,62,.55)}
 .cta.main::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.15);border-radius:50%;transform:translate(-50%,-50%);transition:width .5s,height .5s}
 .cta.main:hover::before{width:300px;height:300px}
-.cta.main:hover{box-shadow:0 0 30px var(--glow),0 0 60px rgba(0,229,176,.08),4px 4px 0 #fff;transform:translate(-2px,-2px)}
+.cta.main:hover{box-shadow:0 0 30px var(--glow),0 0 60px rgba(11,150,128,.08),4px 4px 0 #11463e;transform:translate(-2px,-2px)}
 .cta.main:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #fff;transition-duration:.06s}
 
 /* ── POPUP PREVIEW (1:1 with the live extension overlay — see contents/modules/styles.ts) ── */
 #pv-wrap{width:290px;transition:all .5s cubic-bezier(.22,1,.36,1)}
-.box{width:290px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.06);box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.02) inset;animation:float 4s ease-in-out infinite;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.4;will-change:transform;transform:translateZ(0)}
+.box{border-radius:14px;width:290px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.06);box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.02) inset;animation:float 4s ease-in-out infinite;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.4;will-change:transform;transform:translateZ(0)}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .box::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:180px;height:100px;border-radius:50%;filter:blur(60px);opacity:.08;z-index:0;pointer-events:none}
 /* Watermark — orbital logo behind overlay content. Pinned at fixed
@@ -131,7 +131,7 @@ footer{
    live extension's contents/modules/styles.ts .box::after rule. */
 .box::after{content:'';position:absolute;width:160px;height:160px;left:77%;top:77px;margin:-80px 0 0 -80px;background:url(/assets/icon.png) no-repeat center/contain;opacity:.12;pointer-events:none;z-index:0}
 .box.safe::before{background:#00e5b0}.box.caution::before{background:#f5d000}.box.danger::before{background:#ff5f5f}.box.rug::before{background:#ff2244}
-.box.safe{background:linear-gradient(180deg,#0b100f 0%,#090b0a 100%)}.box.caution{background:linear-gradient(180deg,#0e0d0a 0%,#0a0a09 100%)}.box.danger{background:linear-gradient(180deg,#0e0a0a 0%,#0a0909 100%)}.box.rug{background:linear-gradient(180deg,#100809 0%,#0a0808 100%)}
+.box.safe{background:linear-gradient(180deg,#0b100f 0%,#090b0a 100%)}.box.caution{background:linear-gradient(180deg,#0e0d0a 0%,#0a0a09 100%)}.box.danger{background:linear-gradient(180deg,#0e0a0a 0%,#0a0909 100%)}.box.rug{background:linear-gradient(180deg,#100809 0%,#0a0808 100%)} /* vernis demo */.box{box-shadow:0 40px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.02) inset,inset 0 1px 0 rgba(255,255,255,.09),inset 0 0 24px rgba(255,255,255,.02)}.box.safe{background:linear-gradient(160deg,rgba(255,255,255,.09) 0%,rgba(255,255,255,.035) 30%,rgba(255,255,255,0) 52%),linear-gradient(180deg,#0b100f 0%,#090b0a 100%)}.box.caution{background:linear-gradient(160deg,rgba(255,255,255,.09) 0%,rgba(255,255,255,.035) 30%,rgba(255,255,255,0) 52%),linear-gradient(180deg,#0e0d0a 0%,#0a0a09 100%)}.box.danger{background:linear-gradient(160deg,rgba(255,255,255,.09) 0%,rgba(255,255,255,.035) 30%,rgba(255,255,255,0) 52%),linear-gradient(180deg,#0e0a0a 0%,#0a0909 100%)}.box.rug{background:linear-gradient(160deg,rgba(255,255,255,.09) 0%,rgba(255,255,255,.035) 30%,rgba(255,255,255,0) 52%),linear-gradient(180deg,#100809 0%,#0a0808 100%)}
 .topbar{height:2px}
 .box.safe .topbar{background:linear-gradient(90deg,transparent,#00e5b0,transparent)}.box.caution .topbar{background:linear-gradient(90deg,transparent,#f5d000,transparent)}.box.danger .topbar{background:linear-gradient(90deg,transparent,#ff5f5f,transparent)}.box.rug .topbar{background:linear-gradient(90deg,transparent,#ff2244,transparent)}
 .hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 0}
@@ -167,12 +167,12 @@ footer{
 /* ── HOW IT WORKS ── */
 .how-section{padding:120px 0}
 .section-label{text-align:center;margin-bottom:60px}
-.section-label span{font-size:11px;color:#888;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;font-weight:600}
+.section-label span{font-size:11px;color:#4f7d74;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;font-weight:600}
 .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
 .how-item{background:var(--bg);padding:56px 40px;position:relative;transition:background .4s}
-.how-item:hover{background:#0e0e11}
-.how-n{font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.04);margin-bottom:16px;transition:.4s;text-align:center}
-.how-item:hover .how-n{color:rgba(0,229,176,.4);text-shadow:0 0 28px rgba(0,229,176,.35)}
+.how-item:hover{background:rgba(255,255,255,.5)}
+.how-n{font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(11,150,128,.04);margin-bottom:16px;transition:.4s;text-align:center}
+.how-item:hover .how-n{color:rgba(11,150,128,.4);text-shadow:0 0 28px rgba(11,150,128,.35)}
 
 /* Sequential light-up: 01 lights at 0s, 02 at 3s, 03 at 6s.
    Cycle restarts at 12s (6s of all-lit hold before reset). */
@@ -180,43 +180,43 @@ footer{
 .how-grid .how-item:nth-child(2) .how-n{animation:how-light-2 12s ease-in-out infinite}
 .how-grid .how-item:nth-child(3) .how-n{animation:how-light-3 12s ease-in-out infinite}
 @keyframes how-light-1{
-  0%        {color:rgba(0,229,176,.04);text-shadow:none}
-  3%,92%    {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
-  100%      {color:rgba(0,229,176,.04);text-shadow:none}
+  0%        {color:rgba(11,150,128,.04);text-shadow:none}
+  3%,92%    {color:rgba(11,150,128,.4); text-shadow:0 0 28px rgba(11,150,128,.35)}
+  100%      {color:rgba(11,150,128,.04);text-shadow:none}
 }
 @keyframes how-light-2{
-  0%,25%    {color:rgba(0,229,176,.04);text-shadow:none}
-  28%,92%   {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
-  100%      {color:rgba(0,229,176,.04);text-shadow:none}
+  0%,25%    {color:rgba(11,150,128,.04);text-shadow:none}
+  28%,92%   {color:rgba(11,150,128,.4); text-shadow:0 0 28px rgba(11,150,128,.35)}
+  100%      {color:rgba(11,150,128,.04);text-shadow:none}
 }
 @keyframes how-light-3{
-  0%,50%    {color:rgba(0,229,176,.04);text-shadow:none}
-  53%,92%   {color:rgba(0,229,176,.4); text-shadow:0 0 28px rgba(0,229,176,.35)}
-  100%      {color:rgba(0,229,176,.04);text-shadow:none}
+  0%,50%    {color:rgba(11,150,128,.04);text-shadow:none}
+  53%,92%   {color:rgba(11,150,128,.4); text-shadow:0 0 28px rgba(11,150,128,.35)}
+  100%      {color:rgba(11,150,128,.04);text-shadow:none}
 }
 .how-item h3{font-size:13px;color:var(--txt);letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px;font-weight:600}
-.how-item p{font-size:13px;color:#888;line-height:1.75}
+.how-item p{font-size:13px;color:#4f7d74;line-height:1.75}
 
 /* ── CTA FINAL ── */
 .cta-final{text-align:center;padding:140px 48px;margin:60px 0 40px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
 .cta-final::before{content:'ANTARES';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:400 280px/1 'Bebas Neue',sans-serif;color:rgba(255,255,255,.012);pointer-events:none;white-space:nowrap}
-.cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,229,176,.05) 0%,transparent 70%);pointer-events:none;animation:cta-pulse 3s ease infinite}
+.cta-final::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(11,150,128,.05) 0%,transparent 70%);pointer-events:none;animation:cta-pulse 3s ease infinite}
 @keyframes cta-pulse{0%,100%{opacity:.5}50%{opacity:1}}
 .cta-threat{font:500 14px/1.4 'IBM Plex Mono',monospace;color:#7a4a4a;letter-spacing:.18em;text-transform:uppercase;margin-bottom:28px;position:relative;z-index:1}
-.cta-final h2{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:56px;position:relative;z-index:1;color:#eaeaea}
-.cta-final h2 span{color:var(--c);text-shadow:0 0 80px rgba(0,229,176,.2)}
+.cta-final h2{font:400 clamp(68px,11vw,130px)/.88 'Bebas Neue',sans-serif;letter-spacing:.04em;margin-bottom:56px;position:relative;z-index:1;color:#123b35}
+.cta-final h2 span{color:var(--c);text-shadow:0 0 80px rgba(11,150,128,.2)}
 
 /* ── FOOTER ── */
-footer{text-align:center;padding:36px 32px;color:#15151a;font-size:10px;letter-spacing:.15em;text-transform:uppercase}
-footer span{color:#15151a}
+footer{text-align:center;padding:36px 32px;color:#8fbfb4;font-size:10px;letter-spacing:.15em;text-transform:uppercase}
+footer span{color:#8fbfb4}
 footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
-footer .foot-links a{color:#15151a;text-decoration:none;margin:0 4px;transition:color .25s}
-footer .foot-links a:hover{color:#5a5a62}
+footer .foot-links a{color:#8fbfb4;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a:hover{color:#6f9c93}
 
 /* ── GLITCH ── */
 .glitch{position:relative;display:inline-block;cursor:default;user-select:none}
 .glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;overflow:hidden;opacity:0;pointer-events:none;font:inherit;color:inherit;letter-spacing:inherit}
-.glitch::before{color:#ff006e;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%)}
+.glitch::before{color:#d2478f;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%)}
 .glitch::after{color:var(--c);clip-path:polygon(0 55%,100% 55%,100% 75%,0 75%)}
 .glitch:hover::before{animation:gl-a .45s steps(2,end) infinite}
 .glitch:hover::after{animation:gl-b .45s steps(2,end) infinite}
@@ -226,12 +226,12 @@ footer .foot-links a:hover{color:#5a5a62}
 /* ── SMOOTH SCROLL INDICATOR ── */
 .scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.3;animation:fade-bounce 2s ease infinite}
 @keyframes fade-bounce{0%,100%{opacity:.2;transform:translateX(-50%) translateY(0)}50%{opacity:.5;transform:translateX(-50%) translateY(6px)}}
-.scroll-indicator span{font-size:8px;color:#3a3a40;letter-spacing:.2em;text-transform:uppercase}
+.scroll-indicator span{font-size:8px;color:#8fb8ae;letter-spacing:.2em;text-transform:uppercase}
 .scroll-indicator .arrow{font-size:16px;color:var(--c)}
 
 /* ── LOSS STRIP (additive section, harmonised with How It Works rhythm) ── */
 .loss-strip{padding:100px 0 80px;text-align:center;position:relative;overflow:hidden}
-.loss-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at center,rgba(255,34,68,.04) 0%,transparent 70%);pointer-events:none}
+.loss-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at center,rgba(210,51,79,.04) 0%,transparent 70%);pointer-events:none}
 .loss-strip .section-label{position:relative;z-index:1}
 .loss-strip-inner{position:relative;z-index:1}
 
@@ -239,8 +239,8 @@ footer .foot-links a:hover{color:#5a5a62}
    every 8s. Each side (green climb, red crash) fades in with the
    reveal so the chart reads as drawn live, not flickering. */
 .loss-chart-bg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.32;z-index:0;clip-path:inset(0 100% 0 0);animation:loss-chart-reveal 8s ease-in-out infinite;will-change:clip-path}
-.loss-chart-bg .candles-up rect,.loss-chart-bg .candles-up line{filter:drop-shadow(0 0 4px rgba(0,229,176,.4))}
-.loss-chart-bg .candles-down rect,.loss-chart-bg .candles-down line{filter:drop-shadow(0 0 6px rgba(255,34,68,.55))}
+.loss-chart-bg .candles-up rect,.loss-chart-bg .candles-up line{filter:drop-shadow(0 0 4px rgba(11,150,128,.4))}
+.loss-chart-bg .candles-down rect,.loss-chart-bg .candles-down line{filter:drop-shadow(0 0 6px rgba(210,51,79,.55))}
 @keyframes loss-chart-reveal{
   0%   {clip-path:inset(0 100% 0 0);opacity:.32}
   55%  {clip-path:inset(0 0 0 0);   opacity:.32}
@@ -248,16 +248,16 @@ footer .foot-links a:hover{color:#5a5a62}
   100% {clip-path:inset(0 100% 0 0);opacity:.32}
 }
 .loss-strip-inner{position:relative;max-width:780px;margin:0 auto;padding:0 32px;text-align:center}
-.loss-strip-num{font:400 clamp(64px,10vw,118px)/.9 'Bebas Neue',sans-serif;letter-spacing:.02em;color:var(--red);margin-bottom:14px;text-shadow:0 0 50px rgba(255,34,68,.22),0 0 16px rgba(255,34,68,.12);display:flex;align-items:baseline;justify-content:center;gap:0}
+.loss-strip-num{font:400 clamp(64px,10vw,118px)/.9 'Bebas Neue',sans-serif;letter-spacing:.02em;color:rgba(14,66,58,.36);margin-bottom:14px;text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12);display:flex;align-items:baseline;justify-content:center;gap:0}
 .ls-currency,.ls-unit{font-size:.55em;align-self:flex-start;margin-top:.18em;opacity:.85}
 .ls-currency{margin-right:6px}.ls-unit{margin-left:6px}
 #loss-counter{font-feature-settings:"tnum";display:inline-block;min-width:1.4ch}
-.loss-strip-sub{font-size:13.5px;color:#888;line-height:1.8;letter-spacing:.16em;text-transform:uppercase;margin-bottom:30px;font-weight:500}
-.loss-strip-pivot{font-size:13.5px;color:#7a7a82;line-height:1.8;letter-spacing:.04em;max-width:560px;margin:0 auto 24px;padding:0 20px}
-.loss-strip-pivot b.accent{color:var(--c);font-weight:700;text-shadow:0 0 18px rgba(0,229,176,.2)}
-.ls-tag-d{color:#ff5f5f;font-weight:600;letter-spacing:.06em}
+.loss-strip-sub{font-size:13.5px;color:#4f7d74;line-height:1.8;letter-spacing:.16em;text-transform:uppercase;margin-bottom:30px;font-weight:500}
+.loss-strip-pivot{font-size:13.5px;color:#57837b;line-height:1.8;letter-spacing:.04em;max-width:560px;margin:0 auto 24px;padding:0 20px}
+.loss-strip-pivot b.accent{color:var(--c);font-weight:700;text-shadow:0 0 18px rgba(11,150,128,.2)}
+.ls-tag-d{color:#d64848;font-weight:600;letter-spacing:.06em}
 .ls-tag-r{color:var(--red);font-weight:700;letter-spacing:.06em}
-.loss-strip-foot{font-size:13.5px;color:#7a7a82;letter-spacing:.08em;line-height:1.8;max-width:560px;margin:0 auto;padding:0 20px}
+.loss-strip-foot{font-size:13.5px;color:#57837b;letter-spacing:.08em;line-height:1.8;max-width:560px;margin:0 auto;padding:0 20px}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
@@ -269,12 +269,34 @@ footer .foot-links a:hover{color:#5a5a62}
   .loss-strip{padding:80px 0 60px}
   .loss-strip-num{font-size:clamp(56px,13vw,90px)}
 }
-    .skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#0f0f11;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none;transition:top .2s}
+    .skip-link{position:absolute;top:-100%;left:0;background:var(--c);color:#f0fffa;padding:8px 16px;z-index:10000;font-size:12px;text-decoration:none;transition:top .2s}
     .skip-link:focus{top:0}
 </style>
 <!-- Structured Data -->
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Antares","applicationCategory":"BrowserApplication","operatingSystem":"Chrome","description":"Solana token scanner Chrome extension. 7 detection layers, 1000-point score. Real-time protection against scams, rug pulls, and honeypots.","url":"https://antaresscan.com/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-</head>
+<style id="mint-demo-overrides">
+/* ===== DEMO GLASS MINT - apercu local uniquement ===== */
+body{background:linear-gradient(118deg,#cfefe1 0%,#a8e3ce 32%,#84d7c9 65%,#6fcdd0 100%) fixed;text-shadow:0 1px 1px rgba(255,255,255,.2)}
+/* titres en verre (emboss) */
+h1,.hero h1,.cta-final h2{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+h1 .accent,.hero h1 .accent,.page-hero h1 .accent,.cta-final h2 span{color:rgba(10,140,118,.5);text-shadow:0 1px 1px rgba(255,255,255,.7),0 -1px 1px rgba(8,80,64,.32),0 0 34px rgba(11,150,128,.22)}
+/* header : wordmark + logo couleur "SCAMMED." + liens en verre */
+nav .brand{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+nav .brand img{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75);opacity:.42}
+nav .links a{color:rgba(14,66,58,.5);text-shadow:0 1px 1px rgba(255,255,255,.6),0 -1px 1px rgba(8,60,52,.22);font-size:13px}
+nav .links a:hover,nav .links a.active{color:rgba(10,140,118,.8)}
+/* protections : overlays produit, boutons pleins, glitch */
+#pv-wrap,#antares-host{text-shadow:none}
+.cta,.nav-cta,.skip-link,button{text-shadow:none}
+.glitch::before,.glitch::after{text-shadow:none}
+img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75)}
+/* cartes givrees (vernis E adopte, sans contours) */
+.how-item,.proof-stat,.feat-card,.tier,.src-card,.faq-item,.cmp-row,.layer,.step-card,.install-card,.values-grid>*,.layer-list>*,.score-visual>*,.feat-grid>*,.how-grid>*,.modes>*,.invariants>*,.facts-grid>*,.source-grid>*{backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);background:rgba(255,255,255,.24)!important;border:none!important;box-shadow:0 14px 38px rgba(8,80,70,.1)!important;border-radius:10px}
+.values-grid,.layer-list,.score-visual,.feat-grid,.how-grid,.modes,.invariants,.facts-grid,.source-grid{background:transparent!important;border:none!important;gap:18px}
+/* boutons arrondis comme les cartes */
+.cta,a.cta,.nav-cta,.nav-account,.tier-cta,button{border-radius:10px}
+:focus-visible{outline-color:#0b7d68}
+</style></head>
 <body class="is-home">
       <a href="#main-content" class="skip-link">Skip to content</a>
 
@@ -342,62 +364,62 @@ footer .foot-links a:hover{color:#5a5a62}
          crash candle → 6 red descending. Reveal animation sweeps the
          chart left→right every 8s. -->
     <g class="candles-up" stroke-width="1.2">
-      <line x1="10" y1="193" x2="10" y2="200" stroke="#00e5b0"/><rect x="7" y="195" width="6" height="3" fill="#00e5b0"/>
-      <line x1="38" y1="195" x2="38" y2="202" stroke="#00e5b0"/><rect x="35" y="197" width="6" height="3" fill="#00e5b0"/>
-      <line x1="66" y1="193" x2="66" y2="200" stroke="#00e5b0"/><rect x="63" y="195" width="6" height="3" fill="#00e5b0"/>
-      <line x1="94" y1="191" x2="94" y2="200" stroke="#00e5b0"/><rect x="91" y="193" width="6" height="4" fill="#00e5b0"/>
-      <line x1="122" y1="191" x2="122" y2="200" stroke="#00e5b0"/><rect x="119" y="193" width="6" height="5" fill="#00e5b0"/>
-      <line x1="150" y1="190" x2="150" y2="198" stroke="#00e5b0"/><rect x="147" y="192" width="6" height="4" fill="#00e5b0"/>
-      <line x1="164" y1="188" x2="164" y2="196" stroke="#00e5b0"/><rect x="161" y="190" width="6" height="4" fill="#00e5b0"/>
-      <line x1="178" y1="178" x2="178" y2="192" stroke="#00e5b0"/><rect x="175" y="180" width="6" height="10" fill="#00e5b0"/>
-      <line x1="192" y1="168" x2="192" y2="185" stroke="#00e5b0"/><rect x="189" y="170" width="6" height="12" fill="#00e5b0"/>
-      <line x1="206" y1="157" x2="206" y2="175" stroke="#00e5b0"/><rect x="203" y="160" width="6" height="12" fill="#00e5b0"/>
-      <line x1="248" y1="178" x2="248" y2="188" stroke="#00e5b0"/><rect x="245" y="180" width="6" height="5" fill="#00e5b0"/>
-      <line x1="262" y1="175" x2="262" y2="186" stroke="#00e5b0"/><rect x="259" y="178" width="6" height="6" fill="#00e5b0"/>
-      <line x1="290" y1="176" x2="290" y2="185" stroke="#00e5b0"/><rect x="287" y="178" width="6" height="4" fill="#00e5b0"/>
-      <line x1="304" y1="168" x2="304" y2="182" stroke="#00e5b0"/><rect x="301" y="170" width="6" height="10" fill="#00e5b0"/>
-      <line x1="318" y1="157" x2="318" y2="175" stroke="#00e5b0"/><rect x="315" y="160" width="6" height="12" fill="#00e5b0"/>
-      <line x1="346" y1="150" x2="346" y2="170" stroke="#00e5b0"/><rect x="343" y="152" width="6" height="16" fill="#00e5b0"/>
-      <line x1="360" y1="137" x2="360" y2="158" stroke="#00e5b0"/><rect x="357" y="140" width="6" height="15" fill="#00e5b0"/>
-      <line x1="388" y1="130" x2="388" y2="150" stroke="#00e5b0"/><rect x="385" y="132" width="6" height="16" fill="#00e5b0"/>
-      <line x1="402" y1="122" x2="402" y2="140" stroke="#00e5b0"/><rect x="399" y="125" width="6" height="13" fill="#00e5b0"/>
-      <line x1="416" y1="125" x2="416" y2="140" stroke="#00e5b0"/><rect x="413" y="128" width="6" height="10" fill="#00e5b0"/>
-      <line x1="444" y1="125" x2="444" y2="138" stroke="#00e5b0"/><rect x="441" y="128" width="6" height="7" fill="#00e5b0"/>
-      <line x1="458" y1="118" x2="458" y2="135" stroke="#00e5b0"/><rect x="455" y="120" width="6" height="12" fill="#00e5b0"/>
-      <line x1="472" y1="102" x2="472" y2="123" stroke="#00e5b0"/><rect x="469" y="105" width="6" height="15" fill="#00e5b0"/>
-      <line x1="500" y1="85" x2="500" y2="112" stroke="#00e5b0"/><rect x="497" y="88" width="6" height="20" fill="#00e5b0"/>
-      <line x1="514" y1="68" x2="514" y2="93" stroke="#00e5b0"/><rect x="511" y="72" width="6" height="18" fill="#00e5b0"/>
-      <line x1="542" y1="52" x2="542" y2="80" stroke="#00e5b0"/><rect x="539" y="55" width="6" height="20" fill="#00e5b0"/>
-      <line x1="556" y1="35" x2="556" y2="58" stroke="#00e5b0"/><rect x="553" y="38" width="6" height="17" fill="#00e5b0"/>
-      <line x1="570" y1="18" x2="570" y2="42" stroke="#00e5b0"/><rect x="567" y="22" width="6" height="16" fill="#00e5b0"/>
-      <line x1="682" y1="198" x2="682" y2="206" stroke="#00e5b0"/><rect x="679" y="200" width="6" height="3" fill="#00e5b0"/>
-      <line x1="724" y1="198" x2="724" y2="205" stroke="#00e5b0"/><rect x="721" y="200" width="6" height="2" fill="#00e5b0"/>
+      <line x1="10" y1="193" x2="10" y2="200" stroke="#0ca88c"/><rect x="7" y="195" width="6" height="3" fill="#0ca88c"/>
+      <line x1="38" y1="195" x2="38" y2="202" stroke="#0ca88c"/><rect x="35" y="197" width="6" height="3" fill="#0ca88c"/>
+      <line x1="66" y1="193" x2="66" y2="200" stroke="#0ca88c"/><rect x="63" y="195" width="6" height="3" fill="#0ca88c"/>
+      <line x1="94" y1="191" x2="94" y2="200" stroke="#0ca88c"/><rect x="91" y="193" width="6" height="4" fill="#0ca88c"/>
+      <line x1="122" y1="191" x2="122" y2="200" stroke="#0ca88c"/><rect x="119" y="193" width="6" height="5" fill="#0ca88c"/>
+      <line x1="150" y1="190" x2="150" y2="198" stroke="#0ca88c"/><rect x="147" y="192" width="6" height="4" fill="#0ca88c"/>
+      <line x1="164" y1="188" x2="164" y2="196" stroke="#0ca88c"/><rect x="161" y="190" width="6" height="4" fill="#0ca88c"/>
+      <line x1="178" y1="178" x2="178" y2="192" stroke="#0ca88c"/><rect x="175" y="180" width="6" height="10" fill="#0ca88c"/>
+      <line x1="192" y1="168" x2="192" y2="185" stroke="#0ca88c"/><rect x="189" y="170" width="6" height="12" fill="#0ca88c"/>
+      <line x1="206" y1="157" x2="206" y2="175" stroke="#0ca88c"/><rect x="203" y="160" width="6" height="12" fill="#0ca88c"/>
+      <line x1="248" y1="178" x2="248" y2="188" stroke="#0ca88c"/><rect x="245" y="180" width="6" height="5" fill="#0ca88c"/>
+      <line x1="262" y1="175" x2="262" y2="186" stroke="#0ca88c"/><rect x="259" y="178" width="6" height="6" fill="#0ca88c"/>
+      <line x1="290" y1="176" x2="290" y2="185" stroke="#0ca88c"/><rect x="287" y="178" width="6" height="4" fill="#0ca88c"/>
+      <line x1="304" y1="168" x2="304" y2="182" stroke="#0ca88c"/><rect x="301" y="170" width="6" height="10" fill="#0ca88c"/>
+      <line x1="318" y1="157" x2="318" y2="175" stroke="#0ca88c"/><rect x="315" y="160" width="6" height="12" fill="#0ca88c"/>
+      <line x1="346" y1="150" x2="346" y2="170" stroke="#0ca88c"/><rect x="343" y="152" width="6" height="16" fill="#0ca88c"/>
+      <line x1="360" y1="137" x2="360" y2="158" stroke="#0ca88c"/><rect x="357" y="140" width="6" height="15" fill="#0ca88c"/>
+      <line x1="388" y1="130" x2="388" y2="150" stroke="#0ca88c"/><rect x="385" y="132" width="6" height="16" fill="#0ca88c"/>
+      <line x1="402" y1="122" x2="402" y2="140" stroke="#0ca88c"/><rect x="399" y="125" width="6" height="13" fill="#0ca88c"/>
+      <line x1="416" y1="125" x2="416" y2="140" stroke="#0ca88c"/><rect x="413" y="128" width="6" height="10" fill="#0ca88c"/>
+      <line x1="444" y1="125" x2="444" y2="138" stroke="#0ca88c"/><rect x="441" y="128" width="6" height="7" fill="#0ca88c"/>
+      <line x1="458" y1="118" x2="458" y2="135" stroke="#0ca88c"/><rect x="455" y="120" width="6" height="12" fill="#0ca88c"/>
+      <line x1="472" y1="102" x2="472" y2="123" stroke="#0ca88c"/><rect x="469" y="105" width="6" height="15" fill="#0ca88c"/>
+      <line x1="500" y1="85" x2="500" y2="112" stroke="#0ca88c"/><rect x="497" y="88" width="6" height="20" fill="#0ca88c"/>
+      <line x1="514" y1="68" x2="514" y2="93" stroke="#0ca88c"/><rect x="511" y="72" width="6" height="18" fill="#0ca88c"/>
+      <line x1="542" y1="52" x2="542" y2="80" stroke="#0ca88c"/><rect x="539" y="55" width="6" height="20" fill="#0ca88c"/>
+      <line x1="556" y1="35" x2="556" y2="58" stroke="#0ca88c"/><rect x="553" y="38" width="6" height="17" fill="#0ca88c"/>
+      <line x1="570" y1="18" x2="570" y2="42" stroke="#0ca88c"/><rect x="567" y="22" width="6" height="16" fill="#0ca88c"/>
+      <line x1="682" y1="198" x2="682" y2="206" stroke="#0ca88c"/><rect x="679" y="200" width="6" height="3" fill="#0ca88c"/>
+      <line x1="724" y1="198" x2="724" y2="205" stroke="#0ca88c"/><rect x="721" y="200" width="6" height="2" fill="#0ca88c"/>
     </g>
     <g class="candles-down" stroke-width="1.2">
-      <line x1="24" y1="194" x2="24" y2="202" stroke="#ff2244"/><rect x="21" y="196" width="6" height="4" fill="#ff2244"/>
-      <line x1="52" y1="196" x2="52" y2="203" stroke="#ff2244"/><rect x="49" y="198" width="6" height="3" fill="#ff2244"/>
-      <line x1="80" y1="194" x2="80" y2="202" stroke="#ff2244"/><rect x="77" y="196" width="6" height="4" fill="#ff2244"/>
-      <line x1="108" y1="193" x2="108" y2="202" stroke="#ff2244"/><rect x="105" y="195" width="6" height="5" fill="#ff2244"/>
-      <line x1="136" y1="193" x2="136" y2="202" stroke="#ff2244"/><rect x="133" y="195" width="6" height="5" fill="#ff2244"/>
-      <line x1="220" y1="168" x2="220" y2="180" stroke="#ff2244"/><rect x="217" y="170" width="6" height="8" fill="#ff2244"/>
-      <line x1="234" y1="175" x2="234" y2="188" stroke="#ff2244"/><rect x="231" y="178" width="6" height="7" fill="#ff2244"/>
-      <line x1="276" y1="177" x2="276" y2="186" stroke="#ff2244"/><rect x="273" y="180" width="6" height="4" fill="#ff2244"/>
-      <line x1="332" y1="162" x2="332" y2="175" stroke="#ff2244"/><rect x="329" y="165" width="6" height="7" fill="#ff2244"/>
-      <line x1="374" y1="142" x2="374" y2="155" stroke="#ff2244"/><rect x="371" y="145" width="6" height="7" fill="#ff2244"/>
-      <line x1="430" y1="130" x2="430" y2="142" stroke="#ff2244"/><rect x="427" y="132" width="6" height="8" fill="#ff2244"/>
-      <line x1="486" y1="108" x2="486" y2="122" stroke="#ff2244"/><rect x="483" y="110" width="6" height="8" fill="#ff2244"/>
-      <line x1="528" y1="75" x2="528" y2="90" stroke="#ff2244"/><rect x="525" y="78" width="6" height="8" fill="#ff2244"/>
-      <line x1="584" y1="20" x2="584" y2="55" stroke="#ff2244"/><rect x="581" y="28" width="6" height="14" fill="#ff2244"/>
-      <line x1="598" y1="28" x2="598" y2="60" stroke="#ff2244"/><rect x="595" y="35" width="6" height="20" fill="#ff2244"/>
-      <line x1="612" y1="50" x2="612" y2="115" stroke="#ff2244"/><rect x="609" y="55" width="6" height="55" fill="#ff2244"/>
-      <line x1="626" y1="105" x2="626" y2="200" stroke="#ff2244"/><rect x="623" y="110" width="6" height="85" fill="#ff2244"/>
-      <line x1="640" y1="192" x2="640" y2="208" stroke="#ff2244"/><rect x="637" y="195" width="6" height="10" fill="#ff2244"/>
-      <line x1="654" y1="196" x2="654" y2="208" stroke="#ff2244"/><rect x="651" y="198" width="6" height="8" fill="#ff2244"/>
-      <line x1="668" y1="198" x2="668" y2="208" stroke="#ff2244"/><rect x="665" y="200" width="6" height="6" fill="#ff2244"/>
-      <line x1="696" y1="200" x2="696" y2="208" stroke="#ff2244"/><rect x="693" y="202" width="6" height="4" fill="#ff2244"/>
-      <line x1="710" y1="199" x2="710" y2="206" stroke="#ff2244"/><rect x="707" y="201" width="6" height="3" fill="#ff2244"/>
-      <line x1="738" y1="199" x2="738" y2="205" stroke="#ff2244"/><rect x="735" y="201" width="6" height="2" fill="#ff2244"/>
-      <line x1="752" y1="200" x2="752" y2="206" stroke="#ff2244"/><rect x="749" y="202" width="6" height="2" fill="#ff2244"/>
+      <line x1="24" y1="194" x2="24" y2="202" stroke="#d2334f"/><rect x="21" y="196" width="6" height="4" fill="#d2334f"/>
+      <line x1="52" y1="196" x2="52" y2="203" stroke="#d2334f"/><rect x="49" y="198" width="6" height="3" fill="#d2334f"/>
+      <line x1="80" y1="194" x2="80" y2="202" stroke="#d2334f"/><rect x="77" y="196" width="6" height="4" fill="#d2334f"/>
+      <line x1="108" y1="193" x2="108" y2="202" stroke="#d2334f"/><rect x="105" y="195" width="6" height="5" fill="#d2334f"/>
+      <line x1="136" y1="193" x2="136" y2="202" stroke="#d2334f"/><rect x="133" y="195" width="6" height="5" fill="#d2334f"/>
+      <line x1="220" y1="168" x2="220" y2="180" stroke="#d2334f"/><rect x="217" y="170" width="6" height="8" fill="#d2334f"/>
+      <line x1="234" y1="175" x2="234" y2="188" stroke="#d2334f"/><rect x="231" y="178" width="6" height="7" fill="#d2334f"/>
+      <line x1="276" y1="177" x2="276" y2="186" stroke="#d2334f"/><rect x="273" y="180" width="6" height="4" fill="#d2334f"/>
+      <line x1="332" y1="162" x2="332" y2="175" stroke="#d2334f"/><rect x="329" y="165" width="6" height="7" fill="#d2334f"/>
+      <line x1="374" y1="142" x2="374" y2="155" stroke="#d2334f"/><rect x="371" y="145" width="6" height="7" fill="#d2334f"/>
+      <line x1="430" y1="130" x2="430" y2="142" stroke="#d2334f"/><rect x="427" y="132" width="6" height="8" fill="#d2334f"/>
+      <line x1="486" y1="108" x2="486" y2="122" stroke="#d2334f"/><rect x="483" y="110" width="6" height="8" fill="#d2334f"/>
+      <line x1="528" y1="75" x2="528" y2="90" stroke="#d2334f"/><rect x="525" y="78" width="6" height="8" fill="#d2334f"/>
+      <line x1="584" y1="20" x2="584" y2="55" stroke="#d2334f"/><rect x="581" y="28" width="6" height="14" fill="#d2334f"/>
+      <line x1="598" y1="28" x2="598" y2="60" stroke="#d2334f"/><rect x="595" y="35" width="6" height="20" fill="#d2334f"/>
+      <line x1="612" y1="50" x2="612" y2="115" stroke="#d2334f"/><rect x="609" y="55" width="6" height="55" fill="#d2334f"/>
+      <line x1="626" y1="105" x2="626" y2="200" stroke="#d2334f"/><rect x="623" y="110" width="6" height="85" fill="#d2334f"/>
+      <line x1="640" y1="192" x2="640" y2="208" stroke="#d2334f"/><rect x="637" y="195" width="6" height="10" fill="#d2334f"/>
+      <line x1="654" y1="196" x2="654" y2="208" stroke="#d2334f"/><rect x="651" y="198" width="6" height="8" fill="#d2334f"/>
+      <line x1="668" y1="198" x2="668" y2="208" stroke="#d2334f"/><rect x="665" y="200" width="6" height="6" fill="#d2334f"/>
+      <line x1="696" y1="200" x2="696" y2="208" stroke="#d2334f"/><rect x="693" y="202" width="6" height="4" fill="#d2334f"/>
+      <line x1="710" y1="199" x2="710" y2="206" stroke="#d2334f"/><rect x="707" y="201" width="6" height="3" fill="#d2334f"/>
+      <line x1="738" y1="199" x2="738" y2="205" stroke="#d2334f"/><rect x="735" y="201" width="6" height="2" fill="#d2334f"/>
+      <line x1="752" y1="200" x2="752" y2="206" stroke="#d2334f"/><rect x="749" y="202" width="6" height="2" fill="#d2334f"/>
     </g>
   </svg>
   <div class="section-label section-label-loss reveal"><span>2024 &ndash; 2025 on Solana</span></div>
@@ -447,24 +469,24 @@ footer .foot-links a:hover{color:#5a5a62}
 <style>
 .proof-section{padding:100px 0 80px}
 .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:36px}
-.proof-stat{position:relative;background:linear-gradient(180deg,rgba(0,229,176,.03),rgba(15,15,18,.5));border:1px solid var(--border);padding:36px 28px;text-align:left;transition:.3s;overflow:hidden}
-.proof-stat:hover{border-color:rgba(0,229,176,.4);background:linear-gradient(180deg,rgba(0,229,176,.06),rgba(15,15,18,.7));transform:translateY(-2px)}
+.proof-stat{position:relative;background:linear-gradient(180deg,rgba(11,150,128,.03),rgba(255,255,255,.5));border:1px solid var(--border);padding:36px 28px;text-align:left;transition:.3s;overflow:hidden}
+.proof-stat:hover{border-color:rgba(11,150,128,.4);background:linear-gradient(180deg,rgba(11,150,128,.06),rgba(255,255,255,.7));transform:translateY(-2px)}
 .proof-accent-bar{position:absolute;top:0;left:0;height:2px;width:0;background:var(--c);transition:width .5s ease}
 .proof-stat:hover .proof-accent-bar{width:100%}
 .ps3-eye{font-size:12px;color:var(--c);letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;line-height:1.5;font-weight:600}
 .ps3-num{display:flex;align-items:baseline;gap:6px;margin-bottom:16px;font-family:"IBM Plex Mono",monospace}
-.ps3-num b{font:400 clamp(54px,7vw,76px)/.86 'Bebas Neue',sans-serif;color:#eaeaea;font-weight:400;letter-spacing:.02em}
-.ps3-denom{font-size:14px;color:#3a3a40;letter-spacing:.04em;font-family:'IBM Plex Mono',monospace;font-weight:400}
-.ps3-live-num b{color:var(--c);font-size:clamp(36px,4.8vw,52px);text-shadow:0 0 24px rgba(0,229,176,.2)}
-.ps3-msg{font-size:13px;color:#888;line-height:1.75;letter-spacing:.02em}
-.ps3-msg em{font-style:normal;color:#5a5a62;display:block;margin-top:6px;font-size:12px;line-height:1.65}
-.proof-blurb{font-size:13.5px;color:#aaa;line-height:1.8;max-width:780px;margin:0 auto;text-align:center;padding:0 20px}
-.proof-blurb code{color:#aaa;font-size:11.5px;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:2px}
-.proof-blurb a{display:inline-block;margin-top:14px;color:var(--c);text-decoration:none;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid rgba(0,229,176,.3);padding-bottom:4px;transition:.2s}
-.proof-blurb a:hover{border-bottom-color:var(--c);text-shadow:0 0 12px rgba(0,229,176,.5)}
+.ps3-num b{font:400 clamp(54px,7vw,76px)/.86 'Bebas Neue',sans-serif;color:#123b35;font-weight:400;letter-spacing:.02em}
+.ps3-denom{font-size:14px;color:#8fb8ae;letter-spacing:.04em;font-family:'IBM Plex Mono',monospace;font-weight:400}
+.ps3-live-num b{color:var(--c);font-size:clamp(36px,4.8vw,52px);text-shadow:0 0 24px rgba(11,150,128,.2)}
+.ps3-msg{font-size:13px;color:#4f7d74;line-height:1.75;letter-spacing:.02em}
+.ps3-msg em{font-style:normal;color:#6f9c93;display:block;margin-top:6px;font-size:12px;line-height:1.65}
+.proof-blurb{font-size:13.5px;color:#3f6e66;line-height:1.8;max-width:780px;margin:0 auto;text-align:center;padding:0 20px}
+.proof-blurb code{color:#3f6e66;font-size:11.5px;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:2px}
+.proof-blurb a{display:inline-block;margin-top:14px;color:var(--c);text-decoration:none;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid rgba(11,150,128,.3);padding-bottom:4px;transition:.2s}
+.proof-blurb a:hover{border-bottom-color:var(--c);text-shadow:0 0 12px rgba(11,150,128,.5)}
 .proof-link{display:block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase}
 .proof-link:hover{text-decoration:underline}
-.proof-verify{display:inline-block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid rgba(0,229,176,.3);padding-bottom:3px;transition:.2s}
+.proof-verify{display:inline-block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid rgba(11,150,128,.3);padding-bottom:3px;transition:.2s}
 .proof-verify:hover{border-bottom-color:var(--c)}
 @media(max-width:780px){.proof-grid{grid-template-columns:1fr}.ps3-num b{font-size:48px}.ps3-live-num b{font-size:36px}}
 

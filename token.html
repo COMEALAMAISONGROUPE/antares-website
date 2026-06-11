@@ -308,7 +308,16 @@ footer span{color:var(--c)}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Antares — Token Analysis","description":"Full analysis: score, flags, chart patterns, AI summary, and detailed risk breakdown for this Solana token.","url":"https://antaresscan.com/token","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antaresscan.com/"},"about":{"@type":"SoftwareApplication","name":"Antares","applicationCategory":"BrowserApplication","operatingSystem":"Chrome","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}}</script>
 <link rel="stylesheet" href="/css/mobile-fixes.css">
 <script src="/js/mobile-cta-rewrite.js" defer></script>
-</head>
+<style id="token-dark-restore">
+/* token.html = page produit, reste dark (base.css est desormais theme mint) */
+:root{--bg:#0a0a0c;--border:#1a1a1e}
+body{background:#0a0a0c}
+nav::before{background:rgba(10,10,12,.88);border-bottom:1px solid #1a1a1e}
+nav .brand{color:#e0e0e0}
+nav .links a{color:#454550}
+nav .nav-account{color:#888;border-color:#2a2a30}
+h1{color:#eaeaea}
+</style></head>
 <body>
       <a href="#main-content" class="skip-link">Skip to content</a>
       <div class="stripe" role="presentation" aria-hidden="true"></div>

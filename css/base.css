@@ -86,7 +86,7 @@ body{background:var(--bg);color:var(--txt);font-family:'IBM Plex Mono',monospace
    clicks, so mouse users don't see an outline ring on every click.
    ──────────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--c, #00e5b0);
+  outline: 2px solid var(--c, #0ca88c);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -109,8 +109,8 @@ main:focus-visible { outline: none; }
   left: 0;
   z-index: 10000;
   padding: 10px 16px;
-  background: var(--c, #00e5b0);
-  color: var(--bg, #0a0a0c);
+  background: var(--c, #0ca88c);
+  color: var(--bg, #e7f7f0);
   font: 700 12px/1 'IBM Plex Mono', monospace;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -122,7 +122,7 @@ main:focus-visible { outline: none; }
 .skip-link:focus,
 .skip-link:focus-visible {
   transform: translateY(0);
-  outline: 2px solid var(--bg, #0a0a0c);
+  outline: 2px solid var(--bg, #e7f7f0);
   outline-offset: -4px;
 }
 
@@ -156,7 +156,7 @@ nav::before {
   bottom: 0;
   left: calc(50% - 50vw);
   right: calc(50% - 50vw);
-  background: rgba(10, 10, 12, .88);
+  background: rgba(255,255,255, .88);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
@@ -166,7 +166,7 @@ nav::before {
 nav .brand {
   font: 400 30px/1 'Bebas Neue', sans-serif;
   letter-spacing: .18em;
-  color: #e0e0e0;
+  color: #16423b;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -176,7 +176,7 @@ nav .brand img { height: 38px; width: auto; }
 nav .links { display: flex; gap: 24px; }
 nav .links a {
   font-size: 11px;
-  color: #454550;
+  color: #82aaa1;
   text-decoration: none;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -204,13 +204,13 @@ nav .nav-cta { color: var(--bg); background: var(--c); border-color: var(--c); }
 nav .nav-cta:hover {
   background: transparent;
   color: var(--c);
-  box-shadow: 0 0 20px rgba(0, 229, 176, .25);
+  box-shadow: 0 0 20px rgba(11,150,128, .25);
 }
-nav .nav-account { color: #888; background: transparent; border-color: #2a2a30; }
+nav .nav-account { color: #4f7d74; background: transparent; border-color: rgba(14,80,70,.25); }
 nav .nav-account:hover {
   color: var(--c);
   border-color: var(--c);
-  background: rgba(0, 229, 176, .04);
+  background: rgba(11,150,128, .04);
 }
 
 /* ── Main content wrapper ──────────────────────────────────────────
@@ -251,12 +251,12 @@ nav .nav-account:hover {
 h1 {
   font: 400 clamp(52px, 9vw, 100px) / .9 'Bebas Neue', sans-serif;
   letter-spacing: .04em;
-  color: #eaeaea;
+  color: #123b35;
   margin-bottom: 20px;
 }
 h1 .accent {
   color: var(--c);
-  text-shadow: 0 0 60px rgba(0, 229, 176, .15);
+  text-shadow: 0 0 60px rgba(11,150,128, .15);
 }
 
 /* ── Page hero — same shape on every non-home page ─────────────────

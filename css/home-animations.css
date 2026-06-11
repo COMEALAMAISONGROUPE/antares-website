@@ -52,7 +52,7 @@
   height: 0.95em;
   margin-left: 4px;
   vertical-align: -.08em;
-  background: var(--c, #00e5b0);
+  background: var(--c, #0ca88c);
   opacity: 0;
   transition: opacity .15s linear;
 }

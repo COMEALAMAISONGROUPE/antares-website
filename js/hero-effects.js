@@ -116,7 +116,7 @@
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(q.x, q.y);
-          ctx.strokeStyle = 'rgba(0,229,176,' + (0.06 * (1 - d2 / CN)) + ')';
+          ctx.strokeStyle = 'rgba(11,150,128,' + (0.06 * (1 - d2 / CN)) + ')';
           ctx.stroke();
         }
       }

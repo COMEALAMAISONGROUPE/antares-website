@@ -8,27 +8,49 @@
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#00e5b0">
+<meta name="theme-color" content="#0ca88c">
 <link rel="stylesheet" href="/css/base.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--c:#00e5b0;--bg:#0a0a0c;--border:#1a1a1e}
-body{background:var(--bg);color:#c8c8cc;font-family:'IBM Plex Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+:root{--c:#0ca88c;--bg:#bce8d8;--border:rgba(14,80,70,.16)}
+body{background:var(--bg);color:#1d4a43;font-family:'IBM Plex Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
 .stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:999;background:linear-gradient(90deg,#c0007a,var(--c),#c8c000,#c0002a,var(--c),#c0007a);background-size:400% 100%;animation:stripe 6s linear infinite;opacity:.7}
 @keyframes stripe{0%{background-position:0% 0}100%{background-position:400% 0}}
 .code{font:400 clamp(120px,20vw,200px)/1 'Bebas Neue',sans-serif;letter-spacing:.08em;color:rgba(255,255,255,.03);margin-bottom:-20px}
-.verdict{font:400 clamp(48px,8vw,80px)/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#ff2244;text-shadow:0 0 40px rgba(255,34,68,.2);margin-bottom:16px}
-.msg{font-size:13px;color:#4a4a52;line-height:1.8;max-width:420px;margin-bottom:36px}
-.back{padding:15px 32px;font:700 11px/1 'IBM Plex Mono',monospace;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;background:var(--c);color:var(--bg);transition:all .3s;box-shadow:3px 3px 0 rgba(255,255,255,.8)}
-.back:hover{box-shadow:0 0 30px rgba(0,229,176,.12),4px 4px 0 #fff;transform:translate(-2px,-2px)}
-.score{margin-top:32px;font-size:10px;color:#2a2a2f;letter-spacing:.14em;text-transform:uppercase}
-.score b{color:#ff2244;font-weight:600}
-footer{position:fixed;bottom:24px;font-size:10px;color:#1a1a1e;letter-spacing:.15em;text-transform:uppercase}
+.verdict{font:400 clamp(48px,8vw,80px)/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#d2334f;text-shadow:0 0 40px rgba(210,51,79,.2);margin-bottom:16px}
+.msg{font-size:13px;color:#7fa8a0;line-height:1.8;max-width:420px;margin-bottom:36px}
+.back{padding:15px 32px;font:700 11px/1 'IBM Plex Mono',monospace;text-decoration:none;text-transform:uppercase;letter-spacing:.1em;background:var(--c);color:var(--bg);transition:all .3s;box-shadow:3px 3px 0 rgba(17,70,62,.55)}
+.back:hover{box-shadow:0 0 30px rgba(11,150,128,.12),4px 4px 0 #11463e;transform:translate(-2px,-2px)}
+.score{margin-top:32px;font-size:10px;color:rgba(14,80,70,.25);letter-spacing:.14em;text-transform:uppercase}
+.score b{color:#d2334f;font-weight:600}
+footer{position:fixed;bottom:24px;font-size:10px;color:rgba(14,80,70,.16);letter-spacing:.15em;text-transform:uppercase}
 footer span{color:var(--c)}
 </style>
 <link rel="stylesheet" href="/css/mobile-fixes.css">
 <script src="/js/mobile-cta-rewrite.js" defer></script>
-</head>
+<style id="mint-demo-overrides">
+/* ===== DEMO GLASS MINT - apercu local uniquement ===== */
+body{background:linear-gradient(118deg,#cfefe1 0%,#a8e3ce 32%,#84d7c9 65%,#6fcdd0 100%) fixed;text-shadow:0 1px 1px rgba(255,255,255,.2)}
+/* titres en verre (emboss) */
+h1,.hero h1,.cta-final h2{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+h1 .accent,.hero h1 .accent,.page-hero h1 .accent,.cta-final h2 span{color:rgba(10,140,118,.5);text-shadow:0 1px 1px rgba(255,255,255,.7),0 -1px 1px rgba(8,80,64,.32),0 0 34px rgba(11,150,128,.22)}
+/* header : wordmark + logo couleur "SCAMMED." + liens en verre */
+nav .brand{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+nav .brand img{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75);opacity:.42}
+nav .links a{color:rgba(14,66,58,.5);text-shadow:0 1px 1px rgba(255,255,255,.6),0 -1px 1px rgba(8,60,52,.22);font-size:13px}
+nav .links a:hover,nav .links a.active{color:rgba(10,140,118,.8)}
+/* protections : overlays produit, boutons pleins, glitch */
+#pv-wrap,#antares-host{text-shadow:none}
+.cta,.nav-cta,.skip-link,button{text-shadow:none}
+.glitch::before,.glitch::after{text-shadow:none}
+img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75)}
+/* cartes givrees (vernis E adopte, sans contours) */
+.how-item,.proof-stat,.feat-card,.tier,.src-card,.faq-item,.cmp-row,.layer,.step-card,.install-card,.values-grid>*,.layer-list>*,.score-visual>*,.feat-grid>*,.how-grid>*,.modes>*,.invariants>*,.facts-grid>*,.source-grid>*{backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);background:rgba(255,255,255,.24)!important;border:none!important;box-shadow:0 14px 38px rgba(8,80,70,.1)!important;border-radius:10px}
+.values-grid,.layer-list,.score-visual,.feat-grid,.how-grid,.modes,.invariants,.facts-grid,.source-grid{background:transparent!important;border:none!important;gap:18px}
+/* boutons arrondis comme les cartes */
+.cta,a.cta,.nav-cta,.nav-account,.tier-cta,button{border-radius:10px}
+:focus-visible{outline-color:#0b7d68}
+</style></head>
 <body>
 <div class="stripe" role="presentation"></div>
 <div class="code" aria-hidden="true">404</div>

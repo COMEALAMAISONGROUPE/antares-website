@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#00e5b0">
+<meta name="theme-color" content="#0ca88c">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Install Antares — Step by Step</title>
 <meta name="description" content="Install the Antares Chrome extension in 3 steps. Free, no signup, no data collection. Works on Chrome, Brave, Edge, Arc.">
@@ -26,38 +26,38 @@
 <meta name="twitter:image" content="https://antaresscan.com/assets/og-image.png">
 <link rel="stylesheet" href="/css/base.css">
 <style>
-:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc}
+:root{--c:#0ca88c;--bg:#bce8d8;--card:rgba(255,255,255,.34);--border:rgba(14,80,70,.16);--dim:#4d7a72;--txt:#1d4a43}
 /* nav + .shell live in css/base.css; .shell.api sets max-width:920px */
 .eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
 .eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
 @keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
-.sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:600px;border-left:2px solid var(--c);padding-left:16px;margin-bottom:48px}
+.sub{font-size:13px;color:#6f9c93;line-height:1.85;max-width:600px;border-left:2px solid var(--c);padding-left:16px;margin-bottom:48px}
 .step{display:grid;grid-template-columns:80px 1fr;gap:32px;padding:36px 0;border-bottom:1px solid var(--border);align-items:start}
-.step-n{font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.15)}
-.step-body h3{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#e0e0e0;margin-bottom:12px}
-.step-body p{font-size:12.5px;color:#7a7a82;line-height:1.85;margin-bottom:14px}
-.step-body p code{background:#15151a;padding:2px 6px;border-radius:2px;color:#bbb;font-size:11.5px}
+.step-n{font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(11,150,128,.15)}
+.step-body h3{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.06em;color:#16423b;margin-bottom:12px}
+.step-body p{font-size:12.5px;color:#57837b;line-height:1.85;margin-bottom:14px}
+.step-body p code{background:#8fbfb4;padding:2px 6px;border-radius:2px;color:#35655d;font-size:11.5px}
 .step-body a{color:var(--c)}
-.step-body .cta{display:inline-block;background:var(--c);color:#0a0a0c;padding:14px 28px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;margin-top:8px;transition:transform .2s,box-shadow .2s}
-.step-body .cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,229,176,.25)}
-.note-box{background:rgba(0,229,176,.04);border-left:2px solid var(--c);padding:14px 18px;font-size:11px;color:#888;line-height:1.85;margin-top:14px}
-.warn-box{background:rgba(245,208,0,.04);border-left:2px solid #f5d000;padding:14px 18px;font-size:11px;color:#a8a060;line-height:1.85;margin-top:14px}
-.compat{display:flex;gap:24px;flex-wrap:wrap;margin:32px 0 0;font-size:11px;color:#666}
+.step-body .cta{display:inline-block;background:var(--c);color:#f0fffa;padding:14px 28px;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border-radius:2px;margin-top:8px;transition:transform .2s,box-shadow .2s}
+.step-body .cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(11,150,128,.25)}
+.note-box{background:rgba(11,150,128,.04);border-left:2px solid var(--c);padding:14px 18px;font-size:11px;color:#4f7d74;line-height:1.85;margin-top:14px}
+.warn-box{background:rgba(184,155,0,.04);border-left:2px solid #b89b00;padding:14px 18px;font-size:11px;color:#8a7f35;line-height:1.85;margin-top:14px}
+.compat{display:flex;gap:24px;flex-wrap:wrap;margin:32px 0 0;font-size:11px;color:#6a958c}
 .compat span{display:flex;align-items:center;gap:8px}
 .compat span::before{content:'✓';color:var(--c);font-weight:700}
-.compat-matrix{margin:32px 0 0;border:1px solid var(--border);background:#0c0c0e;overflow:hidden}
+.compat-matrix{margin:32px 0 0;border:1px solid var(--border);background:rgba(255,255,255,.34);overflow:hidden}
 .compat-matrix table{width:100%;border-collapse:collapse;font-size:11.5px}
-.compat-matrix th{text-align:left;padding:12px 16px;font-weight:700;color:#bbb;letter-spacing:.12em;text-transform:uppercase;font-size:9.5px;background:#111114;border-bottom:1px solid var(--border)}
-.compat-matrix td{padding:11px 16px;color:#888;border-bottom:1px solid #131316;letter-spacing:.04em}
+.compat-matrix th{text-align:left;padding:12px 16px;font-weight:700;color:#35655d;letter-spacing:.12em;text-transform:uppercase;font-size:9.5px;background:rgba(255,255,255,.45);border-bottom:1px solid var(--border)}
+.compat-matrix td{padding:11px 16px;color:#4f7d74;border-bottom:1px solid rgba(255,255,255,.35);letter-spacing:.04em}
 .compat-matrix tr:last-child td{border-bottom:none}
 .compat-matrix td.ok{color:var(--c)}
-.compat-matrix td.warn{color:#a8a060}
-.compat-matrix td:first-child{color:#ddd;font-weight:600}
-.compat-note{font-size:10.5px;color:#555;line-height:1.85;padding:14px 16px 16px;background:#0a0a0c;margin:0;border-top:1px solid var(--border)}
-footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px;max-width:1160px;margin:60px auto 0}
+.compat-matrix td.warn{color:#8a7f35}
+.compat-matrix td:first-child{color:#2a5850;font-weight:600}
+.compat-note{font-size:10.5px;color:#75a199;line-height:1.85;padding:14px 16px 16px;background:#e7f7f0;margin:0;border-top:1px solid var(--border)}
+footer{text-align:center;padding:36px 32px;color:#8fb8ae;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;margin-top:60px;max-width:1160px;margin:60px auto 0}
 footer span{color:var(--c)}
 footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
-footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a{color:#82aaa1;text-decoration:none;margin:0 4px;transition:color .25s}
 footer .foot-links a:hover{color:var(--c)}
 
 /* Base burger + drawer styles live in css/mobile-fixes.css (loaded
@@ -70,7 +70,29 @@ footer .foot-links a:hover{color:var(--c)}
 <script src="/js/mobile-cta-rewrite.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Install Antares Chrome Extension","description":"3-step install guide for the Antares Solana token scanner","step":[{"@type":"HowToStep","name":"Open Chrome Web Store","text":"Visit the Antares listing on the Chrome Web Store"},{"@type":"HowToStep","name":"Add to Chrome","text":"Click 'Add to Chrome' and confirm permissions"},{"@type":"HowToStep","name":"Browse","text":"Antares activates automatically on supported Solana trading platforms"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://antaresscan.com/"},{"@type":"ListItem","position":2,"name":"Install Antares — Step by Step","item":"https://antaresscan.com/install"}]}</script>
-</head>
+<style id="mint-demo-overrides">
+/* ===== DEMO GLASS MINT - apercu local uniquement ===== */
+body{background:linear-gradient(118deg,#cfefe1 0%,#a8e3ce 32%,#84d7c9 65%,#6fcdd0 100%) fixed;text-shadow:0 1px 1px rgba(255,255,255,.2)}
+/* titres en verre (emboss) */
+h1,.hero h1,.cta-final h2{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+h1 .accent,.hero h1 .accent,.page-hero h1 .accent,.cta-final h2 span{color:rgba(10,140,118,.5);text-shadow:0 1px 1px rgba(255,255,255,.7),0 -1px 1px rgba(8,80,64,.32),0 0 34px rgba(11,150,128,.22)}
+/* header : wordmark + logo couleur "SCAMMED." + liens en verre */
+nav .brand{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+nav .brand img{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75);opacity:.42}
+nav .links a{color:rgba(14,66,58,.5);text-shadow:0 1px 1px rgba(255,255,255,.6),0 -1px 1px rgba(8,60,52,.22);font-size:13px}
+nav .links a:hover,nav .links a.active{color:rgba(10,140,118,.8)}
+/* protections : overlays produit, boutons pleins, glitch */
+#pv-wrap,#antares-host{text-shadow:none}
+.cta,.nav-cta,.skip-link,button{text-shadow:none}
+.glitch::before,.glitch::after{text-shadow:none}
+img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75)}
+/* cartes givrees (vernis E adopte, sans contours) */
+.how-item,.proof-stat,.feat-card,.tier,.src-card,.faq-item,.cmp-row,.layer,.step-card,.install-card,.values-grid>*,.layer-list>*,.score-visual>*,.feat-grid>*,.how-grid>*,.modes>*,.invariants>*,.facts-grid>*,.source-grid>*{backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);background:rgba(255,255,255,.24)!important;border:none!important;box-shadow:0 14px 38px rgba(8,80,70,.1)!important;border-radius:10px}
+.values-grid,.layer-list,.score-visual,.feat-grid,.how-grid,.modes,.invariants,.facts-grid,.source-grid{background:transparent!important;border:none!important;gap:18px}
+/* boutons arrondis comme les cartes */
+.cta,a.cta,.nav-cta,.nav-account,.tier-cta,button{border-radius:10px}
+:focus-visible{outline-color:#0b7d68}
+</style></head>
 <body>
 <div class="stripe" role="presentation"></div>
 <nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="/assets/icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install &rarr;</a></div>  <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">

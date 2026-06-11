@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#00e5b0">
+<meta name="theme-color" content="#0ca88c">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Proof &mdash; Antares</title>
 <meta name="description" content="How we prove the Antares scoring engine works. A frozen corpus of real Solana tokens, a nightly drift check against the same /api/scan endpoint your extension hits, and a scoped audit path for security researchers.">
@@ -26,10 +26,10 @@
 <meta name="twitter:image" content="https://antaresscan.com/assets/og-image.png">
 <link rel="stylesheet" href="/css/base.css">
 <style>
-:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--card-2:#0d0d10;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff5566;--yellow:#f5d000}
+:root{--c:#0ca88c;--bg:#bce8d8;--card:rgba(255,255,255,.34);--card-2:rgba(255,255,255,.22);--border:rgba(14,80,70,.16);--dim:#4d7a72;--txt:#1d4a43;--red:#d8405a;--yellow:#b89b00}
 
 /* Top stripe + atom watermark (consistent with the rest of the site) */
-.bg-atom{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:1100px;height:1100px;opacity:.05;pointer-events:none;z-index:0;background:radial-gradient(ellipse at center,rgba(0,229,176,.18) 0%,transparent 60%)}
+.bg-atom{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:1100px;height:1100px;opacity:.05;pointer-events:none;z-index:0;background:radial-gradient(ellipse at center,rgba(11,150,128,.18) 0%,transparent 60%)}
 .bg-atom::before{content:'';position:absolute;inset:0;background:url('/assets/icon.png') no-repeat center;background-size:80%;filter:invert(1) brightness(.8) sepia(.5) hue-rotate(115deg) saturate(2.2);opacity:.5}
 
 /* nav + .shell live in css/base.css; .shell.mid sets max-width:880px */
@@ -55,14 +55,14 @@
 
 /* Generic prose card — used as the wrapper for each major section */
 .card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--c);padding:28px 32px;margin-bottom:18px;position:relative}
-.card.warn-card{border-left-color:var(--yellow);background:linear-gradient(180deg,rgba(245,208,0,.04) 0%,var(--card) 60%)}
-.card.cta-card{border-left-color:var(--c);background:linear-gradient(135deg,rgba(0,229,176,.06) 0%,var(--card) 70%)}
-.card p{font-size:13.5px;color:#9a9aa2;line-height:1.85;margin-bottom:12px}
+.card.warn-card{border-left-color:var(--yellow);background:linear-gradient(180deg,rgba(184,155,0,.04) 0%,var(--card) 60%)}
+.card.cta-card{border-left-color:var(--c);background:linear-gradient(135deg,rgba(11,150,128,.06) 0%,var(--card) 70%)}
+.card p{font-size:13.5px;color:#44726a;line-height:1.85;margin-bottom:12px}
 .card p:last-child{margin-bottom:0}
 .card p b{color:#cfcfd6;font-weight:600}
-.card p a{color:var(--c);text-decoration:none;border-bottom:1px solid rgba(0,229,176,.4);transition:border-color .2s}
+.card p a{color:var(--c);text-decoration:none;border-bottom:1px solid rgba(11,150,128,.4);transition:border-color .2s}
 .card p a:hover{border-color:var(--c)}
-.card code{background:#1a1a1f;padding:2px 7px;border-radius:2px;color:#cfcfd6;font-size:11.5px;font-family:'IBM Plex Mono',monospace}
+.card code{background:rgba(14,80,70,.12);padding:2px 7px;border-radius:2px;color:#cfcfd6;font-size:11.5px;font-family:'IBM Plex Mono',monospace}
 
 /* Failure-mode tiles — 3 cards stacked, each with a severity dot + verdict label */
 .modes{display:grid;grid-template-columns:1fr;gap:1px;margin:20px 0 16px;background:var(--border);border:1px solid var(--border)}
@@ -79,16 +79,16 @@
 .mode.warn .tag{color:var(--c)}
 .mode-body{flex:1}
 .mode .tag{display:inline-block;font:700 10px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
-.mode h4{font:400 22px/1.15 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:6px}
-.mode p{font-size:12.5px;color:#9a9aa2;line-height:1.7;margin:0}
+.mode h4{font:400 22px/1.15 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#123b35;margin-bottom:6px}
+.mode p{font-size:12.5px;color:#44726a;line-height:1.7;margin:0}
 .mode p b{color:#c8c8d0;font-weight:600}
 
 /* Auditor invariants — 2-column card grid */
 .invariants{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin:20px 0 16px;background:var(--border);border:1px solid var(--border)}
 .invariant{background:var(--card-2);padding:22px 24px}
 .invariant .num{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;margin-bottom:10px}
-.invariant h4{font:400 22px/1.15 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#eaeaea;margin-bottom:8px}
-.invariant p{font-size:12.5px;color:#9a9aa2;line-height:1.7;margin:0}
+.invariant h4{font:400 22px/1.15 'Bebas Neue',sans-serif;letter-spacing:.04em;color:#123b35;margin-bottom:8px}
+.invariant p{font-size:12.5px;color:#44726a;line-height:1.7;margin:0}
 .invariant p b{color:#c8c8d0;font-weight:600}
 @media(max-width:760px){
   .invariants{grid-template-columns:1fr}
@@ -97,18 +97,18 @@
 
 /* CTA email button */
 .audit-cta{display:inline-flex;align-items:center;gap:10px;margin-top:14px;padding:12px 20px;background:var(--c);color:var(--bg);font:700 11.5px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border:1px solid var(--c);transition:.25s}
-.audit-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 24px rgba(0,229,176,.3)}
+.audit-cta:hover{background:transparent;color:var(--c);box-shadow:0 0 24px rgba(11,150,128,.3)}
 .audit-cta::after{content:'\2192';margin-left:4px}
 
 /* Closing line — bold callout */
-.closer{margin:64px 0 16px;padding:24px 28px;background:linear-gradient(135deg,rgba(0,229,176,.04) 0%,var(--card) 100%);border:1px solid var(--border);border-left:3px solid var(--c);position:relative}
-.closer p{font-size:13.5px;color:#9a9aa2;line-height:1.85;margin:0}
-.closer p b{color:#eaeaea;font-weight:600}
+.closer{margin:64px 0 16px;padding:24px 28px;background:linear-gradient(135deg,rgba(11,150,128,.04) 0%,var(--card) 100%);border:1px solid var(--border);border-left:3px solid var(--c);position:relative}
+.closer p{font-size:13.5px;color:#44726a;line-height:1.85;margin:0}
+.closer p b{color:#123b35;font-weight:600}
 
-footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;max-width:1160px;margin:80px auto 0;position:relative;z-index:2}
+footer{text-align:center;padding:36px 32px;color:#8fb8ae;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;max-width:1160px;margin:80px auto 0;position:relative;z-index:2}
 footer span{color:var(--c)}
 footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
-footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a{color:#82aaa1;text-decoration:none;margin:0 4px;transition:color .25s}
 footer .foot-links a:hover{color:var(--c)}
 
 /* Base burger + drawer styles live in css/mobile-fixes.css (loaded
@@ -120,7 +120,29 @@ footer .foot-links a:hover{color:var(--c)}
 <script src="/js/burger.js" defer></script>
 <script src="/js/mobile-cta-rewrite.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://antaresscan.com/"},{"@type":"ListItem","position":2,"name":"Proof","item":"https://antaresscan.com/proof"}]}</script>
-</head>
+<style id="mint-demo-overrides">
+/* ===== DEMO GLASS MINT - apercu local uniquement ===== */
+body{background:linear-gradient(118deg,#cfefe1 0%,#a8e3ce 32%,#84d7c9 65%,#6fcdd0 100%) fixed;text-shadow:0 1px 1px rgba(255,255,255,.2)}
+/* titres en verre (emboss) */
+h1,.hero h1,.cta-final h2{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+h1 .accent,.hero h1 .accent,.page-hero h1 .accent,.cta-final h2 span{color:rgba(10,140,118,.5);text-shadow:0 1px 1px rgba(255,255,255,.7),0 -1px 1px rgba(8,80,64,.32),0 0 34px rgba(11,150,128,.22)}
+/* header : wordmark + logo couleur "SCAMMED." + liens en verre */
+nav .brand{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+nav .brand img{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75);opacity:.42}
+nav .links a{color:rgba(14,66,58,.5);text-shadow:0 1px 1px rgba(255,255,255,.6),0 -1px 1px rgba(8,60,52,.22);font-size:13px}
+nav .links a:hover,nav .links a.active{color:rgba(10,140,118,.8)}
+/* protections : overlays produit, boutons pleins, glitch */
+#pv-wrap,#antares-host{text-shadow:none}
+.cta,.nav-cta,.skip-link,button{text-shadow:none}
+.glitch::before,.glitch::after{text-shadow:none}
+img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75)}
+/* cartes givrees (vernis E adopte, sans contours) */
+.how-item,.proof-stat,.feat-card,.tier,.src-card,.faq-item,.cmp-row,.layer,.step-card,.install-card,.values-grid>*,.layer-list>*,.score-visual>*,.feat-grid>*,.how-grid>*,.modes>*,.invariants>*,.facts-grid>*,.source-grid>*{backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);background:rgba(255,255,255,.24)!important;border:none!important;box-shadow:0 14px 38px rgba(8,80,70,.1)!important;border-radius:10px}
+.values-grid,.layer-list,.score-visual,.feat-grid,.how-grid,.modes,.invariants,.facts-grid,.source-grid{background:transparent!important;border:none!important;gap:18px}
+/* boutons arrondis comme les cartes */
+.cta,a.cta,.nav-cta,.nav-account,.tier-cta,button{border-radius:10px}
+:focus-visible{outline-color:#0b7d68}
+</style></head>
 <body class="short-mobile">
 <div class="stripe" role="presentation"></div>
 <div class="bg-atom" aria-hidden="true"></div>
@@ -202,7 +224,7 @@ footer .foot-links a:hover{color:var(--c)}
   <div class="invariant">
     <div class="num">01 / Endpoint</div>
     <h4>The endpoint is real.</h4>
-    <p>Every public <code style="background:#1a1a1f;padding:1px 5px;color:#cfcfd6;font-size:11px">/api/scan</code> call is the same code path the corpus drift check hits. You can compare the JSON your extension receives against a token's known on-chain state and the result is reproducible.</p>
+    <p>Every public <code style="background:rgba(14,80,70,.12);padding:1px 5px;color:#cfcfd6;font-size:11px">/api/scan</code> call is the same code path the corpus drift check hits. You can compare the JSON your extension receives against a token's known on-chain state and the result is reproducible.</p>
   </div>
   <div class="invariant">
     <div class="num">02 / Logic</div>

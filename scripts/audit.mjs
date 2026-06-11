@@ -319,9 +319,9 @@ async function auditDesktop(page, route) {
   }
 
   /* PWA contract: every public route declares the manifest + a
-     theme-color matching the brand mint (#00e5b0). */
+     theme-color matching the brand mint (#0ca88c, glass-mint theme). */
   if (!probe.manifestLinked) fails.push('manifest-link-missing');
-  if (probe.themeColor !== '#00e5b0') {
+  if (probe.themeColor !== '#0ca88c') {
     fails.push(`theme-color-mismatch (got="${probe.themeColor}")`);
   }
 

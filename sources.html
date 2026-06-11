@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
         <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#00e5b0">
+<meta name="theme-color" content="#0ca88c">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Antares — Data Sources</title>
             <meta name="description" content="The 6 independent APIs Antares queries on every scan: DexScreener (market data), RugCheck (token audit), GoPlus (contract security), Helius (on-chain RPC), Solscan (holder analysis), GeckoTerminal (chart data). How each contributes to the verdict.">
@@ -30,48 +30,48 @@
 <link rel="stylesheet" href="/css/base.css">
 <style>
 
-:root{--c:#00e5b0;--bg:#0a0a0c;--card:#111114;--border:#1a1a1e;--dim:#3a3a3f;--txt:#c8c8cc;--red:#ff2244;--yellow:#f5d000;--glow:rgba(0,229,176,.12)}
-.cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(0,229,176,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
+:root{--c:#0ca88c;--bg:#bce8d8;--card:rgba(255,255,255,.34);--border:rgba(14,80,70,.16);--dim:#4d7a72;--txt:#1d4a43;--red:#d2334f;--yellow:#b89b00;--glow:rgba(11,150,128,.12)}
+.cursor-glow{position:fixed;width:350px;height:350px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(11,150,128,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
 #particles-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:.35}
 /* nav + .shell live in css/base.css; default .shell = 1160px */
 .glitch{position:relative;display:inline-block;cursor:default;user-select:none}
 .glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;overflow:hidden;opacity:0;pointer-events:none;font:inherit;color:inherit;letter-spacing:inherit}
-.glitch::before{color:#ff006e;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%)}
+.glitch::before{color:#d2478f;clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%)}
 .glitch::after{color:var(--c);clip-path:polygon(0 55%,100% 55%,100% 75%,0 75%)}
 .glitch:hover::before{animation:gl-a .45s steps(2,end) infinite}
 .glitch:hover::after{animation:gl-b .45s steps(2,end) infinite}
 @keyframes gl-a{0%{transform:translate(-3px,0);opacity:.75}50%{transform:translate(-2px,0);opacity:.75}100%{transform:translate(-3px,0);opacity:0}}
 @keyframes gl-b{0%{transform:translate(3px,0);opacity:.55}66%{transform:translate(2px,0);opacity:.55}100%{transform:translate(3px,0);opacity:0}}
-footer{text-align:center;padding:36px 32px;color:#3a3a40;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;max-width:1160px;margin:80px auto 0}
+footer{text-align:center;padding:36px 32px;color:#8fb8ae;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;max-width:1160px;margin:80px auto 0}
 footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
-footer .foot-links a{color:#454550;text-decoration:none;margin:0 4px;transition:color .25s}
+footer .foot-links a{color:#82aaa1;text-decoration:none;margin:0 4px;transition:color .25s}
 footer .foot-links a:hover{color:var(--c)}
 footer span{color:var(--c)}
 .section-label{display:flex;align-items:center;gap:16px;margin-bottom:50px}
-.section-label span{font-size:10px;color:#2a2a2f;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
+.section-label span{font-size:10px;color:rgba(14,80,70,.25);letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
 
 .page-hero .eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
 .page-hero .eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--c);animation:pulse-line 2s ease infinite}
 @keyframes pulse-line{0%,100%{opacity:.5;width:22px}50%{opacity:1;width:30px}}
-.page-hero .sub{font-size:13px;color:#5a5a62;line-height:1.85;max-width:600px;border-left:2px solid var(--c);padding-left:16px}
+.page-hero .sub{font-size:13px;color:#6f9c93;line-height:1.85;max-width:600px;border-left:2px solid var(--c);padding-left:16px}
 .source-grid{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:80px}
 .source{background:var(--bg);display:grid;grid-template-columns:200px 1fr;gap:0;transition:background .4s}
-.source:hover{background:#0d0d10}
+.source:hover{background:rgba(255,255,255,.25)}
 .source-name{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;border-right:1px solid var(--border);text-align:center}
-.source-name h3{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.08em;color:#e0e0e0;margin-bottom:6px}
+.source-name h3{font:400 28px/1 'Bebas Neue',sans-serif;letter-spacing:.08em;color:#16423b;margin-bottom:6px}
 .source-name .role{font-size:9px;color:var(--c);letter-spacing:.12em;text-transform:uppercase}
 .source-body{padding:36px 40px}
-.source-body p{font-size:11px;color:#4a4a52;line-height:1.8;margin-bottom:12px}
+.source-body p{font-size:11px;color:#7fa8a0;line-height:1.8;margin-bottom:12px}
 .source-body p:last-child{margin-bottom:0}
 .data-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.data-tags span{font-size:8px;color:#3a3a40;border:1px solid var(--border);padding:4px 10px;letter-spacing:.1em;text-transform:uppercase;transition:.3s}
-.data-tags span:hover{border-color:rgba(0,229,176,.2);color:var(--c)}
-.conflict-box{border:1px solid rgba(0,229,176,.12);background:linear-gradient(180deg,rgba(0,229,176,.02) 0%,transparent 100%);padding:48px 40px;margin-bottom:80px;position:relative;overflow:hidden}
-.conflict-box::before{content:'TRUST NOTHING';position:absolute;top:50%;right:40px;transform:translateY(-50%);font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(0,229,176,.02);pointer-events:none}
+.data-tags span{font-size:8px;color:#8fb8ae;border:1px solid var(--border);padding:4px 10px;letter-spacing:.1em;text-transform:uppercase;transition:.3s}
+.data-tags span:hover{border-color:rgba(11,150,128,.2);color:var(--c)}
+.conflict-box{border:1px solid rgba(11,150,128,.12);background:linear-gradient(180deg,rgba(11,150,128,.02) 0%,transparent 100%);padding:48px 40px;margin-bottom:80px;position:relative;overflow:hidden}
+.conflict-box::before{content:'TRUST NOTHING';position:absolute;top:50%;right:40px;transform:translateY(-50%);font:400 80px/1 'Bebas Neue',sans-serif;color:rgba(11,150,128,.02);pointer-events:none}
 .conflict-box h3{font:400 32px/1 'Bebas Neue',sans-serif;color:var(--c);letter-spacing:.06em;margin-bottom:12px}
-.conflict-box p{font-size:11px;color:#4a4a52;line-height:1.8;max-width:560px}
+.conflict-box p{font-size:11px;color:#7fa8a0;line-height:1.8;max-width:560px}
 @media(max-width:900px){.source{grid-template-columns:1fr}.source-name{border-right:none;border-bottom:1px solid var(--border);padding:24px}}
 
 
@@ -84,7 +84,29 @@ footer span{color:var(--c)}
 <script src="/js/a11y.js" defer></script>
 <script src="/js/mobile-cta-rewrite.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://antaresscan.com/"},{"@type":"ListItem","position":2,"name":"Data Sources","item":"https://antaresscan.com/sources"}]}</script>
-</head>
+<style id="mint-demo-overrides">
+/* ===== DEMO GLASS MINT - apercu local uniquement ===== */
+body{background:linear-gradient(118deg,#cfefe1 0%,#a8e3ce 32%,#84d7c9 65%,#6fcdd0 100%) fixed;text-shadow:0 1px 1px rgba(255,255,255,.2)}
+/* titres en verre (emboss) */
+h1,.hero h1,.cta-final h2{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+h1 .accent,.hero h1 .accent,.page-hero h1 .accent,.cta-final h2 span{color:rgba(10,140,118,.5);text-shadow:0 1px 1px rgba(255,255,255,.7),0 -1px 1px rgba(8,80,64,.32),0 0 34px rgba(11,150,128,.22)}
+/* header : wordmark + logo couleur "SCAMMED." + liens en verre */
+nav .brand{color:rgba(14,66,58,.36);text-shadow:0 1px 1px rgba(255,255,255,.65),0 -1px 1px rgba(8,60,52,.28),0 12px 26px rgba(8,80,70,.12)}
+nav .brand img{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75);opacity:.42}
+nav .links a{color:rgba(14,66,58,.5);text-shadow:0 1px 1px rgba(255,255,255,.6),0 -1px 1px rgba(8,60,52,.22);font-size:13px}
+nav .links a:hover,nav .links a.active{color:rgba(10,140,118,.8)}
+/* protections : overlays produit, boutons pleins, glitch */
+#pv-wrap,#antares-host{text-shadow:none}
+.cta,.nav-cta,.skip-link,button{text-shadow:none}
+.glitch::before,.glitch::after{text-shadow:none}
+img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) saturate(2.4) hue-rotate(125deg) brightness(.75)}
+/* cartes givrees (vernis E adopte, sans contours) */
+.how-item,.proof-stat,.feat-card,.tier,.src-card,.faq-item,.cmp-row,.layer,.step-card,.install-card,.values-grid>*,.layer-list>*,.score-visual>*,.feat-grid>*,.how-grid>*,.modes>*,.invariants>*,.facts-grid>*,.source-grid>*{backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);background:rgba(255,255,255,.24)!important;border:none!important;box-shadow:0 14px 38px rgba(8,80,70,.1)!important;border-radius:10px}
+.values-grid,.layer-list,.score-visual,.feat-grid,.how-grid,.modes,.invariants,.facts-grid,.source-grid{background:transparent!important;border:none!important;gap:18px}
+/* boutons arrondis comme les cartes */
+.cta,a.cta,.nav-cta,.nav-account,.tier-cta,button{border-radius:10px}
+:focus-visible{outline-color:#0b7d68}
+</style></head>
 <body>
 <div class="stripe" role="presentation" aria-hidden="true"></div>
 <div class="cursor-glow" id="cursor-glow"></div>
