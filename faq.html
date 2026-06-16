@@ -128,7 +128,7 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 
 <div class="qa"><h3>What do SAFE / CAUTION / DANGER / RUG actually mean?</h3>
 <p>The verdict is a band on the 1000-point score, with hard overrides:</p>
-<p><b>SAFE</b> (score &ge;900, &ge;5 sources active): no critical signals across all 7 layers.<br><b>CAUTION</b> (600-899): at least one risk signal but nothing critical &mdash; e.g. concentrated top-10 holders, mild wash-trading ratio, very young token.<br><b>DANGER</b> (350-599): multiple risk signals or one critical signal partially mitigated by maturity.<br><b>RUG</b> (&lt;350 or Safe Gate triggered): hard kill &mdash; LP open, honeypot, mint/freeze active, or deceptive name.</p>
+<p><b>SAFE</b> (score &ge;900, &ge;5 sources active): no critical signals across all 7 layers.<br><b>CAUTION</b> (600-899): at least one risk signal but nothing critical &mdash; e.g. concentrated top-10 holders, mild wash-trading ratio, very young token.<br><b>DANGER</b> (350-599 &mdash; or forced by any single critical flag, or by 3+ warning flags): multiple risk signals, or one critical signal. A Safe Gate hard flag &mdash; LP open, honeypot, mint/freeze active, deceptive name &mdash; also forces DANGER regardless of how clean the rest looks.<br><b>RUG</b> (&lt;350): lowest band &mdash; a structurally broken token, or a Safe Gate hard flag landing on an already-failing score.</p>
 </div>
 
 <div class="qa"><h3>Can a SAFE token still rug?</h3>
