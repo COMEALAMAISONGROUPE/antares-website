@@ -97,6 +97,56 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 </section>
 
 <div class="release">
+  <div class="release-head"><div class="release-v">v1.3.7</div><div class="release-date">28 May 2026</div></div>
+  <h3>Reliability &amp; rate limits</h3>
+  <ul>
+    <li>Toggling the extension off is now respected by tabs opened <em>after</em> the toggle &mdash; no more overlay leaking onto DexScreener / pump.fun tabs that booted while the extension was disabled. <span class="pr-ref">#562</span></li>
+    <li>Client-side scan rate limit raised 10 &rarr; 50 per 60s to match the new server cap; power users opening 15&ndash;20 token tabs in a burst no longer hit a false gate. <span class="pr-ref">#561</span></li>
+    <li>Per-user server limits bumped to 60 requests / 60s sustained, still keyed per install. <span class="pr-ref">#560</span> <span class="pr-ref">#561</span></li>
+  </ul>
+</div>
+
+<div class="release">
+  <div class="release-head"><div class="release-v">v1.3.6</div><div class="release-date">28 May 2026</div></div>
+  <h3>Reliable tier sync on account switch</h3>
+  <ul>
+    <li>The overlay&rsquo;s Pro / Free badge now syncs reliably when you switch accounts &mdash; the in-flight scan is aborted before the cache clear + rescan, fixing the &ldquo;stuck on the previous account&rsquo;s tier&rdquo; bug from v1.3.5. Session handling moved into its own module with a 7-case test suite.</li>
+  </ul>
+</div>
+
+<div class="release">
+  <div class="release-head"><div class="release-v">v1.3.5</div><div class="release-date">27 May 2026</div></div>
+  <h3>Instant Pro / Free badge flip</h3>
+  <ul>
+    <li>Logging in / out flips the tier badge in under 300ms (was 2&ndash;5s): logout swaps to Free with no API call; login hits the lightweight <code>/api/quota</code> endpoint before re-rendering. The full silent rescan still runs in the background to refresh price/score.</li>
+  </ul>
+</div>
+
+<div class="release">
+  <div class="release-head"><div class="release-v">v1.3.4</div><div class="release-date">27 May 2026</div></div>
+  <h3>Clearer verdicts, honest flags</h3>
+  <ul>
+    <li>Critical Flags grouped by severity; the AI summary now explains info-level signals instead of swallowing them. <span class="pr-ref">#525</span></li>
+    <li>Positive signals (e.g. &ldquo;LP burned&rdquo;) hidden on RUG / DANGER verdicts to avoid a contradictory read. <span class="pr-ref">#527</span></li>
+    <li>Pipeline status flags (e.g. &ldquo;Helius unavailable&rdquo;) removed from the user surface &mdash; engine internals only; reduced confidence is noted inline. <span class="pr-ref">#526</span></li>
+    <li>Overlay shows clean display bands (250 / 500 / 750 / 1000). <span class="pr-ref">#544</span></li>
+    <li>&ldquo;Upgrade to Pro&rdquo; buttons route to antaresscan.com/pricing via the website bridge (no install_id in the URL). <span class="pr-ref">#538</span> <span class="pr-ref">#539</span> <span class="pr-ref">#541</span></li>
+    <li>Demo full-analysis renders fully-populated Deep Analysis tabs (Buy/Sell Flow, Wash Volume, Sniper Map, Exit Liquidity, Insider Watch) for PENGU / FARTCOIN / PIPPIN / HAWK. <span class="pr-ref">#553</span></li>
+    <li>Scoring: <code>pump_imbalance</code> reclassified as a soft block reason; slow-rug chart pattern + 2 critical flags blocks SAFE. <span class="pr-ref">#549</span> <span class="pr-ref">#550</span></li>
+  </ul>
+</div>
+
+<div class="release">
+  <div class="release-head"><div class="release-v">v1.3.2</div><div class="release-date">18 May 2026</div></div>
+  <h3>Pre-launch security hardening</h3>
+  <ul>
+    <li>Five pre-launch security blockers closed after an external audit (6 independent sub-agent reviews): postMessage origin allowlist on the website bridge, XSS escaping for <code>criticalActors.desc</code> / exit-note, OPEN_TAB host whitelist, SESSION_SECRET fallback memoisation, and founder-grant emails moved out of source into env vars.</li>
+    <li>Payment provider switched Solana Pay &rarr; NOWPayments (hosted checkout, 200+ cryptos) &mdash; the v1.3.1 work (never tagged) is rolled into this release.</li>
+    <li>Full test suite: 1052 passing.</li>
+  </ul>
+</div>
+
+<div class="release">
   <div class="release-head"><div class="release-v">v1.3.0</div><div class="release-date">5 May 2026</div></div>
   <h3>Deep Analysis redesign — 4 new tabs replace the originals</h3>
   <ul>
