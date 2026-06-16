@@ -669,3 +669,14 @@ body.menu-open { overflow: hidden; }
   /* The cta-final's own content already sits at z-index:1 in the
      home stylesheet, so this watermark stays in the back. */
 }
+
+/* ── Home: hide the "$2.8B stolen" loss-strip on mobile ──────────────
+   Per request, the loss-strip (rug-pull stat + candlestick chart +
+   "2024–2025 on Solana" label) is a desktop-only storytelling beat.
+   On phones it pushed the real content (workflow + proof) too far
+   down, so the whole <section class="loss-strip"> is hidden ≤760px.
+   The section only exists on index.html, so this selector is a no-op
+   on every other page that also loads this stylesheet. */
+@media (max-width: 760px) {
+  .loss-strip { display: none !important; }
+}
