@@ -473,13 +473,13 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 .proof-stat:hover{border-color:rgba(11,150,128,.4);background:linear-gradient(180deg,rgba(11,150,128,.06),rgba(255,255,255,.7));transform:translateY(-2px)}
 .proof-accent-bar{position:absolute;top:0;left:0;height:2px;width:0;background:var(--c);transition:width .5s ease}
 .proof-stat:hover .proof-accent-bar{width:100%}
-.ps3-eye{font-size:12px;color:var(--c);letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;line-height:1.5;font-weight:600}
-.ps3-num{display:flex;align-items:baseline;gap:6px;margin-bottom:16px;font-family:"IBM Plex Mono",monospace}
+.ps3-eye{font-size:12px;color:#0a7a64;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;line-height:1.5;font-weight:600;min-height:36px}
+.ps3-num{display:flex;align-items:flex-end;gap:6px;margin-bottom:16px;font-family:"IBM Plex Mono",monospace;min-height:66px}
 .ps3-num b{font:400 clamp(54px,7vw,76px)/.86 'Bebas Neue',sans-serif;color:#123b35;font-weight:400;letter-spacing:.02em}
 .ps3-denom{font-size:14px;color:#8fb8ae;letter-spacing:.04em;font-family:'IBM Plex Mono',monospace;font-weight:400}
 .ps3-live-num b{color:var(--c);font-size:clamp(36px,4.8vw,52px);text-shadow:0 0 24px rgba(11,150,128,.2)}
-.ps3-msg{font-size:13px;color:#4f7d74;line-height:1.75;letter-spacing:.02em}
-.ps3-msg em{font-style:normal;color:#6f9c93;display:block;margin-top:6px;font-size:12px;line-height:1.65}
+.ps3-msg{font-size:13px;color:#244f48;line-height:1.75;letter-spacing:.02em}
+.ps3-msg em{font-style:normal;color:#3a665e;display:block;margin-top:6px;font-size:12px;line-height:1.65}
 .proof-blurb{font-size:14px;color:#3f6e66;line-height:1.8;max-width:780px;margin:0 auto;text-align:center;padding:0 20px}
 .proof-blurb code{color:#3f6e66;font-size:12px;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:2px}
 .proof-blurb a{display:inline-block;margin-top:14px;color:var(--c);text-decoration:none;font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid rgba(11,150,128,.3);padding-bottom:4px;transition:.2s}
@@ -488,7 +488,7 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 .proof-link:hover{text-decoration:underline}
 .proof-verify{display:inline-block;margin-top:18px;color:var(--c);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid rgba(11,150,128,.3);padding-bottom:3px;transition:.2s}
 .proof-verify:hover{border-bottom-color:var(--c)}
-@media(max-width:780px){.proof-grid{grid-template-columns:1fr}.ps3-num b{font-size:48px}.ps3-live-num b{font-size:36px}}
+@media(max-width:780px){.proof-grid{grid-template-columns:1fr}.ps3-num b{font-size:48px}.ps3-live-num b{font-size:36px}.ps3-eye{min-height:0}.ps3-num{min-height:0}}
 
 /* Base burger + drawer styles live in css/mobile-fixes.css (loaded
    below) — kept here historically as the "ANTARES-BURGER-INJECT"
