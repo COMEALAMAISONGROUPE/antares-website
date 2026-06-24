@@ -4,7 +4,7 @@
 
 This file covers the **antares-website** repo — the marketing site
 at <https://antaresscan.com>. The Chrome extension and its backend
-live in [`antares-extension`](https://github.com/COMEALAMAISONGROUPE/antares-extension)
+live in [`antares-extension`](https://github.com/antaresscan/antares-extension)
 and have their own disclosure flow. If you're unsure which side of
 the system a finding affects, file under either repo — we'll route
 it.
@@ -14,7 +14,7 @@ it.
 Two options, in order of preference:
 
 1. **Private GitHub Security Advisory** — go to the repo's
-   [Security tab](https://github.com/COMEALAMAISONGROUPE/antares-website/security)
+   [Security tab](https://github.com/antaresscan/antares-website/security)
    → "Report a vulnerability". This creates a private discussion
    only repo maintainers can see.
 2. **Email** — `security@antaresscan.com` (PGP key available on

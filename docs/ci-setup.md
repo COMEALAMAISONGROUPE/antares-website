@@ -33,7 +33,7 @@ They must match.
 
 ### 2. Add it as a GitHub repo secret
 
-1. Open the repo settings: <https://github.com/COMEALAMAISONGROUPE/antares-website/settings/secrets/actions>
+1. Open the repo settings: <https://github.com/antaresscan/antares-website/settings/secrets/actions>
 2. Click **New repository secret**
 3. **Name:** `VERCEL_BYPASS_TOKEN`
 4. **Secret:** paste the value from step 1

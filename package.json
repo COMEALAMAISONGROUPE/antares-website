@@ -21,13 +21,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/COMEALAMAISONGROUPE/antares-website.git"
+    "url": "git+https://github.com/antaresscan/antares-website.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/COMEALAMAISONGROUPE/antares-website/issues"
+    "url": "https://github.com/antaresscan/antares-website/issues"
   },
-  "homepage": "https://github.com/COMEALAMAISONGROUPE/antares-website#readme",
+  "homepage": "https://github.com/antaresscan/antares-website#readme",
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
     "htmlhint": "^1.9.2",

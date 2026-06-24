@@ -279,7 +279,7 @@ Stuff worth remembering before you change anything:
 - **PR #180** — this audit + the 6-page burger fix that brought the
   state-2 bug pattern home.
 
-Reading the PR descriptions in <https://github.com/COMEALAMAISONGROUPE/antares-website/pulls?q=is%3Apr+is%3Aclosed> is the fastest way to understand
+Reading the PR descriptions in <https://github.com/antaresscan/antares-website/pulls?q=is%3Apr+is%3Aclosed> is the fastest way to understand
 why a given rule exists.
 
 ## 9. Accessibility
