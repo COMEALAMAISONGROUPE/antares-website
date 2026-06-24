@@ -4,7 +4,7 @@ Marketing site for **Antares** — the Solana rug-detection Chrome
 extension. Static HTML, no build step, deployed on Vercel.
 
 Live: <https://antaresscan.com>
-Sister repo (the extension + backend): [`antares-extension`](https://github.com/COMEALAMAISONGROUPE/antares-extension)
+Sister repo (the extension + backend): [`antares-extension`](https://github.com/antaresscan/antares-extension)
 
 ---
 

@@ -5,7 +5,7 @@ Quick reference for anyone (including future-you) touching this repo.
 ## Local setup
 
 ```bash
-git clone https://github.com/COMEALAMAISONGROUPE/antares-website.git
+git clone https://github.com/antaresscan/antares-website.git
 cd antares-website
 npm ci                       # installs playwright + linters
 npm run hooks:install        # optional: pre-commit runs lint
