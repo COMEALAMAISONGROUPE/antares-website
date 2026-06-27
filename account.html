@@ -21,12 +21,12 @@ h1 span{color:var(--c)}
 
 main{padding-bottom:80px}
 .head-row{display:flex;justify-content:space-between;align-items:flex-end;margin:50px 0 36px;flex-wrap:wrap;gap:18px}
-.account-meta{font-size:11px;color:#6a958c;letter-spacing:.04em;line-height:1.7;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
-.account-meta b{color:#44726a;font-weight:600}
-.logout-btn{background:none;border:1px solid var(--border);color:#4f7d74;padding:7px 14px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s}
+.account-meta{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:11px;color:#6a958c;letter-spacing:.04em;line-height:1.7;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+.account-meta b{color:#44726a;font-weight:400}
+.logout-btn{background:none;border:1px solid var(--border);color:#4f7d74;padding:7px 14px;font:400 10px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s}
 .logout-btn:hover{color:#ff7777;border-color:rgba(214,72,72,.4)}
 
-.section-label{font-size:10px;color:#6f9c93;letter-spacing:.22em;text-transform:uppercase;margin:24px 0 14px;text-align:center}
+.section-label{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:10px;color:#6f9c93;letter-spacing:.22em;text-transform:uppercase;margin:24px 0 14px;text-align:center}
 
 /* ── Tier banner — big, at-a-glance "you are PRO/LIFETIME/FREE" indicator
    that lands directly under the page heading. The whole point of the
@@ -40,28 +40,28 @@ main{padding-bottom:80px}
 .tier-banner.pro{border-color:rgba(11,150,128,.5);color:var(--c);box-shadow:0 0 0 1px rgba(11,150,128,.1),0 12px 32px rgba(11,150,128,.06)}
 .tier-banner.lifetime{border-color:rgba(123,95,212,.5);color:var(--purple);box-shadow:0 0 0 1px rgba(123,95,212,.1),0 12px 32px rgba(123,95,212,.06)}
 .tier-banner.yearly{border-color:rgba(123,95,212,.5);color:var(--purple);box-shadow:0 0 0 1px rgba(123,95,212,.1),0 12px 32px rgba(123,95,212,.06)}
-.tier-banner-label{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:#6f9c93;margin-bottom:6px}
+.tier-banner-label{font:400 10px/1 'Bebas Neue',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#6f9c93;margin-bottom:6px}
 .tier-banner-name{font:400 44px/.95 'Bebas Neue',sans-serif;letter-spacing:.06em;color:currentColor;margin-bottom:6px}
-.tier-banner-detail{font-size:12px;color:#44726a;letter-spacing:.04em;line-height:1.6}
-.tier-banner-detail b{color:#2e5d55;font-weight:600}
-.tier-banner-meta{margin-left:auto;text-align:right;font-size:10px;color:#6f9c93;letter-spacing:.04em;line-height:1.7;flex-shrink:0}
-.tier-banner-meta b{color:#44726a;font-weight:600;font-size:11px}
+.tier-banner-detail{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:12px;color:#44726a;letter-spacing:.04em;line-height:1.6}
+.tier-banner-detail b{color:#2e5d55;font-weight:400}
+.tier-banner-meta{margin-left:auto;text-align:right;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:10px;color:#6f9c93;letter-spacing:.04em;line-height:1.7;flex-shrink:0}
+.tier-banner-meta b{color:#44726a;font-weight:400;font-size:11px}
 
 /* ── Activate-in-extension callout — the missing UX bridge between
    "I have a license key" and "my extension knows I'm Pro". Without
    this, users sit on the page wondering why their browser overlay
    still says Free. Step-by-step + a Copy button on the relevant
    key keeps the friction low. */
-.activate-callout{margin:18px 0 12px;padding:18px 22px;border:1px dashed rgba(14,80,70,.25);border-radius:4px;background:rgba(11,150,128,.02);font-size:12px;color:#44726a;line-height:1.7}
-.activate-callout h3{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.28em;text-transform:uppercase;color:var(--c);margin-bottom:10px}
+.activate-callout{margin:18px 0 12px;padding:18px 22px;border:1px dashed rgba(14,80,70,.25);border-radius:4px;background:rgba(11,150,128,.02);font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:12px;color:#44726a;line-height:1.7}
+.activate-callout h3{font:400 10px/1 'Bebas Neue',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:var(--c);margin-bottom:10px}
 .activate-callout ol{margin:0 0 0 18px;padding:0}
 .activate-callout li{margin:6px 0;color:#44726a}
-.activate-callout b{color:#2e5d55;font-weight:600}
+.activate-callout b{color:#2e5d55;font-weight:400}
 .activate-callout code{background:rgba(14,80,70,.16);color:#35655d;padding:1px 6px;border-radius:2px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.04em}
 
 .empty{padding:32px;text-align:center;background:var(--card);border:1px solid var(--border);border-radius:4px}
-.empty p{color:#57837b;font-size:13px;line-height:1.7;margin-bottom:18px}
-.empty a{display:inline-block;padding:11px 22px;background:var(--c);color:var(--bg);font:700 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-radius:2px}
+.empty p{color:#57837b;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:16px;line-height:1.7;margin-bottom:18px}
+.empty a{display:inline-block;padding:11px 22px;background:var(--c);color:var(--bg);font:400 11px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-radius:2px}
 .empty a:hover{box-shadow:0 8px 24px rgba(11,150,128,.2)}
 
 .licenses{display:flex;flex-direction:column;gap:14px}
@@ -69,23 +69,23 @@ main{padding-bottom:80px}
 .lic.lifetime{border-color:rgba(123,95,212,.35);box-shadow:0 0 0 1px rgba(123,95,212,.1)}
 .lic.yearly{border-color:rgba(123,95,212,.35);box-shadow:0 0 0 1px rgba(123,95,212,.1)}
 .lic.pro{border-color:rgba(11,150,128,.35);box-shadow:0 0 0 1px rgba(11,150,128,.1)}
-.lic-tier{font:700 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;text-transform:uppercase;padding:4px 8px;border-radius:2px;width:fit-content;grid-column:1}
+.lic-tier{font:400 9px/1 'Bebas Neue',sans-serif;letter-spacing:.22em;text-transform:uppercase;padding:4px 8px;border-radius:2px;width:fit-content;grid-column:1}
 .lic-tier.pro{color:var(--c);border:1px solid rgba(11,150,128,.4);background:rgba(11,150,128,.06)}
 .lic-tier.lifetime{color:var(--purple);border:1px solid rgba(123,95,212,.4);background:rgba(123,95,212,.06)}
 .lic-tier.yearly{color:var(--purple);border:1px solid rgba(123,95,212,.4);background:rgba(123,95,212,.06)}
 .lic-key{font:700 14px/1.3 'IBM Plex Mono',monospace;color:#123b35;letter-spacing:.12em;word-break:break-all;user-select:all;-webkit-user-select:all;grid-column:1}
-.lic-meta{font-size:10px;color:#6f9c93;letter-spacing:.04em;line-height:1.6;grid-column:1}
-.lic-meta b{color:#44726a;font-weight:600}
+.lic-meta{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:10px;color:#6f9c93;letter-spacing:.04em;line-height:1.6;grid-column:1}
+.lic-meta b{color:#44726a;font-weight:400}
 .lic-state{grid-column:2;grid-row:1 / span 3;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-.lic-state .badge{font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;border-radius:2px;white-space:nowrap}
+.lic-state .badge{font:400 9px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;border-radius:2px;white-space:nowrap}
 .lic-state .badge.active{color:var(--c);border:1px solid rgba(11,150,128,.4);background:rgba(11,150,128,.06)}
 .lic-state .badge.expired{color:#6f9c93;border:1px solid rgba(14,80,70,.25)}
 
-.loading{padding:40px;text-align:center;color:#6a958c;font-size:12px;letter-spacing:.04em}
+.loading{padding:40px;text-align:center;color:#6a958c;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:12px;letter-spacing:.04em}
 .spinner{display:inline-block;width:9px;height:9px;border-radius:50%;background:#6a958c;margin-right:8px;animation:pulse 1.2s ease-in-out infinite;vertical-align:middle}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
-.error-banner{margin-top:18px;padding:12px 14px;background:rgba(214,72,72,.06);border:1px solid rgba(214,72,72,.4);border-radius:2px;color:#ff7070;font-size:12px;letter-spacing:.04em;line-height:1.55}
+.error-banner{margin-top:18px;padding:12px 14px;background:rgba(214,72,72,.06);border:1px solid rgba(214,72,72,.4);border-radius:2px;color:#ff7070;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:12px;letter-spacing:.04em;line-height:1.55}
 
 /* ── Post-checkout success banner ────────────────────────────────────────
    Shown when the user lands on /account.html?ref=<reference> after a
@@ -97,22 +97,22 @@ main{padding-bottom:80px}
 .checkout-banner.confirmed{box-shadow:0 0 0 1px rgba(11,150,128,.15) inset, 0 24px 60px rgba(11,150,128,.08)}
 .checkout-banner.warn{background:rgba(184,155,0,.05);border-color:rgba(184,155,0,.4)}
 .checkout-banner.error{background:rgba(214,72,72,.06);border-color:rgba(214,72,72,.4)}
-.checkout-banner-title{font:700 11px/1 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.checkout-banner-title{font:400 11px/1 'Bebas Neue',sans-serif;color:var(--c);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:10px}
 .checkout-banner.warn .checkout-banner-title{color:#b89b00}
 .checkout-banner.error .checkout-banner-title{color:#ff7777}
 .checkout-banner-spinner{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;animation:checkout-pulse 1.2s ease-in-out infinite}
 @keyframes checkout-pulse{0%,100%{opacity:.3}50%{opacity:1}}
 .checkout-banner.confirmed .checkout-banner-spinner{display:none}
-.checkout-banner-msg{font:400 13px/1.5 'IBM Plex Mono',monospace;color:#2e5d55;margin-bottom:14px}
+.checkout-banner-msg{font:400 13px/1.5 'Bebas Neue',sans-serif;color:#2e5d55;margin-bottom:14px}
 .checkout-banner-key-wrap{margin:14px 0;padding:14px;background:#e7f7f0;border:1px solid rgba(11,150,128,.3);border-radius:2px;text-align:center}
-.checkout-banner-key-label{font:600 9px/1 'IBM Plex Mono',monospace;color:#4f7d74;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
+.checkout-banner-key-label{font:400 9px/1 'Bebas Neue',sans-serif;color:#4f7d74;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
 .checkout-banner-key{font:700 14px/1.3 'IBM Plex Mono',monospace;color:var(--c);letter-spacing:.12em;word-break:break-all;user-select:all;-webkit-user-select:all}
-.checkout-banner-key-copy{margin-top:12px;background:none;border:1px solid rgba(11,150,128,.4);color:var(--c);padding:6px 14px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px}
+.checkout-banner-key-copy{margin-top:12px;background:none;border:1px solid rgba(11,150,128,.4);color:var(--c);padding:6px 14px;font:400 10px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px}
 .checkout-banner-key-copy:hover{background:rgba(11,150,128,.12);border-color:var(--c)}
-.checkout-banner-instr{font:400 11px/1.5 'IBM Plex Mono',monospace;color:#4f7d74;margin-top:10px}
+.checkout-banner-instr{font:400 11px/1.5 'Bebas Neue',sans-serif;color:#4f7d74;margin-top:10px}
 .checkout-banner-instr a{color:var(--c)}
 
-footer{text-align:center;padding:36px 32px;color:#8fb8ae;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;max-width:1160px;margin:60px auto 0}
+footer{text-align:center;padding:36px 32px;color:#8fb8ae;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:10px;border-top:1px solid var(--border);letter-spacing:.15em;text-transform:uppercase;max-width:1160px;margin:60px auto 0}
 footer .foot-links{margin-top:14px;font-size:9px;letter-spacing:.18em}
 footer .foot-links a{color:#82aaa1;text-decoration:none;margin:0 4px}
 footer .foot-links a:hover{color:var(--c)}

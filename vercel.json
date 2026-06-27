@@ -49,10 +49,6 @@
       "destination": "/about.html"
     },
     {
-      "source": "/api",
-      "destination": "/api.html"
-    },
-    {
       "source": "/security",
       "destination": "/security.html"
     },
