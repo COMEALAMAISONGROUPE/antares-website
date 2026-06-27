@@ -30,9 +30,6 @@
 /* .shell.narrow gives 780px; this just adds the legal-page vertical breathing room */
 .shell{padding:80px 32px 60px}
 /* nav + nav::before live in css/base.css */
-nav a.brand{font:400 30px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;color:#16423b;text-decoration:none}
-nav a.back{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:11px;color:#82aaa1;text-decoration:none;letter-spacing:.1em;text-transform:uppercase}
-nav a.back:hover{color:var(--c)}
 .updated{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:10px;color:#8fb8ae;letter-spacing:.12em;text-transform:uppercase;margin-bottom:40px}
 h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:16px;color:var(--c);letter-spacing:.1em;text-transform:uppercase;margin:32px 0 12px}
 p{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:15px;color:#57837b;line-height:1.85;margin-bottom:14px}
@@ -53,6 +50,8 @@ footer .foot-links a:hover{color:var(--c)}
 </style>
 <link rel="stylesheet" href="/css/mobile-fixes.css">
 <script src="/js/a11y.js" defer></script>
+<script src="/js/burger.js" defer></script>
+<script src="/js/nav-account.js" defer></script>
 <script src="/js/mobile-cta-rewrite.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy — Antares","description":"Antares privacy policy: what we process, third-party processors, GDPR rights, retention, contact.","url":"https://antaresscan.com/privacy","isPartOf":{"@type":"WebSite","name":"Antares","url":"https://antaresscan.com/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://antaresscan.com/"},{"@type":"ListItem","position":2,"name":"Privacy Policy","item":"https://antaresscan.com/privacy"}]}</script>
@@ -81,7 +80,10 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 </style></head>
 <body class="legal-page">
 <div class="stripe" role="presentation"></div>
-<nav><a href="./index.html" class="brand">ANTARES</a><a href="./index.html" class="back">← Back</a></nav>
+<nav aria-label="Main navigation"><a href="./index.html" class="brand"><img src="/assets/icon.png" alt="Antares Logo">ANTARES</a><div class="links"><a href="./demo">Demo</a><a href="./features">Features</a><a href="./engine">Engine</a><a href="./compare">Compare</a><a href="./pricing">Pricing</a></div><div class="nav-actions"><a href="./auth" id="nav-account" class="nav-account">Log in</a><a href="./install" class="nav-cta">Install</a></div>  <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
+    <span></span><span></span><span></span>
+  </button>
+      </nav>
 <main class="shell narrow">
 <h1>Privacy Policy</h1>
 <p class="updated">Last updated: 27 April 2026</p>

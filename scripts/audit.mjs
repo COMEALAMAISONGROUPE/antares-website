@@ -182,8 +182,9 @@ const IGNORE_ERRORS = /CORS|Access to fetch|net::ERR_FAILED|preview-feedback|spa
 
 /* Pages whose nav is the simplified <a brand><a back> shape — they
    don't have a .links group on desktop, so the burger+drawer
-   expectations are skipped on those routes. */
-const PAGES_WITHOUT_LINKS_GROUP = new Set(['/privacy', '/terms']);
+   expectations are skipped on those routes. privacy/terms moved to
+   the standard nav and were removed from this set. */
+const PAGES_WITHOUT_LINKS_GROUP = new Set();
 
 /* Pages that are expected to hide the footer on mobile (PR #168 +
    the body.is-home contract). Currently only the home. */
