@@ -88,7 +88,7 @@
 .mobile-menu {
   position: fixed;
   inset: 0;
-  background: rgba(255,255,255, .97);
+  background: linear-gradient(118deg, #cfefe1 0%, #a8e3ce 32%, #84d7c9 65%, #6fcdd0 100%);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
   z-index: 200;
@@ -112,9 +112,9 @@
   right: 20px;
   background: transparent;
   border: 0;
-  font-size: 38px;
+  font-size: 32px;
   line-height: 1;
-  color: var(--c, #0ca88c);
+  color: rgba(14,66,58,.5);
   cursor: pointer;
   width: 48px;
   height: 48px;
@@ -122,7 +122,9 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  text-shadow: 0 1px 1px rgba(255,255,255,.6), 0 -1px 1px rgba(8,60,52,.22);
 }
 .mobile-links {
   display: flex;
@@ -134,14 +136,18 @@
   font: 400 26px/1 'Bebas Neue', sans-serif;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: #16423b;
+  color: rgba(14,66,58,.5);
+  text-shadow: 0 1px 1px rgba(255,255,255,.6), 0 -1px 1px rgba(8,60,52,.22);
   text-decoration: none;
   transition: color .25s, transform .2s;
   padding: 6px 12px;
+  border-radius: 10px;
 }
 .mobile-links a:hover,
 .mobile-links a.active {
-  color: var(--c, #0ca88c);
+  color: rgba(10,140,118,.8);
+  text-shadow: 0 1px 1px rgba(255,255,255,.6), 0 -1px 1px rgba(8,60,52,.22);
+  background: rgba(12,168,140,.12);
   transform: translateY(-1px);
 }
 body.menu-open { overflow: hidden; }
