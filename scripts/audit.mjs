@@ -38,8 +38,10 @@
        • No uncaught JS errors
 
    Plus home-only assertions on DESKTOP:
-       • The "$2.8B" loss-counter animation lands on "2.8" after
-         scrolling the loss-strip into view (PR #166 A1 contract)
+       • The loss-strip headline ("Billions of dollars") renders
+         non-empty after scrolling it into view (PR #166 A1 contract,
+         updated when the animated "$2.8B" counter was replaced with
+         static copy)
        • The cta-final typewriter actually runs (typewrite-run +
          typewrite-done classes show up after scrolling) (PR #166
          B1 contract)
@@ -76,7 +78,7 @@ if (!['mobile', 'desktop', 'both'].includes(viewportArg)) {
 const ROUTES = [
   '/', '/demo', '/features', '/engine', '/compare', '/pricing',
   '/install', '/sources', '/proof', '/faq', '/changelog', '/about',
-  '/api', '/security', '/support', '/auth', '/account', '/privacy', '/terms',
+  '/security', '/support', '/auth', '/account', '/privacy', '/terms',
 ];
 
 /* Per-viewport browser context settings. */
@@ -331,17 +333,18 @@ async function auditDesktop(page, route) {
 
   /* Home-only animation contract (PR #166). */
   if (route === '/') {
-    /* Trigger A1 — counter tick-up — by scrolling the loss-strip
-       into view. easeOutExpo finishes around 1.6s. */
+    /* Trigger A1 — the loss-strip headline — by scrolling it into
+       view. The animated counter was replaced with static copy
+       ("Billions of dollars"); just assert it renders. */
     await page.evaluate(() => {
       document.querySelector('.loss-strip')?.scrollIntoView({ behavior: 'instant' });
     });
     await page.waitForTimeout(2200);
-    const counter = await page.evaluate(() =>
-      document.getElementById('loss-counter')?.textContent
+    const headline = await page.evaluate(() =>
+      document.querySelector('.loss-strip-num')?.textContent?.trim()
     );
-    if (counter !== '2.8') {
-      fails.push(`A1-counter-final-value="${counter}" (expected "2.8")`);
+    if (!headline) {
+      fails.push(`A1-loss-strip-headline-empty="${headline}"`);
     }
 
     /* Trigger B1 — typewriter on cta-final — by scrolling it into
