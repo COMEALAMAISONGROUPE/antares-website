@@ -642,7 +642,7 @@ body.menu-open { overflow: hidden; }
     content: '';
     position: absolute;
     bottom: 46px;
-    left: calc(50% - 118px);
+    left: calc(50% - 99px);
     width: 40px;
     height: 40px;
     background-color: rgba(14,66,58,.36);
@@ -662,7 +662,7 @@ body.menu-open { overflow: hidden; }
     content: 'ANTARES';
     position: absolute;
     bottom: 42px;
-    left: calc(50% - 62px);
+    left: calc(50% - 43px);
     font: 400 36px/1 'Bebas Neue', sans-serif;
     letter-spacing: .18em;
     color: rgba(14,66,58,.36);
