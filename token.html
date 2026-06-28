@@ -313,7 +313,8 @@ footer span{color:var(--c)}
 :root{--bg:#0a0a0c;--border:#1a1a1e}
 body{background:#0a0a0c}
 nav::before{background:rgba(10,10,12,.88);border-bottom:1px solid #1a1a1e}
-nav .brand{color:#e0e0e0}
+nav .brand{color:#8fb8ae}
+nav .brand-icon{background-color:#8fb8ae}
 nav .links a{color:#454550}
 nav .nav-account{color:#888;border-color:#2a2a30}
 h1{color:#eaeaea}
@@ -323,7 +324,7 @@ h1{color:#eaeaea}
       <div class="stripe" role="presentation" aria-hidden="true"></div>
           <canvas id="particles-canvas" aria-hidden="true"></canvas>
           <nav aria-label="Main navigation">
-  <a href="/" class="brand"><img src="/assets/icon.png" alt="Antares Logo">ANTARES</a>
+  <a href="/" class="brand"><span class="brand-icon" aria-hidden="true"></span>ANTARES</a>
   <div class="links"><a href="/">← Back</a></div>
 </nav>
     <main id="main-content" class="shell">
