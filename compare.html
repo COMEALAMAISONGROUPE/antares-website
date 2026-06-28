@@ -43,6 +43,15 @@
 .cmp-table thead th.tool.us{color:var(--c);background:rgba(11,150,128,.04)}
 .cmp-table tbody td{padding:13px 12px;border-bottom:1px solid rgba(255,255,255,.35);color:#4f7d74;line-height:1.6;vertical-align:middle}
 .cmp-table tbody tr:last-child td{border-bottom:none}
+/* The wrapping div's border-radius:14px (below) relies on overflow-x:auto
+   to clip the table -- overflow:auto doesn't reliably clip to a parent's
+   border-radius on every browser, so the header cells' own flat
+   background (#e7f7f0) can show a square corner poking past the curve.
+   Round the actual corner cells too so the curve holds regardless. */
+.cmp-table thead th:first-child{border-top-left-radius:13px}
+.cmp-table thead th:last-child{border-top-right-radius:13px}
+.cmp-table tbody tr:last-child td:first-child{border-bottom-left-radius:13px}
+.cmp-table tbody tr:last-child td:last-child{border-bottom-right-radius:13px}
 .cmp-table tbody tr:hover{background:rgba(255,255,255,.3)}
 .cmp-table .feature{color:#35655d;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:15px;width:34%}
 .cmp-table .feature small{display:block;color:#75a199;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:12px;margin-top:3px;font-style:italic}
