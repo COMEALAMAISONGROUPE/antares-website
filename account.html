@@ -21,9 +21,9 @@ h1 span{color:var(--c)}
 
 main{padding-bottom:80px}
 .head-row{display:flex;justify-content:space-between;align-items:flex-end;margin:50px 0 36px;flex-wrap:wrap;gap:18px}
-.account-meta{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:14px;color:#6a958c;letter-spacing:.04em;line-height:1.7;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+.account-meta{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:16px;color:#6a958c;letter-spacing:.04em;line-height:1.7;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
 .account-meta b{color:#44726a;font-weight:400}
-.logout-btn{background:none;border:1px solid var(--border);color:#4f7d74;padding:7px 14px;font:400 13px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s}
+.logout-btn{background:none;border:1px solid var(--border);color:#4f7d74;padding:8px 16px;font:400 15px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s}
 .logout-btn:hover{color:#ff7777;border-color:rgba(214,72,72,.4)}
 
 .section-label{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:13px;color:#6f9c93;letter-spacing:.22em;text-transform:uppercase;margin:24px 0 14px;text-align:center}
@@ -80,6 +80,16 @@ main{padding-bottom:80px}
 .lic-state .badge{font:400 12px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:5px 9px;border-radius:2px;white-space:nowrap}
 .lic-state .badge.active{color:var(--c);border:1px solid rgba(11,150,128,.4);background:rgba(11,150,128,.06)}
 .lic-state .badge.expired{color:#6f9c93;border:1px solid rgba(14,80,70,.25)}
+
+/* ── Active / Expired tabs — only rendered when both buckets have at
+   least one license (see renderLicenses). Keeps the common case (no
+   expired history yet) a plain list with no useless empty tab. */
+.lic-tabs{display:flex;gap:0;margin:0 0 14px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#e7f7f0;width:fit-content}
+.lic-tabs button{padding:9px 20px;background:transparent;border:none;color:#6a958c;font:400 11px/1 'Bebas Neue',sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.lic-tabs button.active{color:var(--bg);background:var(--c)}
+.lic-tabs button:not(.active):hover{color:#2e5d55}
+.lic-panel{display:none}
+.lic-panel.active{display:block}
 
 .loading{padding:40px;text-align:center;color:#6a958c;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:12px;letter-spacing:.04em}
 .spinner{display:inline-block;width:9px;height:9px;border-radius:50%;background:#6a958c;margin-right:8px;animation:pulse 1.2s ease-in-out infinite;vertical-align:middle}
@@ -203,7 +213,7 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
   <div id="activate-wrap"></div>
 
   <div class="section-label" id="results-label" style="display:none"><span>Your licenses</span></div>
-  <section class="licenses" id="licenses"></section>
+  <section id="licenses"></section>
   <div class="error-banner" id="error" style="display:none"></div>
 </div>
 </main>
@@ -514,6 +524,43 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
     });
   }
 
+  // Active = no expiry OR expiry in the future. Lifetime is always
+  // active. Pro/Yearly past their expiry render as "expired" so the
+  // user knows to renew without inferring it from the date alone.
+  function isLicenseActive(l, now) {
+    return l.tier === 'lifetime' || !l.expiresAt || l.expiresAt > now;
+  }
+
+  function licenseCardHtml(l, now) {
+    var rowLabel = l.tier === 'lifetime'
+      ? 'Lifetime'
+      : l.tier === 'yearly'
+        ? 'Yearly · 1 year'
+        : 'Pro · 30 days';
+    var stateBadge = isLicenseActive(l, now)
+      ? '<span class="badge active">Active</span>'
+      : '<span class="badge expired">Expired</span>';
+    var expiryLine = l.tier === 'lifetime'
+      ? '<b>Expires:</b> never'
+      : '<b>Expires:</b> ' + fmtDate(l.expiresAt);
+    return [
+      '<div class="lic ' + l.tier + '">',
+        '<div class="lic-tier ' + l.tier + '">' + rowLabel + '</div>',
+        // License key kept visible as a purchase receipt — useful for
+        // support tickets — but no copy button. Users no longer need
+        // to enter it anywhere; their account is the activator.
+        '<div class="lic-key" id="key-' + escapeHtml(l.key) + '">' + escapeHtml(l.key) + '</div>',
+        '<div class="lic-meta"><b>Issued:</b> ' + fmtDate(l.createdAt) + ' &middot; ',
+          '<b>Paid:</b> $' + Number(l.amountUsd || 0).toFixed(2) + ' &middot; ',
+          expiryLine,
+        '</div>',
+        '<div class="lic-state">',
+          stateBadge,
+        '</div>',
+      '</div>'
+    ].join('');
+  }
+
   function renderLicenses(list) {
     // Resolve + paint the tier banner first — that's the answer the
     // user came here for, even before they look at the licence rows.
@@ -527,39 +574,42 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
     }
     resultsLabel.style.display = 'block';
     var now = Date.now();
-    listEl.innerHTML = list.map(function(l) {
-      var rowLabel = l.tier === 'lifetime'
-        ? 'Lifetime'
-        : l.tier === 'yearly'
-          ? 'Yearly · 1 year'
-          : 'Pro · 30 days';
-      // Active = no expiry OR expiry in the future. Lifetime is always
-      // active. Pro/Yearly past their expiry render as "expired" so the
-      // user knows to renew without inferring it from the date alone.
-      var isActive = l.tier === 'lifetime' || !l.expiresAt || l.expiresAt > now;
-      var stateBadge = isActive
-        ? '<span class="badge active">Active</span>'
-        : '<span class="badge expired">Expired</span>';
-      var expiryLine = l.tier === 'lifetime'
-        ? '<b>Expires:</b> never'
-        : '<b>Expires:</b> ' + fmtDate(l.expiresAt);
-      return [
-        '<div class="lic ' + l.tier + '">',
-          '<div class="lic-tier ' + l.tier + '">' + rowLabel + '</div>',
-          // License key kept visible as a purchase receipt — useful for
-          // support tickets — but no copy button. Users no longer need
-          // to enter it anywhere; their account is the activator.
-          '<div class="lic-key" id="key-' + escapeHtml(l.key) + '">' + escapeHtml(l.key) + '</div>',
-          '<div class="lic-meta"><b>Issued:</b> ' + fmtDate(l.createdAt) + ' &middot; ',
-            '<b>Paid:</b> $' + Number(l.amountUsd || 0).toFixed(2) + ' &middot; ',
-            expiryLine,
-          '</div>',
-          '<div class="lic-state">',
-            stateBadge,
-          '</div>',
-        '</div>'
-      ].join('');
-    }).join('');
+    var activeList = list.filter(function(l) { return isLicenseActive(l, now); });
+    var expiredList = list.filter(function(l) { return !isLicenseActive(l, now); });
+
+    // Plain list when everything is in one bucket — tabs would just add
+    // a useless empty "Expired (0)" pill next to the real content.
+    if (!activeList.length || !expiredList.length) {
+      listEl.innerHTML = '<div class="licenses">' +
+        list.map(function(l) { return licenseCardHtml(l, now); }).join('') +
+      '</div>';
+      return;
+    }
+
+    listEl.innerHTML =
+      '<div class="lic-tabs" role="tablist">' +
+        '<button type="button" class="active" data-panel="lic-panel-active" role="tab" aria-selected="true">Active (' + activeList.length + ')</button>' +
+        '<button type="button" data-panel="lic-panel-expired" role="tab" aria-selected="false">Expired (' + expiredList.length + ')</button>' +
+      '</div>' +
+      '<div class="lic-panel active" id="lic-panel-active"><div class="licenses">' +
+        activeList.map(function(l) { return licenseCardHtml(l, now); }).join('') +
+      '</div></div>' +
+      '<div class="lic-panel" id="lic-panel-expired"><div class="licenses">' +
+        expiredList.map(function(l) { return licenseCardHtml(l, now); }).join('') +
+      '</div></div>';
+
+    listEl.querySelectorAll('.lic-tabs button').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        listEl.querySelectorAll('.lic-tabs button').forEach(function(b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        listEl.querySelectorAll('.lic-panel').forEach(function(p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById(btn.dataset.panel).classList.add('active');
+      });
+    });
   }
 
   // Push the session JWT to the extension via the bridge so its scan
