@@ -714,13 +714,6 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
     if (!ctaBtn.disabled) startCheckout();
   });
 
-  // Pressing Enter in the email field also starts checkout (when valid).
-  emailInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !ctaBtn.disabled) {
-      e.preventDefault();
-      startCheckout();
-    }
-  });
 
   function openModal(spec) {
     // ── Account required before checkout ─────────────────────────────────
