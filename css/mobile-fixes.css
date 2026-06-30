@@ -533,7 +533,12 @@ body.menu-open { overflow: hidden; }
          The " · " text-node separator between the install link
          and Support is stripped at runtime by mobile-cta-rewrite.js
          (otherwise it would orphan at the start of line 2). */
-  body.is-home footer { display: none !important; }
+  body.is-home footer {
+    display: flex !important;
+    justify-content: center;
+    padding: 20px 32px 36px !important;
+    margin-top: 0 !important;
+  }
 
   body:not(.is-home) footer {
     /* Hides the "Antares v1.3.0" text node + <span>No mercy</span>

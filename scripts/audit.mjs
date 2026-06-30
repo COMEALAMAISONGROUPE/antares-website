@@ -187,8 +187,9 @@ const IGNORE_ERRORS = /CORS|Access to fetch|net::ERR_FAILED|preview-feedback|spa
 const PAGES_WITHOUT_LINKS_GROUP = new Set();
 
 /* Pages that are expected to hide the footer on mobile (PR #168 +
-   the body.is-home contract). Currently only the home. */
-const PAGES_WITH_HIDDEN_MOBILE_FOOTER = new Set(['/']);
+   the body.is-home contract). Empty since PR #272: the home footer
+   is now visible on mobile to show the @antaresscan X handle. */
+const PAGES_WITH_HIDDEN_MOBILE_FOOTER = new Set();
 
 async function auditMobile(page, route) {
   const fails = [];
