@@ -283,13 +283,13 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 @keyframes refresh-flash{0%{box-shadow:0 0 0 0 rgba(0,229,176,0)}40%{box-shadow:0 0 14px 2px rgba(0,229,176,.55)}100%{box-shadow:0 0 0 0 rgba(0,229,176,0)}}
 .topbar.flash{animation:refresh-flash .6s ease}
 
-.hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 0;cursor:grab;touch-action:none}
+.hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 0 12px;cursor:grab;touch-action:none}
 .hd:active{cursor:grabbing}
 .hd-right{display:flex;align-items:center;gap:10px}
 
 /* ANTARES wordmark — gray for Free (default), gold for Pro/Yearly/Lifetime
    via .pro modifier. The single visual signal for tier in the topbar. */
-.brand{font-size:9px;color:#888;font-weight:400;letter-spacing:.55em;text-transform:uppercase;font-family:'Bebas Neue',sans-serif}
+.brand{font-size:10.5px;color:#888;font-weight:400;letter-spacing:.3em;text-transform:uppercase;font-family:'Bebas Neue',sans-serif}
 .brand.pro{color:#f5d000}
 
 .drag-icon{display:flex;align-items:center;color:#3a3a42;transition:color .2s;pointer-events:none}
@@ -315,10 +315,10 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 .aff-disclosure{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;color:#555;letter-spacing:0.16em;text-transform:uppercase;padding:2px 5px;border:1px solid #1a1a1e;border-radius:2px;cursor:help;flex-shrink:0;transition:color .2s,border-color .2s}
 .aff-disclosure:hover{color:#888;border-color:#2a2a30}
 
-.tk{padding:0 14px;margin-top:6px;font-size:14px;color:#999;font-weight:400;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Bebas Neue',sans-serif}
+.tk{padding:0 14px 0 12px;margin-top:6px;font-size:15.5px;color:#999;font-weight:400;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Bebas Neue',sans-serif}
 .tk b{color:#e6e6e6;font-weight:400}
 
-.vb{padding:2px 14px 6px;position:relative;z-index:1}
+.vb{padding:2px 14px 6px 12px;position:relative;z-index:1}
 .vb h1{font-family:'Bebas Neue','Arial Black',sans-serif;font-size:46px;line-height:.88;font-weight:400;letter-spacing:.04em}
 .box.safe    .vb h1{color:#00e5b0;text-shadow:0 0 30px rgba(0,229,176,.15)}
 .box.caution .vb h1{color:#f5d000;text-shadow:0 0 30px rgba(245,208,0,.12)}
@@ -364,13 +364,19 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 .si{flex:1;text-align:center;padding:7px 2px;position:relative}
 .si + .si::before{content:'';position:absolute;left:0;top:25%;height:50%;width:1px;background:#1a1a1e}
 .si span{display:block;font-size:9px;color:#888;font-weight:400;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;font-family:'Bebas Neue',sans-serif}
-.si b{font-size:10px;letter-spacing:.02em;font-weight:700;font-family:'IBM Plex Mono',monospace;color:#f0f0f0}
-.si b.y{color:#00e5b0}
+.si b{font-size:8.5px;letter-spacing:.06em;font-weight:400;line-height:1;font-family:'IBM Plex Mono',monospace;color:#f0f0f0;vertical-align:top}
+.si b.y{color:#00e5b0;position:relative;top:1.5px}
 .si b.n{color:#ff5f5f}
 .si b.w{color:#f5d000}
+.si b.ok{display:inline-flex;align-items:flex-start;justify-content:center;width:12px;height:12px;position:relative;font-size:0;vertical-align:top}
+.si b.ok::before{content:'';position:absolute;width:7px;height:4px;border-left:1.5px solid #00e5b0;border-bottom:1.5px solid #00e5b0;top:3px;left:50%;transform:translateX(-50%) rotate(-45deg)}
+.si b.no{display:inline-flex;align-items:flex-start;justify-content:center;width:12px;height:12px;position:relative;top:1.5px;font-size:0;vertical-align:top}
+.si b.no::before,.si b.no::after{content:'';position:absolute;width:9px;height:1.5px;background:#ff5f5f;border-radius:.75px;top:5px;left:50%}
+.si b.no::before{transform:translateX(-50%) rotate(45deg)}
+.si b.no::after{transform:translateX(-50%) rotate(-45deg)}
 
 .fo{display:flex;margin:8px 14px 10px;gap:4px}
-.fo a{flex:1;display:block;padding:8px;font-size:11px;color:#b0b0b0;font-weight:400;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;text-align:center;border:1px solid #2a2a2e;border-radius:2px;transition:.2s;font-family:'Bebas Neue',sans-serif}
+.fo a{flex:1;display:flex;align-items:center;justify-content:center;line-height:1.1;padding:8px;font-size:12px;color:#b0b0b0;font-weight:400;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;text-align:center;border:1px solid #2a2a2e;border-radius:2px;transition:.2s;font-family:'Bebas Neue',sans-serif}
 .fo a:hover{color:#f0f0f0;border-color:#555;background:rgba(255,255,255,.04)}
 .fo a.warn{border-color:rgba(255,95,95,.2);color:#cc5555}
 .fo a.warn:hover{border-color:rgba(255,95,95,.4);color:#ff5f5f;background:rgba(255,95,95,.04)}
@@ -424,7 +430,7 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 .sparkline svg{display:block}
 
 /* AI Summary button + panel */
-.ai-btn{flex:1;display:block;padding:8px;font-size:11px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;text-align:center;border-radius:2px;transition:color .2s,border-color .2s,background .2s;font-family:'Bebas Neue',sans-serif;background:none;cursor:pointer;color:#a78bfa;border:1px solid rgba(167,139,250,.25);background:rgba(167,139,250,.05)}
+.ai-btn{flex:1;display:flex;align-items:center;justify-content:center;line-height:1.1;padding:8px;font-size:12px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;text-align:center;border-radius:2px;transition:color .2s,border-color .2s,background .2s;font-family:'Bebas Neue',sans-serif;background:none;cursor:pointer;color:#a78bfa;border:1px solid rgba(167,139,250,.25);background:rgba(167,139,250,.05)}
 .ai-btn--active{color:#a78bfa;border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.05)}
 .ai-btn:hover,.ai-btn--active:hover{color:#c4b5fd;border-color:rgba(167,139,250,.5);background:rgba(167,139,250,.1)}
 
@@ -467,7 +473,7 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 .ai-time{color:#444;font-size:8px}
 
 /* Critical Flags button + panel */
-.cf-btn{flex:1;display:block;padding:8px;font-size:11px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;text-align:center;border-radius:2px;transition:color .2s,border-color .2s,background .2s;font-family:'Bebas Neue',sans-serif;background:rgba(255,95,95,.05);cursor:pointer;color:#cc7070;border:1px solid rgba(255,95,95,.25)}
+.cf-btn{flex:1;display:flex;align-items:center;justify-content:center;line-height:1.1;padding:8px;font-size:12px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;text-align:center;border-radius:2px;transition:color .2s,border-color .2s,background .2s;font-family:'Bebas Neue',sans-serif;background:rgba(255,95,95,.05);cursor:pointer;color:#cc7070;border:1px solid rgba(255,95,95,.25)}
 .cf-btn:hover{color:#ff5f5f;border-color:rgba(255,95,95,.5);background:rgba(255,95,95,.1)}
 
 @keyframes cf-panel-out{from{opacity:1}to{opacity:0}}
@@ -700,17 +706,17 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
   function buildSiBool(label,val,invert){
     if(val==null)return el('div',{'class':'si'},el('span',null,label),el('b',{'style':'color:#333'},'—'));
     var yes=invert?!val:!!val;
-    return el('div',{'class':'si'},el('span',null,label),el('b',{'class':yes?'y':'n'},yes?'✓':'✗'));
+    return el('div',{'class':'si'},el('span',null,label),el('b',{'class':yes?'ok':'no'}));
   }
   function buildSiLp(d){
-    if(d.lpBurned){return el('div',{'class':'si'},el('span',null,'LP Burned'),el('b',{'class':'y'},'✓'));}
+    if(d.lpBurned){return el('div',{'class':'si'},el('span',null,'LP Burned'),el('b',{'class':'ok'}));}
     if(d.lpLocked){
       var pct=d.lpLockedPct!=null?(' '+d.lpLockedPct+'%'):'';
       var dur=d.lpLockDurationDays!=null?(' ('+d.lpLockDurationDays+'d)'):'';
-      return el('div',{'class':'si'},el('span',null,'LP Locked'+pct+dur),el('b',{'class':'y'},'✓'));
+      return el('div',{'class':'si'},el('span',null,'LP Locked'+pct+dur),el('b',{'class':'ok'}));
     }
     if(d.lpBurned==null&&d.lpLocked==null)return el('div',{'class':'si'},el('span',null,'LP Lock'),el('b',{'style':'color:#555'},'—'));
-    return el('div',{'class':'si'},el('span',null,'LP Lock'),el('b',{'class':'n'},'✗'));
+    return el('div',{'class':'si'},el('span',null,'LP Lock'),el('b',{'class':'no'}));
   }
   function buildResultNode(d,ca){
     var riskClass=RISK_CLASS[d.risk]||'danger';
@@ -749,7 +755,7 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
     var ssNode=el('div',{'class':'ss'},
       el('div',{'class':'si'},
         el('span',null,'Sell'),
-        el('b',{'class':d.honeypot?'n':'y'},d.honeypot?'✗':'✓')
+        el('b',{'class':d.honeypot?'no':'ok'})
       ),
       buildSiBool('Mint',d.mintAuthority,true),
       buildSiBool('Freeze',d.freezeAuthority,true),
@@ -764,13 +770,13 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
     // The wordmark colour above already signals tier; the buttons are
     // shown active so visitors can click them and explore the panels.
     var foNode=el('div',{'class':'fo'});
-    foNode.appendChild(el('button',{'class':'cf-btn','id':'ant-critical-flags-btn','type':'button'},'⚠ Critical Flags'));
+    foNode.appendChild(el('button',{'class':'cf-btn','id':'ant-critical-flags-btn','type':'button'},'Critical Flags'));
     foNode.appendChild(el('a',{
       'href':ANALYSIS_PAGE+'?ca='+encodeURIComponent(mint),
       'id':'ant-full-analysis',
       'data-ca':encodeURIComponent(mint)
-    },'Full Analysis →'));
-    foNode.appendChild(el('button',{'class':'ai-btn ai-btn--active','id':'ant-ai-summary-btn','type':'button'},'⬡ AI Summary'));
+    },'Full Analysis'));
+    foNode.appendChild(el('button',{'class':'ai-btn ai-btn--active','id':'ant-ai-summary-btn','type':'button'},'AI Summary'));
 
     var tkNode=tokenSymbol?el('div',{'class':'tk'},el('b',null,tokenSymbol),tokenName?(' '+tokenName):''):null;
 
