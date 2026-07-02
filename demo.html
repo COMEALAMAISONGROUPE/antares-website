@@ -326,10 +326,10 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
 .box.rug     .vb h1{color:#ff2244;text-shadow:0 0 40px rgba(255,34,68,.2)}
 
 .sr{display:flex;align-items:center;gap:8px;padding:0 14px;margin-top:10px}
-.sr .n{font-size:15px;color:#888;font-weight:400;font-family:'Bebas Neue',sans-serif}
+.sr .n{font-size:17px;color:#888;font-weight:400;word-spacing:2px;font-family:'Bebas Neue',sans-serif}
 .sr .n b{color:#f0f0f0;font-weight:400}
-.dots{display:flex;gap:2px;align-items:center}
-.dt{width:4px;height:4px;border-radius:50%}
+.dots{display:flex;gap:3px;align-items:center}
+.dt{width:5px;height:5px;border-radius:50%}
 .dt.on{background:#00e5b0}.dt.off{background:#222226}
 
 .sbar{margin:6px 14px 0;height:2px;background:#181818;border-radius:1px;overflow:hidden}
@@ -729,9 +729,9 @@ img[src*="icon.png"],img[src*="favicon.png"]{filter:invert(.72) sepia(.35) satur
     var tokenSymbol=d.tokenSymbol||(d.pair&&d.pair.baseToken?d.pair.baseToken.symbol:'')||'';
     boxEl.className='box '+riskClass;
 
-    var dotsCount=Math.round((score/1000)*5);
+    var dotsCount=Math.round((score/1000)*4);
     var dotsArgs=['div',{'class':'dots'}];
-    for(var i=0;i<5;i++)dotsArgs.push(el('div',{'class':'dt '+(i<dotsCount?'on':'off')}));
+    for(var i=0;i<4;i++)dotsArgs.push(el('div',{'class':'dt '+(i<dotsCount?'on':'off')}));
     var dotsNode=el.apply(null,dotsArgs);
 
     // Same filter as the live extension (contents/modules/components.ts):
